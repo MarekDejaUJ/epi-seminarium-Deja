@@ -28,6 +28,8 @@ ROZDZIALY = [
     ('04-jak-pisac.tex', '04-jak-pisac.md'),
     ('05-warsztat.tex', '05-warsztat.md'),
     ('06-wymogi.tex', '06-wymogi.md'),
+    ('07-agent-cli.tex', '07-agent-cli.md'),
+    ('08-etyka-si.tex', '08-etyka-si.md'),
 ]
 
 # ---------------------------------------------------------------------------
@@ -508,6 +510,8 @@ KIEDY = {
     '04-jak-pisac.md': 'przy pisaniu każdej części',
     '05-warsztat.md': 'raz, na samym początku',
     '06-wymogi.md': 'przed oddaniem',
+    '07-agent-cli.md': 'przed pierwszym poleceniem dla narzędzia',
+    '08-etyka-si.md': 'na początku i przed oddaniem',
 }
 
 

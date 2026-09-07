@@ -19,6 +19,8 @@ Rozdziały pierwszy, drugi i trzeci dotyczą narzędzi. Przeczytaj je na począt
 
 Rozdziały czwarty, piąty i szósty dotyczą pisania. Do rozdziału czwartego wracaj przy każdej kolejnej części pracy. Rozdział piąty przeczytaj raz, na samym początku, bo pytanie badawcze stawia się przed pisaniem, a nie po nim. Rozdział szósty służy jako lista kontrolna przed oddaniem.
 
+Rozdziały siódmy i ósmy dotyczą pracy z narzędziem wspomagającym pisanie kodu. Siódmy opisuje metodę, ósmy granice dozwolonego użycia i sposób jego dokumentowania. Oba przeczytaj **zanim wydasz pierwsze polecenie**, a nie wtedy, gdy pakiet będzie już gotowy: część wymagań dotyczy rzeczy, których nie da się odtworzyć po fakcie.
+
 **Tabela 1. Zawartość przewodnika**
 
 | Rozdział | Temat | Kiedy czytać |
@@ -29,6 +31,8 @@ Rozdziały czwarty, piąty i szósty dotyczą pisania. Do rozdziału czwartego w
 | 4 | Jak napisać pracę | przy pisaniu każdej części |
 | 5 | Warsztat akademicki | raz, na samym początku |
 | 6 | Wymogi formalne | przed oddaniem |
+| 7 | Praca z narzędziem programistycznym | przed pierwszym poleceniem |
+| 8 | Jawność i odpowiedzialność | na początku i przed oddaniem |
 
 ## Dokumenty rozstrzygające
 

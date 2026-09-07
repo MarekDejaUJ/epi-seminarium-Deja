@@ -4,6 +4,7 @@
 |---|---|
 | [`SzablonR/`](SzablonR/) | szkielet pakietu R przechodzący sprawdzenie w trybie zgodności z CRAN |
 | [`spec/`](spec/) | szablon dokumentu `SPEC.md` – kontraktu algorytmu spisywanego przed kodem |
+| [`agent/`](agent/) | pliki do pracy z narzędziem wspomagającym: instrukcje repozytorium, szablony poleceń, rejestr |
 
 ## Kolejność pracy
 
