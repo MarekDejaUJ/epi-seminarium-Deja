@@ -1,0 +1,59 @@
+---
+title: "O serwisie"
+---
+
+> Autorem niniejszego serwisu jest **[imię i nazwisko]**. Serwis ten stanowi
+> integralną część pracy licencjackiej (kierunek: elektroniczne przetwarzanie
+> informacji), przygotowanej pod kierunkiem **[tytuł, imię i nazwisko
+> promotora]** na Wydziale Zarządzania i Komunikacji Społecznej Uniwersytetu
+> Jagiellońskiego.
+
+Nota powyżej jest wymagana Załącznikiem nr 2 do *Standardów prac dyplomowych
+na kierunku elektroniczne przetwarzanie informacji*. Ta sama treść musi znaleźć
+się w aneksie pracy pisemnej.
+
+## Czym jest ten serwis
+
+Serwis udostępnia narzędzie badawcze powstałe jako projekt dyplomowy: pakiet
+języka R implementujący procedurę porządkowania alternatyw według wielu
+kryteriów. Składa się z trzech części.
+
+Zakładka **Algorytm** opisuje metodę: wzory, założenia, granice stosowalności
+i sposób weryfikacji poprawności, wraz z powołaniami na literaturę.
+
+Zakładka **Poradnik** prowadzi przez pełną ścieżkę analizy od surowych danych
+do rankingu.
+
+Zakładka **Aplikacja** pozwala uruchomić narzędzie bez instalowania czegokolwiek.
+Obliczenia wykonują się w przeglądarce; dane nie są nigdzie wysyłane.
+
+Zakładka z dokumentacją funkcji zawiera opis każdej funkcji publicznej wraz
+z argumentami, wartością zwracaną i przykładem użycia.
+
+## Instalacja
+
+```r
+# install.packages("remotes")
+remotes::install_github("nazwauzytkownika/SzablonR")
+```
+
+## Jak cytować
+
+```r
+citation("SzablonR")
+```
+
+## Licencja i kod źródłowy
+
+Kod udostępniony na licencji GPL-3. Repozytorium:
+<https://github.com/nazwauzytkownika/SzablonR>.
+
+Dane przykładowe są danymi symulowanymi wygenerowanymi procedurą opisaną
+w repozytorium; nie pochodzą od żadnych osób ani instytucji.
+
+## Kontakt
+
+**[imię i nazwisko]**, [adres poczty elektronicznej]
+
+Instytut Studiów Informacyjnych, Wydział Zarządzania i Komunikacji Społecznej,
+Uniwersytet Jagielloński.

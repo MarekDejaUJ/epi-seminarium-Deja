@@ -1,0 +1,91 @@
+url: https://nazwauzytkownika.github.io/SzablonR/
+
+lang: pl
+
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#2E5E9E"
+    base_font: {google: "Source Sans 3"}
+    code_font: {google: "JetBrains Mono"}
+
+home:
+  title: Narzędzie badawcze do analizy wielokryterialnej
+  description: >
+    Pakiet języka R udostępniający procedurę porządkowania alternatyw według
+    wielu kryteriów jednocześnie, z wagami wyznaczanymi obiektywnie.
+
+navbar:
+  structure:
+    left:  [algorytm, poradnik, reference, news]
+    right: [aplikacja, oserwisie, github]
+  components:
+    reference:
+      text: Dokumentacja funkcji
+      href: reference/index.html
+    news:
+      text: Zmiany
+      href: news/index.html
+    algorytm:
+      text: Algorytm
+      href: articles/algorytm.html
+    poradnik:
+      text: Poradnik
+      href: articles/poradnik.html
+    aplikacja:
+      text: Aplikacja
+      href: app/index.html
+    oserwisie:
+      text: O serwisie
+      href: articles/o-serwisie.html
+
+articles:
+  - title: Metoda
+    navbar: ~
+    contents:
+      - articles/algorytm
+  - title: Użycie
+    contents:
+      - poradnik
+  - title: Informacje
+    contents:
+      - articles/o-serwisie
+
+reference:
+  - title: Przygotowanie danych
+    desc: Od surowej ramki danych do macierzy decyzyjnej.
+    contents:
+      - przygotuj_dane
+      - rozbierz_model
+      - skaluj_min_max
+  - title: Wagi kryteriów
+    desc: Metody obiektywne, wyznaczane z samych danych.
+    contents:
+      - oblicz_wagi_entropia
+      - oblicz_wagi_std
+  - title: Ranking
+    desc: Silnik obliczeniowy i obiekt wyniku.
+    contents:
+      - oblicz_ranking
+      - print.ranking_epi
+      - summary.ranking_epi
+      - print.macierz_decyzyjna
+  - title: Wizualizacja
+    contents:
+      - plot.ranking_epi
+      - wykres_udzialow
+  - title: Dane
+    contents:
+      - dane_przykladowe
+  - title: Pakiet
+    contents:
+      - SzablonR-package
+
+footer:
+  structure:
+    left: nota
+    right: built_with
+  components:
+    nota: >
+      Serwis stanowi integralną część pracy licencjackiej na kierunku
+      elektroniczne przetwarzanie informacji, Instytut Studiów Informacyjnych UJ.

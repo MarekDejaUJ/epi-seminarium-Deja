@@ -31,4 +31,9 @@ Stan wyjściowy: **0 błędów, 0 ostrzeżeń, 0 uwag** w `R CMD check --as-cran
 126 przechodzących testów, sprawdzanie na macOS, Windows i Linuksie przez
 ciągłą integrację. Twoim zadaniem jest utrzymać ten stan, podmieniając treść.
 
+Do tego gotowy serwis wymagany Standardami: dokumentacja funkcji, opis algorytmu
+z wzorami i powołaniami, nota z Załącznika nr 2 oraz aplikacja działająca
+w przeglądarce bez serwera R. Serwis buduje i publikuje przepływ pracy, więc
+osiemdziesięciomegabajtowy eksport nie trafia do historii repozytorium.
+
 Szczegóły: [`SzablonR/README.md`](SzablonR/README.md).
