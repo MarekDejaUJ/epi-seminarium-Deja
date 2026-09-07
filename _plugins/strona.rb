@@ -16,7 +16,7 @@ module Kramdown
 end
 
 # Tytuł strony pochodzi z pierwszego nagłówka pierwszego stopnia.
-Jekyll::Hooks.register :site, :post_read do |site|
+Jekyll::Hooks.register :site, :pre_render do |site|
   site.pages.each do |page|
     next unless page.data["title"].to_s.empty?
 
