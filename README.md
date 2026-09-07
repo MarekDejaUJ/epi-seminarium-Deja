@@ -29,6 +29,8 @@ po przyjęciu projektu.
 | [`harmonogram/`](harmonogram/) | trzydzieści tygodni w dwóch ścieżkach, sześć kamieni milowych, przebieg zajęć |
 | [`ocenianie/`](ocenianie/) | rubryki projektu i pracy, listy kontrolne, pytania na obronę |
 
+Te same materiały w postaci witryny: **<https://marekdejauj.github.io/epi-seminarium-Deja/>**.
+
 ## Od czego zacząć
 
 1. [Warsztat pisania](przewodniki/05-warsztat.md#pytanie-analityczne) – zanim napiszesz
@@ -52,6 +54,11 @@ Wzór realizuje wymagania dwóch dokumentów Instytutu: *Standardów prac dyplom
 na kierunku EPI* oraz *Instrukcji ISI* w części dotyczącej składu, przypisów i opisów
 bibliograficznych. Przy rozbieżnościach o układzie rozdziałów rozstrzygają Standardy EPI,
 o zapisie bibliografii – Instrukcja ISI.
+
+## Aktualizacja na kolejny rocznik
+
+Zasób jest przygotowany do corocznego użycia. Co trzeba zmienić, opisuje
+[instrukcja aktualizacji](aktualizacja.md).
 
 ## Licencja
 

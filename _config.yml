@@ -1,0 +1,55 @@
+title: Seminarium licencjackie EPI
+description: >-
+  Materiały seminarium licencjackiego na kierunku elektroniczne przetwarzanie
+  informacji. Instytut Studiów Informacyjnych, Uniwersytet Jagielloński.
+lang: pl
+url: https://marekdejauj.github.io
+baseurl: /epi-seminarium-Deja
+repozytorium: https://github.com/MarekDejaUJ/epi-seminarium-Deja
+
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-relative-links
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+
+relative_links:
+  enabled: true
+  collections: false
+
+readme_index:
+  enabled: true
+  with_frontmatter: true
+  remove_originals: true
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      render_with_liquid: false
+
+nawigacja:
+  - tytul: Wzór pracy
+    adres: /wzor-pracy/
+  - tytul: Przewodnik
+    adres: /przewodniki/
+  - tytul: Szablony
+    adres: /szablony/
+  - tytul: Tematy
+    adres: /tematy/
+  - tytul: Harmonogram
+    adres: /harmonogram/
+  - tytul: Ocenianie
+    adres: /ocenianie/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md

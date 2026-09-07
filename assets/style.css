@@ -1,0 +1,211 @@
+:root {
+  --tlo: #fdfdfc;
+  --tlo-pasek: #ffffff;
+  --tlo-kod: #f2f2ef;
+  --tekst: #1c1c1a;
+  --tekst-slaby: #5d5d57;
+  --akcent: #17457a;
+  --akcent-jasny: #2c6fb8;
+  --linia: #e0e0d9;
+  --szerokosc: 54rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tlo: #16171a;
+    --tlo-pasek: #1c1e22;
+    --tlo-kod: #23262b;
+    --tekst: #e6e6e3;
+    --tekst-slaby: #9d9d97;
+    --akcent: #8fbdf0;
+    --akcent-jasny: #b3d4f7;
+    --linia: #32353b;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--tlo);
+  color: var(--tekst);
+  font-family: "Segoe UI", Roboto, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.pasek {
+  background: var(--tlo-pasek);
+  border-bottom: 1px solid var(--linia);
+}
+
+.pasek-tresc {
+  max-width: var(--szerokosc);
+  margin: 0 auto;
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 1.5rem;
+}
+
+.marka {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--tekst);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.pasek nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.pasek nav a {
+  color: var(--tekst-slaby);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.pasek nav a:hover { color: var(--akcent); }
+.pasek nav a.biezaca { color: var(--akcent); font-weight: 600; }
+
+main {
+  max-width: var(--szerokosc);
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.25;
+  letter-spacing: -0.011em;
+  margin: 2.2em 0 0.6em;
+}
+
+h1 {
+  font-size: 1.95rem;
+  margin-top: 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--linia);
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--linia);
+}
+
+h3 { font-size: 1.13rem; }
+h4 { font-size: 1rem; }
+
+p, ul, ol { margin: 0 0 1.1em; }
+
+a { color: var(--akcent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--akcent-jasny); }
+
+strong { font-weight: 650; }
+
+code, pre, kbd {
+  font-family: "JetBrains Mono", "Cascadia Mono", Consolas, "SF Mono", monospace;
+  font-size: 0.88em;
+}
+
+code {
+  background: var(--tlo-kod);
+  padding: 0.12em 0.35em;
+  border-radius: 3px;
+}
+
+pre {
+  background: var(--tlo-kod);
+  border: 1px solid var(--linia);
+  border-radius: 5px;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+pre code { background: none; padding: 0; }
+
+blockquote {
+  margin: 1.4em 0;
+  padding: 0.2rem 0 0.2rem 1.1rem;
+  border-left: 3px solid var(--akcent);
+  color: var(--tekst-slaby);
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+table {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1.4em 0;
+  font-size: 0.94rem;
+}
+
+th, td {
+  border: 1px solid var(--linia);
+  padding: 0.45rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th { background: var(--tlo-kod); font-weight: 650; }
+
+li { margin-bottom: 0.25em; }
+li > ul, li > ol { margin-top: 0.25em; }
+
+li.zadanie { list-style: none; margin-left: -1.4em; }
+li.zadanie input { margin-right: 0.5em; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--linia);
+  margin: 2.5em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+footer {
+  border-top: 1px solid var(--linia);
+  margin-top: 3rem;
+  padding: 1.5rem 1.25rem 3rem;
+  color: var(--tekst-slaby);
+  font-size: 0.87rem;
+}
+
+footer p {
+  max-width: var(--szerokosc);
+  margin: 0 auto 0.4rem;
+}
+
+footer a { color: var(--tekst-slaby); }
+
+.highlight .k, .highlight .kd, .highlight .kn { color: #8250df; }
+.highlight .s, .highlight .s1, .highlight .s2 { color: #0a6640; }
+.highlight .c, .highlight .c1, .highlight .cm { color: var(--tekst-slaby); font-style: italic; }
+.highlight .nf, .highlight .nb { color: var(--akcent); }
+.highlight .m, .highlight .mi, .highlight .mf { color: #b45309; }
+
+@media (prefers-color-scheme: dark) {
+  .highlight .k, .highlight .kd, .highlight .kn { color: #d2a8ff; }
+  .highlight .s, .highlight .s1, .highlight .s2 { color: #7ee787; }
+  .highlight .m, .highlight .mi, .highlight .mf { color: #ffa657; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  main { padding: 1.75rem 1rem 3rem; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.25rem; }
+}

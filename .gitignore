@@ -41,6 +41,8 @@ _site/
 .jekyll-cache/
 .jekyll-metadata
 node_modules/
+vendor/
+Gemfile.lock
 
 # Wynik kompilacji wzoru, odtwarzany lokalnie
 wzor-pracy/main.pdf
