@@ -26,8 +26,8 @@ po przyjęciu projektu.
 | [`przewodnik/`](przewodnik/) | źródła przewodnika w LaTeX oraz wersja do druku w jednym pliku |
 | [`szablony/`](szablony/) | szkielet pakietu R przechodzący sprawdzenie w trybie zgodności z CRAN oraz szablon dokumentu specyfikacji |
 | [`tematy/`](tematy/) | czternaście briefów tematycznych wraz z bibliografią źródłową i notą o doborze tematów |
-
-Harmonogram i witryna seminarium powstają w trakcie przygotowania.
+| [`harmonogram/`](harmonogram/) | trzydzieści tygodni w dwóch ścieżkach, sześć kamieni milowych, przebieg zajęć |
+| [`ocenianie/`](ocenianie/) | rubryki projektu i pracy, listy kontrolne, pytania na obronę |
 
 ## Od czego zacząć
 
