@@ -1,0 +1,38 @@
+% Przewodnik seminaryjny.
+%
+% Dokument sklada sie ta sama klasa, co prace studentow, i korzysta z tego samego
+% stylu bibliograficznego. Jest wiec jednoczesnie instrukcja i pelnowymiarowym
+% przykladem dzialania wzoru: kazdy element skladu opisany w rozdziale pierwszym
+% wystepuje dalej w praktyce.
+%
+% Kompilacja z katalogu przewodnik/:
+%   latexmk -lualatex przewodnik.tex
+% Plik latexmkrc wskazuje katalog wzoru, w ktorym lezy klasa i styl bibliograficzny.
+
+\documentclass{epi-praca}
+
+\addbibresource{bibliografia/zrodla.bib}
+
+\autor{dr Marek Deja}
+\tytul{Przewodnik seminaryjny}
+\podtytul{Praca licencjacka i projekt dyplomowy na kierunku EPI}
+\rok{2027}
+
+\begin{document}
+
+\stronatytulowaporadnika
+
+\tableofcontents
+
+\input{rozdzialy/00-wprowadzenie}
+\input{rozdzialy/01-latex}
+\input{rozdzialy/02-bibliografia}
+\input{rozdzialy/03-overleaf}
+\input{rozdzialy/04-jak-pisac}
+\input{rozdzialy/05-warsztat}
+\input{rozdzialy/06-wymogi}
+
+\bibliografia
+\spisilustracji
+
+\end{document}

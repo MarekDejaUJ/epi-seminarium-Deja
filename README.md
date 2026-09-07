@@ -22,25 +22,21 @@ po przyjęciu projektu.
 | Katalog | Zawartość |
 |---|---|
 | [`wzor-pracy/`](wzor-pracy/) | wzór pracy licencjackiej w LaTeX-u wraz ze stylem bibliograficznym zgodnym z wymaganiami Instytutu |
-| [`przewodniki/`](przewodniki/) | LaTeX, bibliografia i Zotero, Overleaf, jak napisać pracę rozdział po rozdziale, warsztat pisania akademickiego, wymogi formalne |
+| [`przewodnik/`](przewodnik/) | przewodnik seminaryjny: LaTeX, bibliografia i Zotero, Overleaf, jak napisać pracę rozdział po rozdziale, warsztat akademicki, wymogi formalne |
 
 Kolejne części — szablon pakietu R, tematy prac i harmonogram — powstają w trakcie
 przygotowania seminarium.
 
 ## Od czego zacząć
 
-1. [Warsztat pisania](przewodniki/05-warsztat-pisania-akademickiego.md#pytanie-analityczne) —
-   zanim napiszesz pierwsze zdanie, sformułuj pytanie.
-2. [Overleaf](przewodniki/03-overleaf-i-wspolpraca.md#ścieżka-studenta) — załóż projekt
-   z wzoru i ustaw kompilator na LuaLaTeX.
-3. [LaTeX od podstaw](przewodniki/01-latex-od-podstaw.md) — jeden wieczór wystarczy,
-   żeby zacząć pisać. Zapisu każdego elementu szukaj w `wzor-pracy/przyklad.tex`.
-4. [Bibliografia i Zotero](przewodniki/02-bibliografia-bib-zotero.md) — skonfiguruj
-   **przed** pierwszą lekturą, nie po dwudziestej.
-5. Przy pisaniu każdej części sięgaj do
-   [przewodnika rozdział po rozdziale](przewodniki/04-jak-pisac-prace.md).
-6. Przed oddaniem przejdź
-   [listę kontrolną](przewodniki/06-wymogi-formalne-isi-epi.md#lista-kontrolna-przed-oddaniem).
+1. Otwórz [`przewodnik/przewodnik.pdf`](przewodnik/przewodnik.pdf). Rozdział piąty
+   przeczytaj od razu — pytanie badawcze stawia się przed pisaniem, a nie po nim.
+2. Załóż projekt z wzoru na Overleaf i ustaw kompilator na LuaLaTeX (rozdział trzeci).
+3. Przerób pierwsze dwa poziomy rozdziału o LaTeX-u; jeden wieczór wystarczy, żeby zacząć
+   pisać. Zapisu każdego elementu szukaj w `wzor-pracy/przyklad.tex`.
+4. Skonfiguruj Zotero **przed** pierwszą lekturą, nie po dwudziestej (rozdział drugi).
+5. Przy pisaniu każdej części sięgaj do rozdziału czwartego.
+6. Przed oddaniem przejdź listę kontrolną z końca rozdziału szóstego.
 
 ## Wymagania formalne
 

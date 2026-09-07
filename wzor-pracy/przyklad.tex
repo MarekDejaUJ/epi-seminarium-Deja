@@ -12,46 +12,20 @@
 
 \autor{Jan Kowalski}
 \nralbumu{1234567}
-\tytul{Pakiet R do analizy wielokryterialnej jako przykład zastosowania
-       oprogramowania badawczego w naukach społecznych}
-\tytulen{An R package for multi-criteria analysis as an example of research
-         software in the social sciences}
+\tytul{Pakiet R do analizy wielokryterialnej jako przykład zastosowania oprogramowania badawczego w naukach społecznych}
+\tytulen{An R package for multi-criteria analysis as an example of research software in the social sciences}
 \promotor{dr Marek Deja}
 \rok{2027}
 \adresstrony{https://jankowalski.github.io/PrzykladR/}
 \adresrepozytorium{https://github.com/jankowalski/PrzykladR}
 \liczbastron{40}
 
-\abstraktpl{Praca przedstawia projekt, implementację i weryfikację autorskiego
-pakietu języka R, który udostępnia badaczom nauk społecznych procedurę
-wielokryterialnej analizy decyzyjnej. Celem pracy jest sprawdzenie, czy
-algorytm opisany w literaturze metodycznej da się zamknąć w narzędziu
-spełniającym wymagania repozytorium CRAN i możliwym do użycia bez przygotowania
-programistycznego. W części teoretycznej omówiono aparat matematyczny metody
-oraz przesłanki jej wyboru. W części projektowej opisano architekturę pakietu,
-procedurę generowania danych testowych o znanej strukturze oraz strategię
-testowania obejmującą przypadki analityczne, testy własności i testy odporności.
-Działanie narzędzia zilustrowano studium przypadku na otwartym zbiorze danych.
-Uzyskane wyniki wskazują, że narzędzie odtwarza rezultaty publikowane w
-literaturze i pozostaje stabilne na trzech systemach operacyjnych.}
+\abstraktpl{Praca przedstawia projekt, implementację i weryfikację autorskiego pakietu języka R, który udostępnia badaczom nauk społecznych procedurę wielokryterialnej analizy decyzyjnej. Celem pracy jest sprawdzenie, czy algorytm opisany w literaturze metodycznej da się zamknąć w narzędziu spełniającym wymagania repozytorium CRAN i możliwym do użycia bez przygotowania programistycznego. W części teoretycznej omówiono aparat matematyczny metody oraz przesłanki jej wyboru. W części projektowej opisano architekturę pakietu, procedurę generowania danych testowych o znanej strukturze oraz strategię testowania obejmującą przypadki analityczne, testy własności i testy odporności. Działanie narzędzia zilustrowano studium przypadku na otwartym zbiorze danych. Uzyskane wyniki wskazują, że narzędzie odtwarza rezultaty publikowane w literaturze i pozostaje stabilne na trzech systemach operacyjnych.}
 
-\abstrakten{The thesis presents the design, implementation and verification of
-an original R package that provides social science researchers with a
-multi-criteria decision analysis procedure. The aim is to establish whether an
-algorithm described in the methodological literature can be enclosed in a tool
-that meets CRAN repository requirements and remains usable without programming
-background. The theoretical part discusses the mathematical apparatus of the
-method and the rationale for its selection. The project part describes the
-package architecture, the test data generating procedure with a known structure,
-and the testing strategy covering analytical cases, property tests and
-robustness tests. The tool is illustrated with a case study on an open dataset.
-The results indicate that the tool reproduces published findings and remains
-stable across three operating systems.}
+\abstrakten{The thesis presents the design, implementation and verification of an original R package that provides social science researchers with a multi-criteria decision analysis procedure. The aim is to establish whether an algorithm described in the methodological literature can be enclosed in a tool that meets CRAN repository requirements and remains usable without programming background. The theoretical part discusses the mathematical apparatus of the method and the rationale for its selection. The project part describes the package architecture, the test data generating procedure with a known structure, and the testing strategy covering analytical cases, property tests and robustness tests. The tool is illustrated with a case study on an open dataset. The results indicate that the tool reproduces published findings and remains stable across three operating systems.}
 
-\slowaklucze{analiza wielokryterialna, oprogramowanie badawcze, pakiet R,
-             odtwarzalność badań, wspomaganie decyzji}
-\keywords{decision support, multi-criteria analysis, R package,
-          reproducible research, research software}
+\slowaklucze{analiza wielokryterialna, oprogramowanie badawcze, pakiet R, odtwarzalność badań, wspomaganie decyzji}
+\keywords{decision support, multi-criteria analysis, R package, reproducible research, research software}
 
 \begin{document}
 
@@ -63,36 +37,20 @@ stable across three operating systems.}
 % ===========================================================================
 \wprowadzenie
 
-Współczesne badania w naukach społecznych coraz częściej wymagają narzędzi
-obliczeniowych, których nie da się zastąpić arkuszem kalkulacyjnym. Metody
-opisywane w literaturze metodycznej pozostają jednak dla wielu badaczy
-niedostępne, ponieważ nie mają gotowych implementacji \parencite{cisek2002filozoficzne}.
-Lukę tę wypełniają pakiety oprogramowania badawczego, budowane i dokumentowane
-zgodnie ze standardami odtwarzalności \parencite[s.~15-21]{kowalski2010a}.
+Współczesne badania w naukach społecznych coraz częściej wymagają narzędzi obliczeniowych, których nie da się zastąpić arkuszem kalkulacyjnym. Metody opisywane w literaturze metodycznej pozostają jednak dla wielu badaczy niedostępne, ponieważ nie mają gotowych implementacji \parencite{cisek2002filozoficzne}. Lukę tę wypełniają pakiety oprogramowania badawczego, budowane i dokumentowane zgodnie ze standardami odtwarzalności \parencite[s.~15-21]{kowalski2010a}.
 
-Celem pracy jest zaprojektowanie i zweryfikowanie pakietu języka R, który
-udostępnia procedurę analizy wielokryterialnej badaczowi bez przygotowania
-programistycznego. Praca odpowiada na pytanie, jakie warunki musi spełnić
-narzędzie, żeby procedura opisana w artykule metodycznym stała się powtarzalna
-i możliwa do zweryfikowania przez osoby trzecie.
+Celem pracy jest zaprojektowanie i zweryfikowanie pakietu języka R, który udostępnia procedurę analizy wielokryterialnej badaczowi bez przygotowania programistycznego. Praca odpowiada na pytanie, jakie warunki musi spełnić narzędzie, żeby procedura opisana w artykule metodycznym stała się powtarzalna i możliwa do zweryfikowania przez osoby trzecie.
 
-Praca składa się z trzech rozdziałów. Rozdział pierwszy przedstawia podstawy
-metodyczne. Rozdział drugi opisuje architekturę pakietu. Rozdział trzeci
-prezentuje studium przypadku.
+Praca składa się z trzech rozdziałów. Rozdział pierwszy przedstawia podstawy metodyczne. Rozdział drugi opisuje architekturę pakietu. Rozdział trzeci prezentuje studium przypadku.
 
 % ===========================================================================
 \chapter{Podstawy metodyczne}
 
-Metody wielokryterialnego wspomagania decyzji porządkują warianty według wielu
-kryteriów jednocześnie. \osoba{Hjørland}{Birger} zwraca uwagę, że wybór aparatu
-formalnego przesądza o zakresie wniosków, jakie wolno wyciągnąć z analizy
-\parencite{hjorland1998theory}. Podobne stanowisko zajmuje
-\textcite{wozniak1997kognitywizm}.
+Metody wielokryterialnego wspomagania decyzji porządkują warianty według wielu kryteriów jednocześnie. \osoba{Hjørland}{Birger} zwraca uwagę, że wybór aparatu formalnego przesądza o zakresie wniosków, jakie wolno wyciągnąć z analizy \parencite{hjorland1998theory}. Podobne stanowisko zajmuje \textcite{wozniak1997kognitywizm}.
 
 \section{Aparat formalny}
 
-Znormalizowaną wartość wariantu wyznacza się jako iloraz odległości od
-rozwiązania anty-idealnego i sumy obu odległości:
+Znormalizowaną wartość wariantu wyznacza się jako iloraz odległości od rozwiązania anty-idealnego i sumy obu odległości:
 
 \begin{equation}\label{eq:cc}
   CC_i = \frac{d_i^{-}}{d_i^{+} + d_i^{-}},
@@ -100,42 +58,28 @@ rozwiązania anty-idealnego i sumy obu odległości:
   d_i^{\pm} = \sqrt{\sum_{j=1}^{n} \bigl(v_{ij} - v_j^{\pm}\bigr)^2}.
 \end{equation}
 
-We wzorze \eqref{eq:cc} symbol $v_{ij}$ oznacza znormalizowaną i zważoną ocenę
-wariantu $i$ względem kryterium $j$, natomiast $v_j^{+}$ i $v_j^{-}$ to wartości
-odpowiednio najlepsza i najgorsza w obrębie kryterium. Wskaźnik $CC_i$ przyjmuje
-wartości z przedziału $[0, 1]$; im bliżej jedności, tym wariant lepszy.
+We wzorze \eqref{eq:cc} symbol $v_{ij}$ oznacza znormalizowaną i zważoną ocenę wariantu $i$ względem kryterium $j$, natomiast $v_j^{+}$ i $v_j^{-}$ to wartości odpowiednio najlepsza i najgorsza w obrębie kryterium. Wskaźnik $CC_i$ przyjmuje wartości z przedziału $[0, 1]$; im bliżej jedności, tym wariant lepszy.
 
 \section{Wyznaczanie wag}
 
-Wagi obiektywne wyprowadza się z rozproszenia ocen w obrębie kryterium. Jak
-ujmuje to jedno z opracowań podstawowych:
+Wagi obiektywne wyprowadza się z rozproszenia ocen w obrębie kryterium. Jak ujmuje to jedno z opracowań podstawowych:
 
 \begin{quote}
-Kryterium, w którym oceny wariantów są do siebie zbliżone, niesie mało
-informacji różnicującej i powinno otrzymać wagę niższą niż kryterium
-o wysokim rozproszeniu ocen.
+Kryterium, w którym oceny wariantów są do siebie zbliżone, niesie mało informacji różnicującej i powinno otrzymać wagę niższą niż kryterium o wysokim rozproszeniu ocen.
 \end{quote}
 
-Podejście to opisano szerzej w pracach zbiorowych poświęconych metodyce badań
-\parencite{kowalski1998red} oraz w opracowaniach przeglądowych
-\parencite{nowak1999wielu,nowakp1999}.
+Podejście to opisano szerzej w pracach zbiorowych poświęconych metodyce badań \parencite{kowalski1998red} oraz w opracowaniach przeglądowych \parencite{nowak1999wielu,nowakp1999}.
 
 % ===========================================================================
 \chapter{Implementacja i architektura pakietu}
 
-Pakiet zaimplementowano w języku R zgodnie ze standardami repozytorium CRAN.
-Logika obliczeniowa znajduje się w katalogu \plik{R/}, dane w \plik{data/},
-a dokumentacja w \plik{man/} oraz \plik{vignettes/}.
+Pakiet zaimplementowano w języku R zgodnie ze standardami repozytorium CRAN. Logika obliczeniowa znajduje się w katalogu \plik{R/}, dane w \plik{data/}, a dokumentacja w \plik{man/} oraz \plik{vignettes/}.
 
 \section{Struktura i przetwarzanie danych}
 
-Funkcja \fun{przygotuj\_dane} przyjmuje surową ramkę danych oraz definicję
-modelu i zwraca macierz decyzyjną. Argument \argument{skala} określa zakres
-normalizacji, a argument \argument{braki} sposób obsługi wartości brakujących.
-Wizualizacje powstają z użyciem pakietu \pkg{ggplot2}.
+Funkcja \fun{przygotuj\_dane} przyjmuje surową ramkę danych oraz definicję modelu i zwraca macierz decyzyjną. Argument \argument{skala} określa zakres normalizacji, a argument \argument{braki} sposób obsługi wartości brakujących. Wizualizacje powstają z użyciem pakietu \pkg{ggplot2}.
 
-Warto podkreślić, że \wyroznienie{walidacja wejścia poprzedza każde obliczenie} --
-jest to \termin{precondition} w rozumieniu programowania kontraktowego.
+Warto podkreślić, że \wyroznienie{walidacja wejścia poprzedza każde obliczenie} -- jest to \termin{precondition} w rozumieniu programowania kontraktowego.
 
 \begin{tabelaepi}{Moduły pakietu i ich odpowiedzialność}{tab:moduly}
 \begin{tabular}{@{}lll@{}}
@@ -174,8 +118,7 @@ plot(wynik)
 \zrodlo{oprac. własne}
 \end{rysunekepi}
 
-Rysunek~\ref{rys:mapa} pokazuje położenie wariantów względem obu punktów
-odniesienia. Wariant oznaczony literą A znajduje się w ćwiartce najkorzystniejszej.
+Rysunek~\ref{rys:mapa} pokazuje położenie wariantów względem obu punktów odniesienia. Wariant oznaczony literą A znajduje się w ćwiartce najkorzystniejszej.
 
 \begin{wykresepi}{Udział kryteriów w wagach obiektywnych}{wyk:wagi}
 \begin{tabular}{@{}lr@{}}
@@ -194,32 +137,16 @@ Rozwój  & 0,17 \\
 % ===========================================================================
 \chapter{Studium przypadku}
 
-Weryfikację przeprowadzono na zbiorze wygenerowanym własną procedurą
-o znanej strukturze zależności. Procedurę opisano w normie dotyczącej
-dokumentowania źródeł \parencite{pniso690} oraz w dokumentacji środowiska
-\parencite{rcore2026}.
+Weryfikację przeprowadzono na zbiorze wygenerowanym własną procedurą o znanej strukturze zależności. Procedurę opisano w normie dotyczącej dokumentowania źródeł \parencite{pniso690} oraz w dokumentacji środowiska \parencite{rcore2026}.
 
-Zastosowane hasła terminologiczne opierają się na wydawnictwach informacyjnych
-\parencite{apoteoza1996,kolodziejska1976propaganda} oraz na opracowaniach
-dostępnych w wersji elektronicznej \parencite{cisek2002szara,kowalski2009zmiany}.
-Materiały instytucjonalne przywołano za serwisem biblioteki
-\parencite{bj2021zasoby} i wpisem badaczki \parencite{cisek2019informacja}.
+Zastosowane hasła terminologiczne opierają się na wydawnictwach informacyjnych \parencite{apoteoza1996,kolodziejska1976propaganda} oraz na opracowaniach dostępnych w wersji elektronicznej \parencite{cisek2002szara,kowalski2009zmiany}. Materiały instytucjonalne przywołano za serwisem biblioteki \parencite{bj2021zasoby} i wpisem badaczki \parencite{cisek2019informacja}.
 
-Pozostałe pozycje sprawdzające postać opisu to praca zbiorowa
-\parencite{zielinski1998swiat}, rozdział w tomie \parencite{nowak2004srodowisko},
-artykuł prasowy \parencite{nowak2000jutro}, wydawnictwo na nośniku
-\parencite{kopalinski1998slownik}, pozycja bez autora
-\parencite{elektroniczne2008}, druga praca tego samego autora z tego samego roku
-\parencite{kowalski2010b} oraz książka dwóch autorów
-\parencite{nowak2009postrzeganie}.
+Pozostałe pozycje sprawdzające postać opisu to praca zbiorowa \parencite{zielinski1998swiat}, rozdział w tomie \parencite{nowak2004srodowisko}, artykuł prasowy \parencite{nowak2000jutro}, wydawnictwo na nośniku \parencite{kopalinski1998slownik}, pozycja bez autora \parencite{elektroniczne2008}, druga praca tego samego autora z tego samego roku \parencite{kowalski2010b} oraz książka dwóch autorów \parencite{nowak2009postrzeganie}.
 
 % ===========================================================================
 \podsumowanie
 
-Zbudowane narzędzie odtwarza procedurę opisaną w literaturze metodycznej
-i przechodzi sprawdzenie zgodności z wymaganiami repozytorium na trzech
-systemach operacyjnych. Dalszy rozwój obejmuje rozszerzenie zestawu metod
-wyznaczania wag oraz udostępnienie interfejsu przeglądarkowego.
+Zbudowane narzędzie odtwarza procedurę opisaną w literaturze metodycznej i przechodzi sprawdzenie zgodności z wymaganiami repozytorium na trzech systemach operacyjnych. Dalszy rozwój obejmuje rozszerzenie zestawu metod wyznaczania wag oraz udostępnienie interfejsu przeglądarkowego.
 
 % ===========================================================================
 \wykazzrodel
@@ -227,12 +154,9 @@ wyznaczania wag oraz udostępnienie interfejsu przeglądarkowego.
 Wykaz obejmuje narzędzia programistyczne wykorzystane w projekcie.
 
 \begin{description}
-  \item[\pkg{ggplot2}] Wickham, H. (2016). \termin{ggplot2: Elegant Graphics for
-    Data Analysis}. Nowy Jork: Springer.
-  \item[\pkg{testthat}] Wickham, H. (2011). testthat: Get Started with Testing.
-    \termin{The R Journal}, vol. 3, pp. 5-10.
-  \item[\pkg{PrzykladR}] Kowalski, J. (2027). \termin{PrzykladR: Wielokryterialna
-    analiza decyzyjna}. \url{https://github.com/jankowalski/PrzykladR}.
+\item[\pkg{ggplot2}] Wickham, H. (2016). \termin{ggplot2: Elegant Graphics for Data Analysis}. Nowy Jork: Springer.
+\item[\pkg{testthat}] Wickham, H. (2011). testthat: Get Started with Testing. \termin{The R Journal}, vol. 3, pp. 5-10.
+\item[\pkg{PrzykladR}] Kowalski, J. (2027). \termin{PrzykladR: Wielokryterialna analiza decyzyjna}. \url{https://github.com/jankowalski/PrzykladR}.
 \end{description}
 
 % ===========================================================================
@@ -264,9 +188,6 @@ C6 & Zależności: ggplot2, stats \\
 
 \aneks{Nota wymagana w serwisie WWW}
 
-Autorem niniejszego serwisu jest Jan Kowalski. Serwis stanowi integralną część
-pracy licencjackiej (kierunek: elektroniczne przetwarzanie informacji),
-przygotowanej pod kierunkiem dra Marka Dei na Wydziale Zarządzania
-i Komunikacji Społecznej Uniwersytetu Jagiellońskiego.
+Autorem niniejszego serwisu jest Jan Kowalski. Serwis stanowi integralną część pracy licencjackiej (kierunek: elektroniczne przetwarzanie informacji), przygotowanej pod kierunkiem dra Marka Dei na Wydziale Zarządzania i Komunikacji Społecznej Uniwersytetu Jagiellońskiego.
 
 \end{document}

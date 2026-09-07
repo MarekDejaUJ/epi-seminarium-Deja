@@ -1,0 +1,264 @@
+\chapter{Jak napisać pracę}\label{ch:jakpisac}
+
+Rozdział prowadzi przez wzór część po części. Każdy podrozdział odpowiada jednemu plikowi w katalogu rozdziałów. Kolejność podrozdziałów jest kolejnością w pracy, ale \wyroznienie{nie kolejnością pisania} --- o tym w podrozdziale~\ref{sec:kolejnosc}.
+
+Twoja praca opisuje projekt: pakiet języka R implementujący algorytm z artykułu metodycznego. To zmienia sens niektórych części w stosunku do prac czysto teoretycznych. Stanem badań jest tu nie tylko literatura przedmiotu, ale też istniejące oprogramowanie. Materiałem badawczym są dane, na których pokazujesz działanie narzędzia. Wynikiem jest działające, sprawdzone narzędzie oraz wnioski z jego zastosowania.
+
+\section{Wprowadzenie}
+
+Plik \plik{rozdzialy/00-wprowadzenie.tex}, objętość trzy do pięciu stron, bez numeru rozdziału.
+
+Wprowadzenie odpowiada czytelnikowi na cztery pytania w tej kolejności: o czym to jest, dlaczego to problem, co konkretnie zrobiłeś, jak czytać dalej. Recenzent czyta wprowadzenie i podsumowanie uważniej niż resztę --- z nich wyrabia sobie zdanie o pracy.
+
+\subsection{Co musi zawierać}
+
+\wyroznienie{Tło problemu.} Zacznij od problemu, który istnieje niezależnie od Twojego pakietu. Nie od narzędzia, tylko od pytania, na które badacz nauk społecznych dziś nie potrafi odpowiedzieć albo odpowiada z trudem. Dopiero na tym tle pojawia się metoda.
+
+\wyroznienie{Luka.} Wyjaśnij, czego brakuje. W pracy projektowej luka ma dwie warstwy i warto rozróżnić je wprost. \termin{Luka technologiczna} to sytuacja, w której metoda jest opisana w literaturze, ale nie ma jej implementacji; implementacja istnieje, lecz wymaga przygotowania programistycznego; istniejące narzędzie nie obsługuje danych określonego rodzaju. \termin{Luka poznawcza} to z kolei to, czego badacze nie wiedzą, bo nie mają czym policzyć. Praca, która wypełnia wyłącznie pierwszą, jest sprawozdaniem z programowania, a nie pracą naukową.
+
+Luka musi być sprawdzalna. Wymień narzędzia, które przejrzałeś, i napisz, czego w nich nie ma. Zdanie o nieistnieniu implementacji, podane bez wykazu przeszukanych źródeł, jest zarzutem pod Twoim adresem, a nie argumentem.
+
+\wyroznienie{Cel.} Jedno zdanie w formie czynności: celem pracy jest zaprojektowanie, implementacja i weryfikacja pakietu języka R udostępniającego określoną procedurę badaczom nauk społecznych. Cel jest tym, co zrobiłeś, a nie tym, czego się dowiedziałeś.
+
+\wyroznienie{Pytanie badawcze.} Cel mówi, co zbudowałeś; pytanie mówi, czego się dzięki temu dowiadujemy. Pytania zaczynające się od \enquote{jak} i \enquote{dlaczego} prowadzą do analizy, a \enquote{co} i \enquote{ile} do opisu. Sposób dochodzenia do pytania opisuje podrozdział~\ref{sec:pytanie}. Przykłady pytań właściwych dla tego typu pracy:
+
+\begin{itemize}
+\item Jakie warunki musi spełnić implementacja metody, żeby jej wyniki dały się odtworzyć przez osobę trzecią?
+\item Które założenia metody okazują się najbardziej wrażliwe na jakość danych spotykanych w badaniach społecznych?
+\item Jak wybór procedury generowania danych testowych wpływa na to, co wolno wywnioskować o poprawności implementacji?
+\end{itemize}
+
+\wyroznienie{Materiał i metoda.} Dwa lub trzy zdania: na jakich danych sprawdzasz narzędzie i jak weryfikujesz poprawność. Szczegóły idą do rozdziałów drugiego i trzeciego pracy.
+
+\wyroznienie{Zakres i ograniczenia.} Co praca obejmuje, a czego nie. Ograniczenie postawione samodzielnie jest mocniejsze niż ten sam zarzut w recenzji.
+
+\wyroznienie{Struktura.} Jedno zdanie o każdym rozdziale.
+
+\subsection{Typowe błędy}
+
+\begin{tabelaepi}{Błędy we wprowadzeniu}{tab:bledywprowadzenie}
+\begin{tabular}{@{}p{6.6cm}p{6.6cm}@{}}
+\toprule
+Błąd & Dlaczego szkodzi \\
+\midrule
+Wprowadzenie zaczyna się od opisu pakietu & czytelnik nie wie jeszcze, po co mu ten pakiet \\
+Cel sformułowany jako przedstawienie zagadnienia & nie da się sprawdzić, czy został osiągnięty \\
+Luka stwierdzona bez wykazu przejrzanych narzędzi & twierdzenie nieudokumentowane \\
+Historia dziedziny od połowy zeszłego wieku & wprowadzenie ma wprowadzać do problemu, nie do dyscypliny \\
+Pytanie badawcze utożsamione z celem & brakuje warstwy poznawczej pracy \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+\begin{kontrolna}
+\item Problem postawiony przed narzędziem
+\item Luka wskazana i udokumentowana wykazem przejrzanych rozwiązań
+\item Cel w jednym zdaniu, w formie czynności
+\item Pytanie badawcze różne od celu
+\item Zakres i ograniczenia wypisane
+\item Zapowiedź struktury zgodna z faktyczną strukturą pracy
+\item Każde twierdzenie o stanie rzeczy ma powołanie
+\end{kontrolna}
+
+\section{Rozdział pierwszy: podstawy metodyczne}\label{sec:rozdzial1}
+
+Plik \plik{rozdzialy/01-podstawy.tex}, objętość osiem do dwunastu stron.
+
+Odpowiednik sekcji poświęconej podstawom metodycznym w czasopismach o oprogramowaniu badawczym. Opisujesz matematykę i logikę, które zaimplementowałeś --- jeszcze nie kod. Rozdział ma udowodnić, że rozumiesz metodę, którą zamknąłeś w narzędziu.
+
+\subsection{Zasada nadrzędna}
+
+\wyroznienie{Po każdym wzorze następuje akapit wyjaśniający, co ten wzór robi i po co, językiem zrozumiałym dla badacza bez przygotowania matematycznego.} Wzór bez wyjaśnienia jest w tej pracy błędem merytorycznym, a nie oszczędnością miejsca. Twoim odbiorcą jest osoba, która chce metody użyć, a nie ją wyprowadzić.
+
+Sprawdzian: przeczytaj sam akapit, bez wzoru. Czy nadal wiadomo, co się dzieje? Jeżeli nie, akapit jest za słaby.
+
+\subsection{Co musi zawierać}
+
+\wyroznienie{Osadzenie metody.} Jaki problem metoda rozwiązuje, skąd się wzięła, czym różni się od podejść wcześniejszych. Powołanie na artykuł źródłowy i dwa lub trzy opracowania wprowadzające.
+
+\wyroznienie{Aparat formalny.} Wielkości wejściowe wraz z dziedzinami, kolejne kroki algorytmu, wielkości wyjściowe. Numeruj i etykietuj te wzory, do których praca się odwołuje. Objaśnij \wyroznienie{każdy} symbol, którego używasz --- nawet ten, który wydaje Ci się oczywisty.
+
+\wyroznienie{Założenia i granice stosowalności.} Przy jakich warunkach metoda jest poprawna: rozkłady, niezależność obserwacji, kompletność danych, skale pomiarowe. I co się dzieje, gdy założenie jest naruszone. Ta sekcja zasila później kontrakt w specyfikacji oraz testy odporności pakietu --- pisząc ją, projektujesz jednocześnie oprogramowanie.
+
+\wyroznienie{Rozwiązania pokrewne.} Przegląd istniejących implementacji w układzie problemowym: co już jest, czego brakuje, jak Twoje narzędzie się do tego ma. Nie lista, tylko wywód. Zakończ jednoznacznym stwierdzeniem, jaki wkład wnosi Twój pakiet.
+
+\subsection{Skąd brać treść}
+
+Z artykułu źródłowego, z sekcji definicyjnej i algorytmicznej. \wyroznienie{Nie przepisuj wzorów z opracowań wtórnych ani z zestawień tematycznych} --- zapis bywa tam skrócony i niedokładny. Wracaj do publikacji.
+
+Wzoru nie tłumacz na polski w sensie notacji. Symbole zostają takie jak w źródle, żeby czytelnik mógł porównać; tłumaczysz sens, a nie znaki.
+
+\begin{tabelaepi}{Błędy w rozdziale metodycznym}{tab:bledymetodyka}
+\begin{tabular}{@{}p{6.6cm}p{6.6cm}@{}}
+\toprule
+Błąd & Dlaczego szkodzi \\
+\midrule
+Wzory przepisane bez objaśnienia symboli & recenzent nie odróżni zrozumienia od przepisania \\
+Opis kodu zamiast opisu metody & kod należy do rozdziału drugiego \\
+Pominięcie założeń metody & testy odporności nie mają z czego wyniknąć \\
+Przegląd narzędzi w formie listy & brak wywodu problemowego, wymóg Standardów \\
+Wzory przepisane z opracowania wtórnego & ryzyko powielenia cudzego błędu \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+\begin{kontrolna}
+\item Każdy symbol objaśniony w tekście
+\item Po każdym wzorze akapit o tym, co wzór robi
+\item Założenia metody wypisane wprost
+\item Granice stosowalności opisane
+\item Przegląd rozwiązań pokrewnych w układzie problemowym
+\item Wkład własny sformułowany jednoznacznie
+\item Wzory sprawdzone z publikacją źródłową, nie z zestawieniem
+\end{kontrolna}
+
+\section{Rozdział drugi: implementacja i architektura}
+
+Plik \plik{rozdzialy/02-implementacja.tex}, objętość dziesięć do czternastu stron.
+
+Odpowiednik sekcji opisującej oprogramowanie. Najważniejszy rozdział inżynierski --- tu pokazujesz własny wkład. Standardy wymagają w tym miejscu opisu logiki aplikacji ze schematami oraz opisu implementacji z formatem danych i sposobem realizacji każdego modułu \parencite{standardyEPI}.
+
+\subsection{Co musi zawierać}
+
+\wyroznienie{Struktura projektu.} Katalogi, moduły, przepływ danych. Wyjaśnij, co gdzie leży i dlaczego akurat tak. Tabela modułów z odpowiedzialnościami i funkcjami eksportowanymi mówi więcej niż akapit opisu.
+
+\wyroznienie{Przetwarzanie i walidacja danych.} Droga od danych surowych do struktury, na której pracuje algorytm: sprawdzanie warunków wstępnych, obsługa braków i kodów błędnych, skalowanie, agregacja. Wypisz, które naruszenia zatrzymują wykonanie i z jakim komunikatem --- to jest kontrakt Twojego narzędzia i najmocniejsza część tego rozdziału.
+
+\wyroznienie{Silnik obliczeniowy.} Jak wzory z rozdziału pierwszego przełożyły się na kod. Pokaż fragment, nie całość; całość jest w repozytorium. Wyjaśnij decyzje, które nie wynikają wprost ze wzoru: sposób radzenia sobie z dzieleniem przez zero, wybór biblioteki optymalizacyjnej, zamianę pętli na operacje na wektorach.
+
+\wyroznienie{System klas i metody generyczne.} Dlaczego wynik jest obiektem określonej klasy, a nie zwykłą ramką danych, i co dzięki temu potrafią funkcje wypisujące, podsumowujące i rysujące.
+
+\wyroznienie{Procedura generowania danych testowych.} Rozkłady, parametry, zależności między zmiennymi, kontrolowane braki i wartości odstające, ziarno losowości. To jest element metodologii, a nie dodatek techniczny: dzięki znanej strukturze danych wiadomo, jaki wynik narzędzie \wyroznienie{powinno} zwrócić, więc odchylenie jest wykrywalne.
+
+\wyroznienie{Weryfikacja poprawności.} Trzy warstwy, opisane osobno. Przypadki analityczne o wyniku policzonym ręcznie: mała macierz, przypadek zdegenerowany, wartości brzegowe. Testy własności: niezmienniczość na skalowanie, monotoniczność, odporność na permutację etykiet. Testy odporności: zerowa wariancja, współliniowość, wartości poza dziedziną, macierz osobliwa --- oczekiwanym wynikiem jest kontrolowany błąd z czytelnym komunikatem, a nie poprawny wynik. Podaj rezultat sprawdzenia zgodności na trzech systemach operacyjnych.
+
+\wyroznienie{Narzędzia zewnętrzne.} Dla każdej biblioteki nazwa, źródło, przeznaczenie oraz krótki opis wejścia i wyjścia. Wymóg wprost ze Standardów.
+
+\subsection{Jak pisać o pracy z narzędziem programistycznym}
+
+Jeżeli korzystałeś z narzędzia wspomagającego pisanie kodu, opisz to jako element metodyki inżynierskiej, a nie jako wyznanie. Interesujące jest to, \wyroznienie{gdzie specyfikacja wychwyciła błąd}: w którym miejscu narzędzie uprościło założenie metody i jak to wykryłeś. To pokazuje zrozumienie metody lepiej niż bezbłędny kod. Zasada podstawowa pozostaje jedna: musisz umieć objaśnić każdą linię kodu, którą oddajesz.
+
+\begin{tabelaepi}{Błędy w rozdziale inżynierskim}{tab:bledyimplementacja}
+\begin{tabular}{@{}p{6.6cm}p{6.6cm}@{}}
+\toprule
+Błąd & Dlaczego szkodzi \\
+\midrule
+Wklejone całe pliki źródłowe & praca nie jest wydrukiem repozytorium \\
+Opis funkcji zamiast opisu architektury & dokumentacja funkcji jest na stronie projektu \\
+Procedura generowania danych zbyta jednym zdaniem & traci sens cała weryfikacja \\
+Brak opisu kontraktu błędów & nie wiadomo, kiedy narzędzie zawodzi świadomie \\
+Testy opisane jako napisano testy jednostkowe & nie wiadomo, co właściwie sprawdzono \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+\begin{kontrolna}
+\item Schemat lub tabela modułów z odpowiedzialnościami
+\item Opisany kontrakt: warunki wstępne, komunikaty błędów
+\item Fragmenty kodu, nie całe pliki
+\item Procedura generowania danych opisana z parametrami i ziarnem
+\item Trzy warstwy weryfikacji opisane osobno
+\item Wynik sprawdzenia zgodności na trzech systemach
+\item Biblioteki zewnętrzne z nazwą, źródłem, przeznaczeniem, wejściem i wyjściem
+\item Listingi zawierają wyłącznie znaki ASCII
+\end{kontrolna}
+
+\section{Rozdział trzeci: studium przypadku}
+
+Plik \plik{rozdzialy/03-studium-przypadku.tex}, objętość osiem do dziesięciu stron.
+
+Pokazujesz, że narzędzie działa na danych, a nie tylko się kompiluje. Zagadnienie ma należeć do dziedziny wskazanej w tytule pracy --- inaczej tytuł przestaje odpowiadać treści, co jest pierwszym kryterium oceny w Standardach.
+
+\subsection{Co musi zawierać}
+
+\wyroznienie{Charakterystyka danych.} Pochodzenie, licencja, liczba obserwacji i zmiennych, skale pomiarowe, braki. Jeżeli używasz danych z własnej procedury, odeślij do rozdziału drugiego i podaj przyjęte parametry. Napisz, jak wybór zbioru wpływa na to, co wolno wywnioskować.
+
+Dane wygenerowane pozwalają sprawdzić poprawność, bo znasz prawdziwą odpowiedź. Dane empiryczne pozwalają pokazać użyteczność, ale prawdziwej odpowiedzi nie znasz. Najmocniejszy rozdział trzeci używa obu i mówi wprost, po co każdego.
+
+\wyroznienie{Przebieg analizy.} Pełna ścieżka od danych surowych do wyniku, w postaci listingu. Czytelnik ma móc ją powtórzyć.
+
+\wyroznienie{Wyniki.} Tabela i rysunek, a po nich interpretacja w tekście. Tabela nie zastępuje interpretacji. Oddziel to, co pokazuje narzędzie, od tego, co twierdzisz Ty: narzędzie zwraca liczby, a wniosek merytoryczny jest Twój i wymaga uzasadnienia.
+
+\wyroznienie{Porównanie.} Zestaw wyniki z rezultatem z artykułu źródłowego albo z metodą odniesienia. Rozbieżność nie jest porażką --- jest wynikiem, o ile potrafisz wskazać jej przyczynę. Rozbieżność przemilczana jest błędem.
+
+\begin{tabelaepi}{Błędy w studium przypadku}{tab:bledystudium}
+\begin{tabular}{@{}p{6.6cm}p{6.6cm}@{}}
+\toprule
+Błąd & Dlaczego szkodzi \\
+\midrule
+Zbiór danych spoza dziedziny z tytułu pracy & treść przestaje odpowiadać tematowi \\
+Tabela wyników bez interpretacji & czytelnik ma wykonać pracę autora \\
+Wniosek mocniejszy niż dane & najczęstszy zarzut w recenzjach \\
+Brak informacji o licencji danych & uniemożliwia odtworzenie analizy \\
+Pominięcie rozbieżności z artykułem źródłowym & podważa wiarygodność weryfikacji \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+\begin{kontrolna}
+\item Zbiór opisany: pochodzenie, licencja, rozmiar, skale, braki
+\item Uzasadniony wybór danych względem tematu pracy
+\item Pełna ścieżka analizy możliwa do powtórzenia
+\item Każdy wynik zinterpretowany w tekście
+\item Rozdzielone: co pokazuje narzędzie, a co twierdzi autor
+\item Porównanie z wynikiem odniesienia wraz z omówieniem rozbieżności
+\end{kontrolna}
+
+\section{Podsumowanie}
+
+Plik \plik{rozdzialy/04-podsumowanie.tex}, objętość dwie do trzech stron, bez numeru rozdziału.
+
+Podsumowanie domyka klamrę z Wprowadzeniem. Czytelnik, który przeczyta tylko te dwie części, ma wiedzieć, co zostało zrobione i z jakim skutkiem. Zawiera: realizację celu podaną wprost, odpowiedź na pytanie badawcze wynikającą z rozdziałów drugiego i trzeciego, trzy do pięciu wniosków uporządkowanych od najważniejszego, ograniczenia oraz perspektywy rozwoju aplikacji. Ostatni element jest wymogiem wprost ze Standardów --- nie zbywaj go jednym zdaniem.
+
+\wyroznienie{Nie wprowadzaj tu niczego nowego} i nie powołuj się na nowe źródła. Jeżeli w trakcie pisania podsumowania pojawia się nowy argument, jego miejsce jest wcześniej.
+
+\begin{kontrolna}
+\item Powrót do celu z Wprowadzenia
+\item Odpowiedź na pytanie badawcze
+\item Wnioski uporządkowane od najważniejszego
+\item Ograniczenia
+\item Perspektywy rozwoju opisane konkretnie
+\item Zero nowych źródeł i nowych tez
+\end{kontrolna}
+
+\section{Elementy końcowe}
+
+\subsection{Wykaz źródeł}\label{sec:wykazzrodel}
+
+Plik \plik{rozdzialy/05-wykaz-zrodel.tex}. To \wyroznienie{nie to samo co bibliografia}. Bibliografia obejmuje opracowania naukowe, do których odsyłają powołania w tekście. Wykaz źródeł obejmuje narzędzia i dane: pakiety R, zbiory danych, serwisy udostępniające oprogramowanie. Standardy dopuszczają reprezentowanie narzędzi programistycznych adresami serwisów, które je udostępniają i opisują.
+
+\subsection{Bibliografia}
+
+Generowana automatycznie z pliku bibliograficznego. Zasada, której pilnuje recenzent: żadnej pozycji w bibliografii bez powołania w tekście i odwrotnie. Pozycje przeczytane, ale niewykorzystane, do bibliografii nie trafiają. Muszą się w niej znaleźć pozycje obcojęzyczne --- wymóg zarówno Standardów, jak i Instrukcji. Zapis wpisów opisuje rozdział~\ref{ch:bibliografia}.
+
+\subsection{Spis ilustracji i indeks nazwisk}
+
+Powstają automatycznie. Indeks zbiera nazwiska wstawione poleceniem \kod{\textbackslash osoba} --- używaj go od pierwszego dnia pisania, bo uzupełnianie indeksu na końcu to praca na kilka godzin.
+
+\subsection{Aneksy}
+
+Plik \plik{rozdzialy/06-aneksy.tex}. Wzór przewiduje cztery aneksy: metadane oprogramowania, notę wymaganą w serwisie internetowym zgodnie z załącznikiem do Standardów, oświadczenie o wykorzystaniu sztucznej inteligencji oraz wykaz poleceń wydanych narzędziu programistycznemu. Ostatni dotyczy wyłącznie budowy aplikacji i dla każdego polecenia podaje cel, treść, wprowadzone przez Ciebie zmiany i sposób weryfikacji. Aneksy muszą być powiązane z tekstem odsyłaczami.
+
+\section{W jakiej kolejności pisać}\label{sec:kolejnosc}
+
+\begin{tabelaepi}{Kolejność pisania rozdziałów}{tab:kolejnosc}
+\begin{tabular}{@{}clp{7cm}@{}}
+\toprule
+Etap & Co piszesz & Dlaczego wtedy \\
+\midrule
+1 & rozdział 1, aparat formalny & zmusza do zrozumienia metody, zanim powstanie kod \\
+2 & rozdział 1, założenia i granice & staje się kontraktem specyfikacji pakietu \\
+3 & rozdział 2, generowanie danych & piszesz razem z kodem, gdy pamiętasz parametry \\
+4 & rozdział 2, reszta & po zamknięciu implementacji \\
+5 & rozdział 3 & po pierwszym pełnym przebiegu analizy \\
+6 & rozdział 1, rozwiązania pokrewne & dopiero teraz wiesz, z czym się porównujesz \\
+7 & Wprowadzenie & wiadomo już, co się zapowiada \\
+8 & Podsumowanie & domyka klamrę z gotowym Wprowadzeniem \\
+9 & aneksy, wykaz źródeł, redakcja & na końcu \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Wprowadzenie pisane jako pierwsze jest prawie zawsze pisane dwa razy.
+
+Trzy rzeczy prowadź \wyroznienie{od pierwszego dnia}, a nie na końcu: plik bibliograficzny, polecenia wstawiające nazwiska do indeksu oraz rejestr poleceń wydanych narzędziu programistycznemu. Odtwarzanie każdej z nich po fakcie kosztuje wielokrotnie więcej czasu.

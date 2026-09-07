@@ -1,0 +1,321 @@
+\chapter{LaTeX od podstaw}\label{ch:latex}
+
+Rozdział uczy LaTeX-a na wzorze, którym piszesz pracę, a nie w oderwaniu od niego. Wszystkie przykłady działają bez dodatkowej konfiguracji, bo skład ustawia klasa dokumentu.
+
+Podziel naukę na trzy wieczory. Po pierwszym umiesz złożyć tekst z rozdziałami i powołaniami. Po drugim --- tabele, rysunki i wzory. Trzeci przyda się dopiero przy redakcji.
+
+\section{Jak myśleć o LaTeX-u}
+
+W edytorze tekstu zaznaczasz fragment i nadajesz mu wygląd. W LaTeX-u \wyroznienie{opisujesz, czym fragment jest}, a wygląd wynika z tego automatycznie. Piszesz \enquote{to jest tytuł rozdziału}, a nie \enquote{to ma być osiemnaście punktów, wytłuszczone, wyśrodkowane}.
+
+Ma to trzy konsekwencje, które w pracy licencjackiej są warte więcej niż koszt nauki. Skład jest zgodny z wymogami Instytutu z definicji, a nie dlatego, że pamiętałeś o ustawieniu interlinii w każdym akapicie. Spis treści, spis ilustracji, bibliografia i indeks nazwisk powstają same z tego, co napisałeś w tekście --- nie da się mieć w spisie treści rozdziału, którego nie ma. Wzory matematyczne są zapisem, a nie obrazkiem, co przy pracy pełnej wzorów z artykułu metodycznego przestaje być wygodą, a staje się warunkiem wykonalności.
+
+Kosztem jest to, że pliku źródłowego się nie ogląda --- trzeba go skompilować. Do tego przyzwyczaisz się w pierwszy wieczór.
+
+\section{Poziom pierwszy: tekst i struktura}
+
+\subsection{Anatomia dokumentu}
+
+Praca składa się z pliku głównego i plików rozdziałów.
+
+\begin{zapis}
+\documentclass{epi-praca}        % klasa: caly sklad
+
+\addbibresource{bibliografia/literatura.bib}
+\autor{Jan Kowalski}             % metadane
+\tytul{Tytul pracy}
+
+\begin{document}                 % poczatek tresci
+\stronatytulowa
+\tableofcontents
+\input{rozdzialy/00-wprowadzenie}
+\end{document}                   % koniec tresci
+\end{zapis}
+
+Wszystko przed \kod{\textbackslash begin\{document\}} to \termin{preambuła}, czyli ustawienia. Wszystko między \kod{\textbackslash begin\{document\}} a \kod{\textbackslash end\{document\}} to treść. W Twojej pracy preambuła jest już gotowa; uzupełniasz w niej wyłącznie metadane.
+
+\wyroznienie{Polecenie} zaczyna się od ukośnika wstecznego. Argumenty obowiązkowe idą w nawiasach klamrowych, opcjonalne w kwadratowych. \wyroznienie{Środowisko} ma początek i koniec, jak \kod{quote} albo \kod{tabular}.
+
+\subsection{Akapity i spacje}
+
+Nowy akapit robi \wyroznienie{pusta linia}. Pojedyncze złamanie wiersza w pliku źródłowym nie znaczy nic --- LaTeX i tak złoży tekst od nowa. Wielokrotne spacje redukują się do jednej. Nie wymuszaj odstępów spacjami ani pustymi liniami; od tego są polecenia, a w Twojej pracy odstępy ustawia klasa.
+
+W seminarium obowiązuje jedna zasada zapisu źródła: \wyroznienie{jeden akapit w jednym wierszu}. Akapitu nie łamiemy w pliku, bez względu na jego długość; wiersze rozdziela wyłącznie pusta linia. Powód jest praktyczny --- porównanie wersji pokazuje wtedy, który akapit się zmienił, zamiast lawiny przesuniętych wierszy po dopisaniu jednego słowa. Ma to znaczenie przy pracy z promotorem i w historii repozytorium, a edytory i tak zawijają długie wiersze na ekranie. Zasada nie dotyczy wnętrza listingów, tabel i wzorów ani pozycji list wypunktowanych.
+
+\wyroznienie{Twarda spacja} zapisywana tyldą nie pozwala złamać wiersza w danym miejscu. Używaj jej tam, gdzie przeniesienie wygląda źle:
+
+\begin{zapis}
+rysunek~\ref{rys:mapa}    s.~15-21    prof.~Kowalski    nr~3
+\end{zapis}
+
+\subsection{Polskie znaki i typografia}
+
+Piszesz normalnie: zażółć gęślą jaźń. Plik musi być zapisany w UTF-8; Overleaf i Positron robią to domyślnie.
+
+\begin{tabelaepi}{Zapis typograficzny}{tab:typografia}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Chcesz & Piszesz & Efekt \\
+\midrule
+cudzysłów polski & \kod{\textbackslash enquote\{cytat\}} & \enquote{cytat} \\
+cytat w cytacie & \kod{\textbackslash enquote\{a \textbackslash enquote\{b\} c\}} & \enquote{a \enquote{b} c} \\
+półpauza & \kod{-{}-} & -- \\
+pauza & \kod{-{}-{}-} & --- \\
+łącznik & \kod{-} & - \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Cudzysłowów nie wpisuj ręcznie. Polecenie \kod{\textbackslash enquote} dobiera je do języka i poprawnie zagnieżdża, dokładnie tak, jak przewiduje Instrukcja \parencite{instrukcjaISI}.
+
+Znaki zastrzeżone wymagają ucieczki: procent, dolar, ampersand, podkreślenie, kratka i nawiasy klamrowe poprzedzamy ukośnikiem. Najczęściej potykasz się o podkreślenie w nazwach funkcji --- dlatego do nazw służą polecenia opisane w podrozdziale~\ref{sec:makra}, które robią to za Ciebie.
+
+\subsection{Rozdziały i podrozdziały}
+
+\begin{zapis}
+\chapter{Podstawy metodyczne}          % 1
+\section{Aparat formalny}              % 1.1
+\subsection{Normalizacja}              % 1.1.1
+\end{zapis}
+
+Numeracja jest automatyczna. Nie wpisuj numerów ręcznie --- po wstawieniu rozdziału w środku przenumerowanie zajmie sekundę, a nie godzinę. Elementy nienumerowane, obecne mimo to w spisie treści, mają własne polecenia: \kod{\textbackslash wprowadzenie}, \kod{\textbackslash podsumowanie}, \kod{\textbackslash wykazzrodel}, \kod{\textbackslash aneksy}.
+
+\subsection{Etykiety i odsyłacze}
+
+To jest funkcja, dla której warto uczyć się LaTeX-a. Nadajesz obiektowi etykietę i odwołujesz się do niej po nazwie; numer wstawia się sam i zawsze jest poprawny.
+
+\begin{zapis}
+\section{Aparat formalny}\label{sec:aparat}
+
+Metode omowiono w podrozdziale~\ref{sec:aparat} na stronie~\pageref{sec:aparat}.
+\end{zapis}
+
+\begin{tabelaepi}{Konwencja przedrostków w etykietach}{tab:przedrostki}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Przedrostek & Obiekt \\
+\midrule
+\kod{sec:} & rozdział, podrozdział \\
+\kod{tab:} & tabela \\
+\kod{rys:} & rysunek \\
+\kod{wyk:} & wykres \\
+\kod{lst:} & listing \\
+\kod{eq:} & wzór \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Odsyłacz do nieistniejącej etykiety daje w gotowym pliku dwa znaki zapytania i ostrzeżenie \kod{Reference ... undefined}. Zawsze sprawdzaj je przed oddaniem.
+
+\subsection{Powołania}
+
+\begin{zapis}
+\parencite{cisek2002filozoficzne}                  % (Cisek 2002)
+\parencite[s.~15-21]{kowalski2010a}                % (Kowalski 2010a, s. 15-21)
+\parencite{klucz1,klucz2}                          % (A 2019; B 2020)
+\textcite{wozniak1997kognitywizm} pokazuje, ze...  % Wozniak (1997) pokazuje, ze...
+\end{zapis}
+
+Postać powołania --- inicjał przy zbieżnych nazwiskach, skrót \enquote{i in.} przy więcej niż trzech autorach, sufiksy rocznika przy tym samym roku --- dobiera styl automatycznie. Twoim zadaniem jest poprawny wpis w pliku bibliograficznym, opisany w rozdziale~\ref{ch:bibliografia}.
+
+\subsection{Polecenia własne wzoru}\label{sec:makra}
+
+Nie sięgaj po polecenia formatujące bezpośrednio. Wzór ma polecenia, które mówią, \wyroznienie{czym} coś jest, i dobierają wygląd zgodnie z wymogami Instytutu.
+
+\begin{tabelaepi}{Polecenia semantyczne wzoru}{tab:makra}
+\begin{tabular}{@{}llp{5.4cm}@{}}
+\toprule
+Polecenie & Zastosowanie & Wygląd \\
+\midrule
+\kod{\textbackslash fun\{przygotuj\_dane\}} & nazwa funkcji & \fun{przygotuj\_dane} \\
+\kod{\textbackslash argument\{skala\}} & nazwa argumentu & \argument{skala} \\
+\kod{\textbackslash pkg\{ggplot2\}} & nazwa pakietu & \pkg{ggplot2} \\
+\kod{\textbackslash plik\{R/algorytm.R\}} & plik lub katalog & \plik{R/algorytm.R} \\
+\kod{\textbackslash kod\{x <- 1\}} & krótki kod w zdaniu & \kod{x <- 1} \\
+\kod{\textbackslash termin\{fuzzyfikacja\}} & termin, wyraz obcy, tytuł & \termin{fuzzyfikacja} \\
+\kod{\textbackslash wyroznienie\{ważne\}} & wyróżnienie treściowe & \wyroznienie{ważne} \\
+\kod{\textbackslash osoba\{Nowak\}\{Jan\}} & osoba & Jan Nowak plus wpis do indeksu \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Rozróżnienie kursywy i wytłuszczenia nie jest kwestią gustu: Instrukcja przewiduje kursywę dla wyrazów obcych i tytułów, a wytłuszczenie dla wyróżnień w tekście \parencite{instrukcjaISI}.
+
+Polecenie \kod{\textbackslash osoba} stosuj \wyroznienie{od pierwszego dnia}. Indeks nazwisk powstaje z tych poleceń, a uzupełnianie go na końcu to kilka godzin pracy.
+
+\section{Poziom drugi: tabele, rysunki, wzory}
+
+\subsection{Listy i cytaty}
+
+Listy stosuj tam, gdzie kolejność albo równorzędność elementów jest istotna. Nie zastępuj nimi wywodu --- praca złożona z wypunktowań czyta się jak prezentacja i tak jest oceniana.
+
+Fragment dłuższy niż dwa lub trzy zdania wyodrębniasz graficznie, czego wymaga Instrukcja:
+
+\begin{zapis}
+\begin{quote}
+Kryterium, w ktorym oceny wariantow sa do siebie zblizone, niesie malo
+informacji rozniczujacej i powinno otrzymac wage nizsza.
+\end{quote}
+\end{zapis}
+
+\subsection{Tabele}
+
+Tabela w pracy ma tytuł nad sobą i źródło pod sobą. Robi to środowisko \kod{tabelaepi}, które przyjmuje tytuł i etykietę.
+
+\begin{zapis}
+\begin{tabelaepi}{Moduly pakietu}{tab:moduly}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Plik & Odpowiedzialnosc & Funkcje eksportowane \\
+\midrule
+\plik{algorytm.R} & obliczenia & \fun{oblicz_ranking} \\
+\bottomrule
+\end{tabular}
+\zrodlo{oprac. wlasne}
+\end{tabelaepi}
+\end{zapis}
+
+Wnętrze \kod{tabular} czyta się tak. Deklaracja kolumn podaje ich wyrównanie: \kod{l} do lewej, \kod{r} do prawej, \kod{c} do środka, \kod{p\{3cm\}} kolumna o stałej szerokości z łamaniem wiersza. Zapis \kod{@\{\}} na brzegach usuwa wcięcie. Komórki rozdziela ampersand, a wiersz kończą dwa ukośniki. Linie poziome dają \kod{\textbackslash toprule}, \kod{\textbackslash midrule} i \kod{\textbackslash bottomrule} --- i tylko one. Tabela naukowa nie ma linii pionowych ani kratownicy.
+
+Tabela szersza niż strona: użyj \kod{tabularx} z kolumną \kod{X}, która sama dobierze szerokość. Tabela dłuższa niż strona przenosi się do aneksu, tak stanowi Instrukcja.
+
+\subsection{Rysunki}
+
+\begin{zapis}
+\begin{rysunekepi}{Mapa decyzyjna wariantow}{rys:mapa}
+\includegraphics[width=0.78\textwidth]{przyklad-wykres.png}
+\zrodlo{oprac. wlasne}
+\end{rysunekepi}
+\end{zapis}
+
+Pliki graficzne trzymaj w katalogu \plik{rysunki/} --- klasa szuka ich tam automatycznie, więc podajesz samą nazwę pliku. Szerokość podawaj względem szerokości tekstu, nie w centymetrach. Wykresy z R zapisuj w wysokiej rozdzielczości:
+
+\begin{lstlisting}[numbers=none]
+png("rysunki/wykres.png", width = 1600, height = 1000, res = 220)
+plot(x, y)
+dev.off()
+\end{lstlisting}
+
+Wykres liczbowy wstawiaj przez środowisko \kod{wykresepi}; ma osobną numerację, tak jak wymaga Instrukcja.
+
+Tabele i rysunki są \termin{pływakami}: LaTeX umieszcza je tam, gdzie wychodzi najlepiej, niekoniecznie w miejscu wpisania. To nie jest usterka. Nie walcz z tym w trakcie pisania --- zajmij się tym przy redakcji, a w tekście zawsze odsyłaj przez etykietę, nigdy przez zwrot \enquote{poniższa tabela}.
+
+\subsection{Wzory}
+
+Wzór w linii otacza się znakami dolara. Wzór wyróżniony i numerowany zapisuje się tak:
+
+\begin{zapis}
+\begin{equation}\label{eq:cc}
+  CC_i = \frac{d_i^{-}}{d_i^{+} + d_i^{-}}.
+\end{equation}
+
+We wzorze \eqref{eq:cc} symbol $d_i^{+}$ oznacza...
+\end{zapis}
+
+Daje to wynik:
+
+\begin{equation}\label{eq:cc}
+  CC_i = \frac{d_i^{-}}{d_i^{+} + d_i^{-}}.
+\end{equation}
+
+Wzór bez numeru zapisuje się w nawiasach kwadratowych poprzedzonych ukośnikiem. Kilka wzorów wyrównanych do znaku równości składa środowisko \kod{align}.
+
+\begin{tabelaepi}{Zapis matematyczny}{tab:matematyka}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Chcesz & Piszesz \\
+\midrule
+ułamek & \kod{\textbackslash frac\{a\}\{b\}} \\
+indeks dolny i górny & \kod{x\_i}, \kod{x\textasciicircum 2}, \kod{x\_\{ij\}\textasciicircum\{+\}} \\
+suma, iloczyn & \kod{\textbackslash sum\_\{i=1\}\textasciicircum\{n\}}, \kod{\textbackslash prod\_\{j=1\}\textasciicircum\{m\}} \\
+pierwiastek & \kod{\textbackslash sqrt\{x\}} \\
+nawiasy skalujące się & \kod{\textbackslash left( ... \textbackslash right)} \\
+litery greckie & \kod{\textbackslash alpha}, \kod{\textbackslash lambda}, \kod{\textbackslash Phi} \\
+wartość bezwzględna & \kod{\textbackslash lvert x \textbackslash rvert} \\
+tekst wewnątrz wzoru & \kod{\textbackslash text\{dla \} x > 0} \\
+macierz & \kod{\textbackslash begin\{pmatrix\} a \& b \textbackslash\textbackslash{} c \& d \textbackslash end\{pmatrix\}} \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Symbole zostawiaj takie jak w artykule źródłowym --- czytelnik ma móc porównać. I pamiętaj o zasadzie z podrozdziału~\ref{sec:rozdzial1}: po każdym wzorze następuje akapit objaśniający, co ten wzór robi.
+
+\subsection{Listingi kodu}
+
+\begin{zapis}
+\begin{lstlisting}[caption={Wyznaczanie wag},label={lst:wagi}]
+oblicz_wagi <- function(macierz) {
+  stopifnot(is.matrix(macierz))
+  colSums(macierz) / sum(macierz)
+}
+\end{lstlisting}
+\end{zapis}
+
+Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wstawisz poleceniem \kod{\textbackslash listingR}, które przyjmuje podpis, etykietę i ścieżkę --- wtedy listing zawsze odpowiada aktualnej wersji kodu.
+
+\wyroznienie{Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.} Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery wychodzą przestawione. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może. Kontroli służy skrypt \plik{tools/sprawdz-listingi.R}.
+
+\section{Poziom trzeci: przy redakcji}
+
+\subsection{Praca w wielu plikach}
+
+Rozdziały są osobnymi plikami włączanymi poleceniem \kod{\textbackslash input}, podawanym bez rozszerzenia. Dzięki temu nie przewijasz tysiąca wierszy i łatwiej znaleźć miejsce błędu. Żeby przy pisaniu jednego rozdziału kompilować tylko jego, zakomentuj pozostałe polecenia włączenia w pliku głównym. Przed oddaniem odkomentuj wszystkie --- inaczej numeracja, spis treści i bibliografia będą niepełne.
+
+Znak procentu wyłącza resztę wiersza. Komentarze służą do notatek dla siebie i znikają z gotowego pliku. Przed oddaniem przejrzyj je i usuń te, które są notatkami roboczymi.
+
+\subsection{Kontrola typografii}
+
+Klasa blokuje wdowy i sieroty, ale zdarza się, że LaTeX nie umie złamać zbyt długiego słowa i wypuszcza je poza margines. W dzienniku kompilacji zobaczysz wtedy komunikat \kod{Overfull \textbackslash hbox}. Naprawiaj w tej kolejności: przeformułuj zdanie, co najczęściej jest najlepszym rozwiązaniem; podpowiedz miejsce podziału zapisem \kod{wielo\textbackslash-kryterialny}; przy długim adresie sieciowym użyj polecenia \kod{\textbackslash url}, które pozwala łamać w sensownych miejscach. Liczba nadmiarowych pudełek w gotowej pracy powinna być zerowa albo bliska zeru.
+
+\subsection{Sekwencja kompilacji}
+
+Pełne złożenie pracy wymaga kilku przebiegów, bo spis treści, odsyłacze, bibliografia i indeks potrzebują danych z przebiegu poprzedniego. Kolejność to LuaLaTeX, biber, makeindex, a potem dwa razy LuaLaTeX. Robi to za Ciebie \pkg{latexmk}:
+
+\begin{lstlisting}[language=bash,numbers=none]
+latexmk -lualatex main.tex
+\end{lstlisting}
+
+Na Overleaf sekwencja uruchamia się automatycznie. Skutek praktyczny jest taki, że \wyroznienie{po dodaniu nowego powołania albo etykiety pierwsza kompilacja może pokazać znaki zapytania} --- po drugiej znikną.
+
+Polecenie \kod{latexmk -c} usuwa pliki pomocnicze i zostawia gotowy dokument. Przydaje się, gdy kompilacja zaczyna zachowywać się dziwnie, bo uszkodzony plik pomocniczy potrafi utrzymywać błąd, którego w źródle już nie ma. Na Overleaf odpowiednikiem jest \termin{Recompile from scratch} z rozwijanego menu obok przycisku kompilacji.
+
+\section{Diagnostyka}\label{sec:diagnostyka}
+
+\subsection{Jak czytać błąd}
+
+Komunikat zaczyna się od wykrzyknika, a numer wiersza stoi w linii rozpoczynającej się od litery \kod{l} z kropką. Trzy rzeczy warto wiedzieć. Wiersz wskazany w błędzie bywa o jeden dalej niż przyczyna, bo brakujący nawias zamykający zgłasza się dopiero tam, gdzie coś przestało się zgadzać. Pierwszy błąd jest ważny, a reszta zwykle z niego wynika, więc napraw pierwszy i skompiluj ponownie, zamiast czytać wszystkie. Na Overleaf przełącz widok na pełny dziennik, gdy podsumowanie nie wystarcza.
+
+\subsection{Katalog błędów}
+
+\begin{tabelaepi}{Najczęstsze błędy kompilacji}{tab:bledy}
+\begin{tabular}{@{}p{4.5cm}p{4.6cm}p{4.6cm}@{}}
+\toprule
+Komunikat albo objaw & Przyczyna & Naprawa \\
+\midrule
+\kod{Undefined control sequence} & literówka w poleceniu & sprawdź pisownię w tabeli~\ref{tab:makra} \\
+\kod{Missing \$ inserted} & znak matematyczny poza trybem matematycznym & otocz znakami dolara albo poprzedź ukośnikiem \\
+\kod{Missing \textbackslash begin\{document\}} & tekst wpisany w preambule & przenieś treść za początek dokumentu \\
+\kod{File ... not found} & zła nazwa albo ścieżka grafiki & grafiki idą do \plik{rysunki/} \\
+\kod{Environment ... undefined} & literówka w nazwie środowiska & porównaj początek i koniec \\
+\kod{\textbackslash begin ended by \textbackslash end} & niedomknięte środowiska & sprawdź parowanie \\
+\kod{Extra alignment tab} & za dużo ampersandów w wierszu & policz kolumny w deklaracji \\
+\kod{Misplaced alignment tab} & ampersand poza tabelą & poprzedź go ukośnikiem \\
+\kod{Citation ... undefined} & klucz nieobecny w pliku bibliograficznym & sprawdź klucz, skompiluj dwa razy \\
+\kod{Reference ... undefined} & odsyłacz do nieistniejącej etykiety & sprawdź etykietę, skompiluj dwa razy \\
+\kod{Empty bibliography} & brak powołań w tekście & dodaj powołanie \\
+\kod{Overfull \textbackslash hbox} & tekst wychodzi poza margines & przeformułuj zdanie \\
+\kod{Underfull \textbackslash hbox} & zbyt rozstrzelony wiersz & zwykle można zignorować \\
+\kod{There's no line here to end} & podwójny ukośnik bez wiersza & usuń go, akapit robi pusta linia \\
+\kod{Paragraph ended before ...} & brakujący nawias klamrowy & sprawdź parowanie \\
+\kod{Package inputenc Error} & plik w innym kodowaniu niż UTF-8 & zapisz ponownie w UTF-8 \\
+przestawione polskie litery w listingu & znaki spoza ASCII w kodzie & usuń diakrytykę \\
+kod bez właściwego kroju pisma & dokument złożony pdfLaTeX-em & ustaw kompilator na LuaLaTeX \\
+brak indeksu nazwisk & brak polecenia \kod{\textbackslash osoba} & dodaj polecenia i skompiluj \\
+dokument nie odświeża się mimo zmian & uszkodzone pliki pomocnicze & \kod{latexmk -c} i pełna kompilacja \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+\subsection{Gdy nic nie pomaga}
+
+Wykonaj pełną kompilację od zera po usunięciu plików pomocniczych. Następnie zakomentuj połowę treści i skompiluj, żeby zawęzić, w której połowie jest problem; powtórz kilka razy, aż zostanie kilka wierszy. Na koniec sprawdź, czy problem występuje też w dokumencie pokazowym dołączonym do wzoru --- jeżeli tak, przyczyna leży w środowisku, a nie w Twoim tekście.

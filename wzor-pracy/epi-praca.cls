@@ -200,6 +200,17 @@
 \RequirePackage{amsthm}
 
 % --------------------------------------------------------------------------
+% Wyliczenia
+% --------------------------------------------------------------------------
+
+\RequirePackage{enumitem}
+\setlist{itemsep=0.2\baselineskip,parsep=0pt,topsep=0.4\baselineskip}
+
+% Lista kontrolna: pozycje do odhaczenia przed oddaniem pracy.
+\newlist{kontrolna}{itemize}{2}
+\setlist[kontrolna]{label=$\square$,leftmargin=1.6em,itemsep=0.15\baselineskip}
+
+% --------------------------------------------------------------------------
 % Listingi kodu
 % --------------------------------------------------------------------------
 
@@ -234,6 +245,28 @@
   extendedchars=true,
   aboveskip=1.2\baselineskip,
   belowskip=0.8\baselineskip}
+
+% Styl dla fragmentow zapisu LaTeX-a przytaczanych w materialach dydaktycznych.
+\lstdefinestyle{epiTeX}{%
+  language={[LaTeX]TeX},
+  basicstyle=\ttfamily\small\setstretch{1},
+  keywordstyle=\color{epi@slowo},
+  commentstyle=\color{epi@komentarz}\itshape,
+  stringstyle=\color{epi@lancuch},
+  moredelim=[s][\color{epi@lancuch}]{\{}{\}},
+  numbers=none,
+  backgroundcolor=\color{epi@tlo},
+  frame=single,
+  rulecolor=\color{epi@ramka},
+  framesep=6pt,
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  aboveskip=1.2\baselineskip,
+  belowskip=0.8\baselineskip}
+
+\lstnewenvironment{zapis}[1][]{\lstset{style=epiTeX,#1}}{}
 
 \lstset{style=epiR}
 
@@ -382,6 +415,43 @@
     {\footnotesize Opracowano zgodnie z obowi\k azuj\k acymi przepisami
      o prawie autorskim i prawach pokrewnych\par}
     \vspace{0.8cm}
+    {Krak\'ow \epi@rok\par}
+  \end{center}
+  \end{titlepage}
+  \setcounter{page}{2}}
+
+% --------------------------------------------------------------------------
+% Strona tytulowa materialu dydaktycznego
+% --------------------------------------------------------------------------
+% Sklad materialow seminaryjnych ta sama klasa, co prace studentow. Rozni sie
+% wylacznie strona tytulowa - reszta ustawien pozostaje identyczna, dzieki czemu
+% przewodnik jest jednoczesnie przykladem dzialania wzoru na pelnej tresci.
+
+\newcommand{\epi@podtytul}{}
+\newcommand{\podtytul}[1]{\renewcommand{\epi@podtytul}{#1}}
+
+\newcommand{\stronatytulowaporadnika}{%
+  \begin{titlepage}
+  \thispagestyle{empty}
+  \setstretch{1}
+  \begin{center}
+    \vspace*{2.5cm}
+    {\large Uniwersytet Jagiello\'nski\par}
+    \vspace{0.2cm}
+    {\large Wydzia\l{} Zarz\k adzania i Komunikacji Spo\l ecznej\par}
+    \vspace{0.5cm}
+    {\large\MakeUppercase{Instytut Studi\'ow Informacyjnych}\par}
+    \vspace{0.8cm}
+    {Kierunek: elektroniczne przetwarzanie informacji\par}
+    \vspace{3cm}
+    {\LARGE\bfseries\epi@tytul\par}
+    \ifx\epi@podtytul\empty\else
+      \vspace{0.8cm}
+      {\Large\epi@podtytul\par}
+    \fi
+    \vspace{3cm}
+    {\large\epi@autor\par}
+    \vfill
     {Krak\'ow \epi@rok\par}
   \end{center}
   \end{titlepage}

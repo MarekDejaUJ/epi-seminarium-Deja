@@ -3,15 +3,11 @@
 % Odpowiednik sekcji Software Description. Najważniejszy rozdział inżynierski:
 % opisujesz własny wkład programistyczny. Objętość: 10-14 stron.
 
-Pakiet zaimplementowano w języku R zgodnie ze standardami repozytorium CRAN.
-Kod źródłowy jest otwarty i dostępny w repozytorium podanym na stronie
-tytułowej.
+Pakiet zaimplementowano w języku R zgodnie ze standardami repozytorium CRAN. Kod źródłowy jest otwarty i dostępny w repozytorium podanym na stronie tytułowej.
 
 \section{Struktura projektu}
 
-Opisz katalogi i zależności. Wyjaśnij, co gdzie leży i dlaczego. Wymień
-zależności z podziałem na te niezbędne do działania i te potrzebne wyłącznie
-do zbudowania dokumentacji i testów.
+Opisz katalogi i zależności. Wyjaśnij, co gdzie leży i dlaczego. Wymień zależności z podziałem na te niezbędne do działania i te potrzebne wyłącznie do zbudowania dokumentacji i testów.
 
 \begin{tabelaepi}{Moduły pakietu i ich odpowiedzialność}{tab:moduly}
 \begin{tabular}{@{}lll@{}}
@@ -27,15 +23,11 @@ Plik & Odpowiedzialność & Funkcje eksportowane \\
 
 \section{Przetwarzanie i walidacja danych}
 
-Opisz drogę od danych surowych do struktury, na której pracuje algorytm:
-sprawdzanie warunków wstępnych, obsługę braków i kodów błędnych, skalowanie,
-agregację. Wyjaśnij, które naruszenia zatrzymują wykonanie i z jakim
-komunikatem — to jest kontrakt Twojego narzędzia.
+Opisz drogę od danych surowych do struktury, na której pracuje algorytm: sprawdzanie warunków wstępnych, obsługę braków i kodów błędnych, skalowanie, agregację. Wyjaśnij, które naruszenia zatrzymują wykonanie i z jakim komunikatem — to jest kontrakt Twojego narzędzia.
 
 \section{Silnik obliczeniowy i klasy wyniku}
 
-Wyjaśnij, jak wzory z rozdziału pierwszego przełożyły się na kod. Pokaż
-fragment kodu, nie całość — całość jest w repozytorium.
+Wyjaśnij, jak wzory z rozdziału pierwszego przełożyły się na kod. Pokaż fragment kodu, nie całość — całość jest w repozytorium.
 
 % Wnętrze listingu składa się wyłącznie ze znaków ASCII. Komentarze w kodzie
 % pisz bez znaków diakrytycznych. Sprawdzenie: Rscript tools/sprawdz-listingi.R
@@ -51,25 +43,16 @@ oblicz_wagi_entropia <- function(macierz) {
 }
 \end{lstlisting}
 
-Opisz zastosowany system klas i metody generyczne. Wyjaśnij, dlaczego wynik
-jest obiektem określonej klasy, a nie zwykłą ramką danych.
+Opisz zastosowany system klas i metody generyczne. Wyjaśnij, dlaczego wynik jest obiektem określonej klasy, a nie zwykłą ramką danych.
 
 \section{Procedura generowania danych testowych}
 
-Opisz procedurę generowania danych o znanej strukturze: rozkłady, parametry,
-zależności między zmiennymi, kontrolowane braki i wartości odstające, ziarno
-losowości. To jest element metodologii, nie dodatek — dzięki niemu wiadomo,
-jaki wynik narzędzie powinno zwrócić.
+Opisz procedurę generowania danych o znanej strukturze: rozkłady, parametry, zależności między zmiennymi, kontrolowane braki i wartości odstające, ziarno losowości. To jest element metodologii, nie dodatek — dzięki niemu wiadomo, jaki wynik narzędzie powinno zwrócić.
 
 \section{Weryfikacja poprawności}
 
-Opisz trzy warstwy sprawdzania: przypadki analityczne o wyniku policzonym
-ręcznie, testy własności (niezmienniczość na skalowanie, monotoniczność,
-permutacja etykiet) oraz testy odporności na dane niepoprawne. Podaj wynik
-sprawdzenia zgodności z wymaganiami repozytorium na trzech systemach
-operacyjnych.
+Opisz trzy warstwy sprawdzania: przypadki analityczne o wyniku policzonym ręcznie, testy własności (niezmienniczość na skalowanie, monotoniczność, permutacja etykiet) oraz testy odporności na dane niepoprawne. Podaj wynik sprawdzenia zgodności z wymaganiami repozytorium na trzech systemach operacyjnych.
 
 \section{Wykorzystane narzędzia zewnętrzne}
 
-Dla każdej biblioteki zewnętrznej podaj nazwę, źródło, przeznaczenie oraz
-krótki opis wejścia i wyjścia. Wymóg ze Standardów prac dyplomowych EPI.
+Dla każdej biblioteki zewnętrznej podaj nazwę, źródło, przeznaczenie oraz krótki opis wejścia i wyjścia. Wymóg ze Standardów prac dyplomowych EPI.

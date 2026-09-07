@@ -1,0 +1,258 @@
+\chapter{Bibliografia: plik BibTeX i Zotero}\label{ch:bibliografia}
+
+Bibliografia w pracy powstaje automatycznie z pliku \plik{bibliografia/literatura.bib}. Nie składasz jej ręcznie i nie sortujesz --- robi to styl odwzorowujący opisy z Instrukcji \parencite{instrukcjaISI}. Twoje zadanie sprowadza się do jednego: poprawnych wpisów w pliku. Opis wychodzi wtedy zgodny z wymogami sam.
+
+Zasada, której pilnuje recenzent: bibliografia zawiera wyłącznie pozycje faktycznie wykorzystane, do których odsyłają powołania w tekście. Pozycje przeczytane, ale niewykorzystane, do bibliografii nie trafiają.
+
+\wyroznienie{Prowadź plik bibliograficzny od pierwszego dnia.} Odtwarzanie bibliografii po napisaniu pracy zajmuje kilka dni i zawsze kończy się brakującym numerem strony.
+
+\section{Anatomia wpisu}
+
+\begin{zapis}
+@book{cisek2002filozoficzne,
+  author    = {Cisek, Sabina},
+  year      = {2002},
+  title     = {Filozoficzne aspekty informacji naukowej},
+  location  = {Krakow},
+  publisher = {Wydaw. UJ},
+  langid    = {polish},
+}
+\end{zapis}
+
+Pierwsza linia podaje typ wpisu, który decyduje o postaci opisu, oraz klucz cytowania, którym powołujesz się w tekście. Dalej idą pola; wartość zawsze w nawiasach klamrowych. Powołanie \kod{\textbackslash parencite\{cisek2002filozoficzne\}} daje w tekście \enquote{(Cisek 2002)}.
+
+\subsection{Klucze}
+
+Klucz jest Twój i nigdzie nie widać go w gotowym dokumencie, ale przy stu pozycjach zaczyna mieć znaczenie. Konwencja przyjęta w seminarium to nazwisko, rok i pierwsze znaczące słowo tytułu, bez znaków diakrytycznych i bez spacji: \kod{cisek2002filozoficzne}, \kod{callaway2024continuous}, \kod{liPearl2024probabilities}.
+
+Klucz raz nadany zostaje na zawsze. Zmiana klucza po napisaniu połowy pracy oznacza przeszukanie wszystkich rozdziałów.
+
+\subsection{Pola nazwisk}
+
+Autorów rozdziela słowo \kod{and}, \wyroznienie{nigdy przecinek}. Zapis \kod{Nazwisko, Imie} jest jednoznaczny i jego się trzymaj. Przy nazwisku złożonym albo nazwie instytucji użyj podwójnych nawiasów, żeby całość została potraktowana jako jedna jednostka:
+
+\begin{zapis}
+author = {Nowak, Jan and Zielinski, Kazimierz}
+author = {{Biblioteka Jagiellonska}}
+author = {van Dijk, Teun A.}
+\end{zapis}
+
+Imiona podawaj w pełnym brzmieniu --- Instrukcja wymaga pełnych imion w opisie bibliograficznym. Inicjały w powołaniu styl doda sam, gdy będą potrzebne do odróżnienia dwóch autorów o tym samym nazwisku.
+
+Polskie znaki wpisuj wprost, a plik zapisz w UTF-8. LaTeX zmienia wielkość liter w tytułach w części stylów, więc skrót albo nazwę własną otocz dodatkowymi nawiasami klamrowymi: \kod{title = \{Zastosowanie metody \{TOPSIS\}\}}.
+
+\section{Typy wpisów}
+
+Poniższe wpisy odpowiadają wprost przykładom opisu z Instrukcji. Komplet z komentarzami znajdziesz w pliku bibliograficznym dołączonym do wzoru --- zacznij od skopiowania właściwego wzorca i podmiany wartości.
+
+\subsection{Książka i praca zbiorowa}
+
+Książka wielu autorów różni się od pojedynczej tylko listą w polu \kod{author}. Praca zbiorowa ma redaktora zamiast autora, a styl sam dopisze skrót \enquote{red.}:
+
+\begin{zapis}
+@collection{zielinski1998swiat,
+  editor    = {Zielinski, Jan},
+  year      = {1998},
+  title     = {Swiat komputerow},
+  location  = {Wroclaw},
+  publisher = {Globus},
+  langid    = {polish},
+}
+\end{zapis}
+
+Daje to opis \enquote{Zieliński, Jan red. (1998). \termin{Świat komputerów}. Wrocław: Globus.}, a w tekście powołanie \enquote{(Zieliński red. 1998)}.
+
+\subsection{Rozdział w pracy zbiorowej}
+
+\begin{zapis}
+@incollection{nowak2004srodowisko,
+  author    = {Nowak, Jan},
+  year      = {2004},
+  title     = {Srodowisko informacyjne},
+  editor    = {Makowski, Eugeniusz},
+  booktitle = {Czlowiek wspolczesny},
+  location  = {Warszawa},
+  publisher = {Wydaw. Atrakcja},
+  pages     = {11-28},
+  langid    = {polish},
+}
+\end{zapis}
+
+\subsection{Artykuł}
+
+W pozycjach polskich podajesz \wyroznienie{numer} w polu \kod{number}, w obcojęzycznych zwyczajowo \wyroznienie{tom} w polu \kod{volume}. Pole \kod{langid} przełącza skróty na oryginalne, dzięki czemu artykuł angielski dostaje oznaczenia \enquote{vol.} i \enquote{pp.} zamiast \enquote{nr} i \enquote{s.}:
+
+\begin{zapis}
+@article{hjorland1998theory,
+  author       = {Hjorland, Birger},
+  year         = {1998},
+  title        = {Theory and metatheory of information science},
+  journaltitle = {Journal of Documentation},
+  volume       = {5},
+  pages        = {606-621},
+  langid       = {english},
+}
+\end{zapis}
+
+W artykule prasowym datę dzienną wpisz w pole \kod{issue}; stanie wtedy między numerem a stronami, zgodnie z przykładem z Instrukcji.
+
+\subsection{Hasło w wydawnictwie informacyjnym}
+
+Hasło z własnym autorem opisuje się jak rozdział w pracy zbiorowej. Hasło bez autora wymaga podania autora dzieła nadrzędnego w polu \kod{bookauthor}:
+
+\begin{zapis}
+@incollection{apoteoza1996,
+  title      = {Apoteoza},
+  bookauthor = {Kopalinski, Wladyslaw},
+  year       = {1996},
+  booktitle  = {Slownik wyrazow obcych},
+  location   = {Warszawa},
+  publisher  = {Wiedza Powszechna},
+  pages      = {14},
+  langid     = {polish},
+}
+\end{zapis}
+
+\subsection{Dokumenty sieciowe}
+
+Do wpisu drukowanego dodajesz pola \kod{doi}, \kod{url} i \kod{urldate}. Datę odczytu zapisuj w formacie rok-miesiąc-dzień; styl przestawi ją na polską postać z kropkami. Strony internetowe i wpisy w blogach opisuje typ \kod{@online}, a pole \kod{keywords} o wartości \kod{netografia} pozwala złożyć te pozycje w odrębnym wykazie, jeżeli uzgodnisz to z promotorem.
+
+\subsection{Pozycje szczególne}
+
+Dokument na nośniku materialnym opisuje typ nośnika w polu \kod{howpublished}. Norma wymaga pól \kod{entrysubtype} o wartości \kod{norma} oraz \kod{shorthand}, bo rok wchodzi w skład jej oznaczenia i nie powtarza się go w nawiasie \parencite{pniso690}. Pozycja bez autora potrzebuje pola \kod{shorttitle} z dwoma pierwszymi słowami tytułu, żeby powołanie miało postać wymaganą przez Instrukcję.
+
+\section{Zestawienie pól}
+
+\begin{tabelaepi}{Pola wpisu bibliograficznego}{tab:pola}
+\begin{tabular}{@{}llp{6.6cm}@{}}
+\toprule
+Pole & Kiedy & Uwaga \\
+\midrule
+\kod{author} lub \kod{editor} & zawsze, gdy są & zapis nazwisko, imię; rozdzielone słowem \kod{and} \\
+\kod{year} & zawsze & sam rok; brak roku wolno pominąć \\
+\kod{title} & zawsze & \\
+\kod{shorttitle} & pozycje bez autora & dwa pierwsze słowa tytułu \\
+\kod{journaltitle} & artykuł & pełny tytuł, bez skrótów \\
+\kod{booktitle} & rozdział, hasło & tytuł dzieła nadrzędnego \\
+\kod{bookauthor} & hasło bez autora & autor dzieła nadrzędnego \\
+\kod{number} & pozycje polskie & daje oznaczenie \enquote{nr 2} \\
+\kod{volume} & pozycje obcojęzyczne & daje oznaczenie \enquote{vol. 5} \\
+\kod{issue} & gazeta & data dzienna \\
+\kod{pages} & artykuł, rozdział & zakres zapisany łącznikiem \\
+\kod{location} & wydawnictwo zwarte & miasto \\
+\kod{publisher} & wydawnictwo zwarte & \\
+\kod{doi} & gdy jest & sam identyfikator, bez adresu \\
+\kod{url} & dokument sieciowy & \\
+\kod{urldate} & zawsze przy adresie & format rok-miesiąc-dzień \\
+\kod{langid} & zawsze & \kod{polish} albo \kod{english} \\
+\kod{keywords} & opcjonalnie & wartość \kod{netografia} \\
+\kod{howpublished} & nośnik materialny & na przykład płyta DVD \\
+\kod{entrysubtype} & norma & wartość \kod{norma} \\
+\kod{shorthand} & norma & oznaczenie do powołania \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Pole \kod{langid} decyduje o skrótach w opisie, a jego brak jest traktowany jak pozycja polska. \wyroznienie{Wypełniaj je zawsze} --- inaczej artykuł angielski dostanie polskie oznaczenia tomu i stron.
+
+\section{Zotero}
+
+Ręczne pisanie stu wpisów jest wykonalne, ale nierozsądne. Zotero zbiera metadane z przeglądarki i eksportuje je do pliku bibliograficznego.
+
+\subsection{Konfiguracja}
+
+Zainstaluj Zotero wraz z wtyczką do przeglądarki, a następnie dodatek Better BibTeX. Dodatek jest niezbędny: daje stabilne klucze cytowania, eksport w formacie biblatex i automatyczne odświeżanie pliku. Utwórz kolekcję dla pracy, a w niej podkolekcje na metodę, dziedzinę i narzędzia.
+
+W ustawieniach dodatku ustaw wzorzec klucza odpowiadający konwencji seminaryjnej i \wyroznienie{włącz pinowanie kluczy}. Bez tego klucz może się zmienić po edycji metadanych i powołania w pracy przestaną działać.
+
+Eksport ustawia się raz: menu podręczne kolekcji, polecenie eksportu, format \termin{Better BibLaTeX}, opcja utrzymywania pliku w aktualności. Jako cel wskaż plik bibliograficzny w projekcie pracy. Wybieraj format biblatex, a nie starszy BibTeX --- styl korzysta z pól, których starszy format nie zna.
+
+\subsection{Odpowiedniki typów}
+
+\begin{tabelaepi}{Typy dokumentów w Zotero i we wpisie bibliograficznym}{tab:typyzotero}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Typ w Zotero & Typ wpisu \\
+\midrule
+Book & \kod{@book} \\
+Book Section & \kod{@incollection} \\
+Journal Article & \kod{@article} \\
+Magazine, Newspaper Article & \kod{@article} \\
+Conference Paper & \kod{@inproceedings} \\
+Thesis & \kod{@thesis} \\
+Report & \kod{@report} \\
+Web Page, Blog Post & \kod{@online} \\
+Computer Program & \kod{@software} \\
+Dictionary, Encyclopedia Entry & \kod{@incollection} \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+\subsection{Poprawki po imporcie}
+
+Metadane z baz bibliograficznych bywają niekompletne. Po każdym imporcie sprawdź imiona, bo bazy notorycznie zostawiają inicjały, a Instrukcja wymaga pełnych imion. Uzupełnij pole języka wartością \kod{polish} albo \kod{english}, bo stąd bierze się \kod{langid}, i po eksporcie zajrzyj do pliku, czy pole rzeczywiście przeszło. Rozwiń skrócone tytuły czasopism. Sprawdź typ dokumentu, bo rozdział zaimportowany jako artykuł da zły opis. Uzupełnij miejsce wydania, które Zotero często gubi przy książkach. Usuń przedrostek adresowy z identyfikatora cyfrowego. Zapisz tytuł tak, jak w oryginale publikacji, bo bazy anglojęzyczne stosują kapitaliki wyrazowe.
+
+Zasada praktyczna: \wyroznienie{nigdy nie ufaj pierwszemu importowi}. Sprawdzenie wpisu zajmuje minutę, a poprawianie bibliografii tydzień przed obroną --- znacznie więcej.
+
+\section{Powołania w tekście}
+
+\begin{tabelaepi}{Postacie powołania}{tab:powolania}
+\begin{tabular}{@{}llp{5cm}@{}}
+\toprule
+Sytuacja & Polecenie & Efekt \\
+\midrule
+zwykłe & \kod{\textbackslash parencite\{klucz\}} & (Cisek 2002) \\
+ze stroną & \kod{\textbackslash parencite[s.\textasciitilde 15-21]\{klucz\}} & (Kowalski 2010a, s. 15--21) \\
+kilka pozycji & \kod{\textbackslash parencite\{k1,k2\}} & (Cisek 2002; Nowak 2006) \\
+w zdaniu & \kod{\textbackslash textcite\{klucz\}} & Woźniak (1997) pokazuje\ldots \\
+z przedrostkiem & \kod{\textbackslash parencite[zob.][s.\textasciitilde 9]\{klucz\}} & (zob. Nowak 2006, s. 9) \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Inicjał przy zbieżnych nazwiskach, skrót przy więcej niż trzech autorach i sufiksy rocznika styl dobiera automatycznie. Nie wpisuj ich ręcznie w pliku bibliograficznym.
+
+Cytat dosłowny z tłumaczeniem własnym zapisujesz razem z oznaczeniem tłumacza i oryginałem w przypisie dolnym:
+
+\begin{zapis}
+\enquote{Przetlumaczony fragment} [tlum. wlasne --- JK]
+\parencite[s.~44]{hjorland1998theory}\footnote{\enquote{Original wording}.}
+\end{zapis}
+
+\section{Cytowanie oprogramowania i danych}
+
+Pakiety R i zbiory danych trafiają do \wyroznienie{wykazu źródeł}, a nie do bibliografii; rozróżnienie omawia podrozdział~\ref{sec:wykazzrodel}. Jeżeli jednak powołujesz się na pakiet w tekście jak na publikację, potrzebujesz wpisu. Dane pobierzesz w konsoli:
+
+\begin{lstlisting}[numbers=none]
+citation("ggplot2")
+toBibtex(citation("ggplot2"))
+\end{lstlisting}
+
+Twój pakiet powinien mieć plik \plik{inst/CITATION}, żeby polecenie \fun{citation} zwracało poprawny opis. Po nadaniu wydania i uzyskaniu identyfikatora cyfrowego opis własnego pakietu wygląda tak:
+
+\begin{zapis}
+@software{kowalski2027nazwapakietu,
+  author  = {Kowalski, Jan},
+  year    = {2027},
+  title   = {NazwaPakietu: krotki opis przeznaczenia},
+  version = {1.0.0},
+  doi     = {10.5281/zenodo.0000000},
+  url     = {https://github.com/nazwauzytkownika/NazwaPakietu},
+  urldate = {2027-05-15},
+  langid  = {polish},
+}
+\end{zapis}
+
+Zbiór danych opisujesz jak dokument sieciowy, z podaniem wersji albo daty pobrania oraz licencji w polu \kod{note}.
+
+\section{Kontrola}
+
+Przed oddaniem sprawdź trzy rzeczy. Po pierwsze zgodność w obie strony: każda pozycja bibliografii ma powołanie w tekście, a każde powołanie pozycję w bibliografii. Nierozwiązane powołania widać w dzienniku kompilacji; pozycji bez powołania styl po prostu nie złoży, co działa na Twoją korzyść. Po drugie obecność pozycji obcojęzycznych, wymaganych zarówno przez Standardy, jak i przez Instrukcję. Po trzecie kompletność opisów --- przejrzyj gotową bibliografię w złożonym dokumencie, a nie w pliku źródłowym, bo brakujące miasto, ucięty tytuł czasopisma albo brak daty odczytu widać dopiero w składzie.
+
+Gdy bibliografia jest pusta albo nieaktualna po zmianach w pliku, uruchom pełną kompilację od zera.
+
+\section{Wariant APA}
+
+Jeżeli uzgodnisz z promotorem styl APA zamiast instytutowego, wystarczy dopisać opcję klasy \kod{apa} w poleceniu \kod{\textbackslash documentclass}. Ten sam plik bibliograficzny obsługuje oba style. Łączniki są polskie, a nazwy miesięcy w datach dostępu pozostają w formie właściwej dla angielskiego zapisu APA.
+
+Wybór stylu uzgadnia się \wyroznienie{raz, na początku} --- Instrukcja wprost przewiduje ustalenie preferowanego stylu z promotorem. Zmiana w trakcie pisania oznacza przegląd wszystkich wpisów pod kątem pól wymaganych przez nowy styl.

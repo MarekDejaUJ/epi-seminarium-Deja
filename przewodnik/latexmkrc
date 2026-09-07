@@ -1,0 +1,11 @@
+$pdf_mode = 4;
+$lualatex = 'lualatex -interaction=nonstopmode -synctex=1 %O %S';
+$bibtex_use = 2;
+$makeindex = 'makeindex -q %O -o %D %S';
+$clean_ext = 'bbl run.xml synctex.gz lop nav snm';
+
+# Klasa dokumentu i styl bibliograficzny leza w katalogu wzoru, zeby wzor
+# pozostal samowystarczalny przy wgrywaniu na Overleaf.
+my $sep = ($^O eq 'MSWin32') ? ';' : ':';
+$ENV{'TEXINPUTS'} = '.' . $sep . '../wzor-pracy' . $sep . ($ENV{'TEXINPUTS'} // '');
+$ENV{'BIBINPUTS'} = '.' . $sep . '../wzor-pracy' . $sep . ($ENV{'BIBINPUTS'} // '');
