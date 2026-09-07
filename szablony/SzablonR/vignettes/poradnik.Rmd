@@ -1,0 +1,135 @@
+---
+title: "Od danych surowych do rankingu"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Od danych surowych do rankingu}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 6.5,
+                      fig.height = 4)
+```
+
+Winieta pokazuje pełną ścieżkę analizy: od surowej ramki danych, przez macierz
+decyzyjną, po ranking i jego interpretację. Ten sam układ przenosisz do własnego
+pakietu, podmieniając algorytm na ten z artykułu, który opracowujesz.
+
+```{r}
+library(SzablonR)
+```
+
+## Dane
+
+Zbiór `dane_przykladowe` zawiera 120 ocen sześciu alternatyw. Powstał procedurą
+o znanej strukturze zależności opisaną w pliku `data-raw/generuj_dane.R`: każda
+alternatywa ma ukrytą jakość malejącą od A do F, a zmienne surowe są funkcjami
+tej jakości powiększonymi o szum.
+
+```{r}
+str(dane_przykladowe)
+```
+
+Zbiór zawiera dwa rodzaje zanieczyszczeń, celowo wprowadzone po to, żeby było
+na czym sprawdzać odporność: wartość `999` w kolumnie `jakosc_ux` odpowiada
+błędowi wprowadzania danych, a braki w `eko_odpady` pominiętym odpowiedziom.
+
+```{r}
+sum(dane_przykladowe$jakosc_ux == 999, na.rm = TRUE)
+sum(is.na(dane_przykladowe$eko_odpady))
+```
+
+## Model
+
+Kryteria deklaruje się w składni zbliżonej do pakietu `lavaan`. Każdy wiersz
+wymienia zmienne składające się na jedno kryterium.
+
+```{r}
+model <- "Koszt   =~ koszt_surowce + koszt_praca
+          Jakosc  =~ jakosc_trwalosc + jakosc_ux
+          Dostawa =~ dostawa_niezawodnosc
+          Rozwoj  =~ eko_co2 + eko_odpady"
+```
+
+## Macierz decyzyjna
+
+Funkcja `przygotuj_dane()` sprawdza warunki wstępne, zamienia kody błędne na
+braki, obsługuje braki wybranym sposobem i agreguje zmienne do kryteriów.
+
+```{r}
+macierz <- przygotuj_dane(dane_przykladowe, model, braki = "mediana")
+macierz
+```
+
+Sposób obsługi braków jest decyzją metodologiczną, nie techniczną. Warto
+sprawdzić, czy wynik od niej nie zależy:
+
+```{r}
+usuniete <- przygotuj_dane(dane_przykladowe, model, braki = "usun")
+round(macierz - usuniete, 4)
+```
+
+Różnice bliskie zeru oznaczają, że wybór nie przesądza o wyniku. Gdyby były
+wyraźne, należałoby to opisać w pracy jako ograniczenie.
+
+## Wagi
+
+Pakiet udostępnia dwie metody obiektywne. Entropia Shannona przypisuje wyższą
+wagę kryterium o większym rozproszeniu ocen; odchylenie standardowe robi to
+prościej i służy jako punkt odniesienia.
+
+```{r}
+round(oblicz_wagi_entropia(macierz), 4)
+round(oblicz_wagi_std(macierz), 4)
+```
+
+## Ranking
+
+Kryterium kosztowe deklarujemy jako minimalizowane, pozostałe jako
+maksymalizowane.
+
+```{r}
+wynik <- oblicz_ranking(macierz, wagi = "entropia",
+                        kierunki = c("min", "max", "max", "max"))
+summary(wynik)
+```
+
+## Wizualizacja
+
+```{r}
+plot(wynik)
+```
+
+Wykres udziałów odpowiada na pytanie, **dlaczego** alternatywa zajęła swoją
+pozycję, a nie tylko jaką pozycję zajęła.
+
+```{r}
+wykres_udzialow(wynik)
+```
+
+## Sprawdzenie stabilności
+
+Wynik, który zmienia się przy zmianie metody ważenia, wymaga komentarza
+w pracy. Porównanie zajmuje dwie linie:
+
+```{r}
+entropia <- oblicz_ranking(macierz, "entropia",
+                           kierunki = c("min", "max", "max", "max"))$wynik
+odchylenie <- oblicz_ranking(macierz, "std",
+                             kierunki = c("min", "max", "max", "max"))$wynik
+
+data.frame(
+  alternatywa = entropia$alternatywa,
+  entropia = entropia$pozycja,
+  odchylenie = odchylenie$pozycja[match(entropia$alternatywa,
+                                        odchylenie$alternatywa)]
+)
+```
+
+## Co dalej
+
+Podmień algorytm na ten z własnego artykułu, zachowując układ: walidacja
+wejścia w osobnym module, silnik obliczeniowy bez efektów ubocznych, klasa
+wyniku z metodami generycznymi, procedura generowania danych o znanej
+strukturze. Kontrakt funkcji spisz w pliku `SPEC.md`, zanim napiszesz kod.

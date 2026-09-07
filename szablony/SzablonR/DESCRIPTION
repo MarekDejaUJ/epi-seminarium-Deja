@@ -1,0 +1,36 @@
+Package: SzablonR
+Type: Package
+Title: Szablon Pakietu Badawczego dla Seminarium EPI
+Version: 0.1.0
+Authors@R: c(
+    person(
+      given = "Imie",
+      family = "Nazwisko",
+      email = "imie.nazwisko@student.uj.edu.pl",
+      role = c("aut", "cre")
+    )
+  )
+Description: Szkielet pakietu badawczego przygotowany na seminarium licencjackie
+    kierunku elektroniczne przetwarzanie informacji. Zawiera modul przygotowania
+    danych z walidacja wejscia, dwie metody wyznaczania wag obiektywnych, silnik
+    rankingu, klasy wyniku wraz z metodami generycznymi oraz procedure generowania
+    danych o znanej strukturze. Sluzy jako punkt wyjscia do wlasnej implementacji
+    algorytmu opisanego w artykule metodycznym.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 4.1)
+Imports:
+    ggplot2,
+    stats,
+    utils
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+RoxygenNote: 7.3.3
+URL: https://github.com/nazwauzytkownika/SzablonR
+BugReports: https://github.com/nazwauzytkownika/SzablonR/issues

@@ -1,0 +1,10 @@
+citHeader("Aby zacytowac pakiet SzablonR, uzyj ponizszego opisu.")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "SzablonR: Szablon Pakietu Badawczego dla Seminarium EPI",
+  author   = person("Imie", "Nazwisko"),
+  year     = "2027",
+  note     = "Wersja 0.1.0",
+  url      = "https://github.com/nazwauzytkownika/SzablonR"
+)
