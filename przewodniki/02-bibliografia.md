@@ -206,7 +206,7 @@ Inicjał przy zbieżnych nazwiskach, skrót przy więcej niż trzech autorach i 
 Cytat dosłowny z tłumaczeniem własnym zapisujesz razem z oznaczeniem tłumacza i oryginałem w przypisie dolnym:
 
 ```latex
-\enquote{Przetlumaczony fragment} [tlum. wlasne --- JK]
+\enquote{Przetlumaczony fragment} [tlum. wlasne -- JK]
 \parencite[s.~44]{hjorland1998theory}\footnote{\enquote{Original wording}.}
 ```
 
