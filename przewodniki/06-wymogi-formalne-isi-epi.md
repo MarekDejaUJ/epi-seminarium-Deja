@@ -261,3 +261,6 @@ Recenzje trafiają do Archiwum Prac UJ.
 - [ ] korekta całości po wydruku, nie na ekranie
 - [ ] tekst wyjustowany, bez wiszących wierszy
 - [ ] konsekwentna terminologia w całej pracy
+- [ ] w plikach źródłowych nie ma nieadresowanych uwag promotora — wyszukanie
+      `%% UWAGA` w projekcie nie daje wyników
+- [ ] usunięte własne komentarze robocze i wskazówki wzoru

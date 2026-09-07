@@ -64,6 +64,10 @@
 \DeclareFieldFormat[article,incollection,inbook,inproceedings,online,misc,
                     unpublished,software,manual]{title}{#1}
 
+% Prace dyplomowe i raporty sa wydawnictwami samoistnymi, wiec kursywa.
+% Bez jawnej deklaracji biblatex sklada ich tytuly w cudzyslowie.
+\DeclareFieldFormat[thesis,report]{title}{\mkbibemph{#1}}
+
 % Oznaczenia numeru, tomu, stron i daty odczytu zaleza od jezyka pozycji.
 % Pozycje polskie opisuje sie skrotami polskimi, pozostale - oryginalnymi.
 % Rozstrzyga pole langid; jego brak jest traktowany jak pozycja polska.
@@ -82,7 +86,7 @@
 \DeclareFieldFormat{urldate}{%
   \mkbibparens{\isi@wg{odczyt}{accessed}\addcolon\space#1}}
 \DeclareFieldFormat{howpublished}{\mkbibparens{#1}}
-\DeclareFieldFormat{version}{\bibstring{version}~#1}
+\DeclareFieldFormat{version}{\isi@wg{Wersja}{Version}\addnbspace#1}
 \DeclareFieldFormat[thesis]{type}{#1}
 \DeclareFieldFormat{note}{#1}
 

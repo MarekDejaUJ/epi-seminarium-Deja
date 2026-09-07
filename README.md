@@ -22,7 +22,7 @@ po przyjęciu projektu.
 | Katalog | Zawartość |
 |---|---|
 | [`wzor-pracy/`](wzor-pracy/) | wzór pracy licencjackiej w LaTeX-u wraz ze stylem bibliograficznym zgodnym z wymaganiami Instytutu |
-| [`przewodniki/`](przewodniki/) | jak napisać pracę rozdział po rozdziale, warsztat pisania akademickiego, wymogi formalne |
+| [`przewodniki/`](przewodniki/) | LaTeX, bibliografia i Zotero, Overleaf, jak napisać pracę rozdział po rozdziale, warsztat pisania akademickiego, wymogi formalne |
 
 Kolejne części — szablon pakietu R, tematy prac i harmonogram — powstają w trakcie
 przygotowania seminarium.
@@ -31,13 +31,15 @@ przygotowania seminarium.
 
 1. [Warsztat pisania](przewodniki/05-warsztat-pisania-akademickiego.md#pytanie-analityczne) —
    zanim napiszesz pierwsze zdanie, sformułuj pytanie.
-2. Przeczytaj [`wzor-pracy/README.md`](wzor-pracy/README.md) i skompiluj dokument
-   pokazowy `wzor-pracy/przyklad.tex` — zobaczysz w nim wszystkie elementy składu
-   i wszystkie postacie powołań.
-3. Załóż własny projekt na podstawie `wzor-pracy/main.tex` i uzupełnij metadane.
-4. Przy pisaniu każdej części sięgaj do
+2. [Overleaf](przewodniki/03-overleaf-i-wspolpraca.md#ścieżka-studenta) — załóż projekt
+   z wzoru i ustaw kompilator na LuaLaTeX.
+3. [LaTeX od podstaw](przewodniki/01-latex-od-podstaw.md) — jeden wieczór wystarczy,
+   żeby zacząć pisać. Zapisu każdego elementu szukaj w `wzor-pracy/przyklad.tex`.
+4. [Bibliografia i Zotero](przewodniki/02-bibliografia-bib-zotero.md) — skonfiguruj
+   **przed** pierwszą lekturą, nie po dwudziestej.
+5. Przy pisaniu każdej części sięgaj do
    [przewodnika rozdział po rozdziale](przewodniki/04-jak-pisac-prace.md).
-5. Przed oddaniem przejdź
+6. Przed oddaniem przejdź
    [listę kontrolną](przewodniki/06-wymogi-formalne-isi-epi.md#lista-kontrolna-przed-oddaniem).
 
 ## Wymagania formalne
