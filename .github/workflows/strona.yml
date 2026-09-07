@@ -30,8 +30,6 @@ jobs:
       - name: Konfiguracja GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Budowa witryny
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
