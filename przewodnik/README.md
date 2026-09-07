@@ -1,11 +1,11 @@
-# Przewodnik seminaryjny — źródła
+# Przewodnik seminaryjny – źródła
 
 Do czytania na stronie repozytorium: [`przewodniki/`](../przewodniki/).
 Całość w jednym pliku, do druku: **[`przewodnik.pdf`](przewodnik.pdf)**.
 
 Ten katalog zawiera źródła. Poprawki nanoś tutaj.
 
-Przewodnik prowadzi przez cały cykl seminarium — od pierwszego uruchomienia wzoru,
+Przewodnik prowadzi przez cały cykl seminarium – od pierwszego uruchomienia wzoru,
 przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną przed
 oddaniem pracy.
 

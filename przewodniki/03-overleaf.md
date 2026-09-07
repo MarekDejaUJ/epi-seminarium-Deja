@@ -9,7 +9,7 @@ Overleaf to LaTeX w przeglądarce. Nie trzeba nic instalować, projekt jest dost
 
 ### Konto i projekt
 
-Załóż konto **na adres uczelniany**. Sprawdź, czy Uniwersytet udostępnia licencję instytucjonalną — jeżeli tak, konto w domenie uczelni otrzymuje funkcje płatne. Cała ścieżka opisana niżej działa również na planie bezpłatnym.
+Załóż konto **na adres uczelniany**. Sprawdź, czy Uniwersytet udostępnia licencję instytucjonalną – jeżeli tak, konto w domenie uczelni otrzymuje funkcje płatne. Cała ścieżka opisana niżej działa również na planie bezpłatnym.
 
 Wzór pobierasz z repozytorium seminarium: pobierz archiwum całego repozytorium, rozpakuj je, spakuj **sam katalog wzoru** do nowego archiwum i wgraj je jako nowy projekt. Alternatywnie promotor udostępni gotowy projekt wzorcowy łączem tylko do odczytu; wtedy wystarczy skopiować projekt do własnego konta.
 
@@ -29,11 +29,11 @@ Ustawienie kompilatora jest jednorazowe i **łatwe do przeoczenia**. Objaw pomin
 
 W pliku głównym uzupełniasz metadane na górze i nic więcej. Piszesz w plikach rozdziałów. Wpisy bibliograficzne trafiają do pliku w katalogu bibliografii, a grafiki do katalogu rysunków. Dokument pokazowy służy do zaglądania, gdy nie pamiętasz zapisu.
 
-Klasy dokumentu ani plików stylu bibliograficznego **nie ruszasz**. Zmiana czegokolwiek w nich oznacza, że praca przestaje odpowiadać wymogom Instytutu, a odpowiedzialność za to spada na Ciebie, nie na wzór. Jeżeli czegoś nie da się zrobić dostępnymi poleceniami, zgłoś to promotorowi — brakuje wtedy polecenia we wzorze.
+Klasy dokumentu ani plików stylu bibliograficznego **nie ruszasz**. Zmiana czegokolwiek w nich oznacza, że praca przestaje odpowiadać wymogom Instytutu, a odpowiedzialność za to spada na Ciebie, nie na wzór. Jeżeli czegoś nie da się zrobić dostępnymi poleceniami, zgłoś to promotorowi – brakuje wtedy polecenia we wzorze.
 
 ### Kompilacja i kopie
 
-Pierwsza kompilacja po dodaniu nowego powołania albo etykiety może pokazać znaki zapytania; po drugiej znikną. Rozwijane menu obok przycisku kompilacji zawiera polecenie pełnego przebiegu od zera — użyj go, gdy dokument przestaje odpowiadać zmianom albo gdy bibliografia nie chce się odświeżyć.
+Pierwsza kompilacja po dodaniu nowego powołania albo etykiety może pokazać znaki zapytania; po drugiej znikną. Rozwijane menu obok przycisku kompilacji zawiera polecenie pełnego przebiegu od zera – użyj go, gdy dokument przestaje odpowiadać zmianom albo gdy bibliografia nie chce się odświeżyć.
 
 Plan bezpłatny ma limit czasu kompilacji. Praca licencjacka mieści się w nim spokojnie, ale gdy zaczniesz się o niego ocierać, zakomentuj w pliku głównym włączenia rozdziałów, nad którymi akurat nie pracujesz. Przed oddaniem odkomentuj wszystkie.
 
@@ -41,7 +41,7 @@ Overleaf przechowuje projekt na swoich serwerach, ale **to nie jest kopia zapaso
 
 ### Udostępnienie i oddanie
 
-Udostępnij projekt promotorowi na jego adres, z prawem edycji. Na planie bezpłatnym każdy projekt można udostępnić jednej osobie — dokładnie tyle, ile trzeba. Recenzentowi, gdy zajdzie potrzeba, udostępnij łącze tylko do odczytu; łącza nie liczą się do limitu współpracowników.
+Udostępnij projekt promotorowi na jego adres, z prawem edycji. Na planie bezpłatnym każdy projekt można udostępnić jednej osobie – dokładnie tyle, ile trzeba. Recenzentowi, gdy zajdzie potrzeba, udostępnij łącze tylko do odczytu; łącza nie liczą się do limitu współpracowników.
 
 Do Archiwum Prac trafia plik wynikowy pobrany z projektu. Przed pobraniem wykonaj pełną kompilację od zera, sprawdź brak nierozwiązanych powołań i odsyłaczy oraz przejdź listę kontrolną z podrozdziału [Lista kontrolna przed oddaniem](06-wymogi.md#lista-kontrolna-przed-oddaniem).
 
@@ -57,7 +57,7 @@ Niezależnie od sposobu: **po każdej podmianie pliku uruchom pełną kompilacj�
 
 Najmniej kłopotliwy układ, działający również na kontach bezpłatnych, wygląda tak. Prowadzący zakłada **jeden projekt wzorcowy** z zawartości katalogu wzoru i włącza w nim łącze tylko do odczytu. Rozdaje to jedno łącze wszystkim uczestnikom. Każda osoba kopiuje projekt do własnego konta, otrzymując niezależną kopię, i udostępnia ją prowadzącemu z prawem edycji.
 
-Zalety układu: łącze do odczytu nie zużywa limitu współpracowników, poprawka we wzorcu nie psuje niczyjej pracy, a prowadzący ma dostęp do wszystkich projektów z jednego pulpitu. Wadą jest to, że poprawka we wzorcu nie trafia do kopii już wykonanych — dlatego **wzór zamyka się przed pierwszymi zajęciami**, a późniejsze zmiany rozsyła jako opis, co podmienić.
+Zalety układu: łącze do odczytu nie zużywa limitu współpracowników, poprawka we wzorcu nie psuje niczyjej pracy, a prowadzący ma dostęp do wszystkich projektów z jednego pulpitu. Wadą jest to, że poprawka we wzorcu nie trafia do kopii już wykonanych – dlatego **wzór zamyka się przed pierwszymi zajęciami**, a późniejsze zmiany rozsyła jako opis, co podmienić.
 
 ### Przegląd prac
 
@@ -73,7 +73,7 @@ Uwaga stoi wtedy dokładnie przy problematycznym zdaniu, student widzi ją przy 
 
 Zasada zamykająca: **student usuwa komentarz dopiero po naniesieniu poprawki**. Pusty wynik wyszukiwania oznacza, że wszystkie uwagi zostały zaadresowane; ten punkt znajduje się na liście kontrolnej przed oddaniem.
 
-Przy licencji instytucjonalnej dochodzą śledzenie zmian, komentarze w panelu bocznym i pełna historia wersji — wtedy powyższa konwencja staje się zbędna.
+Przy licencji instytucjonalnej dochodzą śledzenie zmian, komentarze w panelu bocznym i pełna historia wersji – wtedy powyższa konwencja staje się zbędna.
 
 ### Kontrola formalna
 
@@ -81,7 +81,7 @@ Kontrolę formalną prowadź **na złożonym dokumencie, nie w źródle**. Margi
 
 W źródle warto sprawdzić dwie rzeczy: czy student nie zmieniał klasy dokumentu ani plików stylu bibliograficznego, co załatwia porównanie z wzorcem, oraz czy w projekcie nie zostały komentarze robocze i uwagi.
 
-Przy kilkunastu pracach przegląd na żądanie nie działa. Sprawdzony układ to stałe okna: oddanie fragmentu do ustalonej daty, przegląd w ciągu tygodnia, omówienie na zajęciach. Fragmenty oddawane w kolejności pisania, a nie w kolejności rozdziałów — kolejność podaje tabela **Kolejność pisania rozdziałów**.
+Przy kilkunastu pracach przegląd na żądanie nie działa. Sprawdzony układ to stałe okna: oddanie fragmentu do ustalonej daty, przegląd w ciągu tygodnia, omówienie na zajęciach. Fragmenty oddawane w kolejności pisania, a nie w kolejności rozdziałów – kolejność podaje tabela **Kolejność pisania rozdziałów**.
 
 ## Praca lokalna w Positronie
 
@@ -92,9 +92,9 @@ cd wzor-pracy
 latexmk -lualatex main.tex
 ```
 
-Zaletami są brak limitu czasu kompilacji, praca bez dostępu do sieci i pełna historia w repozytorium. Wadami — konieczność zainstalowania i utrzymania dystrybucji TeX-a oraz to, że udostępnienie promotorowi wymaga repozytorium zamiast jednego kliknięcia. Układ mieszany bywa najwygodniejszy: pakiet i wykresy lokalnie, tekst na Overleaf.
+Zaletami są brak limitu czasu kompilacji, praca bez dostępu do sieci i pełna historia w repozytorium. Wadami – konieczność zainstalowania i utrzymania dystrybucji TeX-a oraz to, że udostępnienie promotorowi wymaga repozytorium zamiast jednego kliknięcia. Układ mieszany bywa najwygodniejszy: pakiet i wykresy lokalnie, tekst na Overleaf.
 
-Repozytorium pakietu i pracę trzymaj **osobno**. Praca zawiera pliki, które nie mają nic wspólnego z pakietem, a repozytorium pakietu ma być czyste — to ono jest oceniane jako projekt dyplomowy i to jego adres podajesz na stronie tytułowej. Jeżeli prowadzisz pracę w repozytorium, ignoruj artefakty kompilacji.
+Repozytorium pakietu i pracę trzymaj **osobno**. Praca zawiera pliki, które nie mają nic wspólnego z pakietem, a repozytorium pakietu ma być czyste – to ono jest oceniane jako projekt dyplomowy i to jego adres podajesz na stronie tytułowej. Jeżeli prowadzisz pracę w repozytorium, ignoruj artefakty kompilacji.
 
 ## Problemy specyficzne dla Overleaf
 

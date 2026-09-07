@@ -5,15 +5,15 @@
 
 Rozdział uczy LaTeX-a na wzorze, którym piszesz pracę, a nie w oderwaniu od niego. Wszystkie przykłady działają bez dodatkowej konfiguracji, bo skład ustawia klasa dokumentu.
 
-Podziel naukę na trzy wieczory. Po pierwszym umiesz złożyć tekst z rozdziałami i powołaniami. Po drugim — tabele, rysunki i wzory. Trzeci przyda się dopiero przy redakcji.
+Podziel naukę na trzy wieczory. Po pierwszym umiesz złożyć tekst z rozdziałami i powołaniami. Po drugim – tabele, rysunki i wzory. Trzeci przyda się dopiero przy redakcji.
 
 ## Jak myśleć o LaTeX-u
 
 W edytorze tekstu zaznaczasz fragment i nadajesz mu wygląd. W LaTeX-u **opisujesz, czym fragment jest**, a wygląd wynika z tego automatycznie. Piszesz „to jest tytuł rozdziału”, a nie „to ma być osiemnaście punktów, wytłuszczone, wyśrodkowane”.
 
-Ma to trzy konsekwencje, które w pracy licencjackiej są warte więcej niż koszt nauki. Skład jest zgodny z wymogami Instytutu z definicji, a nie dlatego, że pamiętałeś o ustawieniu interlinii w każdym akapicie. Spis treści, spis ilustracji, bibliografia i indeks nazwisk powstają same z tego, co napisałeś w tekście — nie da się mieć w spisie treści rozdziału, którego nie ma. Wzory matematyczne są zapisem, a nie obrazkiem, co przy pracy pełnej wzorów z artykułu metodycznego przestaje być wygodą, a staje się warunkiem wykonalności.
+Ma to trzy konsekwencje, które w pracy licencjackiej są warte więcej niż koszt nauki. Skład jest zgodny z wymogami Instytutu z definicji, a nie dlatego, że pamiętałeś o ustawieniu interlinii w każdym akapicie. Spis treści, spis ilustracji, bibliografia i indeks nazwisk powstają same z tego, co napisałeś w tekście – nie da się mieć w spisie treści rozdziału, którego nie ma. Wzory matematyczne są zapisem, a nie obrazkiem, co przy pracy pełnej wzorów z artykułu metodycznego przestaje być wygodą, a staje się warunkiem wykonalności.
 
-Kosztem jest to, że pliku źródłowego się nie ogląda — trzeba go skompilować. Do tego przyzwyczaisz się w pierwszy wieczór.
+Kosztem jest to, że pliku źródłowego się nie ogląda – trzeba go skompilować. Do tego przyzwyczaisz się w pierwszy wieczór.
 
 ## Poziom pierwszy: tekst i struktura
 
@@ -41,9 +41,9 @@ Wszystko przed `\begin{document}` to *preambuła*, czyli ustawienia. Wszystko mi
 
 ### Akapity i spacje
 
-Nowy akapit robi **pusta linia**. Pojedyncze złamanie wiersza w pliku źródłowym nie znaczy nic — LaTeX i tak złoży tekst od nowa. Wielokrotne spacje redukują się do jednej. Nie wymuszaj odstępów spacjami ani pustymi liniami; od tego są polecenia, a w Twojej pracy odstępy ustawia klasa.
+Nowy akapit robi **pusta linia**. Pojedyncze złamanie wiersza w pliku źródłowym nie znaczy nic – LaTeX i tak złoży tekst od nowa. Wielokrotne spacje redukują się do jednej. Nie wymuszaj odstępów spacjami ani pustymi liniami; od tego są polecenia, a w Twojej pracy odstępy ustawia klasa.
 
-W seminarium obowiązuje jedna zasada zapisu źródła: **jeden akapit w jednym wierszu**. Akapitu nie łamiemy w pliku, bez względu na jego długość; wiersze rozdziela wyłącznie pusta linia. Powód jest praktyczny — porównanie wersji pokazuje wtedy, który akapit się zmienił, zamiast lawiny przesuniętych wierszy po dopisaniu jednego słowa. Ma to znaczenie przy pracy z promotorem i w historii repozytorium, a edytory i tak zawijają długie wiersze na ekranie. Zasada nie dotyczy wnętrza listingów, tabel i wzorów ani pozycji list wypunktowanych.
+W seminarium obowiązuje jedna zasada zapisu źródła: **jeden akapit w jednym wierszu**. Akapitu nie łamiemy w pliku, bez względu na jego długość; wiersze rozdziela wyłącznie pusta linia. Powód jest praktyczny – porównanie wersji pokazuje wtedy, który akapit się zmienił, zamiast lawiny przesuniętych wierszy po dopisaniu jednego słowa. Ma to znaczenie przy pracy z promotorem i w historii repozytorium, a edytory i tak zawijają długie wiersze na ekranie. Zasada nie dotyczy wnętrza listingów, tabel i wzorów ani pozycji list wypunktowanych.
 
 **Twarda spacja** zapisywana tyldą nie pozwala złamać wiersza w danym miejscu. Używaj jej tam, gdzie przeniesienie wygląda źle:
 
@@ -62,12 +62,13 @@ Piszesz normalnie: zażółć gęślą jaźń. Plik musi być zapisany w UTF-8; 
 | cudzysłów polski | `\enquote{cytat}` | „cytat” |
 | cytat w cytacie | `\enquote{a \enquote{b} c}` | „a «b» c” |
 | półpauza | `--` | – |
-| pauza | `---` | — |
 | łącznik | `-` | - |
 
 Cudzysłowów nie wpisuj ręcznie. Polecenie `\enquote` dobiera je do języka i poprawnie zagnieżdża, dokładnie tak, jak przewiduje Instrukcja (Instrukcja ISI).
 
-Znaki zastrzeżone wymagają ucieczki: procent, dolar, ampersand, podkreślenie, kratka i nawiasy klamrowe poprzedzamy ukośnikiem. Najczęściej potykasz się o podkreślenie w nazwach funkcji — dlatego do nazw służą polecenia opisane w podrozdziale [Polecenia własne wzoru](#polecenia-własne-wzoru), które robią to za Ciebie.
+W seminarium obowiązuje jedna zasada typograficzna wykraczająca poza wymogi Instytutu: **nie stosujemy pauzy**, czyli trzech łączników. Zdanie wtrącone wydzielamy półpauzą z odstępem po obu stronach – tak jak w tym zdaniu. Łącznik pozostaje łącznikiem w wyrazach złożonych i w zakresach stron.
+
+Znaki zastrzeżone wymagają ucieczki: procent, dolar, ampersand, podkreślenie, kratka i nawiasy klamrowe poprzedzamy ukośnikiem. Najczęściej potykasz się o podkreślenie w nazwach funkcji – dlatego do nazw służą polecenia opisane w podrozdziale [Polecenia własne wzoru](#polecenia-własne-wzoru), które robią to za Ciebie.
 
 ### Rozdziały i podrozdziały
 
@@ -77,7 +78,7 @@ Znaki zastrzeżone wymagają ucieczki: procent, dolar, ampersand, podkreślenie,
 \subsection{Normalizacja}              % 1.1.1
 ```
 
-Numeracja jest automatyczna. Nie wpisuj numerów ręcznie — po wstawieniu rozdziału w środku przenumerowanie zajmie sekundę, a nie godzinę. Elementy nienumerowane, obecne mimo to w spisie treści, mają własne polecenia: `\wprowadzenie`, `\podsumowanie`, `\wykazzrodel`, `\aneksy`.
+Numeracja jest automatyczna. Nie wpisuj numerów ręcznie – po wstawieniu rozdziału w środku przenumerowanie zajmie sekundę, a nie godzinę. Elementy nienumerowane, obecne mimo to w spisie treści, mają własne polecenia: `\wprowadzenie`, `\podsumowanie`, `\wykazzrodel`, `\aneksy`.
 
 ### Etykiety i odsyłacze
 
@@ -111,7 +112,7 @@ Odsyłacz do nieistniejącej etykiety daje w gotowym pliku dwa znaki zapytania i
 \textcite{wozniak1997kognitywizm} pokazuje, ze...  % Wozniak (1997) pokazuje, ze...
 ```
 
-Postać powołania — inicjał przy zbieżnych nazwiskach, skrót „i in.” przy więcej niż trzech autorach, sufiksy rocznika przy tym samym roku — dobiera styl automatycznie. Twoim zadaniem jest poprawny wpis w pliku bibliograficznym, opisany w rozdziale [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
+Postać powołania – inicjał przy zbieżnych nazwiskach, skrót „i in.” przy więcej niż trzech autorach, sufiksy rocznika przy tym samym roku – dobiera styl automatycznie. Twoim zadaniem jest poprawny wpis w pliku bibliograficznym, opisany w rozdziale [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
 
 ### Polecenia własne wzoru
 
@@ -138,7 +139,7 @@ Polecenie `\osoba` stosuj **od pierwszego dnia**. Indeks nazwisk powstaje z tych
 
 ### Listy i cytaty
 
-Listy stosuj tam, gdzie kolejność albo równorzędność elementów jest istotna. Nie zastępuj nimi wywodu — praca złożona z wypunktowań czyta się jak prezentacja i tak jest oceniana.
+Listy stosuj tam, gdzie kolejność albo równorzędność elementów jest istotna. Nie zastępuj nimi wywodu – praca złożona z wypunktowań czyta się jak prezentacja i tak jest oceniana.
 
 Fragment dłuższy niż dwa lub trzy zdania wyodrębniasz graficznie, czego wymaga Instrukcja:
 
@@ -166,7 +167,7 @@ Plik & Odpowiedzialnosc & Funkcje eksportowane \\
 \end{tabelaepi}
 ```
 
-Wnętrze `tabular` czyta się tak. Deklaracja kolumn podaje ich wyrównanie: `l` do lewej, `r` do prawej, `c` do środka, `p{3cm}` kolumna o stałej szerokości z łamaniem wiersza. Zapis `@{}` na brzegach usuwa wcięcie. Komórki rozdziela ampersand, a wiersz kończą dwa ukośniki. Linie poziome dają `\toprule`, `\midrule` i `\bottomrule` — i tylko one. Tabela naukowa nie ma linii pionowych ani kratownicy.
+Wnętrze `tabular` czyta się tak. Deklaracja kolumn podaje ich wyrównanie: `l` do lewej, `r` do prawej, `c` do środka, `p{3cm}` kolumna o stałej szerokości z łamaniem wiersza. Zapis `@{}` na brzegach usuwa wcięcie. Komórki rozdziela ampersand, a wiersz kończą dwa ukośniki. Linie poziome dają `\toprule`, `\midrule` i `\bottomrule` – i tylko one. Tabela naukowa nie ma linii pionowych ani kratownicy.
 
 Tabela szersza niż strona: użyj `tabularx` z kolumną `X`, która sama dobierze szerokość. Tabela dłuższa niż strona przenosi się do aneksu, tak stanowi Instrukcja.
 
@@ -179,7 +180,7 @@ Tabela szersza niż strona: użyj `tabularx` z kolumną `X`, która sama dobierz
 \end{rysunekepi}
 ```
 
-Pliki graficzne trzymaj w katalogu `rysunki/` — klasa szuka ich tam automatycznie, więc podajesz samą nazwę pliku. Szerokość podawaj względem szerokości tekstu, nie w centymetrach. Wykresy z R zapisuj w wysokiej rozdzielczości:
+Pliki graficzne trzymaj w katalogu `rysunki/` – klasa szuka ich tam automatycznie, więc podajesz samą nazwę pliku. Szerokość podawaj względem szerokości tekstu, nie w centymetrach. Wykresy z R zapisuj w wysokiej rozdzielczości:
 
 ```r
 png("rysunki/wykres.png", width = 1600, height = 1000, res = 220)
@@ -189,7 +190,7 @@ dev.off()
 
 Wykres liczbowy wstawiaj przez środowisko `wykresepi`; ma osobną numerację, tak jak wymaga Instrukcja.
 
-Tabele i rysunki są *pływakami*: LaTeX umieszcza je tam, gdzie wychodzi najlepiej, niekoniecznie w miejscu wpisania. To nie jest usterka. Nie walcz z tym w trakcie pisania — zajmij się tym przy redakcji, a w tekście zawsze odsyłaj przez etykietę, nigdy przez zwrot „poniższa tabela”.
+Tabele i rysunki są *pływakami*: LaTeX umieszcza je tam, gdzie wychodzi najlepiej, niekoniecznie w miejscu wpisania. To nie jest usterka. Nie walcz z tym w trakcie pisania – zajmij się tym przy redakcji, a w tekście zawsze odsyłaj przez etykietę, nigdy przez zwrot „poniższa tabela”.
 
 ### Wzory
 
@@ -225,7 +226,7 @@ Wzór bez numeru zapisuje się w nawiasach kwadratowych poprzedzonych ukośnikie
 | tekst wewnątrz wzoru | `\text{dla } x > 0` |
 | macierz | `\begin{pmatrix} a & b \\ c & d \end{pmatrix}` |
 
-Symbole zostawiaj takie jak w artykule źródłowym — czytelnik ma móc porównać. I pamiętaj o zasadzie z podrozdziału [Rozdział pierwszy: podstawy metodyczne](04-jak-pisac.md#rozdział-pierwszy-podstawy-metodyczne): po każdym wzorze następuje akapit objaśniający, co ten wzór robi.
+Symbole zostawiaj takie jak w artykule źródłowym – czytelnik ma móc porównać. I pamiętaj o zasadzie z podrozdziału [Rozdział pierwszy: podstawy metodyczne](04-jak-pisac.md#rozdział-pierwszy-podstawy-metodyczne): po każdym wzorze następuje akapit objaśniający, co ten wzór robi.
 
 ### Listingi kodu
 
@@ -238,7 +239,7 @@ oblicz_wagi <- function(macierz) {
 \end{lstlisting}
 ```
 
-Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wstawisz poleceniem `\listingR`, które przyjmuje podpis, etykietę i ścieżkę — wtedy listing zawsze odpowiada aktualnej wersji kodu.
+Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wstawisz poleceniem `\listingR`, które przyjmuje podpis, etykietę i ścieżkę – wtedy listing zawsze odpowiada aktualnej wersji kodu.
 
 **Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.** Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery wychodzą przestawione. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może. Kontroli służy skrypt `tools/sprawdz-listingi.R`.
 
@@ -246,7 +247,7 @@ Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wst
 
 ### Praca w wielu plikach
 
-Rozdziały są osobnymi plikami włączanymi poleceniem `\input`, podawanym bez rozszerzenia. Dzięki temu nie przewijasz tysiąca wierszy i łatwiej znaleźć miejsce błędu. Żeby przy pisaniu jednego rozdziału kompilować tylko jego, zakomentuj pozostałe polecenia włączenia w pliku głównym. Przed oddaniem odkomentuj wszystkie — inaczej numeracja, spis treści i bibliografia będą niepełne.
+Rozdziały są osobnymi plikami włączanymi poleceniem `\input`, podawanym bez rozszerzenia. Dzięki temu nie przewijasz tysiąca wierszy i łatwiej znaleźć miejsce błędu. Żeby przy pisaniu jednego rozdziału kompilować tylko jego, zakomentuj pozostałe polecenia włączenia w pliku głównym. Przed oddaniem odkomentuj wszystkie – inaczej numeracja, spis treści i bibliografia będą niepełne.
 
 Znak procentu wyłącza resztę wiersza. Komentarze służą do notatek dla siebie i znikają z gotowego pliku. Przed oddaniem przejrzyj je i usuń te, które są notatkami roboczymi.
 
@@ -262,7 +263,7 @@ Pełne złożenie pracy wymaga kilku przebiegów, bo spis treści, odsyłacze, b
 latexmk -lualatex main.tex
 ```
 
-Na Overleaf sekwencja uruchamia się automatycznie. Skutek praktyczny jest taki, że **po dodaniu nowego powołania albo etykiety pierwsza kompilacja może pokazać znaki zapytania** — po drugiej znikną.
+Na Overleaf sekwencja uruchamia się automatycznie. Skutek praktyczny jest taki, że **po dodaniu nowego powołania albo etykiety pierwsza kompilacja może pokazać znaki zapytania** – po drugiej znikną.
 
 Polecenie `latexmk -c` usuwa pliki pomocnicze i zostawia gotowy dokument. Przydaje się, gdy kompilacja zaczyna zachowywać się dziwnie, bo uszkodzony plik pomocniczy potrafi utrzymywać błąd, którego w źródle już nie ma. Na Overleaf odpowiednikiem jest *Recompile from scratch* z rozwijanego menu obok przycisku kompilacji.
 
@@ -301,7 +302,7 @@ Komunikat zaczyna się od wykrzyknika, a numer wiersza stoi w linii rozpoczynaj�
 
 ### Gdy nic nie pomaga
 
-Wykonaj pełną kompilację od zera po usunięciu plików pomocniczych. Następnie zakomentuj połowę treści i skompiluj, żeby zawęzić, w której połowie jest problem; powtórz kilka razy, aż zostanie kilka wierszy. Na koniec sprawdź, czy problem występuje też w dokumencie pokazowym dołączonym do wzoru — jeżeli tak, przyczyna leży w środowisku, a nie w Twoim tekście.
+Wykonaj pełną kompilację od zera po usunięciu plików pomocniczych. Następnie zakomentuj połowę treści i skompiluj, żeby zawęzić, w której połowie jest problem; powtórz kilka razy, aż zostanie kilka wierszy. Na koniec sprawdź, czy problem występuje też w dokumencie pokazowym dołączonym do wzoru – jeżeli tak, przyczyna leży w środowisku, a nie w Twoim tekście.
 
 ---
 

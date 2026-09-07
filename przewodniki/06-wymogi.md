@@ -3,7 +3,7 @@
 
 # Wymogi formalne
 
-Zestawienie wymagań obowiązujących pracę licencjacką na kierunku elektroniczne przetwarzanie informacji, z podaniem źródła każdego z nich. Dwa dokumenty Instytutu uzupełniają się i miejscami rozchodzą — przy rozbieżności o **układzie pracy** rozstrzygają Standardy (Standardy EPI), a o **zapisie bibliografii** Instrukcja (Instrukcja ISI). W tabelach skrót S oznacza Standardy, a skrót I — Instrukcję.
+Zestawienie wymagań obowiązujących pracę licencjacką na kierunku elektroniczne przetwarzanie informacji, z podaniem źródła każdego z nich. Dwa dokumenty Instytutu uzupełniają się i miejscami rozchodzą – przy rozbieżności o **układzie pracy** rozstrzygają Standardy (Standardy EPI), a o **zapisie bibliografii** Instrukcja (Instrukcja ISI). W tabelach skrót S oznacza Standardy, a skrót I – Instrukcję.
 
 ## Skład
 
@@ -26,7 +26,7 @@ Zestawienie wymagań obowiązujących pracę licencjacką na kierunku elektronic
 | Strona tytułowa liczona, bez numeru | S, I | klasa |
 | Tekst wyjustowany | S, I | klasa |
 
-Wszystkie pozycje realizuje klasa dokumentu bez Twojego udziału. Nie zmieniaj ustawień składu w preambule — rozbieżność z wymogami obciąża pracę, a nie klasę.
+Wszystkie pozycje realizuje klasa dokumentu bez Twojego udziału. Nie zmieniaj ustawień składu w preambule – rozbieżność z wymogami obciąża pracę, a nie klasę.
 
 ## Objętość
 
@@ -38,7 +38,7 @@ Kontrolę wykonuje skrypt `tools/policz_znaki.R`, uruchamiany z katalogu wzoru. 
 
 Kolejność elementów we wzorze łączy wymagania obu dokumentów: strona tytułowa, opcjonalna strona informacyjna z abstraktem i słowami kluczowymi, spis treści, Wprowadzenie, rozdziały numerowane, Podsumowanie, wykaz źródeł, bibliografia, spis ilustracji, indeks nazwisk, aneksy.
 
-Standardy opisują treść rozdziałów zasadniczych jako logikę aplikacji — schemat ogólny, moduły, opis interfejsu ze zrzutami ekranu — oraz implementację, czyli format danych, strukturę bazy, sposób realizacji modułów, biblioteki zewnętrzne i narzędzia. Wzór realizuje to w trzech rozdziałach.
+Standardy opisują treść rozdziałów zasadniczych jako logikę aplikacji – schemat ogólny, moduły, opis interfejsu ze zrzutami ekranu – oraz implementację, czyli format danych, strukturę bazy, sposób realizacji modułów, biblioteki zewnętrzne i narzędzia. Wzór realizuje to w trzech rozdziałach.
 
 ### Strona informacyjna
 
@@ -51,7 +51,7 @@ Strona angielska powstaje automatycznie po wypełnieniu angielskich metadanych i
 Standardy wymieniają pięć sytuacji, w których wskazanie źródła jest obowiązkowe:
 
 1. cytat bezpośredni, czyli dosłownie przytoczone cudze słowa;
-2. graficzna forma cytatu — cudze tabele, rysunki, zestawienia;
+2. graficzna forma cytatu – cudze tabele, rysunki, zestawienia;
 3. cytat znany pośrednio, z tekstu jeszcze innego autora;
 4. zebrane przez kogoś informacje: ankiety, dane statystyczne, dokumenty, materiały ze stron internetowych;
 5. cudza teza, argument, opinia, idea, interpretacja, unikalne ujęcie tematu.
@@ -64,7 +64,7 @@ Brak zasygnalizowania w tekście, że posługujesz się cudzym słowem, oznacza 
 
 ## Przypisy i bibliografia
 
-Obowiązuje system nawiasowy, tak zwany harwardzki: nazwisko, rok, w razie potrzeby strona. Postacie powołań i odpowiadające im polecenia zestawia tabela **Postacie powołania**. Skracanie listy autorów, dodawanie inicjału i sufiksów rocznika wykonuje styl automatycznie — Twoim zadaniem jest poprawny wpis w pliku bibliograficznym.
+Obowiązuje system nawiasowy, tak zwany harwardzki: nazwisko, rok, w razie potrzeby strona. Postacie powołań i odpowiadające im polecenia zestawia tabela **Postacie powołania**. Skracanie listy autorów, dodawanie inicjału i sufiksów rocznika wykonuje styl automatycznie – Twoim zadaniem jest poprawny wpis w pliku bibliograficznym.
 
 Do przypisów dolnych trafiają wyłącznie przypisy dygresyjne, których należy unikać, oraz oryginalne brzmienie tłumaczonych cytatów.
 

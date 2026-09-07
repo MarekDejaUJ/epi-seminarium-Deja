@@ -14,8 +14,8 @@ bez numeru.
 | `przyklad.tex` | dokument pokazowy ze wszystkimi elementami składu i wszystkimi postaciami powołań |
 | `rozdzialy/*.tex` | rozdziały pracy z wbudowanymi wskazówkami do usunięcia |
 | `bibliografia/literatura.bib` | bibliografia; wpisy wzorcowe odpowiadają przykładom z Instrukcji ISI |
-| `epi-praca.cls` | klasa dokumentu — nie zmieniaj |
-| `isi-uj.bbx`, `isi-uj.cbx` | styl bibliograficzny instytutowy — nie zmieniaj |
+| `epi-praca.cls` | klasa dokumentu – nie zmieniaj |
+| `isi-uj.bbx`, `isi-uj.cbx` | styl bibliograficzny instytutowy – nie zmieniaj |
 | `polish-apa.lbx` | polska lokalizacja wariantu APA 7 |
 | `tools/policz_znaki.R` | kontrola objętości części zasadniczej |
 | `tools/sprawdz-listingi.R` | kontrola znaków w listingach kodu |
@@ -60,8 +60,8 @@ Dopisujesz je w nawiasie kwadratowym: `\documentclass[stronyinfo,oprawa]{epi-pra
 | `\pkg{nazwa}` | nazwa pakietu |
 | `\plik{ścieżka}` | nazwa pliku lub katalogu |
 | `\kod{fragment}` | krótki fragment kodu w zdaniu |
-| `\termin{słowo}` | wprowadzany termin, wyraz obcy, tytuł dzieła — kursywa |
-| `\wyroznienie{tekst}` | wyróżnienie treściowe — wytłuszczenie |
+| `\termin{słowo}` | wprowadzany termin, wyraz obcy, tytuł dzieła – kursywa |
+| `\wyroznienie{tekst}` | wyróżnienie treściowe – wytłuszczenie |
 | `\osoba{Nazwisko}{Imię}` | składa „Imię Nazwisko" i dopisuje pozycję do indeksu nazwisk |
 | `\zrodlo{opis}` | wiersz źródła pod tabelą, rysunkiem lub wykresem |
 
@@ -83,7 +83,7 @@ Miasto: Wydawca.` Powołania mają postać `(Kowalski 2010, s. 15-21)`.
 
 W pliku `.bib`:
 
-- pozycje obcojęzyczne oznacz `langid = {english}` — otrzymają oryginalne skróty
+- pozycje obcojęzyczne oznacz `langid = {english}` – otrzymają oryginalne skróty
   `vol.` i `pp.` zamiast `nr` i `s.`;
 - w pozycjach polskich numer czasopisma podawaj w polu `number`, w obcojęzycznych
   tom w polu `volume`;

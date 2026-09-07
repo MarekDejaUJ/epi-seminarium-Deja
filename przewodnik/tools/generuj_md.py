@@ -284,7 +284,8 @@ def zamien_poza_kodem(tekst):
     for k, czesc in enumerate(czesci):
         if czesc.startswith('`'):
             continue
-        czesc = czesc.replace('---', '—').replace('--', '–')
+        # W materialach seminarium nie stosujemy pauzy; oba zapisy daja polpauze.
+        czesc = czesc.replace('---', '–').replace('--', '–')
         czesc = czesc.replace('~', ' ')
         for a, b in (('\\%', '%'), ('\\&', '&'), ('\\_', '_'),
                      ('\\{', '{'), ('\\}', '}'), ('\\#', '#')):
@@ -526,7 +527,7 @@ def zapisz_indeks(tytuly):
         '',
         '# Przewodnik seminaryjny',
         '',
-        'Przewodnik prowadzi przez cały cykl seminarium — od pierwszego uruchomienia',
+        'Przewodnik prowadzi przez cały cykl seminarium – od pierwszego uruchomienia',
         'wzoru, przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną',
         'przed oddaniem pracy.',
         '',

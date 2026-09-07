@@ -3,7 +3,7 @@
 
 # Bibliografia: plik BibTeX i Zotero
 
-Bibliografia w pracy powstaje automatycznie z pliku `bibliografia/literatura.bib`. Nie składasz jej ręcznie i nie sortujesz — robi to styl odwzorowujący opisy z Instrukcji (Instrukcja ISI). Twoje zadanie sprowadza się do jednego: poprawnych wpisów w pliku. Opis wychodzi wtedy zgodny z wymogami sam.
+Bibliografia w pracy powstaje automatycznie z pliku `bibliografia/literatura.bib`. Nie składasz jej ręcznie i nie sortujesz – robi to styl odwzorowujący opisy z Instrukcji (Instrukcja ISI). Twoje zadanie sprowadza się do jednego: poprawnych wpisów w pliku. Opis wychodzi wtedy zgodny z wymogami sam.
 
 Zasada, której pilnuje recenzent: bibliografia zawiera wyłącznie pozycje faktycznie wykorzystane, do których odsyłają powołania w tekście. Pozycje przeczytane, ale niewykorzystane, do bibliografii nie trafiają.
 
@@ -40,13 +40,13 @@ author = {{Biblioteka Jagiellonska}}
 author = {van Dijk, Teun A.}
 ```
 
-Imiona podawaj w pełnym brzmieniu — Instrukcja wymaga pełnych imion w opisie bibliograficznym. Inicjały w powołaniu styl doda sam, gdy będą potrzebne do odróżnienia dwóch autorów o tym samym nazwisku.
+Imiona podawaj w pełnym brzmieniu – Instrukcja wymaga pełnych imion w opisie bibliograficznym. Inicjały w powołaniu styl doda sam, gdy będą potrzebne do odróżnienia dwóch autorów o tym samym nazwisku.
 
 Polskie znaki wpisuj wprost, a plik zapisz w UTF-8. LaTeX zmienia wielkość liter w tytułach w części stylów, więc skrót albo nazwę własną otocz dodatkowymi nawiasami klamrowymi: `title = {Zastosowanie metody {TOPSIS}}`.
 
 ## Typy wpisów
 
-Poniższe wpisy odpowiadają wprost przykładom opisu z Instrukcji. Komplet z komentarzami znajdziesz w pliku bibliograficznym dołączonym do wzoru — zacznij od skopiowania właściwego wzorca i podmiany wartości.
+Poniższe wpisy odpowiadają wprost przykładom opisu z Instrukcji. Komplet z komentarzami znajdziesz w pliku bibliograficznym dołączonym do wzoru – zacznij od skopiowania właściwego wzorca i podmiany wartości.
 
 ### Książka i praca zbiorowa
 
@@ -152,7 +152,7 @@ Dokument na nośniku materialnym opisuje typ nośnika w polu `howpublished`. Nor
 | `entrysubtype` | norma | wartość `norma` |
 | `shorthand` | norma | oznaczenie do powołania |
 
-Pole `langid` decyduje o skrótach w opisie, a jego brak jest traktowany jak pozycja polska. **Wypełniaj je zawsze** — inaczej artykuł angielski dostanie polskie oznaczenia tomu i stron.
+Pole `langid` decyduje o skrótach w opisie, a jego brak jest traktowany jak pozycja polska. **Wypełniaj je zawsze** – inaczej artykuł angielski dostanie polskie oznaczenia tomu i stron.
 
 ## Zotero
 
@@ -164,7 +164,7 @@ Zainstaluj Zotero wraz z wtyczką do przeglądarki, a następnie dodatek Better 
 
 W ustawieniach dodatku ustaw wzorzec klucza odpowiadający konwencji seminaryjnej i **włącz pinowanie kluczy**. Bez tego klucz może się zmienić po edycji metadanych i powołania w pracy przestaną działać.
 
-Eksport ustawia się raz: menu podręczne kolekcji, polecenie eksportu, format *Better BibLaTeX*, opcja utrzymywania pliku w aktualności. Jako cel wskaż plik bibliograficzny w projekcie pracy. Wybieraj format biblatex, a nie starszy BibTeX — styl korzysta z pól, których starszy format nie zna.
+Eksport ustawia się raz: menu podręczne kolekcji, polecenie eksportu, format *Better BibLaTeX*, opcja utrzymywania pliku w aktualności. Jako cel wskaż plik bibliograficzny w projekcie pracy. Wybieraj format biblatex, a nie starszy BibTeX – styl korzysta z pól, których starszy format nie zna.
 
 ### Odpowiedniki typów
 
@@ -187,7 +187,7 @@ Eksport ustawia się raz: menu podręczne kolekcji, polecenie eksportu, format *
 
 Metadane z baz bibliograficznych bywają niekompletne. Po każdym imporcie sprawdź imiona, bo bazy notorycznie zostawiają inicjały, a Instrukcja wymaga pełnych imion. Uzupełnij pole języka wartością `polish` albo `english`, bo stąd bierze się `langid`, i po eksporcie zajrzyj do pliku, czy pole rzeczywiście przeszło. Rozwiń skrócone tytuły czasopism. Sprawdź typ dokumentu, bo rozdział zaimportowany jako artykuł da zły opis. Uzupełnij miejsce wydania, które Zotero często gubi przy książkach. Usuń przedrostek adresowy z identyfikatora cyfrowego. Zapisz tytuł tak, jak w oryginale publikacji, bo bazy anglojęzyczne stosują kapitaliki wyrazowe.
 
-Zasada praktyczna: **nigdy nie ufaj pierwszemu importowi**. Sprawdzenie wpisu zajmuje minutę, a poprawianie bibliografii tydzień przed obroną — znacznie więcej.
+Zasada praktyczna: **nigdy nie ufaj pierwszemu importowi**. Sprawdzenie wpisu zajmuje minutę, a poprawianie bibliografii tydzień przed obroną – znacznie więcej.
 
 ## Powołania w tekście
 
@@ -238,7 +238,7 @@ Zbiór danych opisujesz jak dokument sieciowy, z podaniem wersji albo daty pobra
 
 ## Kontrola
 
-Przed oddaniem sprawdź trzy rzeczy. Po pierwsze zgodność w obie strony: każda pozycja bibliografii ma powołanie w tekście, a każde powołanie pozycję w bibliografii. Nierozwiązane powołania widać w dzienniku kompilacji; pozycji bez powołania styl po prostu nie złoży, co działa na Twoją korzyść. Po drugie obecność pozycji obcojęzycznych, wymaganych zarówno przez Standardy, jak i przez Instrukcję. Po trzecie kompletność opisów — przejrzyj gotową bibliografię w złożonym dokumencie, a nie w pliku źródłowym, bo brakujące miasto, ucięty tytuł czasopisma albo brak daty odczytu widać dopiero w składzie.
+Przed oddaniem sprawdź trzy rzeczy. Po pierwsze zgodność w obie strony: każda pozycja bibliografii ma powołanie w tekście, a każde powołanie pozycję w bibliografii. Nierozwiązane powołania widać w dzienniku kompilacji; pozycji bez powołania styl po prostu nie złoży, co działa na Twoją korzyść. Po drugie obecność pozycji obcojęzycznych, wymaganych zarówno przez Standardy, jak i przez Instrukcję. Po trzecie kompletność opisów – przejrzyj gotową bibliografię w złożonym dokumencie, a nie w pliku źródłowym, bo brakujące miasto, ucięty tytuł czasopisma albo brak daty odczytu widać dopiero w składzie.
 
 Gdy bibliografia jest pusta albo nieaktualna po zmianach w pliku, uruchom pełną kompilację od zera.
 
@@ -246,7 +246,7 @@ Gdy bibliografia jest pusta albo nieaktualna po zmianach w pliku, uruchom pełn�
 
 Jeżeli uzgodnisz z promotorem styl APA zamiast instytutowego, wystarczy dopisać opcję klasy `apa` w poleceniu `\documentclass`. Ten sam plik bibliograficzny obsługuje oba style. Łączniki są polskie, a nazwy miesięcy w datach dostępu pozostają w formie właściwej dla angielskiego zapisu APA.
 
-Wybór stylu uzgadnia się **raz, na początku** — Instrukcja wprost przewiduje ustalenie preferowanego stylu z promotorem. Zmiana w trakcie pisania oznacza przegląd wszystkich wpisów pod kątem pól wymaganych przez nowy styl.
+Wybór stylu uzgadnia się **raz, na początku** – Instrukcja wprost przewiduje ustalenie preferowanego stylu z promotorem. Zmiana w trakcie pisania oznacza przegląd wszystkich wpisów pod kątem pól wymaganych przez nowy styl.
 
 ---
 

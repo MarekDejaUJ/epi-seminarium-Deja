@@ -24,19 +24,20 @@ po przyjęciu projektu.
 | [`wzor-pracy/`](wzor-pracy/) | wzór pracy licencjackiej w LaTeX-u wraz ze stylem bibliograficznym zgodnym z wymaganiami Instytutu |
 | [`przewodniki/`](przewodniki/) | przewodnik seminaryjny do czytania na stronie: LaTeX, bibliografia i Zotero, Overleaf, jak napisać pracę rozdział po rozdziale, warsztat akademicki, wymogi formalne |
 | [`przewodnik/`](przewodnik/) | źródła przewodnika w LaTeX oraz wersja do druku w jednym pliku |
+| [`szablony/`](szablony/) | szkielet pakietu R przechodzący sprawdzenie w trybie zgodności z CRAN oraz szablon dokumentu specyfikacji |
 
-Kolejne części — szablon pakietu R, tematy prac i harmonogram — powstają w trakcie
+Kolejne części – tematy prac, strona projektu i harmonogram – powstają w trakcie
 przygotowania seminarium.
 
 ## Od czego zacząć
 
-1. [Warsztat pisania](przewodniki/05-warsztat.md#pytanie-analityczne) — zanim napiszesz
+1. [Warsztat pisania](przewodniki/05-warsztat.md#pytanie-analityczne) – zanim napiszesz
    pierwsze zdanie, sformułuj pytanie.
-2. [Overleaf](przewodniki/03-overleaf.md#ścieżka-studenta) — załóż projekt z wzoru
+2. [Overleaf](przewodniki/03-overleaf.md#ścieżka-studenta) – załóż projekt z wzoru
    i ustaw kompilator na LuaLaTeX.
-3. [LaTeX od podstaw](przewodniki/01-latex.md) — jeden wieczór wystarczy, żeby zacząć
+3. [LaTeX od podstaw](przewodniki/01-latex.md) – jeden wieczór wystarczy, żeby zacząć
    pisać. Zapisu każdego elementu szukaj w `wzor-pracy/przyklad.tex`.
-4. [Bibliografia i Zotero](przewodniki/02-bibliografia.md) — skonfiguruj **przed**
+4. [Bibliografia i Zotero](przewodniki/02-bibliografia.md) – skonfiguruj **przed**
    pierwszą lekturą, nie po dwudziestej.
 5. Przy pisaniu każdej części sięgaj do
    [przewodnika rozdział po rozdziale](przewodniki/04-jak-pisac.md).
@@ -50,7 +51,7 @@ Całość w jednym pliku, do druku: [`przewodnik/przewodnik.pdf`](przewodnik/prz
 Wzór realizuje wymagania dwóch dokumentów Instytutu: *Standardów prac dyplomowych
 na kierunku EPI* oraz *Instrukcji ISI* w części dotyczącej składu, przypisów i opisów
 bibliograficznych. Przy rozbieżnościach o układzie rozdziałów rozstrzygają Standardy EPI,
-o zapisie bibliografii — Instrukcja ISI.
+o zapisie bibliografii – Instrukcja ISI.
 
 ## Licencja
 

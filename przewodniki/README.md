@@ -3,7 +3,7 @@
 
 # Przewodnik seminaryjny
 
-Przewodnik prowadzi przez cały cykl seminarium — od pierwszego uruchomienia
+Przewodnik prowadzi przez cały cykl seminarium – od pierwszego uruchomienia
 wzoru, przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną
 przed oddaniem pracy.
 
