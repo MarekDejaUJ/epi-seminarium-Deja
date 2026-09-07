@@ -25,9 +25,9 @@ po przyjęciu projektu.
 | [`przewodniki/`](przewodniki/) | przewodnik seminaryjny do czytania na stronie: LaTeX, bibliografia i Zotero, Overleaf, jak napisać pracę rozdział po rozdziale, warsztat akademicki, wymogi formalne |
 | [`przewodnik/`](przewodnik/) | źródła przewodnika w LaTeX oraz wersja do druku w jednym pliku |
 | [`szablony/`](szablony/) | szkielet pakietu R przechodzący sprawdzenie w trybie zgodności z CRAN oraz szablon dokumentu specyfikacji |
+| [`tematy/`](tematy/) | czternaście briefów tematycznych wraz z bibliografią źródłową i notą o doborze tematów |
 
-Kolejne części – tematy prac, strona projektu i harmonogram – powstają w trakcie
-przygotowania seminarium.
+Harmonogram i witryna seminarium powstają w trakcie przygotowania.
 
 ## Od czego zacząć
 
