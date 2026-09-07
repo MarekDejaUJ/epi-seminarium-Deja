@@ -1,6 +1,9 @@
-# Przewodnik seminaryjny
+# Przewodnik seminaryjny — źródła
 
-Gotowy do czytania: **[`przewodnik.pdf`](przewodnik.pdf)**.
+Do czytania na stronie repozytorium: [`przewodniki/`](../przewodniki/).
+Całość w jednym pliku, do druku: **[`przewodnik.pdf`](przewodnik.pdf)**.
+
+Ten katalog zawiera źródła. Poprawki nanoś tutaj.
 
 Przewodnik prowadzi przez cały cykl seminarium — od pierwszego uruchomienia wzoru,
 przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną przed
@@ -32,3 +35,14 @@ latexmk -lualatex przewodnik.tex
 Plik `latexmkrc` wskazuje katalog [`../wzor-pracy`](../wzor-pracy/), w którym leżą klasa
 dokumentu i styl bibliograficzny. Dzięki temu wzór pozostaje samowystarczalny przy
 wgrywaniu na Overleaf, a przewodnik nie powiela jego plików.
+
+## Wersja do czytania na stronie
+
+Katalog [`przewodniki/`](../przewodniki/) powstaje automatycznie z plików tego katalogu:
+
+```bash
+python przewodnik/tools/generuj_md.py
+```
+
+Skrypt przenosi tabele, listingi, wzory, listy kontrolne, powołania i odsyłacze
+międzyrozdziałowe. Uruchom go po każdej zmianie w źródłach, razem z ponowną kompilacją.
