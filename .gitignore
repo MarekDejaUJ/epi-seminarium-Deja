@@ -1,0 +1,45 @@
+# Artefakty kompilacji LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.glo
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Artefakty R i RStudio
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+*.Rcheck/
+*.tar.gz
+*.Rout
+renv/library/
+renv/staging/
+
+# Pliki systemowe
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Katalogi lokalne i tymczasowe
+robocze/
+_site/
+.jekyll-cache/
+.jekyll-metadata
+node_modules/
+
+# Wynik kompilacji wzoru, odtwarzany lokalnie
+wzor-pracy/main.pdf

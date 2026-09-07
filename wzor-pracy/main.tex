@@ -1,0 +1,62 @@
+% Praca licencjacka na kierunku elektroniczne przetwarzanie informacji.
+%
+% W tym pliku uzupełniasz wyłącznie metadane poniżej. Treść piszesz w plikach
+% katalogu rozdzialy/. Składem zajmuje się klasa epi-praca.cls — nie zmieniaj
+% w niej niczego.
+%
+% Kompilacja: LuaLaTeX (zalecany, składa kod krojem JetBrains Mono).
+% Na Overleaf: Menu, Compiler, LuaLaTeX. Lokalnie: latexmk -lualatex main.tex
+%
+% Opcje klasy, które możesz dopisać w nawiasie kwadratowym poniżej:
+%   stronyinfo   — dodaje stronę informacyjną z abstraktem i słowami kluczowymi
+%   oprawa       — poszerza margines wewnętrzny na oprawę introligatorską
+%   dwustronnie  — druk dwustronny, numer strony w rogu zewnętrznym
+%   apa          — bibliografia w stylu APA 7 zamiast instytutowego
+
+\documentclass{epi-praca}
+
+\addbibresource{bibliografia/literatura.bib}
+
+% --- Metadane pracy --------------------------------------------------------
+
+\autor{Imię Nazwisko}
+\nralbumu{}
+\tytul{Tytuł pracy jako przykład zastosowania technologii}
+\promotor{dr Marek Deja}
+\rok{2027}
+\adresstrony{https://nazwauzytkownika.github.io/NazwaPakietu/}
+\adresrepozytorium{https://github.com/nazwauzytkownika/NazwaPakietu}
+
+% --- Metadane strony informacyjnej -----------------------------------------
+% Wypełnij tylko wtedy, gdy używasz opcji klasy stronyinfo.
+% Abstrakt: od 1000 do 1500 znaków ze spacjami. Słowa kluczowe: około pięciu,
+% w porządku alfabetycznym, rozdzielone przecinkami.
+
+\liczbastron{}
+\abstraktpl{}
+\slowaklucze{}
+\tytulen{}
+\abstrakten{}
+\keywords{}
+
+\begin{document}
+
+\stronatytulowa
+\stronyinformacyjne
+
+\tableofcontents
+
+\input{rozdzialy/00-wprowadzenie}
+\input{rozdzialy/01-podstawy}
+\input{rozdzialy/02-implementacja}
+\input{rozdzialy/03-studium-przypadku}
+\input{rozdzialy/04-podsumowanie}
+\input{rozdzialy/05-wykaz-zrodel}
+
+\bibliografia
+\spisilustracji
+\indeksnazwisk
+
+\input{rozdzialy/06-aneksy}
+
+\end{document}

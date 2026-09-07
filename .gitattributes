@@ -1,0 +1,24 @@
+* text=auto
+
+*.tex text
+*.cls text
+*.bbx text
+*.cbx text
+*.bib text
+*.R text
+*.Rmd text
+*.md text
+*.yml text
+*.yaml text
+
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.otf binary
+*.ttf binary
+*.rda binary
+*.rds binary
+*.docx binary
+*.zip binary

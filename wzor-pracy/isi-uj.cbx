@@ -1,0 +1,55 @@
+%% isi-uj.cbx
+%% Powolania w tekscie wedlug Instrukcji Instytutu Studiow Informacyjnych UJ.
+%%
+%% Postacie obslugiwane:
+%%   (Kowalski 2010)                (Kowalski 2010, s. 15-21)
+%%   (Nowak, Kowalski 2004, s. 23)  (Nowak i in. 1999, s. 15)
+%%   (Nowak P. 1999, s. 15)         (Kowalski 2010a, s. 18)
+%%   (Kowalski red. 1998)           (Elektroniczne publikacje 2008)
+%%   (Kowalski 2005, s. 9; Nowak 2006, s. 23)
+
+\ProvidesFile{isi-uj.cbx}[2026/09/07 v1.0 Powolania wg Instrukcji ISI UJ]
+
+\RequireCitationStyle{authoryear}
+
+% Brak przecinka miedzy nazwiskiem a rokiem.
+\renewcommand*{\nameyeardelim}{\addspace}
+
+% Nazwiska rozdzielane przecinkiem, rowniez przed ostatnim.
+\DeclareDelimFormat[cite,parencite,textcite]{multinamedelim}{\addcomma\space}
+\DeclareDelimFormat[cite,parencite,textcite]{finalnamedelim}{\addcomma\space}
+
+% Skrocenie listy powyzej trzech nazwisk.
+\renewcommand*{\andothersdelim}{\addspace}
+
+% Przecinek przed lokalizacja w tekscie.
+\renewcommand*{\postnotedelim}{\addcomma\space}
+
+% Kilka pozycji w jednym powolaniu.
+\renewcommand*{\multicitedelim}{\addsemicolon\space}
+\renewcommand*{\compcitedelim}{\addsemicolon\space}
+
+% Nazwisko, a inicjal imienia dopiero wtedy, gdy samo nazwisko nie wystarcza
+% do jednoznacznej identyfikacji pozycji w bibliografii.
+\DeclareNameFormat{labelname}{%
+  \usebibmacro{name:family}
+    {\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
+  \ifcase\value{uniquename}%
+  \or
+    \ifdefvoid{\namepartgiveni}{}{\addspace\namepartgiveni}%
+  \or
+    \ifdefvoid{\namepartgiven}{}{\addspace\namepartgiven}%
+  \fi
+  \usebibmacro{name:andothers}}
+
+% Gdy pozycja nie ma autora ani redaktora, etykieta powolania jest tytul.
+% Sklada sie go bez cudzyslowu, wedlug wzoru (Elektroniczne publikacje 2008).
+\DeclareFieldFormat{citetitle}{#1}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,online,misc,
+                    unpublished,software,manual,thesis]{citetitle}{#1}
+
+% Prace zbiorowe przywolywane przez nazwisko redaktora z dopiskiem "red.".
+\DeclareNameWrapperFormat{labelname}{%
+  #1\iffieldequalstr{labelnamesource}{editor}{\addspace\bibstring{editor}}{}}
+
+\endinput

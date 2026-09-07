@@ -1,0 +1,62 @@
+%% polish-apa.lbx
+%% Polska lokalizacja stylu APA 7 dla pakietu biblatex-apa.
+%%
+%% Pakiet biblatex-apa nie zawiera pliku dla jezyka polskiego. Plik ponizej
+%% wczytuje najpierw lokalizacje angielska, ktora deklaruje komplet lancuchow
+%% wymaganych przez ten styl, a nastepnie przykrywa polska typografia dat
+%% oraz polskimi odpowiednikami lancuchow uzywanych w pracy dyplomowej.
+%%
+%% Lancuchy dotyczace typow dokumentow, ktore w pracy o pakiecie R nie wystepuja
+%% - nagran, filmow, audycji, dziel plastycznych - pozostaja w wersji angielskiej.
+
+\ProvidesFile{polish-apa.lbx}[2026/09/07 v1.0 Polska lokalizacja APA 7]
+
+\InputIfFileExists{english-apa.lbx}{}{%
+  \PackageError{biblatex}{Nie znaleziono pliku english-apa.lbx}
+    {Zainstaluj pakiet biblatex-apa.}}
+
+% Dodatkow typograficznych nie dziedziczymy z lokalizacji polskiej: styl APA
+% definiuje wlasne makra skladania dat, ktorych polska lokalizacja nie zna.
+% Zmieniamy wylacznie lancuchy tekstowe.
+
+\DeclareBibliographyStrings{%
+  inherit          = {polish},
+  and              = {{i}{i}},
+  andothers        = {{i in\adddot}{i in\adddot}},
+  andmore          = {{i in\adddot}{i in\adddot}},
+  editor           = {{redaktor}{red\adddot}},
+  editors          = {{redaktorzy}{red\adddot}},
+  translator       = {{t\l umacz}{t\l um\adddot}},
+  translators      = {{t\l umacze}{t\l um\adddot}},
+  byeditor         = {{pod redakcj\k a}{pod red\adddot}},
+  bytranslator     = {{w t\l umaczeniu}{t\l um\adddot}},
+  edition          = {{wydanie}{wyd\adddot}},
+  revisededition   = {{wydanie poprawione}{wyd\adddot\space popr\adddot}},
+  volume           = {{tom}{t\adddot}},
+  volumes          = {{tomy}{t\adddot}},
+  number           = {{numer}{nr}},
+  page             = {{strona}{s\adddot}},
+  pages            = {{strony}{s\adddot}},
+  in               = {{w}{w}},
+  inseries         = {{w serii}{w serii}},
+  retrieved        = {{pobrano}{pobrano}},
+  from             = {{z}{z}},
+  on               = {{dnia}{dnia}},
+  available        = {{dost\k epne}{dost\k epne}},
+  urlseen          = {{odczyt}{odczyt}},
+  archivedat       = {{zarchiwizowano w}{zarchiwizowano w}},
+  nodate           = {{bez daty}{b\adddot d\adddot}},
+  inpress          = {{w druku}{w druku}},
+  origyear         = {{wydanie oryginalne}{wyd\adddot\space oryg\adddot}},
+  phdthesis        = {{rozprawa doktorska}{rozprawa doktorska}},
+  mathesis         = {{praca magisterska}{praca magisterska}},
+  manunpub         = {{maszynopis niepublikowany}{masz\adddot\space niepubl\adddot}},
+  maninprep        = {{maszynopis w przygotowaniu}{masz\adddot\space w przyg\adddot}},
+  mansub           = {{maszynopis z\l o\.zony do druku}{masz\adddot\space z\l o\.zony}},
+  reviewof         = {{recenzja pracy}{recenzja pracy}},
+  with             = {{wsp\'o\l praca}{wsp\'o\l pr\adddot}},
+  supplement       = {{materia\l{} uzupe\l niaj\k acy}{materia\l{} uzupe\l niaj\k acy}},
+  commenton        = {{komentarz do}{komentarz do}},
+}
+
+\endinput

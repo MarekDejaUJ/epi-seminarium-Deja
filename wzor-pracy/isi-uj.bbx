@@ -1,0 +1,323 @@
+%% isi-uj.bbx
+%% Opisy bibliograficzne wedlug Instrukcji Instytutu Studiow Informacyjnych UJ.
+%%
+%% Schemat ogolny:
+%%   Nazwisko, Imie (rok). Tytul. Miasto: Wydawca.
+%%   Nazwisko, Imie (rok). Tytul artykulu. Tytul czasopisma, nr 2, s. 3-16.
+%%   Nazwisko, Imie (rok). Tytul. W: Imie Nazwisko red. Tytul tomu. Miasto: Wydawca, s. 11-28.
+%%
+%% Tytuly wydawnictw zwartych i czasopism kursywa, tytuly artykulow pismem prostym.
+%% Nazwiska wspolautorow rozdzielone srednikiem. Kazdy opis zakonczony kropka.
+%%
+%% Pozycje obcojezyczne oznaczane polem langid - biblatex podstawia wtedy
+%% oryginalne skroty (vol., pp.) zamiast polskich (t., s.).
+
+\ProvidesFile{isi-uj.bbx}[2026/09/07 v1.0 Opisy bibliograficzne wg Instrukcji ISI UJ]
+
+\RequireBibliographyStyle{authoryear}
+
+% --------------------------------------------------------------------------
+% Ciagi znakow
+% --------------------------------------------------------------------------
+
+\DefineBibliographyStrings{polish}{%
+  editor      = {red\adddot},
+  editors     = {red\adddot},
+  andothers   = {i in\adddot},
+  in          = {W},
+  urlseen     = {odczyt},
+  page        = {s\adddot},
+  pages       = {s\adddot},
+  number      = {nr},
+  volume      = {t\adddot},
+}
+
+\DefineBibliographyStrings{english}{%
+  urlseen     = {accessed},
+}
+
+% --------------------------------------------------------------------------
+% Data odczytu w postaci dzien.miesiac.rok, miesiac dwucyfrowo
+% --------------------------------------------------------------------------
+
+\newcommand*{\isi@pad}[1]{\ifnumless{#1}{10}{0#1}{#1}}
+
+\DefineBibliographyExtras{polish}{%
+  \protected\def\mkbibdatelong#1#2#3{%
+    \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\adddot}%
+    \iffieldundef{#2}{}{\isi@pad{\thefield{#2}}\adddot}%
+    \iffieldundef{#1}{}{\thefield{#1}}}%
+  \protected\def\mkbibdateshort#1#2#3{\mkbibdatelong{#1}{#2}{#3}}%
+}
+
+% --------------------------------------------------------------------------
+% Postac pol
+% --------------------------------------------------------------------------
+
+% Wydawnictwa zwarte i czasopisma kursywa.
+\DeclareFieldFormat{title}{\mkbibemph{#1}}
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}}
+\DeclareFieldFormat{booktitle}{\mkbibemph{#1}}
+\DeclareFieldFormat{maintitle}{\mkbibemph{#1}}
+
+% Tytuly artykulow i czesci wydawnictw pismem prostym.
+\DeclareFieldFormat[article,incollection,inbook,inproceedings,online,misc,
+                    unpublished,software,manual]{title}{#1}
+
+% Oznaczenia numeru, tomu, stron i daty odczytu zaleza od jezyka pozycji.
+% Pozycje polskie opisuje sie skrotami polskimi, pozostale - oryginalnymi.
+% Rozstrzyga pole langid; jego brak jest traktowany jak pozycja polska.
+\newcommand*{\isi@wg}[2]{%
+  \iffieldundef{langid}{#1}{\iffieldequalstr{langid}{polish}{#1}{#2}}}
+
+\DeclareFieldFormat{number}{\isi@wg{nr}{no.}\addnbspace#1}
+\DeclareFieldFormat[article]{number}{\isi@wg{nr}{no.}\addnbspace#1}
+\DeclareFieldFormat{volume}{\isi@wg{t.}{vol.}\addnbspace#1}
+\DeclareFieldFormat[article]{volume}{\isi@wg{t.}{vol.}\addnbspace#1}
+\DeclareFieldFormat{issue}{#1}
+\DeclareFieldFormat{pages}{%
+  \isi@wg{s.\addnbspace#1}{\ifnumerals{#1}{pp.}{p.}\addnbspace#1}}
+\DeclareFieldFormat{doi}{doi\addcolon\nolinkurl{#1}}
+\DeclareFieldFormat{url}{\url{#1}}
+\DeclareFieldFormat{urldate}{%
+  \mkbibparens{\isi@wg{odczyt}{accessed}\addcolon\space#1}}
+\DeclareFieldFormat{howpublished}{\mkbibparens{#1}}
+\DeclareFieldFormat{version}{\bibstring{version}~#1}
+\DeclareFieldFormat[thesis]{type}{#1}
+\DeclareFieldFormat{note}{#1}
+
+% --------------------------------------------------------------------------
+% Postac nazwisk
+% --------------------------------------------------------------------------
+
+% Wszyscy autorzy w porzadku nazwisko, imie pelne.
+\DeclareNameAlias{author}{family-given}
+\DeclareNameAlias{editor}{family-given}
+\DeclareNameAlias{sortname}{family-given}
+\DeclareNameAlias{default}{family-given}
+
+% Redaktor tomu przywolywany wewnatrz opisu w porzadku imie nazwisko.
+\DeclareNameAlias{isi:redaktor}{given-family}
+\DeclareNameAlias{bookauthor}{family-given}
+
+% W bibliografii nazwiska rozdziela srednik.
+\DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
+
+% --------------------------------------------------------------------------
+% Skladniki opisu
+% --------------------------------------------------------------------------
+
+\newtoggle{isi:tytulwiodacy}
+
+\newbibmacro*{isi:tytul}{%
+  \printfield{title}%
+  \iffieldundef{subtitle}{}{\setunit{\subtitlepunct}\printfield{subtitle}}%
+  \iffieldundef{howpublished}{}{\setunit{\addspace}\printfield{howpublished}}}
+
+\newbibmacro*{isi:rok}{%
+  \iffieldundef{labelyear}
+    {}
+    {\setunit*{\addspace}%
+     \printtext[parens]{\printlabeldateextra}}}
+
+\newbibmacro*{isi:nazwiska}{%
+  \ifnameundef{author}
+    {\ifnameundef{editor}
+       {}
+       {\printnames{editor}%
+        \setunit{\addspace}\bibstring{editor}}}
+    {\printnames{author}}}
+
+% Gdy pozycja nie ma ani autora, ani redaktora, rolę etykiety przejmuje tytul
+% i wtedy rok stoi bezposrednio po nim.
+\newbibmacro*{isi:etykieta}{%
+  \ifboolexpr{ test {\ifnameundef{author}} and test {\ifnameundef{editor}} }
+    {\global\toggletrue{isi:tytulwiodacy}%
+     \usebibmacro{isi:tytul}%
+     \usebibmacro{isi:rok}}
+    {\global\togglefalse{isi:tytulwiodacy}%
+     \usebibmacro{isi:nazwiska}%
+     \usebibmacro{isi:rok}}}
+
+\newbibmacro*{isi:tytul-po-etykiecie}{%
+  \iftoggle{isi:tytulwiodacy}{}{\newunit\newblock\usebibmacro{isi:tytul}}}
+
+\newbibmacro*{isi:wydawca}{%
+  \iflistundef{location}
+    {\printlist{publisher}}
+    {\printlist{location}%
+     \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}}}
+
+\newbibmacro*{isi:instytucja}{%
+  \iflistundef{location}
+    {\printlist{institution}}
+    {\printlist{location}%
+     \iflistundef{institution}{}{\setunit*{\addcolon\space}\printlist{institution}}}}
+
+% Tom lub numer czasopisma. Pozycje polskie opisuje sie numerem, obcojezyczne
+% zwyczajowo tomem - biblatex podstawia skrot wlasciwy dla jezyka pozycji.
+\newbibmacro*{isi:numeracja}{%
+  \iffieldundef{volume}
+    {\printfield{number}}
+    {\printfield{volume}%
+     \iffieldundef{number}{}{\setunit{\addcomma\space}\printfield{number}}}%
+  \iffieldundef{issue}{}{\setunit{\addcomma\space}\printfield{issue}}}
+
+\newbibmacro*{isi:w}{%
+  \printtext{\bibstring{in}\addcolon}\setunit{\addspace}%
+  \ifnameundef{bookauthor}
+    {\ifnameundef{editor}
+       {}
+       {\printnames[isi:redaktor]{editor}%
+        \setunit{\addspace}\bibstring{editor}\setunit{\addspace}}}
+    {\printnames{bookauthor}%
+     \setunit{\addspace}}%
+  \printfield{booktitle}}
+
+\newbibmacro*{isi:elektroniczne}{%
+  \iffieldundef{doi}{}{\newunit\printfield{doi}}%
+  \iffieldundef{url}{}{\newunit\printfield{url}%
+    \iffieldundef{urlyear}{}{\setunit{\addspace}\printurldate}}%
+  \iffieldundef{url}{\iffieldundef{urlyear}{}{\newunit\printurldate}}{}}
+
+\newbibmacro*{isi:uwaga}{%
+  \iffieldundef{note}{}{\newunit\printfield{note}}}
+
+% --------------------------------------------------------------------------
+% Postacie opisow
+% --------------------------------------------------------------------------
+
+% Ksiazka, praca zbiorowa, materialy konferencyjne.
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{isi:etykieta}%
+  \usebibmacro{isi:tytul-po-etykiecie}%
+  \iffieldundef{edition}{}{\newunit\newblock\printfield{edition}}%
+  \newunit\newblock
+  \usebibmacro{isi:wydawca}%
+  \usebibmacro{isi:uwaga}%
+  \usebibmacro{isi:elektroniczne}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyAlias{mvbook}{book}
+\DeclareBibliographyAlias{collection}{book}
+\DeclareBibliographyAlias{mvcollection}{book}
+\DeclareBibliographyAlias{proceedings}{book}
+\DeclareBibliographyAlias{mvproceedings}{book}
+\DeclareBibliographyAlias{reference}{book}
+
+% Artykul w czasopismie lub gazecie.
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{isi:etykieta}%
+  \usebibmacro{isi:tytul-po-etykiecie}%
+  \newunit\newblock
+  \printfield{journaltitle}%
+  \setunit{\addcomma\space}%
+  \usebibmacro{isi:numeracja}%
+  \setunit{\addcomma\space}%
+  \printfield{pages}%
+  \usebibmacro{isi:uwaga}%
+  \usebibmacro{isi:elektroniczne}%
+  \usebibmacro{finentry}}
+
+% Rozdzial w pracy zbiorowej, referat w materialach konferencyjnych,
+% haslo w wydawnictwie informacyjnym.
+% Haslo bez wlasnego autora, umieszczone w dziele autorskim, otwiera opis wlasnym
+% tytulem, a rok stoi przy autorze dziela nadrzednego.
+\DeclareBibliographyDriver{incollection}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \ifboolexpr{ test {\ifnameundef{author}}
+               and not test {\ifnameundef{bookauthor}} }
+    {\usebibmacro{isi:tytul}%
+     \newunit\newblock
+     \printtext{\bibstring{in}\addcolon}\setunit{\addspace}%
+     \printnames{bookauthor}%
+     \usebibmacro{isi:rok}%
+     \newunit\newblock
+     \printfield{booktitle}}
+    {\usebibmacro{isi:etykieta}%
+     \usebibmacro{isi:tytul-po-etykiecie}%
+     \newunit\newblock
+     \usebibmacro{isi:w}}%
+  \newunit\newblock
+  \usebibmacro{isi:wydawca}%
+  \setunit{\addcomma\space}%
+  \printfield{pages}%
+  \usebibmacro{isi:uwaga}%
+  \usebibmacro{isi:elektroniczne}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyAlias{inbook}{incollection}
+\DeclareBibliographyAlias{inproceedings}{incollection}
+\DeclareBibliographyAlias{inreference}{incollection}
+
+% Zasob sieciowy, ktory nie jest ksiazka ani artykulem.
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{isi:etykieta}%
+  \usebibmacro{isi:tytul-po-etykiecie}%
+  \iflistundef{organization}{}{\newunit\newblock\printlist{organization}}%
+  \usebibmacro{isi:uwaga}%
+  \usebibmacro{isi:elektroniczne}%
+  \usebibmacro{finentry}}
+
+% Oprogramowanie i dokumentacja techniczna.
+\DeclareBibliographyDriver{software}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{isi:etykieta}%
+  \usebibmacro{isi:tytul-po-etykiecie}%
+  \iffieldundef{version}{}{\newunit\newblock\printfield{version}}%
+  \iflistundef{organization}{}{\newunit\newblock\printlist{organization}}%
+  \usebibmacro{isi:uwaga}%
+  \usebibmacro{isi:elektroniczne}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyAlias{manual}{software}
+
+% Praca dyplomowa i raport instytucjonalny.
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{isi:etykieta}%
+  \usebibmacro{isi:tytul-po-etykiecie}%
+  \iffieldundef{type}{}{\newunit\newblock\printfield{type}}%
+  \newunit\newblock
+  \usebibmacro{isi:instytucja}%
+  \usebibmacro{isi:uwaga}%
+  \usebibmacro{isi:elektroniczne}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyAlias{report}{thesis}
+
+% Pozycje pozostale. Normy opisuje sie z polem entrysubtype rownym norma -
+% wtedy rok nie jest powtarzany w nawiasie, bo wchodzi w sklad oznaczenia normy.
+\DeclareBibliographyDriver{misc}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \iffieldequalstr{entrysubtype}{norma}
+    {\usebibmacro{isi:tytul}}
+    {\usebibmacro{isi:etykieta}%
+     \usebibmacro{isi:tytul-po-etykiecie}}%
+  \iflistundef{organization}{}{\newunit\newblock\printlist{organization}}%
+  \iflistundef{publisher}{}{\newunit\newblock\usebibmacro{isi:wydawca}}%
+  \usebibmacro{isi:uwaga}%
+  \usebibmacro{isi:elektroniczne}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyAlias{unpublished}{misc}
+\DeclareBibliographyAlias{*}{misc}
+
+% --------------------------------------------------------------------------
+% Netografia jako wyodrebniona czesc bibliografii
+% --------------------------------------------------------------------------
+% Wpisy oznaczone keywords = {netografia} mozna zlozyc osobno poleceniem
+% \printbibliography[keyword=netografia,title={Netografia}].
+
+\endinput

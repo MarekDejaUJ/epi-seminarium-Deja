@@ -1,0 +1,46 @@
+\chapter{Studium przypadku}
+
+% Odpowiednik sekcji Illustrative Examples. Pokazujesz, że narzędzie działa
+% na danych, a nie tylko się kompiluje. Objętość: 8-10 stron.
+
+Wprowadź zagadnienie, na którym demonstrujesz narzędzie, i uzasadnij jego
+wybór. Zagadnienie ma należeć do dziedziny wskazanej w tytule pracy.
+
+\section{Charakterystyka danych}
+
+Opisz zbiór: pochodzenie, licencję, liczbę obserwacji i zmiennych, skale
+pomiarowe, braki danych. Jeżeli używasz danych wygenerowanych własną
+procedurą, odeślij do sekcji, w której ją opisałeś, i podaj przyjęte
+parametry. Wyjaśnij, jak wybór zbioru wpływa na to, co wolno wywnioskować.
+
+\section{Przebieg analizy}
+
+Pokaż pełną ścieżkę od danych surowych do wyniku.
+
+\begin{lstlisting}[caption={Przebieg analizy z uzyciem pakietu},label={lst:analiza}]
+library(NazwaPakietu)
+
+dane <- przygotuj_dane(zbior_surowy, model = "Kryterium =~ zmienna_a + zmienna_b")
+wynik <- oblicz_wynik(dane, wagi = "entropia")
+
+summary(wynik)
+\end{lstlisting}
+
+\section{Wyniki}
+
+Przedstaw wyniki w tabeli i na rysunku, a następnie zinterpretuj je w tekście.
+Tabela i rysunek nie zastępują interpretacji.
+
+\begin{rysunekepi}{Tytuł rysunku}{rys:wynik}
+% \includegraphics[width=0.78\textwidth]{nazwa-pliku.png}
+\zrodlo{oprac. własne}
+\end{rysunekepi}
+
+Oddziel to, co pokazuje narzędzie, od tego, co twierdzisz Ty. Narzędzie
+zwraca liczby; wniosek merytoryczny jest Twój i wymaga uzasadnienia.
+
+\section{Porównanie i ocena poprawności}
+
+Zestaw wyniki z rezultatem opublikowanym w artykule źródłowym albo z metodą
+odniesienia. Rozbieżność nie jest porażką — jest wynikiem, o ile potrafisz
+wskazać jej przyczynę.

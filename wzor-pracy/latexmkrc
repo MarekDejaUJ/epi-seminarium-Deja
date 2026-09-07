@@ -1,0 +1,5 @@
+$pdf_mode = 4;
+$lualatex = 'lualatex -interaction=nonstopmode -synctex=1 %O %S';
+$bibtex_use = 2;
+$makeindex = 'makeindex -q %O -o %D %S';
+$clean_ext = 'bbl run.xml synctex.gz lop nav snm';
