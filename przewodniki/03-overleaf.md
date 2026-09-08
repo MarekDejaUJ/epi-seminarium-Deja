@@ -3,15 +3,17 @@
 
 # Overleaf i współpraca
 
-Overleaf to LaTeX w przeglądarce. Nie trzeba nic instalować, projekt jest dostępny z każdego komputera, a promotor widzi tę samą wersję co Ty. Dla pracy licencjackiej pisanej pod opieką promotora to najmniej kłopotliwe środowisko. Praca lokalna też jest możliwa i opisuje ją podrozdział [Praca lokalna w Positronie](#praca-lokalna-w-positronie).
+Overleaf to LaTeX w przeglądarce. Nie trzeba nic instalować, projekt jest dostępny z każdego komputera, a promotor widzi tę samą wersję co Ty. Uniwersytet prowadzi **własną instalację** pod adresem `overleaf.uj.edu.pl` i to na niej pracujemy: projekty zostają w infrastrukturze uczelni, a udostępnianie działa wewnątrz Uniwersytetu. Dla pracy licencjackiej pisanej pod opieką promotora to najmniej kłopotliwe środowisko. Praca lokalna też jest możliwa i opisana jest w podrozdziale [Praca lokalna w Positronie](#praca-lokalna-w-positronie).
 
 ## Ścieżka studenta
 
 ### Konto i projekt
 
-Załóż konto **na adres uczelniany**. Sprawdź, czy Uniwersytet udostępnia licencję instytucjonalną – jeżeli tak, konto w domenie uczelni otrzymuje funkcje płatne. Cała ścieżka opisana niżej działa również na planie bezpłatnym.
+Konta nie zakładasz. Logujesz się przez **centralny punkt logowania** Uniwersytetu, kontem w domenie `@student.uj.edu.pl`. Jeżeli masz konto w serwisie publicznym Overleaf, jest ono niezależne: projektów między jednym a drugim nie widać i nie da się ich przenieść inaczej niż przez pobranie i wgranie archiwum.
 
-Wzór pobierasz z repozytorium seminarium: pobierz archiwum całego repozytorium, rozpakuj je, spakuj **sam katalog wzoru** do nowego archiwum i wgraj je jako nowy projekt. Alternatywnie promotor udostępni gotowy projekt wzorcowy łączem tylko do odczytu; wtedy wystarczy skopiować projekt do własnego konta.
+Wzór wgrywasz jako **paczkę**. Pobierz plik `wzor-overleaf.zip` ze strony seminarium (<https://marekdejauj.github.io/epi-seminarium-Deja/>), a na Overleaf wybierz zakładanie nowego projektu z przesłanego archiwum i wskaż pobrany plik. Projekt powstaje od razu z gotową strukturą katalogów i niczego nie trzeba układać ręcznie.
+
+Paczka powstaje z repozytorium przy każdej zmianie wzoru, więc pobrana dziś jest zgodna z bieżącą wersją klasy i stylu bibliograficznego. Wariant zapasowy, gdy strona seminarium jest niedostępna: pobierz archiwum całego repozytorium, rozpakuj je i spakuj **zawartość katalogu wzoru** do nowego archiwum.
 
 ### Ustawienia
 
@@ -33,21 +35,21 @@ Klasy dokumentu ani plików stylu bibliograficznego **nie ruszasz**. Zmiana czeg
 
 ### Kompilacja i kopie
 
-Pierwsza kompilacja po dodaniu nowego powołania albo etykiety może pokazać znaki zapytania; po drugiej znikną. Rozwijane menu obok przycisku kompilacji zawiera polecenie pełnego przebiegu od zera – użyj go, gdy dokument przestaje odpowiadać zmianom albo gdy bibliografia nie chce się odświeżyć.
+Pierwsza kompilacja po dodaniu nowego cytowania albo etykiety może pokazać znaki zapytania; po drugiej znikną. Rozwijane menu obok przycisku kompilacji zawiera polecenie pełnego przebiegu od zera – użyj go, gdy dokument przestaje odpowiadać zmianom albo gdy bibliografia nie chce się odświeżyć.
 
-Plan bezpłatny ma limit czasu kompilacji. Praca licencjacka mieści się w nim spokojnie, ale gdy zaczniesz się o niego ocierać, zakomentuj w pliku głównym włączenia rozdziałów, nad którymi akurat nie pracujesz. Przed oddaniem odkomentuj wszystkie.
+Kompilacja ma ograniczenie czasu. Praca licencjacka mieści się w nim spokojnie, ale gdy zaczniesz się o nie ocierać, zakomentuj w pliku głównym włączenia rozdziałów, nad którymi akurat nie pracujesz. Przed oddaniem odkomentuj wszystkie.
 
-Overleaf przechowuje projekt na swoich serwerach, ale **to nie jest kopia zapasowa**. Raz w tygodniu pobierz źródła projektu i zapisz je poza komputerem, na którym pracujesz; przed każdym większym przemeblowaniem pracy dodatkowo. Historia zmian na planie bezpłatnym jest ograniczona i kopii zapasowej nie zastępuje.
+Projekt leży na serwerze uczelni i ma historię zmian, ale **to nie jest kopia zapasowa**. Historia chroni przed Twoim błędem, nie przed awarią serwera ani przed utratą dostępu do konta. Raz w tygodniu pobierz źródła projektu i zapisz je poza tą instalacją; przed każdym większym przemeblowaniem pracy dodatkowo.
 
 ### Udostępnienie i oddanie
 
-Udostępnij projekt promotorowi na jego adres, z prawem edycji. Na planie bezpłatnym każdy projekt można udostępnić jednej osobie – dokładnie tyle, ile trzeba. Recenzentowi, gdy zajdzie potrzeba, udostępnij łącze tylko do odczytu; łącza nie liczą się do limitu współpracowników.
+Udostępnij projekt promotorowi **na adres uczelniany**, z prawem edycji. Udostępnianie działa wewnątrz instalacji uczelnianej, więc adres prywatny nie zadziała. Recenzentowi, gdy zajdzie potrzeba, wystarczy łącze tylko do odczytu.
 
-Do Archiwum Prac trafia plik wynikowy pobrany z projektu. Przed pobraniem wykonaj pełną kompilację od zera, sprawdź brak nierozwiązanych powołań i odsyłaczy oraz przejdź listę kontrolną z podrozdziału [Lista kontrolna przed oddaniem](06-wymogi.md#lista-kontrolna-przed-oddaniem).
+Do Archiwum Prac trafia plik wynikowy pobrany z projektu. Przed pobraniem wykonaj pełną kompilację od zera, sprawdź brak nierozwiązanych cytowań i odsyłaczy oraz przejdź listę kontrolną z podrozdziału [Lista kontrolna przed oddaniem](06-wymogi.md#lista-kontrolna-przed-oddaniem).
 
 ## Plik bibliograficzny a Zotero
 
-Dodatek Better BibTeX odświeża plik bibliograficzny **na Twoim dysku**. Overleaf o tym nie wie, więc plik trzeba do projektu przenieść. Najprostszy sposób to wgranie ręczne: w drzewie plików wskaż katalog bibliografii, prześlij zaktualizowany plik i potwierdź nadpisanie. Wystarczająco dobre, jeżeli robisz to raz na tydzień. Overleaf potrafi też wczytać publiczną bibliotekę Zotero i odświeżać ją na żądanie, co jest wygodne, ale wymaga ustawienia biblioteki jako publicznej. Przy dostępie do synchronizacji z repozytorium plik odświeża się razem z resztą projektu.
+Dodatek Better BibTeX odświeża plik bibliograficzny **na Twoim dysku**. Overleaf o tym nie wie, więc plik trzeba do projektu przenieść. Najprostszy sposób to wgranie ręczne: w drzewie plików wskaż katalog bibliografii, prześlij zaktualizowany plik i potwierdź nadpisanie. Wystarczająco dobre, jeżeli robisz to raz na tydzień. Instalacja może mieć wczytywanie biblioteki Zotero na żądanie; sprawdź w ustawieniach projektu, czy jest dostępne, bo wymaga osobnej konfiguracji po stronie serwera. Przy synchronizacji z repozytorium plik odświeża się razem z resztą projektu.
 
 Niezależnie od sposobu: **po każdej podmianie pliku uruchom pełną kompilację od zera**. Bibliografia budowana jest z pliku pomocniczego, który potrafi zostać na starej wersji.
 
@@ -55,25 +57,31 @@ Niezależnie od sposobu: **po każdej podmianie pliku uruchom pełną kompilacj�
 
 ### Rozdanie wzoru grupie
 
-Najmniej kłopotliwy układ, działający również na kontach bezpłatnych, wygląda tak. Prowadzący zakłada **jeden projekt wzorcowy** z zawartości katalogu wzoru i włącza w nim łącze tylko do odczytu. Rozdaje to jedno łącze wszystkim uczestnikom. Każda osoba kopiuje projekt do własnego konta, otrzymując niezależną kopię, i udostępnia ją prowadzącemu z prawem edycji.
+Wzór rozdaje się **jako paczkę**, nie jako projekt do skopiowania. Prowadzący podaje jedno łącze do pliku `wzor-overleaf.zip` na stronie seminarium, każda osoba zakłada z niego własny projekt i udostępnia go prowadzącemu z prawem edycji.
 
-Zalety układu: łącze do odczytu nie zużywa limitu współpracowników, poprawka we wzorcu nie psuje niczyjej pracy, a prowadzący ma dostęp do wszystkich projektów z jednego pulpitu. Wadą jest to, że poprawka we wzorcu nie trafia do kopii już wykonanych – dlatego **wzór zamyka się przed pierwszymi zajęciami**, a późniejsze zmiany rozsyła jako opis, co podmienić.
+Zalety układu: jedno łącze wystarcza dla całej grupy, paczka jest zawsze zgodna z repozytorium, projekty studentów są od początku niezależne, a prowadzący ma dostęp do wszystkich z jednego pulpitu. Wadą jest to, że poprawka we wzorze nie trafia do projektów już założonych – dlatego **wzór zamyka się przed pierwszymi zajęciami**, a późniejsze zmiany rozsyła się jako opis, co podmienić.
 
 ### Przegląd prac
 
-Bez funkcji płatnych do dyspozycji pozostaje zwykła edycja i komentarze w treści. Przy kilkunastu pracach warto ustalić jedną konwencję i trzymać się jej przez cały rok. Konwencja proponowana w seminarium to uwagi zapisane jako komentarze LaTeX-a, które **nie pojawiają się w gotowym dokumencie**:
+Instalacja uczelniana daje trzy narzędzia: tryb przeglądu, historię zmian i zwykłą edycję.
+
+*Tryb przeglądu* to boczny panel z komentarzami. Zaznaczasz fragment tekstu i dopisujesz do niego uwagę; uwaga zostaje przypięta do tego fragmentu, widzą ją obie strony, a po naniesieniu poprawki oznacza się ją jako załatwioną i znika z panelu. To jest podstawowy kanał uwag w seminarium.
+
+Czego **nie ma**: śledzenia zmian. Zdanie poprawione przez prowadzącego wygląda w tekście dokładnie tak samo jak zdanie napisane przez studenta i nie da się go ani wyróżnić, ani odrzucić jednym kliknięciem. Wynika stąd zasada obowiązująca przez cały rok: **prowadzący komentuje, student poprawia**. Jeżeli prowadzący poprawi coś sam, bo tak jest szybciej, zostawia przy tym komentarz mówiący, co zmienił – inaczej zmiana we własnym tekście przejdzie studentowi niezauważona.
+
+Historia zmian pozwala obejrzeć stan projektu z dowolnego dnia i porównać go z bieżącym. Żeby dało się z niej korzystać, **oznaczaj wersję etykietą przy każdym oddaniu fragmentu**. Bez etykiet historia jest ciągłym strumieniem zmian, w którym nie ma punktu odniesienia.
+
+Przy pracy lokalnej w Positronie panelu komentarzy nie ma, więc uwagi zapisuje się jako komentarze LaTeX-a, które **nie pojawiają się w gotowym dokumencie**:
 
 ```latex
-%% UWAGA: teza z tego akapitu nie wynika z przywolanego zrodla.
-%% UWAGA: brakuje powolania.
+%% UWAGA: teza z tego akapitu nie wynika z cytowanego zrodla.
+%% UWAGA: brakuje cytowania.
 %% PYTANIE: skad wartosc progu 0,7?
 ```
 
 Uwaga stoi wtedy dokładnie przy problematycznym zdaniu, student widzi ją przy pisaniu, a gotowy dokument pozostaje czysty. Wyszukanie wszystkich uwag w projekcie to jedno kliknięcie w polu wyszukiwania.
 
-Zasada zamykająca: **student usuwa komentarz dopiero po naniesieniu poprawki**. Pusty wynik wyszukiwania oznacza, że wszystkie uwagi zostały zaadresowane; ten punkt znajduje się na liście kontrolnej przed oddaniem.
-
-Przy licencji instytucjonalnej dochodzą śledzenie zmian, komentarze w panelu bocznym i pełna historia wersji – wtedy powyższa konwencja staje się zbędna.
+Zasada zamykająca jest w obu trybach ta sama: **uwagę zamyka się dopiero po naniesieniu poprawki**. Brak otwartych komentarzy w panelu i pusty wynik wyszukiwania w źródle oznaczają, że wszystkie uwagi zostały zaadresowane; ten punkt jest na liście kontrolnej przed oddaniem.
 
 ### Kontrola formalna
 
@@ -81,7 +89,7 @@ Kontrolę formalną prowadź **na złożonym dokumencie, nie w źródle**. Margi
 
 W źródle warto sprawdzić dwie rzeczy: czy student nie zmieniał klasy dokumentu ani plików stylu bibliograficznego, co załatwia porównanie z wzorcem, oraz czy w projekcie nie zostały komentarze robocze i uwagi.
 
-Przy kilkunastu pracach przegląd na żądanie nie działa. Sprawdzony układ to stałe okna: oddanie fragmentu do ustalonej daty, przegląd w ciągu tygodnia, omówienie na zajęciach. Fragmenty oddawane w kolejności pisania, a nie w kolejności rozdziałów – kolejność podaje tabela **Kolejność pisania rozdziałów**.
+Przy kilkunastu pracach przegląd na żądanie nie działa. Sprawdzony układ to stałe okna: oddanie fragmentu do ustalonej daty, przegląd w ciągu tygodnia, omówienie na zajęciach. Fragmenty oddawane w kolejności pisania, a nie w kolejności rozdziałów – kolejność jest w tabeli **Kolejność pisania rozdziałów**.
 
 ## Praca lokalna w Positronie
 
@@ -109,7 +117,8 @@ Repozytorium pakietu i pracę trzymaj **osobno**. Praca zawiera pliki, które ni
 | grafika nie znaleziona | plik poza katalogiem rysunków | przenieś plik, podawaj samą nazwę |
 | polskie znaki jako znaki zastępcze | plik w innym kodowaniu | zapisz ponownie w UTF-8 |
 | zmiany współpracownika niewidoczne | stara karta przeglądarki | odśwież stronę |
-| projekt nie chce się skopiować | łącze bez prawa kopiowania | poproś o łącze do odczytu |
+| projekt niewidoczny dla promotora | udostępniony na adres prywatny | udostępnij na adres uczelniany |
+| brak katalogów po wgraniu | spakowany katalog zamiast jego zawartości | spakuj zawartość, nie katalog |
 
 Katalog błędów kompilacji niezależnych od Overleaf zawiera podrozdział [Diagnostyka](01-latex.md#diagnostyka).
 

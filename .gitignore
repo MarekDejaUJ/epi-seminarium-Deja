@@ -47,5 +47,8 @@ Gemfile.lock
 # Wynik kompilacji wzoru, odtwarzany lokalnie
 wzor-pracy/main.pdf
 
+# Paczka wzoru, skladana przy publikacji witryny
+wzor-pracy/*.zip
+
 # Teksty zrodlowe artykulow, udostepniane wylacznie na potrzeby seminarium
 tematy/zrodla/*.pdf

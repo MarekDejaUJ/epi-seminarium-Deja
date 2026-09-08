@@ -25,7 +25,8 @@ rzecz, której nie da się nadrobić później.
 Każdy ma brief prowadzący od artykułu do gotowego pakietu.
 
 **3. Postaw środowisko.** [Overleaf albo Positron](przewodniki/03-overleaf.md) dla
-pracy, [narzędzia programistyczne](przewodniki/07-agent-cli.md) dla pakietu.
+pracy, [narzędzia programistyczne](przewodniki/07-agent-cli.md) dla pakietu. Na uczelnianą
+instalację Overleaf wgrywasz wzór jako [paczkę](https://marekdejauj.github.io/epi-seminarium-Deja/wzor-pracy/wzor-overleaf.zip).
 
 **4. Naucz się składu.** [LaTeX od podstaw](przewodniki/01-latex.md) – jeden wieczór
 wystarczy, żeby zacząć pisać. Zapisu każdego elementu szukaj w
@@ -73,7 +74,7 @@ EPI, o zapisie bibliografii – Instrukcja ISI.
 Narzędzia programistyczne wolno stosować przy budowie aplikacji, pod warunkiem pełnej
 jawności: każde polecenie trafia do rejestru, a rejestr do aneksu pracy. W tekście
 pracy wolno ich używać wyłącznie do poprawiania tekstu, który już napisałeś. Żaden
-fragment pracy nie może zostać wygenerowany, a powołań i opisów bibliograficznych nie
+fragment pracy nie może zostać wygenerowany, a cytowań i opisów bibliograficznych nie
 generuje się w ogóle.
 
 Pełne omówienie: [Jawność i odpowiedzialność](przewodniki/08-etyka-si.md).

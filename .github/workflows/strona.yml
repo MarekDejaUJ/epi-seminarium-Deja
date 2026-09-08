@@ -31,6 +31,15 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
+      - name: Paczka wzoru dla Overleaf
+        run: |
+          mkdir -p /tmp/paczka
+          cp -r wzor-pracy/. /tmp/paczka/
+          cd /tmp/paczka
+          rm -f main.pdf *.aux *.bbl *.bcf *.blg *.fdb_latexmk *.fls *.idx *.ilg *.ind \
+                *.lof *.log *.lop *.lot *.out *.run.xml *.synctex.gz *.toc *.xdv
+          zip -r -q "$GITHUB_WORKSPACE/wzor-pracy/wzor-overleaf.zip" .
+
       - name: Budowa witryny
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:

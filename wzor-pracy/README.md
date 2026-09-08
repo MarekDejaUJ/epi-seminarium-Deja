@@ -6,6 +6,11 @@ i wyśrodkowane, podrozdziały 14 pkt wytłuszczone do lewej, numeracja 1 / 1.1 
 rozdziały od nowej strony, numer strony w prawym dolnym rogu, strona tytułowa liczona
 bez numeru.
 
+Na uczelnianą instalację Overleaf wzór wgrywasz jako gotową paczkę:
+**[wzor-overleaf.zip](https://marekdejauj.github.io/epi-seminarium-Deja/wzor-pracy/wzor-overleaf.zip)**.
+Paczka składana jest z tego katalogu przy każdej publikacji witryny, więc zawsze
+odpowiada bieżącej wersji klasy i stylu bibliograficznego.
+
 ## Pliki
 
 | Plik | Do czego służy |
