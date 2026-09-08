@@ -1,12 +1,12 @@
-# Instrukcje dla narzędzia wspomagającego
+# Instrukcje dla agenta
 
 Plik kopiujesz do repozytorium swojego pakietu i uzupełniasz miejsca w nawiasach
-kwadratowych. Narzędzie czyta go przy każdym uruchomieniu, dzięki czemu nie musisz
+kwadratowych. Agent czyta go przy każdym uruchomieniu, dzięki czemu nie musisz
 powtarzać konwencji projektu w każdym poleceniu.
 
-Umieść go w miejscu, w którym Twoje narzędzie szuka instrukcji projektowych – dla
-narzędzia zalecanego w seminarium jest to `.github/copilot-instructions.md`.
-Jeżeli korzystasz z innego, sprawdź w jego dokumentacji i użyj tej samej treści.
+Umieść go w miejscu, w którym Twój agent szuka instrukcji projektowych – dla agenta
+zalecanego w seminarium jest to `.github/copilot-instructions.md`. Jeżeli korzystasz
+z innego programu, sprawdź w jego dokumentacji i użyj tej samej treści.
 
 ---
 

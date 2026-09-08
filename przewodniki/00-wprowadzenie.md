@@ -31,7 +31,7 @@ Rozdziały siódmy i ósmy dotyczą pracy z narzędziem wspomagającym pisanie k
 | 4 | Jak napisać pracę | przy pisaniu każdej części |
 | 5 | Warsztat akademicki | raz, na samym początku |
 | 6 | Wymogi formalne | przed oddaniem |
-| 7 | Praca z narzędziem programistycznym | przed pierwszym poleceniem |
+| 7 | Praca z agentem programistycznym | przed pierwszym poleceniem |
 | 8 | Jawność i odpowiedzialność | na początku i przed oddaniem |
 
 ## Dokumenty rozstrzygające

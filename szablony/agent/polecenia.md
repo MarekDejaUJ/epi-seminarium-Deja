@@ -4,7 +4,7 @@ Cztery schematy pokrywające większość pracy nad pakietem. Kopiujesz, uzupeł
 miejsca w nawiasach ostrych, wydajesz. Każde wydane polecenie zapisujesz
 w [rejestrze](rejestr-polecen.md).
 
-Metodę, w której te polecenia mają sens, opisuje rozdział o pracy z narzędziem
+Metoda, w której te polecenia mają sens, jest opisana w rozdziale o pracy z agentem
 programistycznym w przewodniku seminaryjnym.
 
 ---
@@ -12,7 +12,7 @@ programistycznym w przewodniku seminaryjnym.
 ## 1. Wzór na kod
 
 Najczęstsze polecenie. Podajesz wzór **razem z objaśnieniem symboli**, bo bez
-tego narzędzie dobierze interpretację z najpopularniejszego wariantu metody,
+tego agent dobierze interpretację z najpopularniejszego wariantu metody,
 niekoniecznie z Twojego artykułu.
 
 ```
@@ -60,14 +60,14 @@ Nie pisz testow. Nie zmieniaj kodu funkcji.
 
 **Czego się spodziewać:** listy przypadków, z których część będzie trafna,
 a część nie. **Co sprawdzić:** czy proponowane zachowanie zgadza się z Twoją
-specyfikacją – to Ty rozstrzygasz, nie narzędzie.
+specyfikacją – to Ty rozstrzygasz, nie agent.
 
 ---
 
 ## 3. Diagnostyka zamiast zgadywania
 
-Gdy obliczenie nie zbiega albo daje wynik spoza oczekiwanego zakresu, narzędzie
-ma skłonność do zmieniania kodu na chybił trafił. To polecenie przerywa taki cykl.
+Gdy obliczenie nie zbiega albo daje wynik spoza oczekiwanego zakresu, agent ma
+skłonność do zmieniania kodu na chybił trafił. To polecenie przerywa taki cykl.
 
 ```
 Funkcja <nazwa> zwraca <opis objawu> dla danych <opis>.

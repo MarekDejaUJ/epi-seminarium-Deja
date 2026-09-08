@@ -1,11 +1,15 @@
 <!-- Plik powstaje automatycznie z przewodnik/rozdzialy/07-agent-cli.tex.
      Zmiany nanos w pliku zrodlowym, nie tutaj. -->
 
-# Praca z narzędziem programistycznym
+# Praca z agentem programistycznym
 
-Rozdział opisuje metodę budowy pakietu z użyciem narzędzia wspomagającego pisanie kodu. Granice dozwolonego użycia i sposób ich dokumentowania opisuje rozdział [Jawność i odpowiedzialność](08-etyka-si.md#jawność-i-odpowiedzialność); tutaj chodzi o to, **jak** pracować, żeby powstało narzędzie, za które da się odpowiadać.
+*Agent programistyczny*, nazywany też agentem SI, to program oparty na dużym modelu językowym, uruchamiany z terminala w katalogu projektu. Dostaje od Ciebie cel opisany słowami, po czym sam czyta pliki projektu, pisze i zmienia kod, uruchamia testy, czyta ich wyniki i poprawia to, co nie przeszło. Pracuje w pętli i sam decyduje, które pliki otworzyć.
 
-Punkt wyjścia jest taki: implementacja algorytmu z artykułu metodycznego to zadanie, w którym trudność nie leży w składni języka, tylko w zrozumieniu metody. Narzędzie wspomagające zdejmuje z Ciebie pierwsze i **nie zdejmuje drugiego**. Twoja rola przesuwa się z pisania linii kodu na projektowanie kontraktu i sprawdzanie, czy wynik ten kontrakt spełnia. To trudniejsza rola, nie łatwiejsza.
+W rozdziale opisana jest metoda budowy pakietu z użyciem takiego agenta. Granice dozwolonego użycia i sposób ich dokumentowania są w rozdziale [Jawność i odpowiedzialność](08-etyka-si.md#jawność-i-odpowiedzialność); tutaj chodzi o to, **jak** pracować, żeby powstało narzędzie badawcze, za które da się odpowiadać.
+
+Nazywamy rzecz po imieniu, bo seminarium wymaga jawności użycia. Praca, która opisuje agenta jako „narzędzie wspomagające”, zaciera to, co recenzent ma ocenić: gdzie kończy się wkład autora, a gdzie zaczyna wynik działania programu.
+
+Punkt wyjścia jest taki: implementacja algorytmu z artykułu metodycznego to zadanie, w którym trudność nie leży w składni języka, tylko w zrozumieniu metody. Agent zdejmuje z Ciebie pierwsze i **nie zdejmuje drugiego**. Twoja rola przesuwa się z pisania linii kodu na projektowanie kontraktu i sprawdzanie, czy wynik ten kontrakt spełnia. To trudniejsza rola, nie łatwiejsza.
 
 ## Środowisko
 
@@ -20,19 +24,29 @@ R.version.string
 .libPaths()
 ```
 
-### Narzędzie wspomagające
+### Wybór agenta
 
-Seminarium standaryzuje pracę na narzędziu dostępnym w ramach pakietu studenckiego platformy, na której trzymasz repozytorium. Uruchamiasz je z terminala w katalogu pakietu, dzięki czemu widzi cały projekt: pliki źródłowe, testy i komunikaty z ich uruchomienia.
+Rozwiązanie domyślne w seminarium to agent dostępny w ramach pakietu studenckiego platformy, na której trzymasz repozytorium, bo nie wymaga własnego abonamentu. Programów tej klasy jest kilka: Copilot CLI, Codex CLI, Claude Code CLI, OpenCode, HermesAgent. Różnią się modelem, limitami i sposobem rozliczenia, natomiast metoda pracy opisana w tym rozdziale jest dla wszystkich taka sama.
 
-Warunkiem sensownej pracy jest to, żeby narzędzie **samo uruchamiało testy**. Bez tego dostajesz kod, który wygląda poprawnie, i musisz sprawdzać go ręcznie. Z tym dostajesz kod, który przechodzi testy, które napisałeś wcześniej.
+Agenta uruchamiasz z terminala w katalogu pakietu, dzięki czemu widzi cały projekt: pliki źródłowe, testy i komunikaty z ich uruchomienia.
+
+Warunkiem sensownej pracy jest to, żeby agent **sam uruchamiał testy**. Bez tego dostajesz kod, który wygląda poprawnie, i musisz sprawdzać go ręcznie. Z tym dostajesz kod, który przechodzi testy napisane przez Ciebie wcześniej.
+
+Limity bywają miesięczne i potrafią się wyczerpać w najgorszym momencie. Przejście na inny program z powyższej listy niczego nie zmienia w metodzie pracy; w rejestrze poleceń odnotowujesz tylko, którego agenta użyłeś do którego zadania.
+
+### Podpowiadanie w edytorze to co innego
+
+Uzupełnianie kodu w edytorze podpowiada kolejny wiersz na podstawie tego, co masz na ekranie. Decyzję podejmujesz Ty, wiersz po wierszu, i każdą propozycję widzisz przed przyjęciem. Agent działa inaczej: dostaje cel, sam wybiera pliki, wprowadza zmiany w kilku miejscach naraz i sam sprawdza wynik.
+
+Rozróżnienie ma skutek praktyczny dla rejestru poleceń. Podpowiedzi w edytorze nie rejestrujesz, bo nie ma czego: nie ma polecenia ani wyodrębnionej zmiany. Każde polecenie wydane agentowi rejestrujesz. Granica przebiega tam, gdzie **istnieje polecenie, które da się przytoczyć**.
 
 ### Konfiguracja repozytorium
 
-W katalogu głównym swojego pakietu umieszczasz plik z instrukcjami dla narzędzia. Jest to zwykły plik tekstowy, który narzędzie czyta przy każdym uruchomieniu. Gotowy do uzupełnienia znajdziesz w materiałach seminarium.
+W katalogu głównym swojego pakietu umieszczasz plik z instrukcjami dla agenta. Jest to zwykły plik tekstowy, który agent czyta przy każdym uruchomieniu. Gotowy do uzupełnienia znajdziesz w materiałach seminarium.
 
 Instrukcje robią trzy rzeczy. Ustalają konwencje projektu, żeby nie trzeba było ich powtarzać przy każdym poleceniu. Zakazują tego, co w tym projekcie jest niedopuszczalne, na przykład dopisywania zależności do pliku opisu pakietu bez uzgodnienia. Wymuszają uruchomienie testów po każdej zmianie.
 
-**Rozgraniczenie odpowiedzialności** zapisz wprost. Pliki, których narzędzie nie zmienia bez Twojej decyzji, to: specyfikacja, testy, procedura generowania danych oraz plik opisu pakietu. Są to miejsca, w których zapisane są Twoje ustalenia metodyczne. Kod obliczeniowy i dokumentacja funkcji są obszarem, w którym narzędzie pracuje.
+**Rozgraniczenie odpowiedzialności** zapisz wprost. Pliki, których agent nie zmienia bez Twojej decyzji, to: specyfikacja, testy, procedura generowania danych oraz plik opisu pakietu. Są to miejsca, w których zapisane są Twoje ustalenia metodyczne. Kod obliczeniowy i dokumentacja funkcji są obszarem, w którym agent pracuje.
 
 ## Kolejność pracy
 
@@ -40,11 +54,11 @@ Instrukcje robią trzy rzeczy. Ustalają konwencje projektu, żeby nie trzeba by
 
 Obowiązująca kolejność to specyfikacja, testy, implementacja, dokumentacja. Nie jest to preferencja stylistyczna, tylko jedyny układ, w którym da się stwierdzić, czy kod jest poprawny.
 
-**Krok pierwszy: specyfikacja.** Czytasz artykuł źródłowy i spisujesz kontrakt: co wchodzi, w jakich dziedzinach, jakie warunki muszą zachodzić, co wychodzi, jakie własności muszą być spełnione. Szablon dokumentu znajdziesz w materiałach seminarium. Ten dokument piszesz sam, bez narzędzia, bo powstaje z lektury, a nie z kodu.
+**Krok pierwszy: specyfikacja.** Czytasz artykuł źródłowy i spisujesz kontrakt: co wchodzi, w jakich dziedzinach, jakie warunki muszą zachodzić, co wychodzi, jakie własności muszą być spełnione. Szablon dokumentu znajdziesz w materiałach seminarium. Ten dokument piszesz sam, bez agenta, bo powstaje z lektury, a nie z kodu.
 
 **Krok drugi: testy.** Z przypadków wypisanych w specyfikacji robisz testy. Każdy przypadek analityczny ma wynik policzony ręcznie ze wzoru. Testy piszesz **przed** implementacją i uruchamiasz je: mają zawieść, bo funkcji jeszcze nie ma. To brzmi absurdalnie, dopóki nie zobaczysz, jak łatwo napisać test, który przechodzi zawsze.
 
-**Krok trzeci: implementacja.** Dopiero teraz uruchamiasz narzędzie, dając mu specyfikację i testy jako kontekst. Polecenie brzmi: zaimplementuj funkcję tak, żeby przechodziła te testy, nie zmieniając testów.
+**Krok trzeci: implementacja.** Dopiero teraz uruchamiasz agenta, dając mu specyfikację i testy jako kontekst. Polecenie brzmi: zaimplementuj funkcję tak, żeby przechodziła te testy, nie zmieniając testów.
 
 **Krok czwarty: dokumentacja.** Bloki dokumentacyjne powstają ze specyfikacji, a nie z kodu. Opis argumentu ma mówić, co argument znaczy, a nie jakiego jest typu.
 
@@ -56,23 +70,23 @@ To rozróżnienie jest sednem całej metody i wraca w rozdziale [Jak napisać pr
 
 ## Pętla naprawcza
 
-Po wydaniu polecenia narzędzie pracuje w cyklu: pisze kod, uruchamia testy, czyta komunikat błędu, poprawia, uruchamia ponownie. Cykl kończy się, gdy testy przechodzą.
+Po wydaniu polecenia agent pracuje w cyklu: pisze kod, uruchamia testy, czyta komunikat błędu, poprawia, uruchamia ponownie. Cykl kończy się, gdy testy przechodzą.
 
-Twoja rola w tym cyklu nie polega na czekaniu. Polega na obserwowaniu, **co narzędzie zmienia**, żeby doprowadzić do przejścia testów.
+Twoja rola w tym cyklu nie polega na czekaniu. Polega na obserwowaniu, **co agent zmienia**, żeby doprowadzić do przejścia testów.
 
 ### Kiedy przerwać
 
 Są trzy sytuacje, w których pętlę trzeba zatrzymać, bo dalsze krążenie tylko pogarsza kod.
 
-**Narzędzie zmienia test zamiast kodu.** Test jest zapisem tego, co metoda ma robić. Zmiana testu, żeby przechodził, jest zmianą definicji problemu. Jeżeli test jest błędny, poprawiasz go sam, po sprawdzeniu w artykule, i odnotowujesz to w specyfikacji.
+**Agent zmienia test zamiast kodu.** Test jest zapisem tego, co metoda ma robić. Zmiana testu, żeby przechodził, jest zmianą definicji problemu. Jeżeli test jest błędny, poprawiasz go sam, po sprawdzeniu w artykule, i odnotowujesz to w specyfikacji.
 
-**Narzędzie osłabia warunek wstępny.** Sprawdzenie, które zatrzymywało wykonanie przy danych spoza dziedziny, znika albo zamienia się w ostrzeżenie. Funkcja zaczyna zwracać wynik tam, gdzie powinna odmówić działania. To najgroźniejszy rodzaj regresu, bo testy przechodzą, a narzędzie staje się niebezpieczne.
+**Agent osłabia warunek wstępny.** Sprawdzenie, które zatrzymywało wykonanie przy danych spoza dziedziny, znika albo zamienia się w ostrzeżenie. Funkcja zaczyna zwracać wynik tam, gdzie powinna odmówić działania. To najgroźniejszy rodzaj regresu, bo testy przechodzą, a pakiet staje się niebezpieczny.
 
-**Narzędzie dodaje zależność.** Zamiast rozwiązać problem, sięga po gotową funkcję z pakietu, którego w projekcie nie ma. Każda zależność zwiększa ryzyko, że pakiet przestanie się instalować, i wymaga Twojej świadomej decyzji.
+**Agent dodaje zależność.** Zamiast rozwiązać problem, sięga po gotową funkcję z pakietu, którego w projekcie nie ma. Każda zależność zwiększa ryzyko, że pakiet przestanie się instalować, i wymaga Twojej świadomej decyzji.
 
-### Miejsca, w których narzędzie zgaduje
+### Miejsca, w których agent zgaduje
 
-Narzędzie nie zna artykułu, który czytasz. Zna wzorce z kodu, który widziało wcześniej. Tam, gdzie Twoja metoda odbiega od wzorca, dostaniesz rozwiązanie typowe, a nie właściwe.
+Agent nie zna artykułu, który czytasz. Zna wzorce z kodu, który widział wcześniej. Tam, gdzie Twoja metoda odbiega od wzorca, dostaniesz rozwiązanie typowe, a nie właściwe.
 
 **Tabela 24. Typowe miejsca rozejścia się implementacji z metodą**
 
@@ -89,7 +103,7 @@ Każde z tych miejsc powinno mieć wcześniej wpis w specyfikacji, w tabeli nied
 
 ## Szablony poleceń
 
-Polecenie wydane narzędziu jest tekstem, który warto przygotować, a nie improwizować. Cztery poniższe schematy pokrywają większość pracy nad pakietem. Wersje gotowe do uzupełnienia znajdziesz w materiałach seminarium.
+Polecenie wydane agentowi jest tekstem, który warto przygotować, a nie improwizować. Cztery poniższe schematy pokrywają większość pracy nad pakietem. Wersje gotowe do uzupełnienia znajdziesz w materiałach seminarium.
 
 ### Wzór na kod
 
@@ -133,7 +147,7 @@ Nie pisz testow. Nie zmieniaj kodu funkcji.
 
 ### Diagnostyka zamiast zgadywania
 
-Gdy obliczenie nie zbiega albo daje wynik spoza oczekiwanego zakresu, narzędzie ma skłonność do zmieniania kodu na chybił trafił. To polecenie przerywa taki cykl.
+Gdy obliczenie nie zbiega albo daje wynik spoza oczekiwanego zakresu, agent ma skłonność do zmieniania kodu na chybił trafił. To polecenie przerywa taki cykl.
 
 ```latex
 Funkcja <nazwa> zwraca <opis objawu> dla danych <opis>.
@@ -161,12 +175,13 @@ Wymagania:
 
 Wykaz poleceń jest wymaganym aneksem pracy, ale prowadzi się go **od pierwszego dnia**, a nie odtwarza z pamięci przed oddaniem. Odtworzenie jest niewykonalne: po pół roku nie pamięta się, które polecenie doprowadziło do której funkcji.
 
-Rejestr jest plikiem w repozytorium pakietu. Dla każdego polecenia zapisujesz cztery rzeczy: cel, treść polecenia, co zmieniłeś w otrzymanym wyniku oraz jak sprawdziłeś poprawność. Trzecia i czwarta kolumna są najważniejsze, bo to one pokazują Twój wkład.
+Rejestr jest plikiem w repozytorium pakietu. Dla każdego polecenia zapisujesz pięć rzeczy: użytego agenta, cel, treść polecenia, co zmieniłeś w otrzymanym wyniku oraz jak sprawdziłeś poprawność. Trzecia i czwarta kolumna są najważniejsze, bo to one pokazują Twój wkład.
 
 **Tabela 25. Wpis w rejestrze poleceń**
 
 | Pole | Treść |
 |---|---|
+| Agent | nazwa i wersja użytego programu |
 | Cel | Implementacja wyznaczania wag metodą entropii |
 | Polecenie | pełna treść wydanego polecenia |
 | Zmiany własne | Dodano obsługę kolumny o zerowej sumie, której polecenie nie obejmowało; zmieniono komunikat błędu na wskazujący nazwę kryterium |
@@ -176,7 +191,7 @@ Rejestr ma jeszcze jedno zastosowanie, ważniejsze od formalnego. Wpis, w który
 
 ## Co robisz sam
 
-Lista zamykająca rozdział. Poniższe czynności nie są zadaniem dla narzędzia, bo w każdej z nich rozstrzyga rozumienie metody, a nie znajomość języka.
+Lista zamykająca rozdział. Poniższe czynności nie są zadaniem dla agenta, bo w każdej z nich rozstrzyga rozumienie metody, a nie znajomość języka.
 
 - lektura artykułu źródłowego i spisanie specyfikacji;
 - rozstrzygnięcie niedopowiedzeń artykułu wraz z uzasadnieniem;

@@ -152,7 +152,7 @@ przyjęciu projektu.
 - [ ] Nota wymagana przez Standardy jest w zakładce o serwisie
 - [ ] Repozytorium jest publiczne i zawiera pełną historię pracy
 - [ ] Środowisko zamrożone, analiza z rozdziału trzeciego odtwarzalna
-- [ ] Rejestr poleceń wydanych narzędziu programistycznemu kompletny
+- [ ] Rejestr poleceń wydanych agentowi programistycznemu kompletny
 
 **Aplikacja musi robić coś więcej niż wyświetlać zawartość.** Wymóg pochodzi wprost
 ze Standardów i w tym seminarium jest spełniony z definicji: aplikacja liczy metodę

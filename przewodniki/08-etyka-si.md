@@ -5,7 +5,7 @@
 
 Praca dyplomowa jest z ustawy **samodzielnym opracowaniem** zagadnienia, prezentującym wiedzę i umiejętności studenta oraz umiejętność samodzielnego analizowania i wnioskowania (Prawo o szkolnictwie wyższym). Ten wymóg nie zmienia się od tego, że część kodu powstała z pomocą narzędzia. Zmienia się natomiast to, co musisz o tej pomocy powiedzieć.
 
-Rozdział opisuje granice dozwolonego użycia, sposób jego dokumentowania i konsekwencje przekroczenia granic. Metodę pracy opisuje rozdział [Praca z narzędziem programistycznym](07-agent-cli.md#praca-z-narzędziem-programistycznym).
+Rozdział opisuje granice dozwolonego użycia, sposób jego dokumentowania i konsekwencje przekroczenia granic. Metodę pracy opisuje rozdział [Praca z agentem programistycznym](07-agent-cli.md#praca-z-agentem-programistycznym).
 
 ## Dwa różne obszary
 

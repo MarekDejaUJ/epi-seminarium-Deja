@@ -24,7 +24,7 @@ Dlatego każdy tydzień ma produkt po obu stronach.
 
 Kolejność jest zawsze ta sama: **specyfikacja, testy, implementacja, dokumentacja**.
 Nie da się jej skrócić i nie opłaca się jej odwracać. Wyjaśnienie, dlaczego odwrotna
-kolejność zawodzi, jest w [przewodniku o pracy z narzędziem
+kolejność zawodzi, jest w [przewodniku o pracy z agentem
 programistycznym](../przewodniki/07-agent-cli.md#dlaczego-odwrotna-kolejność-zawodzi).
 
 Harmonogram jest zbudowany wokół tej kolejności. Pierwsze sześć tygodni nie zawiera
@@ -61,7 +61,7 @@ i opisuje się je w pracy. To samo zawężenie odkryte w czerwcu jest brakiem.
 | Co | Gdzie | Dlaczego |
 |---|---|---|
 | plik bibliograficzny | katalog `bibliografia/` w repozytorium pracy | odtwarzanie po fakcie zajmuje kilka dni |
-| rejestr poleceń wydanych narzędziu | repozytorium pakietu | wymagany w aneksie, nie da się odtworzyć z pamięci |
+| rejestr poleceń wydanych agentowi | repozytorium pakietu | wymagany w aneksie, nie da się odtworzyć z pamięci |
 | dziennik decyzji projektowych | plik `NEWS.md` albo osobna notatka | rozdział drugi to w dużej części ten dziennik |
 
 Trzeci punkt bywa lekceważony. Kiedy w kwietniu piszesz, dlaczego wybrałeś jeden

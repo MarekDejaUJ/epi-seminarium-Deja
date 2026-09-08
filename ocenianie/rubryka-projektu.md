@@ -9,7 +9,7 @@ składników. Sto punktów, przełożenie na ocenę według [skali](README.md#sk
 | [Weryfikacja: testy i dane](#weryfikacja-testy-i-dane) | 25 |
 | [Jakość pakietu i zgodność](#jakość-pakietu-i-zgodność) | 25 |
 | [Dokumentacja i serwis](#dokumentacja-i-serwis) | 20 |
-| [Jawność pracy z narzędziem](#jawność-pracy-z-narzędziem) | 10 |
+| [Jawność pracy z agentem](#jawność-pracy-z-agentem) | 10 |
 
 Dwa warunki poza punktacją. Projekt nie zostaje przyjęty, jeżeli sprawdzenie pakietu
 kończy się błędem albo jeżeli aplikacja nie działa pod podanym adresem. Są to warunki
@@ -72,17 +72,17 @@ Aplikacja, która wyświetla wynik policzony wcześniej i nie pozwala zmienić n
 nie spełnia wymogu Standardów i nie może dostać więcej niż dziewięć punktów,
 niezależnie od tego, jak wygląda.
 
-## Jawność pracy z narzędziem
+## Jawność pracy z agentem
 
 | Punkty | Opis |
 |---|---|
-| 9–10 | Rejestr poleceń prowadzony od pierwszego tygodnia, z celem, poleceniem, wprowadzoną zmianą i sposobem weryfikacji. Widoczne miejsca, w których narzędzie się pomyliło, i opis, co je wykryło. |
+| 9–10 | Rejestr poleceń prowadzony od pierwszego tygodnia, z celem, poleceniem, wprowadzoną zmianą i sposobem weryfikacji. Widoczne miejsca, w których agent się pomylił, i opis, co je wykryło. |
 | 7–8 | Rejestr kompletny, bez opisu weryfikacji. |
 | 4–6 | Rejestr uzupełniony pod koniec roku, ogólnikowy. |
 | 1–3 | Rejestr szczątkowy. |
-| 0 | Brak rejestru przy widocznym użyciu narzędzia. |
+| 0 | Brak rejestru przy widocznym użyciu agenta. |
 
-Wpisy pokazujące pomyłkę narzędzia są punktowane wyżej niż wpisy pokazujące same
+Wpisy pokazujące pomyłkę agenta są punktowane wyżej niż wpisy pokazujące same
 sukcesy. Rejestr, w którym wszystko udało się za pierwszym razem, jest niewiarygodny,
 a jego jedyną funkcją byłoby wypełnienie wymogu.
 

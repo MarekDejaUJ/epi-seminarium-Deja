@@ -1,7 +1,7 @@
 # Rejestr poleceń
 
 Plik prowadzisz w repozytorium swojego pakietu **od pierwszego dnia**. Z niego
-powstaje aneks pracy z wykazem poleceń wydanych narzędziu programistycznemu.
+powstaje aneks pracy z wykazem poleceń wydanych agentowi programistycznemu.
 
 Odtworzenie rejestru przed oddaniem jest niewykonalne: po pół roku nie pamięta
 się, które polecenie doprowadziło do której funkcji ani co w otrzymanym wyniku
@@ -13,7 +13,9 @@ o wykorzystaniu SI.
 
 ## Jak wypełniać
 
-Kolumny **zmiany własne** i **weryfikacja** są najważniejsze: to one pokazują
+Każdy wpis zaczyna się od nazwy i wersji użytego agenta. Przy zmianie programu w trakcie roku widać wtedy, co powstało czym.
+
+Pola **zmiany własne** i **weryfikacja** są najważniejsze: to one pokazują
 Twój wkład. Wpis, w którym kolumna zmian własnych jest pusta, oznacza kod,
 którego nie sprawdziłeś.
 
@@ -24,6 +26,8 @@ otrzymany wynik.
 ---
 
 ## 2027-02-14 · Wagi metodą entropii
+
+**Agent.** Copilot CLI 0.0.0
 
 **Cel.** Implementacja funkcji `oblicz_wagi_entropia()` zgodnie z krokami 1–3
 specyfikacji.
@@ -51,6 +55,8 @@ wzoru; sprawdzono niezmienniczość wag na przeskalowanie kolumny.
 
 ## 2027-02-16 · Dane do testów odporności
 
+**Agent.** Copilot CLI 0.0.0
+
 **Cel.** Zestawy danych naruszające warunki wstępne, do testów odporności.
 
 **Polecenie.**
@@ -71,6 +77,8 @@ wstępny narusza; testy napisane samodzielnie na podstawie tej listy.
 ---
 
 ## RRRR-MM-DD · [tytuł]
+
+**Agent.**
 
 **Cel.**
 

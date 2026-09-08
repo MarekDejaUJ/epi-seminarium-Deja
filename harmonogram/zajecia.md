@@ -26,7 +26,7 @@ w środę nadal znaczy to samo co w poniedziałek.
 ## Co przynosisz
 
 Komputer z działającym środowiskiem: R, Positron, Git, dostęp do repozytorium.
-Konfigurację opisuje przewodnik [Praca z narzędziem
+Konfiguracja jest w przewodniku [Praca z agentem
 programistycznym](../przewodniki/07-agent-cli.md#środowisko).
 
 Od tygodnia 5 przynosisz też aktualną specyfikację, bo w bloku studia korzystasz
@@ -119,11 +119,11 @@ utrzymania. Harmonogram rozkłada to na trzy tury: rozdział pierwszy w tygodnia
 rozdział, więc czyta się czternaście razy ten sam typ tekstu, co jest znacznie
 szybsze niż czternaście różnych.
 
-**Tryb pracy z uwagami.** Warianty obiegu przez Overleaf, przez repozytorium
-i tryb mieszany opisuje przewodnik [Overleaf i
-współpraca](../przewodniki/03-overleaf.md). Wybór zależy od tego, czy Uniwersytet ma
-licencję instytucjonalną: bez niej odpadają śledzenie zmian i komentarze, a obieg
-opiera się na wersjach plików.
+**Tryb pracy z uwagami.** Warianty obiegu przez Overleaf, przez repozytorium i tryb
+mieszany są w przewodniku [Overleaf i
+współpraca](../przewodniki/03-overleaf.md). Na instalacji uczelnianej działają
+komentarze w trybie przeglądu i historia zmian, nie ma natomiast śledzenia zmian.
+Stąd zasada obiegu: prowadzący komentuje, student poprawia.
 
 **Terminy w kalendarzu.** Harmonogram jest przypięty do numerów tygodni. Na początek
 roku wystarczy raz przypisać tygodnie do dat i rozesłać tę tabelę; wszystkie

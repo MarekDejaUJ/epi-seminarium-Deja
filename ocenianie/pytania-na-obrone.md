@@ -79,16 +79,16 @@ umieć powiedzieć, jaki przypadek on obsługuje.
 47. Jak Twoja praca ma się do zagadnienia ogólniejszego z tytułu?
 48. Co byś zbadał, gdybyś miał jeszcze rok?
 
-## O pracy z narzędziami
+## O pracy z agentem
 
-49. W czym narzędzie programistyczne Ci pomogło, a w czym przeszkodziło?
-50. Podaj przypadek, w którym narzędzie zaproponowało rozwiązanie błędne. Jak to wykryłeś?
+49. W czym agent programistyczny Ci pomógł, a w czym przeszkodził?
+50. Podaj przypadek, w którym agent zaproponował rozwiązanie błędne. Jak to wykryłeś?
 51. Skąd wiesz, że kod, który oddajesz, robi to, co opisujesz w pracy?
 52. Które decyzje w projekcie podjąłeś sam, a nie mogłeś ich delegować?
-53. Co byś zrobił, gdyby narzędzie było niedostępne przez cały semestr?
+53. Co byś zrobił, gdyby agent był niedostępny przez cały semestr?
 
 Pytanie 50 jest łatwe, jeżeli prowadziłeś rejestr poleceń, i niemożliwe, jeżeli nie
-prowadziłeś. Wpis opisujący pomyłkę narzędzia i sposób jej wykrycia jest najlepszym
+prowadziłeś. Wpis opisujący pomyłkę agenta i sposób jej wykrycia jest najlepszym
 dowodem, że rozumiesz własny projekt.
 
 ## Kiedy nie znasz odpowiedzi

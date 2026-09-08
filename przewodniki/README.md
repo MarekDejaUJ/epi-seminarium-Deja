@@ -17,7 +17,7 @@ Całość w jednym pliku, do druku: **[przewodnik.pdf](../przewodnik/przewodnik.
 | 4 | [Jak napisać pracę](04-jak-pisac.md) | przy pisaniu każdej części |
 | 5 | [Warsztat pisania akademickiego](05-warsztat.md) | raz, na samym początku |
 | 6 | [Wymogi formalne](06-wymogi.md) | przed oddaniem |
-| 7 | [Praca z narzędziem programistycznym](07-agent-cli.md) | przed pierwszym poleceniem dla narzędzia |
+| 7 | [Praca z agentem programistycznym](07-agent-cli.md) | przed pierwszym poleceniem dla narzędzia |
 | 8 | [Jawność i odpowiedzialność](08-etyka-si.md) | na początku i przed oddaniem |
 
 ## Skąd się biorą te pliki

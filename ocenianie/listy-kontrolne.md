@@ -45,7 +45,7 @@ Do przejścia przed [kamieniem milowym
 - [ ] Licencja jest wskazana i zgodna z ustaleniami seminarium
 - [ ] Plik `inst/CITATION` pozwala zacytować pakiet
 - [ ] Znacznik `1.0.0` wskazuje wersję opisaną w pracy
-- [ ] Rejestr poleceń wydanych narzędziu jest kompletny
+- [ ] Rejestr poleceń wydanych agentowi jest kompletny
 
 ## Student: praca licencjacka
 

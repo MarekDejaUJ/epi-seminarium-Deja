@@ -25,7 +25,7 @@ rzecz, której nie da się nadrobić później.
 Każdy ma brief prowadzący od artykułu do gotowego pakietu.
 
 **3. Postaw środowisko.** [Overleaf albo Positron](przewodniki/03-overleaf.md) dla
-pracy, [narzędzia programistyczne](przewodniki/07-agent-cli.md) dla pakietu. Na uczelnianą
+pracy, [agent programistyczny](przewodniki/07-agent-cli.md) dla pakietu. Na uczelnianą
 instalację Overleaf wgrywasz wzór jako [paczkę](https://marekdejauj.github.io/epi-seminarium-Deja/wzor-pracy/wzor-overleaf.zip).
 
 **4. Naucz się składu.** [LaTeX od podstaw](przewodniki/01-latex.md) – jeden wieczór
@@ -54,8 +54,8 @@ czy rozumiesz to, co oddajesz.
 | Katalog | Zawartość |
 |---|---|
 | [Wzór pracy](wzor-pracy/README.md) | wzór w LaTeX ze stylem bibliograficznym zgodnym z wymaganiami Instytutu oraz wypełniony przykład |
-| [Przewodnik](przewodniki/README.md) | osiem rozdziałów: LaTeX, bibliografia, Overleaf, pisanie pracy, warsztat, wymogi formalne, praca z narzędziami, jawność użycia |
-| [Szablony](szablony/README.md) | szkielet pakietu R przechodzący sprawdzenie w trybie zgodności, szablon specyfikacji, materiały do pracy z narzędziem |
+| [Przewodnik](przewodniki/README.md) | osiem rozdziałów: LaTeX, bibliografia, Overleaf, pisanie pracy, warsztat, wymogi formalne, praca z agentem, jawność użycia |
+| [Szablony](szablony/README.md) | szkielet pakietu R przechodzący sprawdzenie w trybie zgodności, szablon specyfikacji, materiały do pracy z agentem |
 | [Tematy](tematy/README.md) | czternaście briefów wraz z bibliografią źródłową i notą o doborze tematów |
 | [Harmonogram](harmonogram/README.md) | trzydzieści tygodni, sześć kamieni milowych, przebieg zajęć |
 | [Ocenianie](ocenianie/README.md) | rubryki projektu i pracy, listy kontrolne, pytania na obronę |
@@ -71,9 +71,9 @@ EPI, o zapisie bibliografii – Instrukcja ISI.
 
 ## Zasada, o której warto wiedzieć od pierwszego dnia
 
-Narzędzia programistyczne wolno stosować przy budowie aplikacji, pod warunkiem pełnej
+Agenta programistycznego wolno stosować przy budowie aplikacji, pod warunkiem pełnej
 jawności: każde polecenie trafia do rejestru, a rejestr do aneksu pracy. W tekście
-pracy wolno ich używać wyłącznie do poprawiania tekstu, który już napisałeś. Żaden
+pracy wolno go używać wyłącznie do poprawiania tekstu, który już napisałeś. Żaden
 fragment pracy nie może zostać wygenerowany, a cytowań i opisów bibliograficznych nie
 generuje się w ogóle.
 

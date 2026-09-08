@@ -35,16 +35,16 @@ niej jest w zestawie pytań.
 | 3,0 | 51–60 | wymagania spełnione w stopniu minimalnym |
 | 2,0 | poniżej 51 | wymagania niespełnione |
 
-## Samodzielność przy jawnym użyciu narzędzi
+## Samodzielność przy jawnym użyciu agenta
 
-Seminarium zakłada, że budujesz pakiet z pomocą narzędzia programistycznego, i wymaga,
+Seminarium zakłada, że budujesz pakiet z pomocą agenta programistycznego, i wymaga,
 żeby to użycie było jawne. Powstaje więc pytanie, co w takim razie jest oceniane.
 
-Oceniane jest to, czego narzędzie nie zrobi za Ciebie:
+Oceniane jest to, czego agent nie zrobi za Ciebie:
 
-- **rozstrzygnięcia w specyfikacji** – narzędzie nie wie, co artykuł przemilczał,
+- **rozstrzygnięcia w specyfikacji** – agent nie wie, co artykuł przemilczał,
 - **przypadki testowe o znanym wyniku** – trzeba je policzyć ręcznie, z artykułu,
-- **rozpoznanie, że wynik jest zły** – narzędzie zaproponuje kod, który się wykonuje,
+- **rozpoznanie, że wynik jest zły** – agent zaproponuje kod, który się wykonuje,
   i nie odróżni go od kodu, który liczy właściwą rzecz,
 - **decyzje projektowe wraz z uzasadnieniem** – wybór wariantu metody, granice
   stosowalności, sposób obsługi braków,
