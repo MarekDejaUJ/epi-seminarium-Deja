@@ -1,175 +1,196 @@
-# Temat 03. Walidacja macierzy Q metodą detekcji sygnału
+# Temat 03. Ocena wyszukiwarki, gdy nie wszystko oceniono
 
 ## Metryka
 
 | | |
 |---|---|
-| Artykuł źródłowy | Li, Jia; Chen, Ping (2024). *A new Q-matrix validation method based on signal detection theory*. British Journal of Mathematical and Statistical Psychology |
-| Identyfikator | [10.1111/bmsp.12371](https://doi.org/10.1111/bmsp.12371) |
-| **Errata** | *Correction to „A new Q-matrix validation method based on signal detection theory"*, [10.1111/bmsp.12385](https://doi.org/10.1111/bmsp.12385) (2025) |
-| Dostęp | przez bibliotekę UJ |
-| Dziedzina | psychometria, pomiar kompetencji |
-| Proponowany tytuł pracy | Pakiet R do walidacji macierzy specyfikacji zadań jako przykład zastosowania teorii detekcji sygnału w diagnozie kompetencji |
-| Proponowana nazwa pakietu | `WalidacjaQR` |
-| Trudność | ●●● |
+| Artykuł źródłowy | Buckley, Chris; Voorhees, Ellen M. (2004). *Retrieval Evaluation with Incomplete Information*. SIGIR '04, s. 25-32 |
+| Identyfikator | [kopia w repozytorium NIST](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=150469) |
+| Dostęp | wolny |
+| Dziedzina | wyszukiwanie informacji, ocena systemów |
+| Proponowany tytuł pracy | Pakiet R do oceny skuteczności wyszukiwania przy niepełnych sądach o trafności jako przykład zastosowania miar preferencyjnych w badaniach nad systemami informacyjnymi |
+| Proponowana nazwa pakietu | `NiepelnaOcenaR` |
+| Trudność | ● |
 
-> **Zanim zaczniesz:** pobierz **oba** teksty. Errata zmienia treść artykułu.
-> Praca oparta na wersji pierwotnej będzie zawierać błąd, którego autorzy sami się
-> wyrzekli.
+Temat o najniższym progu matematycznym w całym zestawie. Cały aparat to liczenie par
+dokumentów i jedna suma. Trudność projektu leży w danych i w rzetelnym eksperymencie,
+nie we wzorze.
 
 ## Po co to badaczowi
 
-Testy kompetencyjne mają mierzyć konkretne umiejętności. Żeby z odpowiedzi wyczytać,
-które umiejętności uczeń opanował, trzeba wiedzieć, **które zadanie mierzy co**.
-Zapisuje się to w tablicy zero-jedynkowej: wiersze to zadania, kolumny umiejętności,
-jedynka oznacza, że zadanie wymaga danej umiejętności.
+Skuteczność wyszukiwarki mierzy się, porównując to, co zwróciła, z tym, co jest
+naprawdę trafne. Problem w tym, że **nikt nigdy nie ocenił całej kolekcji**. Przy
+milionie dokumentów i pięćdziesięciu zapytaniach ocena wszystkiego jest niewykonalna,
+więc od czasów pierwszych konferencji ewaluacyjnych ocenia się tylko pulę: kilkaset
+dokumentów najwyżej ustawionych przez badane systemy.
 
-Tablicę tę wypełniają eksperci – autorzy testu, metodycy, nauczyciele. I tu leży
-problem, o którym mówi cała literatura przedmiotu: **eksperci się mylą**. Przypisują
-zadaniu umiejętność, której ono w istocie nie sprawdza, albo pomijają taką, która
-jest potrzebna. Skutek jest poważniejszy, niż się wydaje: diagnoza wystawiona na
-podstawie błędnej tablicy przypisuje uczniowi braki, których nie ma, albo przeocza
-te, które ma.
+Powstaje wtedy cicha luka. Dokument nieoceniony traktuje się jak nietrafny. Dopóki
+porównujemy systemy, które współtworzyły pulę, jest to przybliżenie do przyjęcia.
+Kłopot zaczyna się, gdy pojawia się **system nowy**, którego w puli nie było: jego
+trafne trafienia mogą być nieocenione, a więc policzone jako nietrafne. Nowy system
+wygląda gorzej, niż jest.
 
-Metody walidacji tej tablicy istnieją od lat, ale opierają się na dopasowaniu modelu
-i bywają trudne do zinterpretowania. Artykuł proponuje inne podejście: potraktować
-zadanie jak **detektor**. Dobry detektor umiejętności reaguje, gdy uczeń ją ma,
-i milczy, gdy jej nie ma. Teoria detekcji sygnału daje gotowy aparat do mierzenia,
-jak dobrym detektorem jest dane zadanie względem danej umiejętności – ten sam, który
-w psychologii służy do oceny wykrywalności bodźców.
+Jest to problem realny, nie hipotetyczny. Kolekcje testowe żyją latami, a systemy
+oceniane na nich powstają długo po zamknięciu puli. Dotyczy też każdego, kto buduje
+własną kolekcję: sądy o trafności kosztują czas eksperta, więc zawsze jest ich za mało.
 
-Dla badacza edukacji oznacza to narzędzie, które wskazuje konkretne komórki tablicy
-wymagające przemyślenia, wraz z miarą siły tego wskazania.
+Artykuł pokazuje, jak bardzo klasyczne miary zawodzą przy niepełnych ocenach, i podaje
+miarę odporną: **bpref**, liczoną wyłącznie na dokumentach ocenionych, z pominięciem
+nieocenionych zamiast uznawania ich za nietrafne.
 
 ## Algorytm
 
-**Wejście.** Macierz odpowiedzi zero-jedynkowych: uczniowie w wierszach, zadania
-w kolumnach. Wstępna macierz specyfikacji wypełniona przez ekspertów. Opcjonalnie
-wagi próby.
+**Wejście.** Ranking dokumentów zwrócony przez system dla zapytania oraz zbiór sądów
+o trafności: dla części dokumentów wiadomo, że są trafne, dla części, że nietrafne,
+o reszcie nie wiadomo nic.
 
-**Wyjście.** Poprawiona macierz specyfikacji, miary jakości detekcji dla każdej pary
-zadanie–umiejętność oraz wykaz komórek, które metoda proponuje zmienić.
+**Wyjście.** Wartość miary dla zapytania, wartość uśredniona po zapytaniach, liczba
+dokumentów nieocenionych w rankingu oraz miary klasyczne do porównania.
+
+**Wzór.** Niech $R$ oznacza liczbę dokumentów ocenionych jako trafne, $r$ pojedynczy
+dokument trafny, a $n$ dokument oceniony jako nietrafny, należący do pierwszych $R$
+takich dokumentów w rankingu. Wtedy
+
+$$\mathrm{bpref} = \frac{1}{R}\sum_{r}\left(1 - \frac{|n \text{ przed } r|}{R}\right)$$
+
+gdzie $|n \text{ przed } r|$ to liczba tych dokumentów nietrafnych, które w rankingu
+stoją wyżej niż dany dokument trafny.
+
+Miara odpowiada na pytanie: **jak często oceniony dokument trafny wyprzedza oceniony
+dokument nietrafny**. Dokumenty nieoceniane nie występują w tym wzorze w ogóle, więc
+nie da się ukarać systemu za znalezienie czegoś, czego nikt nie obejrzał.
+
+Przy małej liczbie dokumentów trafnych miara robi się skokowa, bo par jest bardzo
+mało. Autorzy podają dla takich przypadków wariant
+
+$$\mathrm{bpref\text{-}10} = \frac{1}{R}\sum_{r}\left(1 - \frac{|n \text{ przed } r|}{10 + R}\right)$$
+
+w którym $n$ przebiega pierwszych $10 + R$ ocenionych dokumentów nietrafnych. Gwarantuje
+to co najmniej dziesięć par nawet wtedy, gdy trafny dokument jest jeden.
 
 **Kroki.**
 
-1. Sprawdzenie wejścia: macierz odpowiedzi zero-jedynkowa, macierz specyfikacji
-   bez wiersza samych zer.
-2. Oszacowanie rozkładu opanowania umiejętności przez uczniów przy zadanej macierzy
-   specyfikacji.
-3. Dla każdej pary zadanie–umiejętność wyznaczenie miar detekcji: skłonności do
-   reagowania oraz zdolności rozróżniania.
-4. Przeszukiwanie: rozważenie zamiany wartości w komórkach i przyjęcie zmian
-   poprawiających kryterium.
-5. Powtórzenie do stabilizacji.
+1. Sprawdzenie danych: zgodność identyfikatorów rankingu i sądów, brak powtórzeń,
+   obecność co najmniej jednego dokumentu trafnego.
+2. Zredukowanie rankingu do dokumentów ocenionych, z zapamiętaniem, ile odrzucono.
+3. Dla każdego dokumentu trafnego policzenie, ile dokumentów nietrafnych z ustalonego
+   początku listy stoi wyżej.
+4. Złożenie sumy i podzielenie przez liczbę dokumentów trafnych.
+5. Powtórzenie dla wariantu z przesunięciem oraz dla miar klasycznych.
+6. Uśrednienie po zapytaniach i porównanie uporządkowania systemów.
 
-**Co wynotować z artykułu i erraty.** Z sekcji metodycznej: definicję obu miar
-detekcji w kategoriach prawdopodobieństw warunkowych, dokładną postać kryterium
-optymalizowanego w przeszukiwaniu, sposób szacowania rozkładu opanowania oraz
-warunek zatrzymania. **Sprawdź w erracie, który z tych elementów uległ zmianie** i
-zapisz to w tabeli niedopowiedzeń specyfikacji – to gotowy materiał do wniosków pracy.
+**Co wynotować z artykułu.** Dokładne sformułowanie obu wzorów wraz z tym, które
+dokumenty nietrafne wchodzą do liczenia; procedurę symulowania niepełnych sądów przez
+losowe usuwanie ocen; sposób porównywania uporządkowań systemów miarą korelacji rangowej;
+wielkości spadku zgodności dla miar klasycznych przy kolejnych poziomach niekompletności.
 
 ## Kontrakt
 
-**Warunki wstępne.** Macierz odpowiedzi zawiera wyłącznie zera i jedynki bez braków
-albo z jawnie zadeklarowaną obsługą braków; macierz specyfikacji zero-jedynkowa
-o liczbie wierszy równej liczbie zadań; żaden wiersz specyfikacji nie jest zerowy;
-co najmniej dwie umiejętności.
+**Warunki wstępne.** Ranking bez powtórzeń; sądy o trafności zerojedynkowe; co najmniej
+jeden dokument trafny wśród ocenionych; identyfikatory rankingu i sądów z tej samej
+przestrzeni.
 
-**Niezmienniki.** Poprawiona macierz pozostaje zero-jedynkowa. Kryterium nie pogarsza
-się między iteracjami. Przy macierzy specyfikacji zgodnej z prawdziwą metoda nie
-proponuje zmian.
+**Niezmienniki.** Wynik należy do przedziału od zera do jedności. Ranking, w którym
+wszystkie dokumenty trafne stoją przed wszystkimi nietrafnymi, daje jedność. Ranking
+odwrotny daje zero. Wstawienie dokumentu nieocenionego w dowolne miejsce nie zmienia
+wyniku – to jest własność, dla której miara powstała, i ma własny test.
 
-**Wyjście.** Klasa `walidacja_q` ze składnikami: macierz poprawiona, macierz
-wejściowa, miary detekcji, wykaz zmian, liczba iteracji.
+**Wyjście.** Klasa `ocena_niepelna` ze składnikami: wartość miary dla każdego zapytania,
+wartość średnia, odsetek dokumentów nieocenionych, liczba dokumentów trafnych.
 
-**Błędy zatrzymujące wykonanie.** Macierz odpowiedzi spoza zbioru zero-jedynkowego;
-zerowy wiersz specyfikacji; niezgodność wymiarów; brak zbieżności w zadanej liczbie
-iteracji.
+**Błędy zatrzymujące wykonanie.** Brak dokumentów trafnych dla zapytania; powtórzone
+identyfikatory w rankingu; sądy o trafności spoza zbioru dwuelementowego.
 
 ## Plan pakietu
 
 | Plik | Odpowiedzialność |
 |---|---|
-| `R/przygotowanie_danych.R` | walidacja macierzy, obsługa braków, wagi |
-| `R/detekcja.R` | miary detekcji dla pary zadanie–umiejętność |
-| `R/przeszukiwanie.R` | procedura poprawiania macierzy |
+| `R/przygotowanie_danych.R` | walidacja rankingu i sądów, redukcja do ocenionych |
+| `R/bpref.R` | obie postaci miary |
+| `R/miary_klasyczne.R` | średnia precyzja i precyzja na zadanej głębokości do porównania |
+| `R/zgodnosc.R` | korelacja rangowa między uporządkowaniami systemów |
 | `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | mapa cieplna zmian i miar detekcji |
+| `R/wizualizacja.R` | spadek zgodności w funkcji odsetka usuniętych ocen |
 
-Zależności: `stats`, `ggplot2`. Jeżeli sięgasz po istniejący pakiet do modeli
-diagnostycznych, uzasadnij to w pracy i sprawdź, czy nie przenosisz do niego całej
-metody.
+Zależności: `stats` i `ggplot2`. **Liczenie par rób na posortowanych pozycjach**, a nie
+przez podwójną pętlę po dokumentach – przy rankingu tysiąca pozycji różnica jest
+odczuwalna, a sam zabieg jest dobrym materiałem do rozdziału drugiego.
 
 ## Dane
 
-**Procedura generowania.** Ustalasz prawdziwą macierz specyfikacji, losujesz
-opanowanie umiejętności przez uczniów, generujesz odpowiedzi zgodnie z modelem
-diagnostycznym. Następnie **psujesz** macierz: zamieniasz zadaną liczbę komórek.
-Metoda powinna te komórki wskazać. Odsetek poprawnie wskazanych komórek jest
-naturalną miarą skuteczności i wprost odpowiada na pytanie badawcze.
+**Procedura generowania.** Generujesz ranking o **zadanej jakości**: ustalasz liczbę
+dokumentów trafnych i prawdopodobieństwo, z jakim system ustawia je wysoko. Znasz wtedy
+oczekiwaną wartość miary. Następnie **usuwasz część sądów o trafności** z zadanym
+odsetkiem i sprawdzasz, jak zmieniają się miary klasyczne, a jak bpref. To jest
+odtworzenie eksperymentu z artykułu i zarazem odpowiedź na pytanie badawcze.
 
-Parametry: liczba uczniów, zadań, umiejętności, odsetek zepsutych komórek, parametry
-zgadywania i przeoczenia, ziarno.
+Parametry: liczba zapytań, długość rankingu, liczba dokumentów trafnych, jakość systemu,
+odsetek usuniętych ocen, ziarno.
 
-**Przypadki o znanym wyniku.** Macierz nieuszkodzona: brak proponowanych zmian.
-Jedna komórka zepsuta przy dużej próbie: metoda wskazuje dokładnie ją. Zadanie
-mierzące wszystkie umiejętności: miary detekcji identyczne dla każdej.
+**Przypadki o znanym wyniku.** Wszystkie trafne przed wszystkimi nietrafnymi: wynik
+równy jeden. Kolejność odwrotna: zero. Ranking `t n t n` przy dwóch dokumentach trafnych:
+wynik policzalny ręcznie w dwóch linijkach – wpisz rachunek do komentarza testu.
 
-**Przypadki patologiczne.** Uczeń odpowiadający na wszystko poprawnie; zadanie,
-na które nikt nie odpowiedział poprawnie; jedna umiejętność.
+**Przypadki patologiczne.** Zero dokumentów trafnych; jeden dokument trafny i zero
+nietrafnych; ranking złożony wyłącznie z dokumentów nieocenionych; sądy o dokumentach
+spoza rankingu.
 
-**Zbiór empiryczny.** Otwarte zbiory odpowiedzi z badań edukacyjnych, na przykład
-dane towarzyszące pakietom do modeli diagnostycznych albo udostępniane przez
-międzynarodowe badania osiągnięć. Sprawdź licencję i warunki cytowania.
+**Zbiór empiryczny.** Publicznie dostępne kolekcje testowe z sądami o trafności, na
+przykład kolekcje udostępniane przez organizatorów konferencji ewaluacyjnych albo
+zbiory oceny wyszukiwania w otwartych repozytoriach. Wystarczy jeden zestaw zapytań
+z sądami i kilka rankingów. Sprawdź warunki licencyjne przed pobraniem.
 
 ## Mapowanie na pracę
 
 | Sekcja briefu | Rozdział pracy |
 |---|---|
-| Po co to badaczowi | Wprowadzenie: tło i luka |
-| Algorytm, co wynotować | Rozdział 1: aparat formalny |
-| Errata i jej skutki | Rozdział 1 oraz Podsumowanie |
-| Plan pakietu, dane, badanie skuteczności | Rozdział 2 |
-| Zbiór empiryczny | Rozdział 3 |
+| Po co to badaczowi, problem niekompletnej puli | Wprowadzenie: tło i luka |
+| Wzory, sens miary preferencyjnej | Rozdział 1: aparat formalny |
+| Kontrakt, niezmienniki | Rozdział 1: granice stosowalności |
+| Plan pakietu, procedura generowania, badanie odporności | Rozdział 2 |
+| Zbiór empiryczny, porównanie uporządkowań | Rozdział 3 |
 
-**Wstępne pytanie badawcze.** Przy jakiej liczbie uczniów metoda zaczyna wiarygodnie
-wskazywać błędne komórki tablicy specyfikacji i jak zależy to od liczby umiejętności?
+**Wstępne pytanie badawcze.** Przy jakim odsetku usuniętych sądów o trafności
+uporządkowanie systemów według miary klasycznej przestaje odpowiadać uporządkowaniu
+przy pełnych sądach, i o ile dłużej wytrzymuje miara preferencyjna?
 
 ## Polecenia startowe
 
-1. Miary detekcji jako funkcja pary zadanie–umiejętność, zgodnie z Twoimi notatkami
-   z artykułu **i erraty**.
-2. Procedura przeszukiwania z jawnym warunkiem zatrzymania.
-3. Procedura generowania z kontrolowanym psuciem macierzy.
-4. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
-5. Badanie skuteczności: odsetek poprawnie wskazanych komórek w funkcji liczby uczniów.
-6. Dokumentacja funkcji eksportowanych.
+1. Walidacja rankingu i sądów o trafności wraz z redukcją do dokumentów ocenionych.
+2. Obie postaci miary, na operacjach wektorowych, zgodnie z wzorami z notatek.
+3. Miary klasyczne do porównania: średnia precyzja i precyzja na zadanej głębokości.
+4. Procedura generowania rankingu o zadanej jakości i kontrolowanym usuwaniu ocen.
+5. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
+6. Badanie zgodności uporządkowań w funkcji odsetka usuniętych ocen.
 
 ## Pułapki
 
-**Wersja przed erratą.** Narzędzie może znać pierwotną wersję metody z materiałów
-w sieci. Ty pracujesz na poprawionej. Sprawdź każdy wzór.
+**Traktowanie nieocenionych jak nietrafnych.** Agent napisze tak, bo tak wygląda typowy
+kod liczenia precyzji. To jest dokładnie ten błąd, który miara ma usunąć. Test wstawiający
+dokument nieoceniony w środek rankingu wychwyci to natychmiast.
 
-**Przeszukiwanie zachłanne nie daje optimum globalnego.** To nie jest wada
-implementacji, tylko własność metody. Praca musi to powiedzieć, a nie ukrywać za
-sformułowaniem o „optymalnej macierzy".
+**Które dokumenty nietrafne liczyć.** We wzorze $n$ nie przebiega wszystkich dokumentów
+nietrafnych, tylko pierwsze $R$ z nich w kolejności rankingu. Pominięcie tego
+ograniczenia daje inne liczby i niezgodność z artykułem.
 
-**Wiersz samych zer.** Zadanie niemierzące żadnej umiejętności psuje szacowanie.
-Metoda musi to wykluczyć na wejściu, a nie radzić sobie z tym po drodze.
+**Uśrednianie.** Miarę liczy się osobno dla każdego zapytania, a dopiero potem uśrednia.
+Policzenie jej raz na połączonych zapytaniach daje wynik pozbawiony sensu.
 
-**Interpretacja wskazań.** Metoda wskazuje komórki podejrzane, a nie błędne.
-Ostateczna decyzja należy do eksperta przedmiotowego. Praca, która przedstawia
-wynik jako poprawioną tablicę bez tego zastrzeżenia, nadinterpretuje metodę.
+**Mała liczba dokumentów trafnych.** Przy jednym dokumencie trafnym miara przyjmuje
+bardzo niewiele wartości. Stąd wariant z przesunięciem, i stąd wymóg, żeby w studium
+przypadku podać rozkład liczby dokumentów trafnych na zapytanie.
 
-**Na obronie** musisz umieć wyjaśnić, czym w tej metodzie jest sygnał, czym szum
-i dlaczego akurat aparat z psychologii percepcji nadaje się do oceny zadań testowych.
+**Na obronie** musisz umieć wyjaśnić, dlaczego miara liczy pary zamiast pozycji, i podać
+przykład rankingu, dla którego miara klasyczna i preferencyjna dają różne uporządkowanie
+dwóch systemów.
 
 ## Literatura
 
-Artykuł źródłowy: `liChen2024qmatrix` wraz z erratą `liChen2025korekta`.
+Artykuł źródłowy: `buckleyVoorhees2004incomplete`.
 
-Wprowadzenie: podręcznikowe omówienie modeli diagnostycznych i roli tablicy
-specyfikacji; klasyczne opracowanie teorii detekcji sygnału. Dwie do czterech
-pozycji dobierasz sam.
+Wprowadzenie: podręcznikowe omówienie oceny systemów wyszukiwawczych i metodyki
+Cranfield; opracowanie o budowie kolekcji testowych i puli dokumentów. Dwie do czterech
+pozycji dobierasz sam. Tematy pokrewne: 02, 07, 08, 11, 12, 13 – wszystkie dotyczą
+pomiaru skuteczności wyszukiwania i można je porównywać na tych samych danych.
 
 Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.

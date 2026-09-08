@@ -1,173 +1,199 @@
-# Temat 07. Granica sprawiedliwości i trafności algorytmu
+# Temat 07. Miara skuteczności wyprowadzona z modelu użytkownika
 
 ## Metryka
 
 | | |
 |---|---|
-| Artykuł źródłowy | Liu, Yiqi; Molinari, Francesca (2024). *Inference for an Algorithmic Fairness-Accuracy Frontier* |
-| Identyfikator | [arXiv:2402.08879](https://arxiv.org/abs/2402.08879) |
-| Dostęp | otwarty |
-| Dziedzina | polityka publiczna, automatyczne podejmowanie decyzji |
-| Proponowany tytuł pracy | Pakiet R do wyznaczania granicy między sprawiedliwością a trafnością algorytmu jako przykład zastosowania optymalizacji wypukłej w ocenie decyzji automatycznych |
-| Proponowana nazwa pakietu | `GranicaFAR` |
-| Trudność | ●●●● |
+| Artykuł źródłowy | Moffat, Alistair; Zobel, Justin (2008). *Rank-Biased Precision for Measurement of Retrieval Effectiveness*. ACM Transactions on Information Systems 27(1) |
+| Identyfikator | [10.1145/1416950.1416952](https://doi.org/10.1145/1416950.1416952), [kopia autorska](https://people.eng.unimelb.edu.au/jzobel/fulltext/acmtois08.pdf) |
+| Dostęp | wolny |
+| Dziedzina | wyszukiwanie informacji, zachowania informacyjne |
+| Proponowany tytuł pracy | Pakiet R do pomiaru skuteczności wyszukiwania jako przykład zastosowania modeli zachowania użytkownika w ocenie systemów informacyjnych |
+| Proponowana nazwa pakietu | `RBPmiaraR` |
+| Trudność | ●● |
 
 ## Po co to badaczowi
 
-Coraz więcej decyzji dotyczących ludzi zapada z udziałem algorytmu: kto dostanie
-kredyt, kogo zaprosić na rozmowę, komu przyznać świadczenie, którą sprawę rozpatrzyć
-w pierwszej kolejności. Wobec takich systemów stawia się dwa wymagania jednocześnie.
-Mają **trafnie** przewidywać. I mają **nie różnicować** osób ze względu na cechy
-chronione.
+Miary skuteczności wyszukiwania wzięły się z pomysłu, że można policzyć, ile spośród
+dokumentów trafnych system znalazł. Kłopot polega na tym, że przy dużej kolekcji nikt
+nie wie, ile ich jest, więc **pełności nie da się zmierzyć**, a średnia precyzja, którą
+stosuje się najczęściej, jest z pełności wyprowadzona i dziedziczy jej wadę.
 
-Wymagania te są ze sobą w konflikcie. Nie w sensie moralnym, tylko matematycznym:
-zwykle nie da się poprawić jednego, nie psując drugiego. Debata publiczna traktuje
-to jako spór o wartości, podczas gdy jest to najpierw kwestia faktu – istnieje
-zbiór osiągalnych par trafność–różnicowanie, a decyzja polityczna dotyczy tego,
-**który punkt tego zbioru wybrać**.
+Jest jeszcze druga rzecz, dziwna, gdy się ją zauważy. Klasyczne miary wagują pozycje
+w rankingu, ale wagi biorą się z konstrukcji miary, nie z tego, jak ludzie czytają
+wyniki wyszukiwania. Nie ma w nich żadnego założenia o użytkowniku.
 
-Artykuł podaje sposób wyznaczenia brzegu tego zbioru wraz z **wnioskowaniem
-statystycznym**: nie tylko szacuje granicę, ale mówi, jak niepewne jest to
-oszacowanie, i pozwala sprawdzić, czy istniejąca procedura na tej granicy leży.
-To ostatnie jest pytaniem o realną doniosłość: jeśli obecny system leży wyraźnie
-poniżej granicy, można poprawić sprawiedliwość **bez** utraty trafności, i wtedy
-argument o nieuchronnym kompromisie przestaje obowiązywać.
+Artykuł odwraca kolejność. Najpierw stawia **model zachowania**: użytkownik ogląda
+wynik pierwszy, potem z prawdopodobieństwem $p$ przechodzi do następnego, a z
+prawdopodobieństwem $1-p$ kończy. Dopiero z tego modelu wyprowadza miarę. Wagi pozycji
+przestają być umowne, a parametr $p$ ma znaczenie, które da się opisać słowami:
+niecierpliwy użytkownik to małe $p$, wytrwały to duże.
 
-Dla badacza polityki publicznej jest to narzędzie do przejścia od sporu o wartości
-do sprawdzalnego pytania: ile trafności faktycznie kosztuje dana poprawa
-sprawiedliwości w tym konkretnym systemie.
+Model daje jeszcze jedną rzecz, której klasyczne miary nie mają. Skoro wagi maleją
+geometrycznie, to **da się policzyć, ile wyniku brakuje** z powodu dokumentów
+nieocenionych albo obciętego rankingu. Wynik przestaje być liczbą, a staje się
+przedziałem z jawnie podaną niepewnością.
+
+Dla badacza zachowań informacyjnych jest to miara, której parametr odpowiada
+obserwowalnej własności użytkownika, a nie decyzji projektanta miary.
 
 ## Algorytm
 
-**Wejście.** Dane z cechami wejściowymi, zmienną wynikową, cechą chronioną oraz
-opcjonalnie decyzjami istniejącej procedury. Wybrana miara różnicowania i miara
-błędu.
+**Wejście.** Ranking dokumentów, sądy o trafności (zerojedynkowe lub stopniowane),
+parametr wytrwałości $p$ z przedziału otwartego od zera do jedności.
 
-**Wyjście.** Oszacowanie brzegu zbioru osiągalnych par wraz z pasmem ufności;
-położenie istniejącej procedury względem brzegu; wynik testu, czy leży ona na brzegu.
+**Wyjście.** Wartość miary, wartość resztowa opisująca niepewność, przedział, w którym
+mieści się wynik przy pełnych sądach, oczekiwana liczba obejrzanych dokumentów.
+
+**Wzór podstawowy.** Niech $r_i$ oznacza trafność dokumentu na pozycji $i$, a $d$
+głębokość rankingu. Wtedy
+
+$$\mathrm{RBP} = (1-p)\sum_{i=1}^{d} r_i\, p^{\,i-1}$$
+
+Czynnik $(1-p)$ normalizuje sumę, bo $\sum_{i=1}^{\infty} p^{\,i-1} = 1/(1-p)$. Miara
+przyjmuje wartości od zera włącznie do jedności wyłącznie.
+
+**Model użytkownika.** Przy tak przyjętym zachowaniu użytkownik ogląda średnio
+
+$$\frac{1}{1-p}$$
+
+dokumentów. Dla $p = 0{,}5$ są to dwa dokumenty, dla $p = 0{,}8$ pięć, dla
+$p = 0{,}95$ dwadzieścia. Jest to jedyna interpretacja parametru, jakiej potrzebujesz,
+i warto ją podać w pracy, bo tłumaczy dobór wartości.
+
+**Wartość resztowa.** Jeżeli ranking urwano na głębokości $d$, to nieznany wkład
+dalszych pozycji wynosi
+
+$$(1-p)\sum_{i=d+1}^{\infty} p^{\,i-1} = p^{\,d}$$
+
+Jeżeli natomiast w obrębie rankingu część dokumentów nie ma oceny, każdy z nich dokłada
+do reszty wagę, którą miałby, gdyby okazał się trafny. Dla zbioru pozycji nieocenionych
+$U$ reszta wynosi
+
+$$p^{\,d} + (1-p)\sum_{i \in U} p^{\,i-1}$$
+
+Wynik prawdziwy leży wtedy między wartością policzoną a wartością powiększoną o resztę.
 
 **Kroki.**
 
-1. Sprawdzenie wejścia: cecha chroniona o co najmniej dwóch poziomach, dostateczne
-   pokrycie w każdej grupie, brak separacji.
-2. Podział próby na części do dopasowania i do oceny.
-3. Wyznaczenie funkcji pomocniczych na częściach do dopasowania.
-4. Dla siatki kierunków rozwiązanie zadania optymalizacji wypukłej wyznaczającego
-   punkt brzegu w danym kierunku.
-5. Złożenie punktów w brzeg i wyznaczenie pasma ufności.
-6. Test położenia istniejącej procedury względem brzegu.
+1. Sprawdzenie danych: zakres parametru, zgodność identyfikatorów, brak powtórzeń.
+2. Rozdzielenie pozycji rankingu na trzy kategorie: ocenione trafne, ocenione nietrafne,
+   nieocenione.
+3. Złożenie sumy ważonej po pozycjach ocenionych jako trafne.
+4. Policzenie reszty z obcięcia rankingu i z pozycji nieocenionych.
+5. Złożenie przedziału i miar pomocniczych.
+6. Powtórzenie dla siatki wartości parametru.
 
-**Co wynotować z artykułu.** Z sekcji metodycznej: definicję obu miar oraz zbioru
-osiągalnego; postać funkcji charakteryzującej brzeg; konstrukcję funkcji wynikowej
-odpornej na błąd oszacowania funkcji pomocniczych; sposób podziału próby; postać
-statystyki testowej i rozkład, do którego się ją porównuje; założenia dotyczące
-pokrycia i ich rolę.
+**Co wynotować z artykułu.** Wyprowadzenie miary z modelu użytkownika, krok po kroku;
+dokładną postać reszty w obu przypadkach; przykład rankingu z dokumentami nieocenionymi
+wraz z policzonymi granicami przedziału dla trzech wartości parametru; argumentację,
+dlaczego miara jest odporna na wydłużenie rankingu, czego średnia precyzja nie jest.
 
 ## Kontrakt
 
-**Warunki wstępne.** Cecha chroniona o co najmniej dwóch poziomach z niepustymi
-grupami; zmienna wynikowa bez braków; liczba obserwacji wystarczająca do podziału
-próby; poziom ufności z przedziału otwartego zero–jeden.
+**Warunki wstępne.** Parametr ściśle między zerem a jednością; ranking bez powtórzeń;
+trafności w przedziale od zera do jedności; sądy o trafności rozłączne z listą pozycji
+nieocenionych.
 
-**Niezmienniki.** Brzeg jest nierosnący: poprawa jednej miary nie następuje bez
-pogorszenia drugiej. Pasmo ufności zawiera oszacowanie punktowe. Zamiana etykiet
-grup cechy chronionej nie zmienia brzegu przy symetrycznej mierze różnicowania.
+**Niezmienniki.** Wynik należy do przedziału od zera włącznie do jedności wyłącznie.
+Reszta jest nieujemna i nie większa niż jeden minus wynik. Dopisanie dokumentów na koniec
+rankingu nie zmniejsza wyniku i nie zwiększa reszty ponad wartość sprzed dopisania.
+Przy wszystkich dokumentach trafnych i nieskończonym rankingu wynik dąży do jedności.
+Przy parametrze bliskim zeru wynik dąży do trafności pierwszego dokumentu.
 
-**Wyjście.** Klasa `granica_far` ze składnikami: punkty brzegu, pasmo ufności,
-położenie procedury odniesienia, wynik testu, parametry podziału próby.
+**Wyjście.** Klasa `rbp` ze składnikami: wartość, reszta, granice przedziału, wartość
+parametru, oczekiwana liczba obejrzanych dokumentów, liczba pozycji nieocenionych.
 
-**Błędy zatrzymujące wykonanie.** Pusta grupa cechy chronionej; brak zmienności
-zmiennej wynikowej w grupie; zbyt mała próba dla zadanego podziału; brak zbieżności
-optymalizacji.
+**Błędy zatrzymujące wykonanie.** Parametr równy zero albo jeden; trafność spoza
+przedziału; powtórzone pozycje w rankingu; pusty ranking.
 
 ## Plan pakietu
 
 | Plik | Odpowiedzialność |
 |---|---|
-| `R/przygotowanie_danych.R` | walidacja, sprawdzenie pokrycia, podział próby |
-| `R/funkcje_pomocnicze.R` | dopasowanie funkcji pomocniczych na częściach próby |
-| `R/brzeg.R` | optymalizacja dla siatki kierunków |
-| `R/wnioskowanie.R` | pasmo ufności i test położenia |
+| `R/przygotowanie_danych.R` | walidacja rankingu, sądów i parametru |
+| `R/rbp.R` | miara podstawowa na operacjach wektorowych |
+| `R/reszta.R` | wartość resztowa z obcięcia i z pozycji nieocenionych |
+| `R/porownanie.R` | miary klasyczne do zestawienia |
 | `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | brzeg z pasmem i naniesioną procedurą odniesienia |
+| `R/wizualizacja.R` | wynik z przedziałem w funkcji parametru |
 
-Zależności: solver optymalizacji wypukłej dostępny na CRAN, `stats`, `ggplot2`.
-Wybór solvera uzasadnij: zadania w tej metodzie bywają źle uwarunkowane.
+Zależności: `stats` i `ggplot2`. Wagi licz jako `(1 - p) * p^(seq_along(x) - 1)`, jednym
+działaniem na wektorze, bez pętli po pozycjach.
 
 ## Dane
 
-**Procedura generowania.** Ustalasz model, w którym **znasz prawdziwy brzeg** – na
-przykład model o rozkładach normalnych z zadaną różnicą między grupami, dla którego
-brzeg da się wyprowadzić analitycznie. Sprawdzasz, czy oszacowany brzeg zbiega do
-prawdziwego i czy pasmo ufności ma deklarowane pokrycie.
+**Procedura generowania.** Generujesz ranking o zadanej jakości i **znanej wartości
+oczekiwanej miary**: przy niezależnym losowaniu trafności z prawdopodobieństwem $q$ na
+każdej pozycji wartość oczekiwana miary wynosi dokładnie $q$, co daje przypadek
+o wyniku znanym z rachunku, a nie z uruchomienia kodu. Następnie usuwasz część sądów
+i sprawdzasz, czy prawdziwa wartość mieści się w wyznaczonym przedziale.
 
-Parametry: liczebność, siła zależności wyniku od cechy chronionej, siła zależności
-od cech wejściowych, nierównowaga grup, ziarno.
+Parametry: długość rankingu, prawdopodobieństwo trafności, odsetek pozycji nieocenionych,
+wartość parametru wytrwałości, ziarno.
 
-**Przypadki o znanym wyniku.** Brak zależności wyniku od cechy chronionej: brzeg
-degeneruje się, bo sprawiedliwość nic nie kosztuje. Zależność deterministyczna:
-kompromis maksymalny. Grupy o identycznych rozkładach: różnicowanie zerowe przy
-dowolnej trafności.
+**Przypadki o znanym wyniku.** Wszystkie pozycje trafne, ranking o długości $d$: wynik
+równy $1 - p^{\,d}$. Tylko pierwsza pozycja trafna: wynik równy $1-p$. Żadna pozycja
+trafna: zero, reszta równa $p^{\,d}$ powiększona o wkład pozycji nieocenionych.
 
-**Przypadki patologiczne.** Grupa o dziesięciu obserwacjach; separacja doskonała;
-cecha chroniona o jednym poziomie.
+**Przypadki patologiczne.** Ranking jednoelementowy; wszystkie pozycje nieocenione;
+parametr bardzo bliski jedności przy krótkim rankingu, gdy reszta przewyższa wynik.
 
-**Zbiór empiryczny.** Otwarte zbiory używane w badaniach nad sprawiedliwością
-algorytmiczną, dotyczące decyzji kredytowych, rekrutacyjnych albo administracyjnych.
-**Sprawdź licencję i historię zbioru** – część popularnych zbiorów z tego obszaru
-jest krytykowana za sposób pozyskania i za to, jak koduje cechy chronione. Ta
-krytyka sama w sobie jest materiałem do rozdziału trzeciego.
+**Zbiór empiryczny.** Publiczna kolekcja testowa z sądami o trafności i kilkoma
+rankingami. Ten sam zbiór, którego używa temat 03, co pozwala porównać wyniki obu miar
+na identycznych danych.
 
 ## Mapowanie na pracę
 
 | Sekcja briefu | Rozdział pracy |
 |---|---|
-| Po co to badaczowi | Wprowadzenie: tło i luka |
-| Algorytm, co wynotować | Rozdział 1: aparat formalny |
-| Kontrakt, założenia o pokryciu | Rozdział 1: granice stosowalności |
-| Plan pakietu, dane, badanie pokrycia | Rozdział 2 |
-| Zbiór empiryczny, jego krytyka | Rozdział 3 |
+| Po co to badaczowi, model użytkownika | Wprowadzenie: tło i luka |
+| Wzory, wyprowadzenie z modelu, reszta | Rozdział 1: aparat formalny |
+| Kontrakt, zachowanie graniczne parametru | Rozdział 1: granice stosowalności |
+| Plan pakietu, procedura generowania, pokrycie przedziału | Rozdział 2 |
+| Zbiór empiryczny, porównanie z miarą klasyczną | Rozdział 3 |
 
-**Wstępne pytanie badawcze.** Jak daleko od brzegu leżą procedury decyzyjne
-stosowane w praktyce i czy odległość ta jest większa niż niepewność oszacowania
-samego brzegu?
+**Wstępne pytanie badawcze.** Jak dobór parametru wytrwałości wpływa na uporządkowanie
+systemów i przy jakim odsetku dokumentów nieocenionych przedział niepewności staje się
+tak szeroki, że uporządkowania nie da się rozstrzygnąć?
 
 ## Polecenia startowe
 
-1. Miary trafności i różnicowania jako funkcje wektora decyzji. Sprawdź na ręcznie
-   policzonym przykładzie dziesięciu obserwacji.
-2. Zadanie optymalizacji dla jednego kierunku, z jawnym wywołaniem solvera.
-3. Podział próby i dopasowanie funkcji pomocniczych.
-4. Pasmo ufności zgodnie z Twoimi notatkami.
-5. Procedura generowania z analitycznie znanym brzegiem.
-6. Badanie pokrycia pasma w powtórzeniach.
+1. Walidacja wejścia z jawnym sprawdzeniem zakresu parametru.
+2. Miara podstawowa na wektorze wag, zgodnie ze wzorem z notatek.
+3. Wartość resztowa w obu przypadkach: obcięcie rankingu i pozycje nieocenione.
+4. Procedura generowania rankingu o znanej wartości oczekiwanej miary.
+5. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
+6. Badanie pokrycia: czy prawdziwa wartość mieści się w przedziale przy rosnącym
+   odsetku pozycji nieocenionych.
 
 ## Pułapki
 
-**Brak podziału próby.** Narzędzie policzy funkcje pomocnicze i brzeg na tych samych
-danych, bo tak jest prościej. Wynik będzie zbyt optymistyczny, a pasmo zbyt wąskie.
-Podział próby nie jest ostrożnością, tylko warunkiem poprawności wnioskowania.
+**Reszta pominięta.** Najłatwiej zaimplementować samą sumę i uznać temat za skończony.
+Reszta jest tym, co odróżnia tę miarę od zwykłej sumy ważonej, i bez niej praca traci
+swoją tezę.
 
-**Miara różnicowania.** Istnieje ich kilkanaście i **nie da się spełnić wszystkich
-naraz**. Wybór jednej jest decyzją merytoryczną, którą praca musi uzasadnić,
-a nie szczegółem implementacyjnym.
+**Normalizacja przez sumę wag policzoną na skończonym rankingu.** Czynnik $(1-p)$
+pochodzi z sumy szeregu nieskończonego. Dzielenie przez sumę wag pierwszych $d$ pozycji
+daje inną miarę, wyglądającą podobnie i zachowującą się inaczej przy wydłużaniu rankingu.
 
-**Brzeg nie jest zaleceniem.** Metoda mówi, co jest osiągalne, a nie co wybrać.
-Punkt na brzegu wskazuje decydent, nie algorytm. Praca, która wskazuje „optymalny"
-punkt, przekracza granice metody.
+**Pozycje nieocenione traktowane jak nietrafne.** Wtedy reszta wychodzi zero i cała
+konstrukcja przestaje działać. Ten sam błąd co w temacie 03 i ta sama metoda wykrycia.
 
-**Pokrycie.** Przy małej grupie mniejszościowej oszacowania stają się niestabilne.
-To najczęstszy realny problem w tym temacie i trzeba go zbadać, a nie przemilczeć.
+**Jedna wartość parametru.** Wynik zależy od parametru, więc podanie jednej liczby bez
+uzasadnienia jest decyzją ukrytą. W pracy podaj siatkę wartości i interpretację każdej
+przez oczekiwaną liczbę obejrzanych dokumentów.
 
-**Na obronie** musisz umieć wyjaśnić, dlaczego niektóre miary sprawiedliwości są
-wzajemnie sprzeczne, i co konkretnie oznacza, że procedura leży na brzegu.
+**Na obronie** musisz umieć wyprowadzić czynnik normalizujący z sumy szeregu
+geometrycznego i wyjaśnić, co dokładnie oznacza wartość resztowa dla czytelnika wyników.
 
 ## Literatura
 
-Artykuł źródłowy: `liuMolinari2024frontier`.
+Artykuł źródłowy: `moffatZobel2008rbp`.
 
-Wprowadzenie: przegląd definicji sprawiedliwości algorytmicznej wraz z wynikami
-o ich niezgodności; opracowanie o wnioskowaniu w zadaniach z funkcjami pomocniczymi.
-Dwie do czterech pozycji dobierasz sam.
+Wprowadzenie: podręcznikowe omówienie miar oceny wyszukiwania; opracowanie o modelach
+zachowania użytkownika w ocenie systemów. Dwie do czterech pozycji dobierasz sam.
+Tematy pokrewne: 03 i 13 dotyczą tego samego problemu z innej strony, 02 przedziałów
+niepewności w ocenie.
 
 Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.

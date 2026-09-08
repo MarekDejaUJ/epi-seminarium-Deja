@@ -2,7 +2,7 @@
 %
 % Kazda pozycja sprawdzona w rejestrze wydawcy, w bazie Crossref albo w arXiv.
 % Identyfikatory pochodza z rejestrow, nie z zestawien wtornych.
-% Stan na 2026-09-07.
+% Stan na 2026-09-08.
 
 % --- 1. Granice prawdopodobienstw przyczynowosci ----------------------------
 @inproceedings{liPearl2024probabilities,
@@ -30,23 +30,17 @@
   langid       = {english},
 }
 
-% --- 3. Walidacja macierzy Q metoda detekcji sygnalu -----------------------
-@article{liChen2024qmatrix,
-  author       = {Li, Jia and Chen, Ping},
-  year         = {2024},
-  title        = {A new Q-matrix validation method based on signal detection theory},
-  journaltitle = {British Journal of Mathematical and Statistical Psychology},
-  doi          = {10.1111/bmsp.12371},
-  langid       = {english},
-}
-
-@article{liChen2025korekta,
-  year         = {2025},
-  title        = {Correction to \enquote{A new Q-matrix validation method based on
-                  signal detection theory}},
-  journaltitle = {British Journal of Mathematical and Statistical Psychology},
-  doi          = {10.1111/bmsp.12385},
-  note         = {errata do liChen2024qmatrix; obowiązuje wersja poprawiona},
+% --- 3. Ocena skutecznosci przy niepelnych sadach o trafnosci --------------
+@inproceedings{buckleyVoorhees2004incomplete,
+  author       = {Buckley, Chris and Voorhees, Ellen M.},
+  year         = {2004},
+  title        = {Retrieval Evaluation with Incomplete Information},
+  booktitle    = {Proceedings of the 27th Annual International ACM SIGIR
+                  Conference on Research and Development in Information Retrieval},
+  pages        = {25-32},
+  url          = {https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=150469},
+  urldate      = {2026-09-08},
+  note         = {kopia w repozytorium NIST, dostęp wolny},
   langid       = {english},
 }
 
@@ -89,36 +83,54 @@
   langid       = {english},
 }
 
-% --- 7. Granica sprawiedliwosci i trafnosci --------------------------------
-@online{liuMolinari2024frontier,
-  author       = {Liu, Yiqi and Molinari, Francesca},
-  year         = {2024},
-  title        = {Inference for an Algorithmic Fairness-Accuracy Frontier},
-  url          = {https://arxiv.org/abs/2402.08879},
-  urldate      = {2026-09-07},
-  note         = {arXiv:2402.08879},
+% --- 7. Rank-biased precision ---------------------------------------------
+@article{moffatZobel2008rbp,
+  author       = {Moffat, Alistair and Zobel, Justin},
+  year         = {2008},
+  title        = {Rank-Biased Precision for Measurement of Retrieval Effectiveness},
+  journaltitle = {ACM Transactions on Information Systems},
+  volume       = {27},
+  number       = {1},
+  pages        = {1-27},
+  doi          = {10.1145/1416950.1416952},
+  url          = {https://people.eng.unimelb.edu.au/jzobel/fulltext/acmtois08.pdf},
+  urldate      = {2026-09-08},
+  note         = {kopia autorska, dostęp wolny},
   langid       = {english},
 }
 
-% --- 8. Analiza wrazliwosci przez korelacje czastkowe -----------------------
-@article{freidlingZhao2026sensitivity,
-  author       = {Freidling, Tobias and Zhao, Qingyuan},
-  year         = {2026},
-  title        = {Optimization-Based Sensitivity Analysis for Unmeasured
-                  Confounding Using Partial Correlations},
-  journaltitle = {Journal of Computational and Graphical Statistics},
-  doi          = {10.1080/10618600.2025.2573156},
+% --- 8. Podobienstwo rankingow nieokreslonej dlugosci ----------------------
+@article{webber2010similarity,
+  author       = {Webber, William and Moffat, Alistair and Zobel, Justin},
+  year         = {2010},
+  title        = {A Similarity Measure for Indefinite Rankings},
+  journaltitle = {ACM Transactions on Information Systems},
+  volume       = {28},
+  number       = {4},
+  doi          = {10.1145/1852102.1852106},
   langid       = {english},
 }
 
-% --- 9. Sekwencyjny syntetyczny DiD ----------------------------------------
-@online{arkhangelsky2024sequential,
-  author       = {Arkhangelsky, Dmitry and Samkov, Aleksei},
+@online{corsiUrbano2024remisy,
+  author       = {Corsi, Matteo and Urbano, Julián},
   year         = {2024},
-  title        = {Sequential Synthetic Difference in Differences},
-  url          = {https://arxiv.org/abs/2404.00164},
-  urldate      = {2026-09-07},
-  note         = {arXiv:2404.00164},
+  title        = {The Treatment of Ties in Rank-Biased Overlap},
+  url          = {https://arxiv.org/abs/2406.07121},
+  urldate      = {2026-09-08},
+  note         = {arXiv:2406.07121; wersja konferencyjna SIGIR 2024},
+  langid       = {english},
+}
+
+% --- 9. Zintegrowany wskaznik oddzialywania I3 -----------------------------
+@online{leydesdorff2019i3,
+  author       = {Leydesdorff, Loet and Bornmann, Lutz and Adams, Jonathan},
+  year         = {2019},
+  title        = {The Integrated Impact Indicator Revisited (I3*):
+                  A Non-Parametric Alternative to the Journal Impact Factor},
+  url          = {https://arxiv.org/abs/1812.03448},
+  urldate      = {2026-09-08},
+  note         = {arXiv:1812.03448, dostęp otwarty; wersja czasopiśmiennicza
+                  w Scientometrics},
   langid       = {english},
 }
 
@@ -135,41 +147,48 @@
   langid       = {english},
 }
 
-% --- 11. Model diagnostyczny bez macierzy Q --------------------------------
-@article{duan2025hmlacdm,
-  author       = {Duan, Hao and Tang, James and Madison, Matthew J.
-                  and Cotterell, Michael and Jeon, Minjeong},
-  year         = {2025},
-  title        = {Variational Bayesian Inference for a Q-Matrix-Free Hidden
-                  Markov Log-Linear Additive Cognitive Diagnostic Model},
-  journaltitle = {Algorithms},
-  volume       = {18},
-  number       = {11},
-  pages        = {675},
-  doi          = {10.3390/a18110675},
-  note         = {dostęp otwarty},
+% --- 11. Standaryzacja wynikow miedzy tematami -----------------------------
+@inproceedings{webber2008standaryzacja,
+  author       = {Webber, William and Moffat, Alistair and Zobel, Justin},
+  year         = {2008},
+  title        = {Score Standardization for Inter-Collection Comparison
+                  of Retrieval Systems},
+  booktitle    = {Proceedings of the 31st Annual International ACM SIGIR
+                  Conference on Research and Development in Information Retrieval},
+  pages        = {51-58},
+  url          = {https://people.eng.unimelb.edu.au/jzobel/fulltext/sigir08.pdf},
+  urldate      = {2026-09-08},
+  note         = {kopia autorska, dostęp wolny},
   langid       = {english},
 }
 
-% --- 12. Wyjasnienia grafowe przez PNS -------------------------------------
-@article{cai2025pns,
-  author       = {Cai, Ruichu and Zhu, Yuxuan and Chen, Xuexin and Fang, Yuan
-                  and Wu, Min and Qiao, Jie and Hao, Zhifeng},
-  year         = {2025},
-  title        = {On the probability of necessity and sufficiency of explaining
-                  Graph Neural Networks: A lower bound optimization approach},
-  journaltitle = {Neural Networks},
-  doi          = {10.1016/j.neunet.2024.107065},
+% --- 12. Nowosc i roznorodnosc w ocenie rankingu ---------------------------
+@inproceedings{clarke2008novelty,
+  author       = {Clarke, Charles L. A. and Kolla, Maheedhar and Cormack, Gordon V.
+                  and Vechtomova, Olga and Ashkan, Azin and Büttcher, Stefan
+                  and MacKinnon, Ian},
+  year         = {2008},
+  title        = {Novelty and Diversity in Information Retrieval Evaluation},
+  booktitle    = {Proceedings of the 31st Annual International ACM SIGIR
+                  Conference on Research and Development in Information Retrieval},
+  pages        = {659-666},
+  doi          = {10.1145/1390334.1390446},
   langid       = {english},
 }
 
-% --- 13. Odporny wybor przy racjonalnej nieuwadze --------------------------
-@article{hansen2025robust,
-  author       = {Hansen, Lars Peter and Miao, Jianjun and Xing, Hao},
-  year         = {2025},
-  title        = {Robust inattentive discrete choice},
-  journaltitle = {Proceedings of the National Academy of Sciences},
-  doi          = {10.1073/pnas.2416643122},
+% --- 13. Oczekiwana odwrotnosc rangi ---------------------------------------
+@inproceedings{chapelle2009err,
+  author       = {Chapelle, Olivier and Metlzer, Donald and Zhang, Ya
+                  and Grinspan, Pierre},
+  year         = {2009},
+  title        = {Expected Reciprocal Rank for Graded Relevance},
+  booktitle    = {Proceedings of the 18th ACM Conference on Information
+                  and Knowledge Management},
+  pages        = {621-630},
+  doi          = {10.1145/1645953.1646033},
+  url          = {http://olivier.chapelle.cc/pub/err.pdf},
+  urldate      = {2026-09-08},
+  note         = {kopia autorska, dostęp wolny},
   langid       = {english},
 }
 

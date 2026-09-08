@@ -1,181 +1,197 @@
-# Temat 11. Diagnoza umiejętności bez macierzy Q
+# Temat 11. Wyniki porównywalne między różnymi zestawami zapytań
 
 ## Metryka
 
 | | |
 |---|---|
-| Artykuł źródłowy | Duan, Hao; Tang, James; Madison, Matthew J.; Cotterell, Michael; Jeon, Minjeong (2025). *Variational Bayesian Inference for a Q-Matrix-Free Hidden Markov Log-Linear Additive Cognitive Diagnostic Model*. Algorithms 18(11), 675 |
-| Identyfikator | [10.3390/a18110675](https://doi.org/10.3390/a18110675) |
-| Dostęp | otwarty |
-| Dziedzina | psychometria, analityka uczenia się |
-| Proponowany tytuł pracy | Pakiet R do śledzenia rozwoju umiejętności w czasie jako przykład zastosowania wnioskowania wariacyjnego w diagnozie edukacyjnej |
-| Proponowana nazwa pakietu | `DiagnozaHMR` |
-| Trudność | ●●●● |
-
-> **Uwaga do nazwy metody.** Skrót w tytule oznacza model **log-liniowy**, a nie
-> podłużny, i model jest **wolny od macierzy Q**. Opracowania wtórne mylą te
-> określenia. Pracuj na tytule i treści z artykułu.
+| Artykuł źródłowy | Webber, William; Moffat, Alistair; Zobel, Justin (2008). *Score Standardization for Inter-Collection Comparison of Retrieval Systems*. SIGIR '08, s. 51-58 |
+| Identyfikator | [kopia autorska](https://people.eng.unimelb.edu.au/jzobel/fulltext/sigir08.pdf) |
+| Dostęp | wolny |
+| Dziedzina | wyszukiwanie informacji, metodologia eksperymentu |
+| Proponowany tytuł pracy | Pakiet R do standaryzacji wyników oceny systemów wyszukiwawczych jako przykład zastosowania normalizacji rozkładowej w badaniach porównawczych |
+| Proponowana nazwa pakietu | `StandaryzacjaR` |
+| Trudność | ●● |
 
 ## Po co to badaczowi
 
-Badania edukacyjne rzadko interesuje sam wynik testu. Interesuje je, **które
-umiejętności** uczeń opanował, a których nie – bo dopiero to pozwala zaplanować
-działanie. Modele diagnostyczne właśnie to dają: zamiast jednej liczby zwracają
-profil opanowanych umiejętności.
+Kiedy w artykule pada zdanie, że system osiągnął wynik 0,32, czytelnik nie wie o nim
+prawie nic. Nie wie, czy to dużo. Nie wie, czy wynik 0,28 z innego artykułu jest gorszy,
+czy tylko zmierzony na trudniejszym zestawie zapytań. **Wyniki miar skuteczności są
+względne wobec kolekcji** i poza nią nie znaczą nic.
 
-Mają jednak dwa ograniczenia, które w praktyce bardzo bolą.
+Powód jest prosty i widać go w danych. Zapytania różnią się trudnością znacznie bardziej
+niż systemy jakością. W typowym zestawie średnie wyniki dla poszczególnych zapytań
+rozciągają się kilkunastokrotnie, podczas gdy średnie wyniki systemów mieszczą się
+w przedziale dwu-, trzykrotnym. O wartości wyniku decyduje więc głównie to, jakie
+zapytania trafiły do kolekcji, a nie to, jak dobry jest system.
 
-Pierwsze: wymagają **tablicy specyfikacji** mówiącej, które zadanie mierzy którą
-umiejętność. Tablicę wypełniają eksperci, a eksperci się mylą (o czym jest temat 03).
-Model postawiony na błędnej tablicy zwraca diagnozę, która wygląda wiarygodnie i jest
-fałszywa.
+Ma to trzy skutki. Wyników z dwóch artykułów nie da się zestawić. Pojedyncza liczba nie
+mówi nic o tym, czy system jest dobry. A w testach istotności zapytania o dużym rozrzucie
+ważą wielokrotnie więcej niż pozostałe, więc wnioski o różnicach między systemami są
+mniej pewne, niż wskazuje sam test.
 
-Drugie: klasyczne modele opisują **jeden moment**. Tymczasem uczenie się jest
-procesem, a pytanie brzmi nie „co uczeń umie", tylko „czego się nauczył od
-poprzedniego pomiaru i co przewidujemy dalej". Modele obsługujące wiele pomiarów
-istnieją, ale ich estymacja przy kilkunastu umiejętnościach i kilku falach badania
-staje się obliczeniowo nieosiągalna: liczba możliwych profili rośnie wykładniczo.
+Artykuł proponuje rozwiązanie zapożyczone ze statystyki stosowanej w badaniach nad
+ludźmi, a wcześniej niestosowane w ocenie wyszukiwarek: **standaryzację wyniku względem
+rozkładu wyników na tym samym zapytaniu**. Trudność zapytania szacuje się z próby
+systemów, a potem używa do przeliczenia wyników wszystkich systemów, także tych, które
+powstaną później.
 
-Artykuł mierzy się z obydwoma naraz. Model **nie wymaga tablicy specyfikacji** – 
-zamiast tego pozwala ją odtworzyć z oszacowanych parametrów zadań. A wnioskowanie
-wariacyjne zastępuje kosztowne całkowanie zadaniem optymalizacji, dzięki czemu
-estymacja jest wykonalna dla realnych rozmiarów danych.
-
-Dla badacza edukacji jest to narzędzie do analizy badań podłużnych, które dziś
-zwykle sprowadza się do porównywania średnich między falami.
+Dla badacza jest to warunek, żeby liczba w tabeli znaczyła coś sama z siebie.
 
 ## Algorytm
 
-**Wejście.** Macierz odpowiedzi w trzech wymiarach: uczniowie, zadania, fale pomiaru.
-Liczba umiejętności. Opcjonalnie wagi próby i obsługa wypadnięcia z badania.
+**Wejście.** Macierz wyników: dla każdego systemu i każdego zapytania jedna wartość
+miary skuteczności. Wskazanie, które systemy tworzą próbę odniesienia.
 
-**Wyjście.** Rozkłady opanowania umiejętności dla każdego ucznia i fali; parametry
-zadań; macierze przejść między falami; odtworzona tablica specyfikacji; miary
-dopasowania.
+**Wyjście.** Wyniki standaryzowane, czynniki standaryzacyjne dla każdego zapytania,
+wyniki przeniesione na przedział jednostkowy, uporządkowanie systemów przed i po.
+
+**Wzory.** Niech $m_{st}$ oznacza wynik systemu $s$ na zapytaniu $t$, a $\mu_t$ i
+$\sigma_t$ średnią i odchylenie standardowe wyników na tym zapytaniu w próbie systemów
+odniesienia. Wynik standaryzowany to
+
+$$m'_{st} = \frac{m_{st} - \mu_t}{\sigma_t}$$
+
+Wielkości $\mu_t$ i $\sigma_t$ nazywa się **czynnikami standaryzacyjnymi** zapytania $t$.
+Wynik standaryzowany mówi, o ile odchyleń standardowych system odbiega od przeciętnej
+na tym zapytaniu.
+
+Tak policzona wartość jest wyśrodkowana na zerze i nieograniczona, a miary skuteczności
+zwyczajowo mieszczą się w przedziale jednostkowym. Autorzy przenoszą ją tam dystrybuantą
+rozkładu normalnego standardowego:
+
+$$F(m') = \int_{-\infty}^{m'} \frac{1}{\sqrt{2\pi}}\, e^{-x^2/2}\, dx$$
+
+Po przeniesieniu wartość 0,5 oznacza wynik przeciętny, 0,84 jedno odchylenie powyżej
+przeciętnej, a 0,16 jedno odchylenie poniżej. Jest to interpretacja, której surowy wynik
+miary nie ma.
+
+Przeniesienie ma jeszcze jeden skutek: **tłumi wpływ wartości skrajnych**, na przykład
+sytuacji, w której tylko jeden system znalazł cokolwiek trafnego dla danego zapytania.
 
 **Kroki.**
 
-1. Sprawdzenie wejścia: kompletność wymiarów, zgodność zestawu zadań między falami,
-   obsługa wypadnięcia.
-2. Inicjalizacja rozkładów wariacyjnych dla profili umiejętności i parametrów zadań.
-3. Naprzemienne uaktualnianie: przy ustalonych parametrach zadań uaktualnij rozkłady
-   profili, przy ustalonych profilach uaktualnij parametry.
-4. Uaktualnienie macierzy przejść między falami.
-5. Powtarzanie do zbieżności mierzonej kryterium wariacyjnym.
-6. Odtworzenie tablicy specyfikacji z oszacowanych parametrów zadań.
+1. Sprawdzenie danych: kompletność macierzy wyników, liczebność próby odniesienia,
+   niezerowe odchylenie standardowe na każdym zapytaniu.
+2. Wyznaczenie czynników standaryzacyjnych z próby systemów odniesienia.
+3. Przeliczenie wyników wszystkich systemów na wartości standaryzowane.
+4. Przeniesienie na przedział jednostkowy dystrybuantą.
+5. Uśrednienie po zapytaniach i uporządkowanie systemów.
+6. Porównanie uporządkowań oraz rozkładów wyników przed i po standaryzacji.
 
-**Co wynotować z artykułu.** Z sekcji metodycznej: postać modelu odpowiedzi
-log-liniowego wraz z parametrami zadań; postać rozkładów wariacyjnych i przyjętą
-faktoryzację; **pełne wzory uaktualnień** dla każdego bloku parametrów; definicję
-kryterium zbieżności; regułę odtwarzania tablicy specyfikacji z parametrów zadań;
-sposób inicjalizacji i jego wpływ na wynik.
+**Co wynotować z artykułu.** Sposób doboru próby systemów odniesienia i jej wymaganą
+liczebność; postępowanie przy zapytaniach o zerowym odchyleniu standardowym; wykazanie,
+że standaryzacja wyniku surowego i wyniku znormalizowanego przez liczbę dokumentów
+trafnych daje ten sam rezultat, wraz z uzasadnieniem; wyniki porównania rozkładów przed
+i po standaryzacji.
 
 ## Kontrakt
 
-**Warunki wstępne.** Macierz odpowiedzi zero-jedynkowa; co najmniej dwie fale
-pomiaru; ten sam zestaw zadań albo jawnie zadeklarowane powiązanie zadań między
-falami; liczba umiejętności co najmniej dwa i mniejsza od liczby zadań.
+**Warunki wstępne.** Macierz wyników bez braków albo z jawnie zadeklarowaną obsługą
+braków; co najmniej dwa systemy w próbie odniesienia; dodatnie odchylenie standardowe
+na każdym zapytaniu; wyniki miary w skali ilorazowej.
 
-**Niezmienniki.** Kryterium wariacyjne nie maleje między iteracjami. Rozkłady profili
-sumują się do jedności dla każdego ucznia i fali. Wiersze macierzy przejść sumują się
-do jedności. Wynik nie zależy od kolejności uczniów.
+**Niezmienniki.** Średnia wyników standaryzowanych w próbie odniesienia wynosi zero
+dla każdego zapytania, a odchylenie standardowe jeden. Wartości po przeniesieniu mieszczą
+się w przedziale od zera do jedności. Przekształcenie jest ściśle rosnące, więc
+uporządkowanie systemów **w obrębie jednego zapytania** się nie zmienia. Uporządkowanie
+po uśrednieniu po zapytaniach zmienić się może i właśnie o to chodzi.
 
-**Wyjście.** Klasa `diagnoza_hm` ze składnikami: rozkłady profili, parametry zadań,
-macierze przejść, odtworzona tablica specyfikacji, przebieg kryterium, liczba iteracji.
+**Wyjście.** Klasa `wyniki_standaryzowane` ze składnikami: macierz wyników
+standaryzowanych, macierz po przeniesieniu, czynniki standaryzacyjne, uporządkowanie
+przed i po, miara zgodności uporządkowań.
 
-**Błędy zatrzymujące wykonanie.** Jedna fala pomiaru; liczba umiejętności większa od
-liczby zadań; odpowiedzi spoza zbioru zero-jedynkowego; brak zbieżności w zadanej
-liczbie iteracji.
+**Błędy zatrzymujące wykonanie.** Zerowe odchylenie standardowe na zapytaniu; mniej niż
+dwa systemy odniesienia; macierz z brakami przy niezadeklarowanej obsłudze; wyniki spoza
+dziedziny miary.
 
 ## Plan pakietu
 
 | Plik | Odpowiedzialność |
 |---|---|
-| `R/przygotowanie_danych.R` | walidacja macierzy trójwymiarowej, obsługa wypadnięcia |
-| `R/model.R` | model odpowiedzi, prawdopodobieństwa warunkowe |
-| `R/wariacyjne.R` | uaktualnienia rozkładów wariacyjnych |
-| `R/przejscia.R` | macierze przejść między falami |
-| `R/tablica_q.R` | odtworzenie tablicy specyfikacji |
+| `R/przygotowanie_danych.R` | walidacja macierzy wyników i próby odniesienia |
+| `R/czynniki.R` | średnie i odchylenia dla zapytań |
+| `R/standaryzacja.R` | przeliczenie i przeniesienie na przedział jednostkowy |
+| `R/uporzadkowanie.R` | uporządkowanie systemów, zgodność uporządkowań |
 | `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | trajektorie opanowania, mapa cieplna przejść |
+| `R/wizualizacja.R` | rozkłady przed i po, wpływ zapytań o dużym rozrzucie |
 
-Zależności: `stats` i `ggplot2`. **Uaktualnienia licz na macierzach, nie w pętlach
-po uczniach** – to jedyna decyzja przesądzająca o wykonalności przy realnych danych.
+Zależności: `stats` i `ggplot2`. Całość to operacje na macierzy: odjęcie wektora średnich
+i podzielenie przez wektor odchyleń wykonuje się jednym działaniem, bez pętli po
+zapytaniach.
 
 ## Dane
 
-**Procedura generowania.** Ustalasz prawdziwą tablicę specyfikacji, parametry zadań
-i macierze przejść, losujesz trajektorie opanowania umiejętności i generujesz
-odpowiedzi. Znasz wtedy prawdziwe profile, przejścia i tablicę, więc możesz zmierzyć
-trzy rzeczy naraz: trafność klasyfikacji profili, obciążenie oszacowań przejść oraz
-zgodność odtworzonej tablicy z prawdziwą. Ostatnia jest najciekawsza, bo dotyczy
-głównego twierdzenia artykułu.
+**Procedura generowania.** Generujesz macierz wyników z **jawnie rozdzielonym wpływem
+systemu i zapytania**: wynik jest funkcją jakości systemu, trudności zapytania i szumu.
+Znasz wtedy prawdziwe uporządkowanie systemów i możesz sprawdzić, które podejście je
+odtwarza. Następnie zwiększasz rozrzut trudności zapytań i obserwujesz, kiedy
+uporządkowanie na wynikach surowych zaczyna się psuć.
 
-Parametry: liczba uczniów, zadań, umiejętności, fal, tempo uczenia się, parametry
-zgadywania i przeoczenia, odsetek wypadnięć, ziarno.
+Parametry: liczba systemów, liczba zapytań, rozrzut jakości systemów, rozrzut trudności
+zapytań, poziom szumu, ziarno.
 
-**Przypadki o znanym wyniku.** Brak zmian między falami: macierz przejść bliska
-jednostkowej. Umiejętności całkowicie opanowane od początku: rozkłady skupione.
-Model z jedną umiejętnością i dwoma zadaniami: uaktualnienia policzalne ręcznie.
+**Przypadki o znanym wyniku.** Wszystkie systemy o identycznym wyniku na zapytaniu:
+odchylenie zerowe, przypadek błędu. Trzy systemy o wynikach 0,1, 0,2 i 0,3 na jednym
+zapytaniu: wartości standaryzowane policzalne ręcznie. System o wyniku równym średniej:
+wartość zero, po przeniesieniu 0,5.
 
-**Przypadki patologiczne.** Uczeń bez odpowiedzi w jednej fali; zadanie, na które
-wszyscy odpowiedzieli poprawnie; dwie fale przy trzech umiejętnościach.
+**Przypadki patologiczne.** Jedno zapytanie w kolekcji; jeden system w próbie odniesienia;
+zapytanie, na którym wszystkie systemy dają zero.
 
-**Zbiór empiryczny.** Otwarte dane z badań podłużnych osiągnięć edukacyjnych albo
-z platform uczenia się udostępniających dane badawcze. Sprawdź licencję i wymagania
-dotyczące danych o osobach niepełnoletnich – to jest w tym temacie warunek konieczny.
+**Zbiór empiryczny.** Publicznie dostępne wyniki przebiegów z konferencji ewaluacyjnych
+albo własne wyniki kilku konfiguracji wyszukiwarki na wspólnym zestawie zapytań. Ten sam
+materiał można uzyskać, uruchamiając kilka wariantów prostej wyszukiwarki na otwartej
+kolekcji. Sprawdź warunki licencyjne.
 
 ## Mapowanie na pracę
 
 | Sekcja briefu | Rozdział pracy |
 |---|---|
-| Po co to badaczowi, oba ograniczenia | Wprowadzenie: tło i luka |
-| Algorytm, co wynotować | Rozdział 1: aparat formalny |
-| Kontrakt, przybliżenie wariacyjne | Rozdział 1: granice stosowalności |
-| Plan pakietu, dane, trzy miary skuteczności | Rozdział 2 |
-| Zbiór empiryczny | Rozdział 3 |
+| Po co to badaczowi, zmienność trudności zapytań | Wprowadzenie: tło i luka |
+| Wzory, czynniki standaryzacyjne, przeniesienie | Rozdział 1: aparat formalny |
+| Kontrakt, niezmienniki, monotoniczność | Rozdział 1: granice stosowalności |
+| Plan pakietu, procedura generowania, odtwarzanie uporządkowania | Rozdział 2 |
+| Zbiór empiryczny, porównanie przed i po | Rozdział 3 |
 
-**Wstępne pytanie badawcze.** Przy jakiej liczbie uczniów i fal pomiaru odtworzona
-tablica specyfikacji zgadza się z prawdziwą na tyle, żeby oprzeć na niej diagnozę,
-i jak zależy to od liczby umiejętności?
+**Wstępne pytanie badawcze.** Przy jakim stosunku rozrzutu trudności zapytań do rozrzutu
+jakości systemów uporządkowanie oparte na wynikach surowych przestaje odtwarzać
+prawdziwe uporządkowanie systemów, i o ile poprawia to standaryzacja?
 
 ## Polecenia startowe
 
-1. Model odpowiedzi jako funkcja profilu i parametrów zadania. Sprawdź na przykładzie
-   jednej umiejętności policzonym ręcznie.
-2. Uaktualnienie rozkładów profili przy ustalonych parametrach zadań, na macierzach.
-3. Uaktualnienie parametrów zadań i macierzy przejść.
-4. Kryterium zbieżności i pętla główna z jawnym warunkiem zatrzymania.
-5. Procedura generowania ze znaną tablicą specyfikacji i znanymi przejściami.
-6. Badanie zgodności odtworzonej tablicy z prawdziwą.
+1. Walidacja macierzy wyników wraz z wykryciem zapytań o zerowym odchyleniu.
+2. Czynniki standaryzacyjne liczone na próbie odniesienia, na operacjach macierzowych.
+3. Przeliczenie i przeniesienie na przedział jednostkowy dystrybuantą.
+4. Procedura generowania macierzy z rozdzielonym wpływem systemu i zapytania.
+5. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
+6. Badanie odtwarzania prawdziwego uporządkowania przy rosnącym rozrzucie trudności.
 
 ## Pułapki
 
-**Wnioskowanie wariacyjne to przybliżenie.** Nie daje rozkładu prawdziwego, tylko
-najbliższy w obrębie przyjętej rodziny. Zwykle **zaniża niepewność**. Praca musi to
-powiedzieć, bo inaczej przedziały wiarygodności zostaną odczytane dosłownie.
+**Standaryzacja po systemach zamiast po zapytaniach.** Macierz ma dwa wymiary i pomyłka
+jest łatwa, a wynik wygląda sensownie. Test sprawdzający, że średnia w próbie odniesienia
+wynosi zero **dla każdego zapytania**, wychwytuje to natychmiast.
 
-**Kryterium nie może maleć.** Spadek między iteracjami oznacza błąd w uaktualnieniach.
-To najlepszy test poprawności implementacji, jaki masz w tym temacie, i wart osobnego
-testu jednostkowego.
+**Czynniki liczone na wszystkich systemach.** Sens metody polega na tym, że czynniki
+pochodzą z ustalonej próby odniesienia i pozostają stałe, także dla systemów ocenianych
+później. Przeliczanie ich przy każdym nowym systemie odbiera metodzie jej jedyną zaletę.
 
-**Zamiana etykiet umiejętności.** Model nie wie, która umiejętność jest którą.
-Porównanie odtworzonej tablicy z prawdziwą wymaga dopasowania kolejności kolumn.
-Pominięcie tego kroku da wynik pozornie fatalny.
+**Zapytania o zerowym odchyleniu.** Dzielenie przez zero. Postępowanie jest w artykule
+i nie należy go wymyślać ani po cichu podmieniać na małą stałą.
 
-**Pętle po uczniach.** Przy tysiącu uczniów, kilkunastu umiejętnościach i kilku falach
-kod się nie skończy. Przeniesienie uaktualnień na operacje macierzowe jest sednem
-części inżynierskiej.
+**Utożsamianie standaryzacji z normalizacją przez wynik idealny.** To dwie różne rzeczy
+i artykuł pokazuje, dlaczego druga nie wystarcza. Praca musi je rozróżnić.
 
-**Na obronie** musisz umieć wyjaśnić, co zastępuje wnioskowanie wariacyjne, dlaczego
-zamienia całkowanie na optymalizację i co się przez to traci.
+**Na obronie** musisz umieć wyjaśnić, dlaczego wynik 0,32 sam z siebie nic nie znaczy,
+i powiedzieć, co dokładnie oznacza wartość 0,84 po standaryzacji.
 
 ## Literatura
 
-Artykuł źródłowy: `duan2025hmlacdm`.
+Artykuł źródłowy: `webber2008standaryzacja`.
 
-Wprowadzenie: podręcznikowe omówienie modeli diagnostycznych; wprowadzenie do
-wnioskowania wariacyjnego. Dwie do czterech pozycji dobierasz sam. Temat pokrewny
-z tematem 03 – warto uzgodnić wspólną część literatury o tablicy specyfikacji.
+Wprowadzenie: podręcznikowe omówienie metodyki eksperymentu w wyszukiwaniu informacji;
+opracowanie o zmienności trudności zapytań. Dwie do czterech pozycji dobierasz sam.
+Tematy pokrewne: 02, 03, 07 – wszystkie dotyczą wiarygodności pomiaru skuteczności.
 
 Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.

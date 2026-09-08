@@ -1,179 +1,194 @@
-# Temat 13. Odporny wybór przy ograniczonej uwadze
+# Temat 13. Kiedy użytkownik przestaje szukać
 
 ## Metryka
 
 | | |
 |---|---|
-| Artykuł źródłowy | Hansen, Lars Peter; Miao, Jianjun; Xing, Hao (2025). *Robust inattentive discrete choice*. Proceedings of the National Academy of Sciences |
-| Identyfikator | [10.1073/pnas.2416643122](https://doi.org/10.1073/pnas.2416643122) |
-| Dostęp | przez bibliotekę UJ |
-| Dziedzina | poznanie, wyszukiwanie informacji, podejmowanie decyzji |
-| Proponowany tytuł pracy | Pakiet R do modelowania wyboru przy ograniczonej uwadze jako przykład zastosowania miar teorioinformacyjnych w badaniach nad zachowaniami informacyjnymi |
-| Proponowana nazwa pakietu | `NieuwagaR` |
-| Trudność | ●●●● |
+| Artykuł źródłowy | Chapelle, Olivier; Metzler, Donald; Zhang, Ya; Grinspan, Pierre (2009). *Expected Reciprocal Rank for Graded Relevance*. CIKM '09, s. 621-630 |
+| Identyfikator | [10.1145/1645953.1646033](https://doi.org/10.1145/1645953.1646033), [kopia autorska](http://olivier.chapelle.cc/pub/err.pdf) |
+| Dostęp | wolny |
+| Dziedzina | zachowania informacyjne, ocena systemów |
+| Proponowany tytuł pracy | Pakiet R do oceny rankingu w modelu kaskadowym jako przykład zastosowania modeli zatrzymania w badaniach nad zachowaniami informacyjnymi |
+| Proponowana nazwa pakietu | `KaskadaR` |
+| Trudność | ●● |
 
 ## Po co to badaczowi
 
-Człowiek stojący przed wyborem nie analizuje wszystkich dostępnych informacji.
-Nie dlatego, że jest nieracjonalny, tylko dlatego, że **uwaga kosztuje**. Czytelnik
-przeglądający wyniki wyszukiwania nie otwiera wszystkich linków. Wyborca nie czyta
-programów wszystkich komitetów. Konsument nie porównuje wszystkich ofert. Każdy
-przeznacza na to tyle uwagi, ile mu się opłaca – i wybiera na podstawie tego, co
-zdążył zauważyć.
+Miary skuteczności wyszukiwania przypisują pozycjom wagi malejące: pierwszy wynik waży
+więcej niż dziesiąty. Wagi te są jednak **ustalone z góry** i nie zależą od tego, co na
+tych pozycjach stoi. W najpopularniejszej mierze waga dziesiątej pozycji jest taka sama
+niezależnie od tego, czy pozycje od pierwszej do dziewiątej były znakomite, czy bezużyteczne.
 
-Teoria racjonalnej nieuwagi opisuje to formalnie: decydent wybiera, ile informacji
-pozyskać, ważąc korzyść z lepszej decyzji przeciw kosztowi uwagi mierzonemu
-teorioinformacyjnie. Model ten tłumaczy zachowania, które klasyczna teoria wyboru
-uznaje za błędy, i jest dla badacza zachowań informacyjnych narzędziem naturalnym.
+Ludzie tak nie czytają. Użytkownik, który znalazł odpowiedź na pozycji drugiej, **nie
+ogląda dziesiątej w ogóle**. Wartość dziesiątej pozycji zależy więc od tego, czy
+użytkownik do niej dotarł, a to zależy od jakości pozycji wcześniejszych. Miara,
+która tego nie uwzględnia, przecenia znaczenie dalszych pozycji w rankingach dobrych
+i niedocenia w rankingach słabych.
 
-Ma jednak założenie, które w zastosowaniach społecznych jest kłopotliwe: decydent
-**zna rozkład** tego, o czym nie wie. Zna prawdopodobieństwa stanów świata, o których
-dopiero zbiera informacje. W realnych sytuacjach – nowa technologia, nieznana
-choroba, nieznany kandydat – ludzie tego rozkładu nie znają i sami o tym wiedzą.
+Artykuł buduje miarę na **modelu kaskadowym**: użytkownik ogląda wyniki po kolei od
+góry, przy każdym decyduje, czy jest usatysfakcjonowany, a jeżeli tak, kończy
+przeszukiwanie. Prawdopodobieństwo zatrzymania rośnie ze stopniem trafności dokumentu.
+Miarą skuteczności jest wtedy oczekiwana odwrotność pozycji, na której użytkownik
+przestaje szukać.
 
-Artykuł to założenie osłabia. Dopuszcza decydenta, który **nie ufa własnym
-przekonaniom wstępnym** i zabezpiecza się przed tym, że są błędne. Podaje warunki
-konieczne i dostateczne rozwiązania odpornego oraz metody numeryczne jego wyznaczania.
-
-Dla badacza zachowań informacyjnych jest to model bliższy temu, co obserwuje:
-ludzie zachowują się ostrożniej niż przewiduje model zakładający pewność co do
-rozkładu.
+Dla badacza zachowań informacyjnych jest to miara, której każdy składnik ma odpowiednik
+w obserwowalnym zachowaniu, a nie w konstrukcji wzoru. To odróżnia ją od miar
+z ustalonymi wagami, w tym od tej z tematu 07, która model użytkownika ma, ale nie
+uzależnia go od zawartości rankingu.
 
 ## Algorytm
 
-**Wejście.** Skończony zbiór działań; skończony zbiór stanów świata; macierz
-wypłat dla par działanie–stan; rozkład wstępny na stanach; parametr kosztu uwagi;
-parametr określający dopuszczalną rozbieżność od rozkładu wstępnego.
+**Wejście.** Ranking dokumentów ze stopniowaną oceną trafności; maksymalny stopień skali;
+głębokość oceny.
 
-**Wyjście.** Rozkład wyborów warunkowy względem stanu; rozkład brzegowy wyborów;
-najgorszy rozkład wstępny w dopuszczalnym zbiorze; wartość funkcji celu; miary
-pozyskanej informacji.
+**Wyjście.** Wartość miary, prawdopodobieństwo zatrzymania na każdej pozycji, oczekiwana
+pozycja zatrzymania, wartości miar porównawczych.
+
+**Wzory.** Stopień trafności $g$ przekłada się na prawdopodobieństwo satysfakcji
+
+$$R_g = \frac{2^{g}-1}{2^{g_{\max}}}$$
+
+gdzie $g_{\max}$ to najwyższy stopień skali. Dla skali od zera do czterech dokument
+o stopniu zero daje zero, o stopniu czwartym piętnaście szesnastych. Przekształcenie
+jest wypukłe: różnica między stopniem trzecim a czwartym waży więcej niż między zerowym
+a pierwszym.
+
+Miarą jest oczekiwana odwrotność pozycji zatrzymania:
+
+$$\mathrm{ERR} = \sum_{r=1}^{n} \frac{1}{r} \left(\prod_{i=1}^{r-1} (1-R_i)\right) R_r$$
+
+Iloczyn to prawdopodobieństwo, że użytkownik **nie zatrzymał się** na żadnej
+z wcześniejszych pozycji, a czynnik $R_r$ to prawdopodobieństwo, że zatrzymuje się na
+bieżącej. Całość jest więc wartością oczekiwaną wielkości $1/r$ względem rozkładu pozycji
+zatrzymania.
+
+Wynikają z tego dwie własności, których miary z ustalonymi wagami nie mają. Wkład pozycji
+$r$ **maleje**, gdy poprawia się jakość pozycji wcześniejszych, bo iloczyn się kurczy.
+Suma prawdopodobieństw zatrzymania po wszystkich pozycjach nie przekracza jedności,
+a reszta odpowiada użytkownikowi, który nie znalazł nic.
 
 **Kroki.**
 
-1. Sprawdzenie wejścia: rozkład wstępny sumujący się do jedności, zgodność wymiarów
-   macierzy wypłat, dodatnie parametry.
-2. Inicjalizacja rozkładu brzegowego wyborów.
-3. Naprzemienne uaktualnianie: przy ustalonym rozkładzie brzegowym wyznacz rozkłady
-   warunkowe, przy ustalonych warunkowych uaktualnij brzegowy.
-4. Uwzględnienie odporności: wyznaczenie najgorszego rozkładu wstępnego w zbiorze
-   ograniczonym rozbieżnością od rozkładu wyjściowego.
-5. Powtarzanie do zbieżności punktu stałego.
-6. Wyznaczenie miar pozyskanej informacji i sprawdzenie warunków optymalności.
+1. Sprawdzenie danych: stopnie trafności w zakresie skali, ranking bez powtórzeń,
+   dodatni maksymalny stopień.
+2. Przeliczenie stopni na prawdopodobieństwa satysfakcji.
+3. Wyznaczenie iloczynów częściowych, czyli prawdopodobieństwa dotarcia do pozycji.
+4. Złożenie sumy ważonej odwrotnościami pozycji.
+5. Wyznaczenie rozkładu pozycji zatrzymania i wartości oczekiwanej.
+6. Porównanie z miarami o ustalonych wagach na tych samych danych.
 
-**Co wynotować z artykułu.** Z sekcji metodycznej: postać zadania decydenta wraz
-z obydwoma składnikami kosztu; **warunki konieczne i dostateczne rozwiązania
-odpornego**; postać uaktualnień w metodzie numerycznej; sposób wyznaczania
-najgorszego rozkładu wstępnego; warunek zbieżności; zachowanie graniczne przy
-parametrze odporności dążącym do zera, czyli powrót do modelu klasycznego.
+**Co wynotować z artykułu.** Wyprowadzenie miary z modelu kaskadowego; uzasadnienie
+postaci przekształcenia stopni na prawdopodobieństwa; omówienie zachowania miary przy
+rankingu obciętym; wyniki porównania z miarami klasycznymi pod względem zgodności
+z obserwowanym zachowaniem użytkowników.
 
 ## Kontrakt
 
-**Warunki wstępne.** Rozkład wstępny nieujemny i sumujący się do jedności; macierz
-wypłat o wymiarach działania na stany bez braków; parametr kosztu uwagi dodatni;
-parametr odporności nieujemny; co najmniej dwa działania i dwa stany.
+**Warunki wstępne.** Stopnie trafności całkowite, nieujemne, nie większe od maksymalnego
+stopnia skali; maksymalny stopień dodatni; ranking bez powtórzeń i niepusty.
 
-**Niezmienniki.** Rozkłady warunkowe sumują się do jedności dla każdego stanu.
-Rozkład brzegowy sumuje się do jedności. Funkcja celu nie maleje między iteracjami.
-Przy parametrze odporności równym zeru wynik pokrywa się z modelem klasycznym.
-Przy koszcie uwagi dążącym do zera wybór staje się deterministyczny.
+**Niezmienniki.** Wynik należy do przedziału od zera do jedności. Prawdopodobieństwa
+dotarcia są nierosnące wzdłuż rankingu. Suma prawdopodobieństw zatrzymania nie przekracza
+jedności. Przeniesienie dokumentu o wyższym stopniu na wyższą pozycję nie zmniejsza
+wyniku. Ranking, w którym pierwszy dokument ma stopień maksymalny, daje wynik bliski
+jedności niezależnie od reszty.
 
-**Wyjście.** Klasa `nieuwaga_odporna` ze składnikami: rozkłady warunkowe i brzegowy,
-najgorszy rozkład wstępny, wartość celu, miary informacji, liczba iteracji.
+**Wyjście.** Klasa `ocena_kaskadowa` ze składnikami: wartość miary, prawdopodobieństwa
+satysfakcji, prawdopodobieństwa dotarcia, rozkład pozycji zatrzymania, oczekiwana pozycja.
 
-**Błędy zatrzymujące wykonanie.** Rozkład niesumujący się do jedności; niezgodność
-wymiarów; niedodatni koszt uwagi; ujemny parametr odporności; brak zbieżności
-w zadanej liczbie iteracji.
+**Błędy zatrzymujące wykonanie.** Stopień spoza skali; maksymalny stopień równy zeru;
+ranking pusty; powtórzone pozycje.
 
 ## Plan pakietu
 
 | Plik | Odpowiedzialność |
 |---|---|
-| `R/przygotowanie_danych.R` | walidacja rozkładu i macierzy wypłat |
-| `R/punkt_staly.R` | naprzemienne uaktualnienia, warunek zbieżności |
-| `R/odpornosc.R` | najgorszy rozkład wstępny w zbiorze dopuszczalnym |
-| `R/miary.R` | miary pozyskanej informacji, sprawdzenie optymalności |
+| `R/przygotowanie_danych.R` | walidacja rankingu i skali stopni |
+| `R/satysfakcja.R` | przeliczenie stopni na prawdopodobieństwa |
+| `R/err.R` | iloczyny częściowe i suma ważona |
+| `R/rozklad.R` | rozkład pozycji zatrzymania, wartość oczekiwana |
 | `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | rozkłady wyborów, wrażliwość na parametry |
+| `R/wizualizacja.R` | rozkład zatrzymania, wkład pozycji w wynik |
 
-Zależności: `stats` i `ggplot2`. Metoda punktu stałego nie wymaga solvera; jeżeli
-sięgasz po optymalizator do kroku odpornościowego, uzasadnij to.
+Zależności: `stats` i `ggplot2`. Iloczyny częściowe licz funkcją skumulowanego iloczynu
+na wektorze, nie pętlą – jedno wywołanie zamiast przejścia po pozycjach.
 
 ## Dane
 
-**Procedura generowania.** Ustalasz zadanie decyzyjne o **znanym rozwiązaniu
-analitycznym** – dwa działania, dwa stany, symetryczne wypłaty – i sprawdzasz, czy
-metoda je odtwarza dla siatki parametrów. Następnie generujesz obserwowane wybory
-z rozwiązania modelu i sprawdzasz, czy z tych wyborów da się odzyskać parametr
-kosztu uwagi. To drugie jest odpowiedzią na pytanie, czy model jest identyfikowalny
-z danych, i wprost zasila rozdział trzeci.
+**Procedura generowania.** Generujesz rankingi o **zadanym rozkładzie stopni trafności**
+i kontrolowanej kolejności: od najlepszego uporządkowania po losowe. Znasz wtedy kierunek,
+w jakim miara ma się zmieniać. Osobno budujesz pary rankingów o identycznej wartości
+miary z ustalonymi wagami i różnej wartości miary kaskadowej – to jest materiał, który
+wprost pokazuje różnicę między podejściami.
 
-Parametry: liczba działań, stanów, rozpiętość wypłat, koszt uwagi, parametr
-odporności, liczba symulowanych decydentów, ziarno.
+Parametry: długość rankingu, rozkład stopni trafności, maksymalny stopień, stopień
+wymieszania, ziarno.
 
-**Przypadki o znanym wyniku.** Wypłaty niezależne od stanu: decydent nie pozyskuje
-informacji, rozkłady warunkowe równe brzegowemu. Koszt uwagi bliski zeru: wybór
-deterministyczny, zgodny z maksymalizacją wypłaty. Parametr odporności zero:
-zgodność z modelem klasycznym.
+**Przypadki o znanym wyniku.** Pierwszy dokument o stopniu maksymalnym przy skali
+czterostopniowej: prawdopodobieństwo satysfakcji piętnaście szesnastych, wynik równy
+piętnaście szesnastych powiększone o niewielki wkład dalszych pozycji. Wszystkie stopnie
+zerowe: wynik zero. Ranking dwuelementowy: cały rachunek policzalny ręcznie.
 
-**Przypadki patologiczne.** Rozkład wstępny skupiony w jednym stanie; wypłaty
-identyczne dla wszystkich działań; jedno działanie.
+**Przypadki patologiczne.** Ranking jednoelementowy; wszystkie dokumenty o stopniu
+maksymalnym; skala dwustopniowa, czyli trafność zerojedynkowa.
 
-**Zbiór empiryczny.** Otwarte dane z eksperymentów wyboru albo z badań zachowań
-wyszukiwawczych, w których zarejestrowano zarówno wybory, jak i przybliżoną miarę
-wysiłku informacyjnego. Sprawdź licencję i warunki wtórnego wykorzystania.
+**Zbiór empiryczny.** Kolekcja testowa ze stopniowanymi sądami o trafności. Jeżeli
+dostępne są wyłącznie sądy zerojedynkowe, opisz w pracy, jak przełożyłeś je na skalę
+i co to zmienia w wyniku – jest to decyzja metodologiczna, nie techniczna.
 
 ## Mapowanie na pracę
 
 | Sekcja briefu | Rozdział pracy |
 |---|---|
-| Po co to badaczowi, problem nieznanego rozkładu | Wprowadzenie: tło i luka |
-| Algorytm, warunki optymalności | Rozdział 1: aparat formalny |
-| Kontrakt, zachowanie graniczne | Rozdział 1: granice stosowalności |
-| Plan pakietu, dane, identyfikowalność | Rozdział 2 |
-| Zbiór empiryczny | Rozdział 3 |
+| Po co to badaczowi, zależność wagi od zawartości | Wprowadzenie: tło i luka |
+| Wzory, model kaskadowy, przeliczenie stopni | Rozdział 1: aparat formalny |
+| Kontrakt, niezmienniki, zachowanie graniczne | Rozdział 1: granice stosowalności |
+| Plan pakietu, procedura generowania, pary rankingów | Rozdział 2 |
+| Zbiór empiryczny, porównanie z miarami o ustalonych wagach | Rozdział 3 |
 
-**Wstępne pytanie badawcze.** Czy z obserwowanych wyborów da się rozróżnić decydenta
-o wysokim koszcie uwagi od decydenta nieufnego wobec własnych przekonań wstępnych,
-i przy jakiej liczbie obserwacji staje się to możliwe?
+**Wstępne pytanie badawcze.** Jak często uporządkowanie systemów według miary kaskadowej
+różni się od uporządkowania według miary o ustalonych wagach, i czy różnice skupiają się
+w rankingach o określonej charakterystyce?
 
 ## Polecenia startowe
 
-1. Naprzemienne uaktualnienia rozkładów, zgodnie z Twoimi notatkami, na macierzach.
-2. Warunek zbieżności i pętla główna z jawnym zatrzymaniem.
-3. Krok odpornościowy: najgorszy rozkład wstępny w zbiorze dopuszczalnym.
-4. Zadanie o znanym rozwiązaniu analitycznym jako test poprawności.
-5. Procedura generowania obserwowanych wyborów z rozwiązania modelu.
-6. Badanie identyfikowalności: odzyskiwanie parametrów z symulowanych wyborów.
+1. Walidacja rankingu i skali stopni trafności.
+2. Przeliczenie stopni na prawdopodobieństwa satysfakcji zgodnie z Twoimi notatkami.
+3. Iloczyny częściowe i suma ważona odwrotnościami pozycji, na operacjach wektorowych.
+4. Rozkład pozycji zatrzymania i wartość oczekiwana.
+5. Procedura generowania rankingów o zadanym rozkładzie stopni i wymieszaniu.
+6. Budowa par rankingów nierozróżnialnych miarą o ustalonych wagach.
 
 ## Pułapki
 
-**Model klasyczny zamiast odpornego.** Metoda naprzemienna dla wariantu klasycznego
-jest znana i narzędzie ją poda. Krok odpornościowy jest tym, co odróżnia ten artykuł,
-i najłatwiej go pominąć bez zauważenia – bo bez niego wszystko się liczy i zbiega.
-Test przy parametrze odporności równym zeru musi dawać wynik klasyczny, a przy
-dodatnim wynik **inny**.
+**Wagi niezależne od zawartości.** Agent napisze sumę ważoną odwrotnościami pozycji, bo
+tak wygląda typowa miara rankingowa. Brak iloczynu prawdopodobieństw dotarcia usuwa
+z metody całą jej treść, a wynik nadal wygląda sensownie.
 
-**Zbieżność do minimum lokalnego.** Metody punktu stałego bywają wrażliwe na
-inicjalizację. Sprawdź stabilność przy różnych punktach startowych i opisz to.
+**Przesunięcie indeksu w iloczynie.** Iloczyn obejmuje pozycje **przed** bieżącą, nie
+włącznie z nią. Pomyłka o jeden daje wartości systematycznie zaniżone i trudna jest do
+wykrycia bez przypadku policzonego ręcznie.
 
-**Logarytm zera.** Rozkład skupiony w jednym punkcie psuje obliczenia
-teorioinformacyjne. Obsłuż to jawnie, a nie przez dodanie małej stałej bez opisu.
+**Przeliczenie stopni.** Przekształcenie jest wypukłe i zależy od maksymalnego stopnia
+skali. Użycie stopni wprost, bez przeliczenia, albo przyjęcie złego maksimum daje inną
+miarę.
 
-**Interpretacja parametrów.** Koszt uwagi i odporność wyjaśniają podobne wzorce
-zachowań. Twierdzenie, że obserwowana ostrożność wynika z jednego z nich, wymaga
-pokazania, że drugiego dałoby się to samo wyjaśnienie. Właśnie temu służy badanie
-identyfikowalności.
+**Interpretacja jako prawdopodobieństwa.** Wynik nie jest prawdopodobieństwem
+znalezienia odpowiedzi, tylko wartością oczekiwaną odwrotności pozycji. Praca musi to
+rozróżnić, bo pomyłka prowadzi do zdań nieprawdziwych o użytkownikach.
 
-**Na obronie** musisz umieć wyjaśnić, dlaczego uwaga jest tu mierzona miarą
-teorioinformacyjną, i co konkretnie oznacza, że decydent nie ufa własnym przekonaniom.
+**Na obronie** musisz umieć wyjaśnić, dlaczego wkład dziesiątej pozycji zależy od tego,
+co stoi na pierwszej, i podać parę rankingów o tej samej wartości miary klasycznej
+i różnej wartości miary kaskadowej.
 
 ## Literatura
 
-Artykuł źródłowy: `hansen2025robust`.
+Artykuł źródłowy: `chapelle2009err`.
 
-Wprowadzenie: klasyczne opracowanie o racjonalnej nieuwadze; podręcznikowe omówienie
-miar teorioinformacyjnych. Dwie do czterech pozycji dobierasz sam. Temat pokrewny
-z tematem 10 w części dotyczącej modelowania decyzji.
+Wprowadzenie: podręcznikowe omówienie miar rankingowych z dyskontem pozycyjnym;
+opracowanie o modelach klikania i zachowania użytkownika wyszukiwarki. Dwie do czterech
+pozycji dobierasz sam. Tematy pokrewne: 07 – miara wyprowadzona z modelu użytkownika
+z wagami niezależnymi od zawartości, dobra do bezpośredniego porównania; 12 – zysk
+zależny od pozycji wcześniejszych.
 
 Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.

@@ -1,172 +1,214 @@
-# Temat 09. Sekwencyjny syntetyczny DiD
+# Temat 09. Wskaźnik łączący liczbę publikacji z ich oddziaływaniem
 
 ## Metryka
 
 | | |
 |---|---|
-| Artykuł źródłowy | Arkhangelsky, Dmitry; Samkov, Aleksei (2024). *Sequential Synthetic Difference in Differences* |
-| Identyfikator | [arXiv:2404.00164](https://arxiv.org/abs/2404.00164) |
+| Artykuł źródłowy | Leydesdorff, Loet; Bornmann, Lutz; Adams, Jonathan (2019). *The Integrated Impact Indicator Revisited (I3\*): A Non-Parametric Alternative to the Journal Impact Factor* |
+| Identyfikator | [arXiv:1812.03448](https://arxiv.org/abs/1812.03448) |
 | Dostęp | otwarty |
-| Dziedzina | ewaluacja programów publicznych, dane panelowe |
-| Proponowany tytuł pracy | Pakiet R do oceny programów wdrażanych etapami jako przykład zastosowania metod syntetycznej kontroli w ewaluacji polityk publicznych |
-| Proponowana nazwa pakietu | `SekwSDIDR` |
-| Trudność | ●●●● |
+| Dziedzina | bibliometria, polityka naukowa |
+| Proponowany tytuł pracy | Pakiet R do nieparametrycznej oceny oddziaływania publikacji jako przykład zastosowania klas percentylowych w naukometrii |
+| Proponowana nazwa pakietu | `WskaznikI3R` |
+| Trudność | ●● |
 
 ## Po co to badaczowi
 
-Programy publiczne rzadko wchodzą w życie wszędzie naraz. Bibliotekę cyfrową wdraża
-się województwo po województwie, program czytelniczy szkoła po szkole, reformę
-gmina po gminie. Powstaje wtedy dane panelowe z **rozłożonym w czasie** momentem
-wejścia – i to jest sytuacja, w której klasyczne metody porównywania grup zawodzą
-w sposób nieoczywisty.
+Wskaźnik oddziaływania czasopisma to średnia liczba cytowań przypadająca na artykuł.
+Jest to jedna z najczęściej używanych liczb w polityce naukowej i jednocześnie liczba
+źle policzona, z powodu, który zna każdy, kto raz spojrzał na rozkład cytowań.
 
-Zawodzą, bo jednostki, które weszły do programu wcześniej, stają się grupą
-porównawczą dla tych, które weszły później – mimo że są już objęte działaniem
-programu. Wynik potrafi wyjść z odwrotnym znakiem niż prawda, i to nie z powodu
-błędu w danych, tylko z powodu konstrukcji estymatora. Literatura ostatnich lat
-opisała to zjawisko szczegółowo i wywołało ono rewizję sporej części wyników
-w ekonomii i naukach o polityce.
+Rozkład ten jest skrajnie skośny. W typowym czasopiśmie kilka procent artykułów zbiera
+większość cytowań, a połowa nie zbiera prawie nic. Średnia arytmetyczna z takiego
+rozkładu nie opisuje ani typowego artykułu, ani żadnego innego: jest zdominowana przez
+ogon. Dwa czasopisma o identycznej średniej mogą mieć zupełnie inny rozkład, a decyzje
+podejmuje się na podstawie średniej.
 
-Odpowiedzią jest rodzina metod syntetycznej kontroli: zamiast porównywać z dowolną
-grupą, buduje się dla każdej jednostki objętej programem **sztuczny odpowiednik**
-złożony z jednostek nieobjętych, dobrany tak, żeby przed wejściem programu zachowywał
-się tak samo. Artykuł rozszerza to podejście na wdrożenia etapowe, wprowadzając
-sekwencyjne wyznaczanie wag jednostek i okresów.
+Drugi kłopot jest taki, że średnia **gubi wielkość**. Czasopismo publikujące trzydzieści
+artykułów rocznie i czasopismo publikujące trzy tysiące mogą mieć tę samą wartość
+wskaźnika, choć ich wkład w obieg wiedzy jest nieporównywalny.
 
-Dla badacza oceniającego program wdrażany etapami jest to narzędzie dające wynik,
-którego nie trzeba opatrywać zastrzeżeniem o możliwym odwróceniu znaku.
+Artykuł proponuje wskaźnik zbudowany inaczej. Zamiast uśredniać cytowania, przypisuje
+każdą publikację do **klasy percentylowej** wyznaczonej w zbiorze odniesienia i sumuje
+publikacje z wagami zależnymi od klasy. Znika założenie o rozkładzie, bo liczy się tylko
+pozycja publikacji wśród innych, a nie sama liczba cytowań. Wielkość dorobku zostaje
+w wyniku, bo to jest suma, nie średnia. Wynik da się też podzielić przez liczbę publikacji
+i wtedy otrzymuje się wartość oczekiwaną przypadającą na jedną pracę.
+
+Dla badacza polityki naukowej jest to narzędzie pozwalające porównywać jednostki różnej
+wielkości bez udawania, że rozkład cytowań jest symetryczny.
 
 ## Algorytm
 
-**Wejście.** Panel z identyfikatorem jednostki, okresem, wynikiem i momentem wejścia
-do programu; opcjonalnie zmienne towarzyszące i wagi jednostek.
+**Wejście.** Zbiór publikacji z liczbą cytowań, zbiór odniesienia wyznaczający percentyle
+(dziedzina, rocznik, typ dokumentu) oraz schemat klas i wag.
 
-**Wyjście.** Efekt programu dla każdej grupy wejścia i każdego okresu po wejściu;
-efekt zagregowany; wagi jednostek i okresów; diagnostyka dopasowania przed wejściem;
-błędy standardowe.
+**Wyjście.** Wartość wskaźnika, wartość znormalizowana przez liczbę publikacji, liczności
+klas rozłącznych, udział każdej klasy w wyniku.
+
+**Wzory.** Wskaźnik jest sumą ważonych liczb publikacji w klasach percentylowych:
+
+$$I3 = \sum_{i} x_i \cdot W_i$$
+
+gdzie $x_i$ to liczba publikacji w klasie $i$, a $W_i$ waga tej klasy.
+
+Schemat zapisuje się w notacji
+
+$$I3(PR_1\text{-}W_1,\; PR_2\text{-}W_2,\; \ldots,\; PR_n\text{-}W_n)$$
+
+w której $PR$ jest **dolnym progiem** klasy percentylowej, a $W$ jej wagą. Wariant
+zaproponowany w artykule to
+
+$$I3^{*} = I3(99\text{-}100,\; 90\text{-}10,\; 50\text{-}2,\; 0\text{-}1)$$
+
+czyli: publikacje w górnym jednym procencie z wagą sto, w górnych dziesięciu procentach
+z wagą dziesięć, w górnej połowie z wagą dwa, pozostałe z wagą jeden.
+
+Wcześniejszy schemat sześcioklasowy zapisuje się jako
+$I3(99\text{-}6,\, 95\text{-}5,\, 90\text{-}4,\, 75\text{-}3,\, 50\text{-}2,\, 0\text{-}1)$,
+a popularny wskaźnik udziału publikacji w górnych dziesięciu procentach jest przypadkiem
+szczególnym $I3(90\text{-}1)$. Ten sam wzór obsługuje więc całą rodzinę wskaźników,
+co jest głównym powodem, dla którego warto go zaimplementować raz.
+
+**Klasy rozłączne.** Progi są zagnieżdżone: publikacja z górnego procenta należy też do
+górnych dziesięciu procent i do górnej połowy. Liczności trzeba więc **skorygować przez
+odejmowanie**, żeby nie policzyć jej wielokrotnie. Jest to krok, który najłatwiej
+pominąć, i jednocześnie ten, który przesądza o poprawności wyniku.
+
+**Wersja niezależna od wielkości.** Podzielenie wyniku przez liczbę publikacji
+
+$$\frac{I3^{*}}{N}$$
+
+daje wartość oczekiwaną przypadającą na jedną pracę, którą można traktować jako wartość
+odniesienia przy sprawdzaniu, czy konkretna publikacja wypada powyżej czy poniżej
+oczekiwania.
 
 **Kroki.**
 
-1. Sprawdzenie panelu: kompletność, brak powrotów do stanu sprzed programu,
-   istnienie jednostek nigdy nieobjętych albo objętych najpóźniej.
-2. Wyśrodkowanie efektów jednostkowych i okresowych.
-3. Dla każdej grupy wejścia wyznaczenie wag jednostek przez regresję z ograniczeniami
-   i karą regularyzacyjną, dopasowującą przebieg sprzed wejścia.
-4. Wyznaczenie wag okresów sprzed wejścia.
-5. Złożenie efektu dla grupy jako różnicy podwójnej z zastosowanymi wagami.
-6. Sekwencyjne przejście po grupach wejścia i agregacja.
-7. Błędy standardowe metodą powtórzeń albo testem placebo.
+1. Sprawdzenie danych: kompletność liczby cytowań, obecność zbioru odniesienia,
+   poprawność schematu klas i wag.
+2. Wyznaczenie rangi percentylowej każdej publikacji w zbiorze odniesienia.
+3. Przypisanie publikacji do klas według progów.
+4. Korekta liczności do klas rozłącznych przez odejmowanie.
+5. Przemnożenie przez wagi i zsumowanie.
+6. Wyznaczenie wersji znormalizowanej i udziału klas w wyniku.
 
-**Co wynotować z artykułu.** Z sekcji metodycznej: postać zadania wyznaczania wag
-jednostek wraz z ograniczeniami i karą; sposób doboru parametru kary; postać wag
-okresów; regułę sekwencyjnego przechodzenia po grupach wejścia; wzór agregacji;
-metodę wyznaczania błędów standardowych i jej założenia; warunek istnienia
-dopuszczalnej grupy porównawczej.
+**Co wynotować z artykułu.** Sposób wyznaczania rangi percentylowej wraz z obsługą
+remisów, bo przy dużej liczbie publikacji o zerowej liczbie cytowań remisy są masowe
+i sposób ich potraktowania zmienia wynik; procedurę normalizacji dziedzinowej; przykład
+liczbowy z tabeli, w której autorzy pokazują rachunek krok po kroku – posłuży za przypadek
+analityczny.
 
 ## Kontrakt
 
-**Warunki wstępne.** Panel zrównoważony albo z jawnie zadeklarowaną obsługą braków;
-program pochłaniający, czyli bez powrotów; co najmniej jedna jednostka nieobjęta
-w każdym momencie porównania; co najmniej dwa okresy przed wejściem dla każdej grupy.
+**Warunki wstępne.** Liczby cytowań nieujemne i całkowite; zbiór odniesienia niepusty;
+progi klas rosnące i zawarte w przedziale od zera do stu; wagi dodatnie; liczba progów
+równa liczbie wag.
 
-**Niezmienniki.** Wagi jednostek są nieujemne i sumują się do jedności. Wagi okresów
-są nieujemne i sumują się do jedności. Przy jednym momencie wejścia metoda sprowadza
-się do wariantu klasycznego. Wynik nie zależy od kolejności jednostek w danych.
+**Niezmienniki.** Suma liczności klas rozłącznych równa się liczbie publikacji. Wynik
+jest nieujemny. Dodanie publikacji nie zmniejsza wyniku. Wartość znormalizowana mieści
+się między najmniejszą a największą wagą schematu. Przy schemacie jednoklasowym z wagą
+jeden wynik równa się liczbie publikacji.
 
-**Wyjście.** Klasa `sekw_sdid` ze składnikami: efekty w podziale na grupy i okresy,
-efekt zagregowany, wagi, diagnostyka dopasowania, błędy standardowe.
+**Wyjście.** Klasa `wskaznik_i3` ze składnikami: wartość, wartość znormalizowana,
+liczności klas rozłącznych, udziały klas, użyty schemat.
 
-**Błędy zatrzymujące wykonanie.** Powrót do stanu sprzed programu; brak jednostek
-nieobjętych; mniej niż dwa okresy przed wejściem; panel z powtórzonymi parami
-jednostka–okres.
+**Błędy zatrzymujące wykonanie.** Progi nierosnące; liczba wag różna od liczby progów;
+ujemna liczba cytowań; pusty zbiór odniesienia.
 
 ## Plan pakietu
 
 | Plik | Odpowiedzialność |
 |---|---|
-| `R/przygotowanie_danych.R` | walidacja panelu, wykrycie schematu wdrożenia |
-| `R/wagi_jednostek.R` | regresja z ograniczeniami i karą |
-| `R/wagi_okresow.R` | wagi okresów sprzed wejścia |
-| `R/efekty.R` | sekwencyjne wyznaczanie i agregacja |
-| `R/bledy.R` | błędy standardowe i testy placebo |
+| `R/przygotowanie_danych.R` | walidacja publikacji, zbioru odniesienia i schematu |
+| `R/percentyle.R` | rangi percentylowe wraz z obsługą remisów |
+| `R/klasy.R` | przypisanie do klas i korekta do klas rozłącznych |
+| `R/wskaznik.R` | suma ważona, wersja znormalizowana, udziały klas |
 | `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | przebiegi obserwowany i syntetyczny, wykres efektów |
+| `R/wizualizacja.R` | udział klas w wyniku, porównanie jednostek |
 
-Zależności: `stats`, `ggplot2` oraz solver dla regresji z ograniczeniami.
-Rozważ implementację własną metodą rzutowanego spadku gradientu i uzasadnij wybór.
+Zależności: `stats` i `ggplot2`. Schemat klas przyjmuj jako **jeden argument o jawnej
+strukturze**, nie jako kilka osobnych wektorów – dzięki temu ta sama funkcja obsłuży
+wszystkie warianty z artykułu bez zmiany kodu.
 
 ## Dane
 
-**Procedura generowania.** Generujesz panel z **zadanym efektem programu**,
-rozłożonym w czasie momentem wejścia i strukturą czynnikową odpowiadającą założeniom
-metody. Znasz prawdziwy efekt, więc mierzysz obciążenie i pokrycie przedziałów.
-Warto dołożyć wariant, w którym założenia są **naruszone**, żeby pokazać, kiedy
-metoda zawodzi.
+**Procedura generowania.** Generujesz rozkład cytowań o **kontrolowanej skośności**,
+na przykład z rozkładu potęgowego o zadanym wykładniku, dla kilku jednostek różnej
+wielkości. Znasz wtedy prawdziwe uporządkowanie jednostek i możesz sprawdzić, kiedy
+wskaźnik oparty na średniej daje inne uporządkowanie niż wskaźnik percentylowy. To jest
+wprost odpowiedź na pytanie badawcze.
 
-Parametry: liczba jednostek, okresów, grup wejścia, wielkość efektu, siła czynników,
-odsetek jednostek nigdy nieobjętych, ziarno.
+Parametry: liczba jednostek, liczba publikacji w jednostce, wykładnik rozkładu, odsetek
+publikacji niecytowanych, ziarno.
 
-**Przypadki o znanym wyniku.** Zerowy efekt: oszacowanie bliskie zeru. Jeden moment
-wejścia: zgodność z wariantem klasycznym. Jednostka porównawcza idealnie dopasowana:
-waga równa jeden dla niej i zero dla pozostałych.
+**Przypadki o znanym wyniku.** Wszystkie publikacje poniżej mediany: wynik równy liczbie
+publikacji. Jedna publikacja w każdej z czterech klas przy schemacie z artykułu: wynik
+równy sumie wag, czyli sto trzynaście. Schemat jednoklasowy z wagą jeden: wynik równy
+liczbie publikacji.
 
-**Przypadki patologiczne.** Wszystkie jednostki objęte w tym samym okresie; brak
-jednostek nieobjętych; jeden okres przed wejściem; jednostka z brakami w środku panelu.
+**Przypadki patologiczne.** Wszystkie publikacje o zerowej liczbie cytowań, czyli jeden
+wielki remis; zbiór odniesienia mniejszy od ocenianego zbioru; jedna publikacja w zbiorze
+odniesienia.
 
-**Zbiór empiryczny.** Otwarte dane o wdrożeniach etapowych: statystyki bibliotek
-publicznych, dane oświatowe, wskaźniki gminne. Dobierz program, którego moment
-wejścia jest udokumentowany, bo od tego zależy cała analiza.
+**Zbiór empiryczny.** Otwarte dane bibliometryczne z liczbą cytowań: rejestry publikacji
+otwartego dostępu, dane z otwartych baz cytowań albo zestawienia udostępniane przez
+wydawców. Wystarczy kilka czasopism albo kilka jednostek z jednej dziedziny i jednego
+rocznika. Sprawdź licencję i warunki wtórnego wykorzystania.
 
 ## Mapowanie na pracę
 
 | Sekcja briefu | Rozdział pracy |
 |---|---|
-| Po co to badaczowi, problem wdrożeń etapowych | Wprowadzenie: tło i luka |
-| Algorytm, co wynotować | Rozdział 1: aparat formalny |
-| Kontrakt, warunek pochłaniania | Rozdział 1: założenia |
-| Plan pakietu, dane, badanie obciążenia | Rozdział 2 |
-| Zbiór empiryczny | Rozdział 3 |
+| Po co to badaczowi, skośność rozkładu cytowań | Wprowadzenie: tło i luka |
+| Wzory, notacja schematu, klasy rozłączne | Rozdział 1: aparat formalny |
+| Kontrakt, niezmienniki, obsługa remisów | Rozdział 1: granice stosowalności |
+| Plan pakietu, procedura generowania | Rozdział 2 |
+| Zbiór empiryczny, porównanie ze wskaźnikiem opartym na średniej | Rozdział 3 |
 
-**Wstępne pytanie badawcze.** Jak liczba jednostek nigdy nieobjętych programem
-wpływa na jakość dopasowania sztucznej grupy porównawczej i przy jakiej ich liczbie
-metoda przestaje dawać wiarygodne oszacowanie?
+**Wstępne pytanie badawcze.** Przy jakim stopniu skośności rozkładu cytowań
+uporządkowanie jednostek według wskaźnika opartego na średniej rozchodzi się
+z uporządkowaniem według wskaźnika percentylowego, i które jednostki tracą, a które
+zyskują na zmianie miary?
 
 ## Polecenia startowe
 
-1. Walidacja panelu i wykrycie schematu wdrożenia, w tym powrotów.
-2. Wagi jednostek przez regresję z ograniczeniami, zgodnie z Twoimi notatkami.
-3. Wagi okresów sprzed wejścia.
-4. Sekwencyjne wyznaczanie efektów i agregacja.
-5. Procedura generowania panelu o zadanym efekcie i etapowym wdrożeniu.
-6. Badanie obciążenia i pokrycia w powtórzeniach.
+1. Walidacja publikacji, zbioru odniesienia i schematu klas z wagami.
+2. Rangi percentylowe z jawną obsługą remisów, zgodnie z Twoimi notatkami.
+3. Przypisanie do klas i korekta do klas rozłącznych przez odejmowanie.
+4. Suma ważona, wersja znormalizowana i udziały klas w wyniku.
+5. Procedura generowania rozkładów cytowań o kontrolowanej skośności.
+6. Porównanie uporządkowań jednostek przy obu rodzajach wskaźnika.
 
 ## Pułapki
 
-**Estymator dwukierunkowy jako punkt wyjścia.** Narzędzie zaproponuje regresję
-z efektami stałymi, bo tak wygląda typowy kod dla danych panelowych. To jest
-dokładnie ten estymator, który metoda ma zastąpić, i który przy wdrożeniach
-etapowych bywa obciążony.
+**Podwójne liczenie publikacji.** Klasy percentylowe są zagnieżdżone. Zsumowanie
+liczności bez korekty daje wynik zawyżony i zawsze w tę samą stronę, więc błąd nie
+rzuca się w oczy. Test na jednej publikacji w każdej klasie wychwyci go natychmiast.
 
-**Ograniczenia na wagi.** Nieujemność i sumowanie do jedności to nie są detale
-techniczne, tylko sedno metody. Implementacja bez tych ograniczeń liczy zwykłą
-regresję i daje inny wynik.
+**Remisy przy zerowych cytowaniach.** W realnych danych połowa publikacji potrafi mieć
+zero cytowań. Sposób przypisania im rangi percentylowej przesądza o tym, ile z nich
+wpadnie do górnej połowy, a to jest znacząca część wyniku. Decyzję trzeba opisać.
 
-**Parametr kary.** Sposób jego doboru jest w metodzie jawny. Wybór arbitralny
-zmienia wynik i musi być opisany w pracy jako decyzja.
+**Zbiór odniesienia.** Percentyl liczy się względem czegoś. Wzięcie za zbiór odniesienia
+ocenianego zbioru zamiast dziedziny i rocznika daje wskaźnik mierzący coś innego, niż
+się deklaruje.
 
-**Diagnostyka dopasowania.** Jeżeli sztuczna grupa porównawcza źle odtwarza przebieg
-sprzed wejścia, wynik nie znaczy nic – niezależnie od tego, jak wygląda błąd
-standardowy. Wykres przebiegów przed wejściem musi być w rozdziale trzecim.
+**Porównywanie wartości nieznormalizowanych między jednostkami różnej wielkości.**
+Wskaźnik jest sumą, więc rośnie z wielkością. To jest cecha, nie wada, ale w porównaniach
+trzeba wiedzieć, którą wersję się podaje.
 
-**Na obronie** musisz umieć wyjaśnić, dlaczego przy wdrożeniach etapowych klasyczny
-estymator potrafi dać zły znak, i jak wagi to naprawiają.
+**Na obronie** musisz umieć wyjaśnić, dlaczego średnia jest złą miarą dla rozkładu
+skośnego, i pokazać dwa zbiory publikacji o tej samej średniej liczbie cytowań i różnym
+wskaźniku percentylowym.
 
 ## Literatura
 
-Artykuł źródłowy: `arkhangelsky2024sequential`.
+Artykuł źródłowy: `leydesdorff2019i3`.
 
-Wprowadzenie: praca wprowadzająca syntetyczny estymator różnicy podwójnej; opracowanie
-o problemach estymatora dwukierunkowego przy wdrożeniach etapowych. Dwie do czterech
-pozycji dobierasz sam.
+Wprowadzenie: opracowanie o rozkładach cytowań i ich skośności; krytyczne omówienie
+wskaźnika oddziaływania czasopisma. Dwie do czterech pozycji dobierasz sam. Tematy
+pokrewne: 04 i 14 – wszystkie trzy operują na danych cytowań i mogą korzystać z tego
+samego zbioru.
 
 Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.

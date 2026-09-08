@@ -1,172 +1,209 @@
-# Temat 12. Wyjaśnienia decyzji sieci grafowej
+# Temat 12. Ranking nagradzający nowość zamiast powtórzeń
 
 ## Metryka
 
 | | |
 |---|---|
-| Artykuł źródłowy | Cai, Ruichu; Zhu, Yuxuan; Chen, Xuexin; Fang, Yuan; Wu, Min; Qiao, Jie; Hao, Zhifeng (2025). *On the probability of necessity and sufficiency of explaining Graph Neural Networks: A lower bound optimization approach*. Neural Networks |
-| Identyfikator | [10.1016/j.neunet.2024.107065](https://doi.org/10.1016/j.neunet.2024.107065) |
+| Artykuł źródłowy | Clarke, Charles L. A.; Kolla, Maheedhar; Cormack, Gordon V.; Vechtomova, Olga; Ashkan, Azin; Büttcher, Stefan; MacKinnon, Ian (2008). *Novelty and Diversity in Information Retrieval Evaluation*. SIGIR '08, s. 659-666 |
+| Identyfikator | [10.1145/1390334.1390446](https://doi.org/10.1145/1390334.1390446) |
 | Dostęp | przez bibliotekę UJ |
-| Dziedzina | sieci informacyjne, wyjaśnialność decyzji |
-| Proponowany tytuł pracy | Pakiet R do wyjaśniania decyzji modeli grafowych jako przykład zastosowania kryteriów przyczynowych w analizie sieci społecznych |
-| Proponowana nazwa pakietu | `WyjasnieniaGR` |
-| Trudność | ●●●● |
+| Dziedzina | wyszukiwanie informacji, wieloznaczność zapytań |
+| Proponowany tytuł pracy | Pakiet R do oceny różnorodności wyników wyszukiwania jako przykład zastosowania miar nowości w analizie systemów informacyjnych |
+| Proponowana nazwa pakietu | `RoznorodnoscR` |
+| Trudność | ●●● |
 
 ## Po co to badaczowi
 
-Sieci są naturalnym opisem wielu zjawisk społecznych: znajomości, współautorstwa,
-cytowań, udostępnień, przepływów informacji. Modele uczące się na grafach potrafią
-w takich sieciach przewidywać – kto się zradykalizuje, który wpis się rozejdzie,
-która praca zyska cytowania. Coraz częściej z nich korzystamy.
+Klasyczne miary skuteczności sumują trafność dokumentów niezależnie od siebie. Dziesięć
+dokumentów mówiących dokładnie to samo dostaje taką samą ocenę jak dziesięć dokumentów
+pokrywających dziesięć różnych aspektów sprawy. Dla użytkownika są to sytuacje zupełnie
+różne, a miara ich nie odróżnia.
 
-I coraz częściej stajemy przed pytaniem, na które model nie odpowiada: **dlaczego**.
-Które połączenia zdecydowały o tej prognozie? Bez odpowiedzi model jest nieużyteczny
-badawczo, bo badacza nie interesuje sama prognoza, tylko mechanizm.
+Problem ma dwa źródła. Pierwsze to **wieloznaczność zapytania**: słowo wpisane
+w wyszukiwarkę zwykle ma kilka znaczeń, a system nie wie, o które chodzi. Rozsądne
+zachowanie polega wtedy na pokryciu kilku znaczeń w pierwszej dziesiątce, a nie na
+postawieniu wszystkiego na jedno. Klasyczna miara karze za takie zachowanie, bo dokumenty
+z pozostałych znaczeń liczy jako nietrafne.
 
-Metody wyjaśniania modeli grafowych istnieją, ale większość szuka fragmentu sieci,
-który **wystarczy** do uzyskania tej samej prognozy. To za mało. Fragment może
-wystarczać i jednocześnie być zbędny, bo prognoza wyszłaby taka sama i bez niego.
-Wyjaśnienie warte swojej nazwy musi spełniać oba warunki naraz: bez tego fragmentu
-prognoza by się zmieniła (**konieczność**) i sam ten fragment do niej wystarcza
-(**dostateczność**).
+Drugie źródło to **powtarzalność**. Nawet przy zapytaniu jednoznacznym użytkownik, który
+przeczytał pierwszy dokument, nie potrzebuje piątego, mówiącego to samo innymi słowami.
+Wartość dokumentu zależy od tego, co użytkownik już widział, a więc od pozycji w rankingu
+i od zawartości pozycji wcześniejszych.
 
-Sformułowanie to pochodzi z teorii przyczynowości i ma znany kłopot: odpowiedniej
-wielkości zwykle nie da się policzyć. Artykuł proponuje wyjście – optymalizować
-**dolne ograniczenie** tej wielkości, które policzyć się da, a które gwarantuje,
-że znaleziony fragment jest co najmniej tak dobry.
+Artykuł podaje ramę, w której trafność przestaje być własnością dokumentu, a staje się
+własnością **dokumentu w kontekście rankingu**. Potrzeba informacyjna rozkłada się na
+elementy składowe, a dokument dostaje tym mniejszy zysk za dany element, im więcej
+wcześniejszych dokumentów ten element już pokryło.
 
-Dla badacza sieci społecznych oznacza to wyjaśnienia, o których da się powiedzieć
-coś mocniejszego niż „model zwrócił uwagę na te krawędzie".
+Dla badacza zachowań informacyjnych jest to miara odpowiadająca na pytanie, czy system
+rozumie, że użytkownik czyta ranking po kolei i się uczy.
 
 ## Algorytm
 
-**Wejście.** Graf w postaci macierzy sąsiedztwa, atrybuty wierzchołków, wytrenowany
-model zwracający prognozę dla grafu, wskazanie wierzchołka lub grafu do wyjaśnienia,
-parametr kary za rozmiar wyjaśnienia.
+**Wejście.** Ranking dokumentów; rozkład potrzeby informacyjnej na elementy składowe;
+macierz przynależności mówiąca, który dokument pokrywa który element; parametr $\alpha$
+sterujący karą za powtórzenie; głębokość oceny.
 
-**Wyjście.** Maska krawędzi lub wierzchołków wskazująca fragment wyjaśniający;
-wartości składowe konieczności i dostateczności; rozmiar wyjaśnienia.
+**Wyjście.** Zysk na każdej pozycji, skumulowany zysk zdyskontowany, wartość
+znormalizowana, ranking wzorcowy użyty do normalizacji.
+
+**Wzory.** Niech $J(d_k, i)$ przyjmuje wartość jeden, gdy dokument na pozycji $k$ pokrywa
+element $i$ potrzeby informacyjnej, a zero w przeciwnym razie. Niech
+
+$$r_{i,k-1} = \sum_{j=1}^{k-1} J(d_j, i)$$
+
+oznacza liczbę dokumentów stojących **przed** pozycją $k$, które element $i$ już pokryły.
+Zysk pozycji $k$ wynosi
+
+$$G[k] = \sum_{i=1}^{m} J(d_k, i)\,(1-\alpha)^{\,r_{i,k-1}}$$
+
+gdzie $m$ to liczba elementów potrzeby, a $\alpha$ należy do przedziału od zera do
+jedności. Kluczowy jest wykładnik: pierwszy dokument pokrywający dany element dostaje
+za niego pełny zysk, drugi $(1-\alpha)$, trzeci $(1-\alpha)^2$ i tak dalej.
+
+Zysk sumuje się z dyskontem pozycyjnym:
+
+$$DCG[k] = \sum_{j=1}^{k} \frac{G[j]}{\log_2(1+j)}$$
+
+a wartość znormalizowana to iloraz przez tę samą wielkość policzoną dla rankingu
+wzorcowego:
+
+$$\alpha\text{-}nDCG[k] = \frac{DCG[k]}{DCG'[k]}$$
+
+**Ranking wzorcowy.** Tu jest sedno trudności tego tematu. Ranking maksymalizujący zysk
+skumulowany nie daje się wyznaczyć przeglądem wszystkich możliwości, bo problem należy
+do klasy zadań trudnych obliczeniowo. Stosuje się przybliżenie **zachłanne**: na każdą
+kolejną pozycję wybiera się dokument dający największy zysk przy już wybranym początku
+rankingu. Jest to decyzja, którą trzeba w pracy nazwać, bo wynik znormalizowany od niej
+zależy.
+
+Przy $\alpha = 0$ kara za powtórzenie znika i miara sprowadza się do zwykłego zysku
+skumulowanego z dyskontem. Przy $\alpha = 1$ drugi i każdy kolejny dokument pokrywający
+ten sam element nie wnosi nic.
 
 **Kroki.**
 
-1. Sprawdzenie wejścia: zgodność wymiarów macierzy sąsiedztwa i atrybutów, poprawność
-   wyjścia modelu, obecność wskazanego wierzchołka.
-2. Zastąpienie wyboru zero-jedynkowego **maską ciągłą** z przedziału jednostkowego.
-3. Wyznaczenie prognozy dla grafu z zastosowaną maską oraz dla grafu z maską
-   dopełniającą.
-4. Złożenie funkcji celu z obu prognoz i kary za rozmiar maski.
-5. Optymalizacja maski metodą gradientową.
-6. Wyostrzenie maski do postaci zero-jedynkowej i sprawdzenie wartości składowych.
+1. Sprawdzenie danych: zgodność wymiarów macierzy przynależności z rankingiem, zakres
+   parametru, niepusty zbiór elementów potrzeby.
+2. Przejście po rankingu z pamięcią, ile razy każdy element był już pokryty.
+3. Złożenie zysku na każdej pozycji.
+4. Skumulowanie zysku z dyskontem pozycyjnym.
+5. Zbudowanie rankingu wzorcowego metodą zachłanną i policzenie dla niego tej samej
+   wielkości.
+6. Podzielenie i zestawienie z miarą klasyczną liczoną bez kary za powtórzenie.
 
-**Co wynotować z artykułu.** Z sekcji metodycznej: definicję prawdopodobieństwa
-konieczności i dostateczności w tym zastosowaniu; **postać dolnego ograniczenia
-wraz z dowodem, że jest ograniczeniem** – to jest sedno artykułu; pełną funkcję celu
-z karą; sposób relaksacji wyboru do maski ciągłej; regułę wyostrzania maski;
-założenia dotyczące modelu, do którego metoda się stosuje.
+**Co wynotować z artykułu.** Uzasadnienie postaci wykładniczej kary; interpretację
+parametru $\alpha$ jako prawdopodobieństwa, że ocena przynależności jest błędna; sposób
+budowy rankingu wzorcowego i jego uzasadnienie; własności, które autorzy wykazują dla
+miary, oraz przyjęte założenia o niezależności elementów potrzeby.
 
 ## Kontrakt
 
-**Warunki wstępne.** Macierz sąsiedztwa kwadratowa, o wymiarze zgodnym z liczbą
-wierszy atrybutów; model zwracający wartość liczbową dla podanego grafu; parametr
-kary nieujemny; wskazany wierzchołek istniejący w grafie.
+**Warunki wstępne.** Parametr $\alpha$ w przedziale od zera do jedności; macierz
+przynależności zerojedynkowa o wymiarach dokumenty na elementy; ranking bez powtórzeń;
+co najmniej jeden element potrzeby.
 
-**Niezmienniki.** Maska należy do przedziału jednostkowego przed wyostrzeniem.
-Funkcja celu nie rośnie między iteracjami. Zwiększenie kary nie zwiększa rozmiaru
-wyjaśnienia. Przy karze zerowej maska dąży do pełnego grafu.
+**Niezmienniki.** Zysk na pozycji jest nieujemny i nie przekracza liczby elementów
+potrzeby. Zysk skumulowany jest niemalejący. Wartość znormalizowana należy do przedziału
+od zera do jedności. Przy $\alpha = 0$ wynik równa się miarze bez kary za powtórzenie.
+Przy $\alpha = 1$ powtórne pokrycie elementu daje zysk zerowy.
 
-**Wyjście.** Klasa `wyjasnienie_grafu` ze składnikami: maska, wartości składowe,
-rozmiar wyjaśnienia, przebieg funkcji celu, liczba iteracji.
+**Wyjście.** Klasa `roznorodnosc_rankingu` ze składnikami: zysk na pozycjach, zysk
+skumulowany, wartość znormalizowana, ranking wzorcowy, pokrycie elementów potrzeby.
 
-**Błędy zatrzymujące wykonanie.** Macierz niekwadratowa; niezgodność wymiarów;
-model zwracający wartość nieliczbową; ujemny parametr kary; brak zbieżności.
+**Błędy zatrzymujące wykonanie.** Parametr poza przedziałem; niezgodność wymiarów;
+macierz przynależności spoza zbioru zerojedynkowego; ranking z powtórzeniami.
 
 ## Plan pakietu
 
 | Plik | Odpowiedzialność |
 |---|---|
-| `R/przygotowanie_danych.R` | walidacja grafu i atrybutów, sprawdzenie modelu |
-| `R/maska.R` | relaksacja ciągła, zastosowanie maski do grafu |
-| `R/cel.R` | funkcja celu wraz z karą |
-| `R/optymalizacja.R` | spadek gradientu, warunek zatrzymania |
+| `R/przygotowanie_danych.R` | walidacja rankingu, macierzy przynależności i parametru |
+| `R/zysk.R` | zysk na pozycji z uwzględnieniem wcześniejszych pokryć |
+| `R/dyskonto.R` | skumulowanie z dyskontem pozycyjnym |
+| `R/wzorzec.R` | ranking wzorcowy metodą zachłanną |
 | `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | graf z wyróżnionym wyjaśnieniem |
+| `R/wizualizacja.R` | pokrycie elementów wzdłuż rankingu, wpływ parametru |
 
-Zależności: pakiet do grafów, `stats`, `ggplot2`. **Model przyjmujesz jako funkcję
-podaną przez użytkownika**, a nie trenujesz w pakiecie: uczenie sieci grafowej
-wprowadziłoby zależności, których nie da się utrzymać w pakiecie przechodzącym
-sprawdzenie zgodności. Do testów wystarczy prosty model o znanym zachowaniu.
+Zależności: `stats` i `ggplot2`. Licznik wcześniejszych pokryć prowadź jako **wektor
+aktualizowany w trakcie przejścia**, a nie licz od nowa dla każdej pozycji: różnica
+między złożonością liniową a kwadratową względem długości rankingu.
 
 ## Dane
 
-**Procedura generowania.** Budujesz grafy, w których **wiesz, który fragment
-decyduje** o prognozie: wszczepiasz w losowy graf określony motyw i definiujesz
-model zwracający wartość zależną wyłącznie od obecności tego motywu. Metoda powinna
-wskazać dokładnie ten fragment. Odsetek poprawnie wskazanych krawędzi jest miarą
-skuteczności.
+**Procedura generowania.** Budujesz zbiór dokumentów o **zadanym pokryciu elementów
+potrzeby**: część dokumentów pokrywa jeden element, część kilka, część żadnego. Znasz
+wtedy ranking optymalny w przypadkach prostych i możesz sprawdzić, czy przybliżenie
+zachłanne go odtwarza. Następnie generujesz rankingi o kontrolowanej powtarzalności
+i badasz, jak miara je odróżnia.
 
-Parametry: liczba wierzchołków, gęstość grafu tła, rodzaj i liczba motywów, poziom
-szumu w modelu, ziarno.
+Parametry: liczba dokumentów, liczba elementów potrzeby, rozkład pokrycia, stopień
+powtarzalności rankingu, wartość parametru kary, ziarno.
 
-**Przypadki o znanym wyniku.** Motyw jedyną przyczyną prognozy: maska wskazuje
-wyłącznie jego krawędzie. Prognoza niezależna od grafu: maska pusta przy niezerowej
-karze. Graf o jednej krawędzi: wynik policzalny ręcznie.
+**Przypadki o znanym wyniku.** Każdy dokument pokrywa dokładnie jeden, inny element:
+kara nie działa, wynik równy miarze klasycznej. Wszystkie dokumenty pokrywają ten sam
+element: zysk maleje geometrycznie, wartości policzalne ręcznie. Ranking o długości dwa:
+cały rachunek mieści się w trzech linijkach – wpisz go do komentarza testu.
 
-**Przypadki patologiczne.** Graf pusty; graf pełny; wierzchołek izolowany; model
-zwracający stałą.
+**Przypadki patologiczne.** Żaden dokument nie pokrywa żadnego elementu; jeden element
+potrzeby; parametr równy jedności przy dokumentach pokrywających wyłącznie ten sam
+element.
 
-**Zbiór empiryczny.** Otwarte sieci społeczne albo cytowań udostępniane do badań,
-wraz z prostym modelem wytrenowanym poza pakietem. Sprawdź licencję i wymagania
-dotyczące danych o osobach.
+**Zbiór empiryczny.** Zapytania wieloznaczne wraz z podziałem na znaczenia. Materiał
+tego rodzaju udostępniają kolekcje testowe do zadań różnorodności; można go też zbudować
+samodzielnie dla kilkunastu zapytań, opisując znaczenia ręcznie. **Opis procedury
+opisywania jest wtedy częścią metodologii**, nie szczegółem technicznym.
 
 ## Mapowanie na pracę
 
 | Sekcja briefu | Rozdział pracy |
 |---|---|
-| Po co to badaczowi, konieczność i dostateczność | Wprowadzenie: tło i luka |
-| Algorytm, dolne ograniczenie | Rozdział 1: aparat formalny |
-| Kontrakt, założenia o modelu | Rozdział 1: granice stosowalności |
-| Plan pakietu, dane, badanie skuteczności | Rozdział 2 |
-| Zbiór empiryczny | Rozdział 3 |
+| Po co to badaczowi, wieloznaczność i powtarzalność | Wprowadzenie: tło i luka |
+| Wzory, kara wykładnicza, ranking wzorcowy | Rozdział 1: aparat formalny |
+| Kontrakt, zachowanie graniczne parametru | Rozdział 1: granice stosowalności |
+| Plan pakietu, przybliżenie zachłanne, procedura generowania | Rozdział 2 |
+| Zbiór empiryczny, porównanie z miarą klasyczną | Rozdział 3 |
 
-**Wstępne pytanie badawcze.** Jak wielkość kary za rozmiar wyjaśnienia wpływa na
-równowagę między koniecznością a dostatecznością i przy jakich wartościach
-wyjaśnienie przestaje być czytelne dla badacza?
+**Wstępne pytanie badawcze.** Jak dobór parametru kary za powtórzenie wpływa na
+uporządkowanie systemów i przy jakiej wartości ranking pokrywający wiele znaczeń zaczyna
+wygrywać z rankingiem skupionym na jednym?
 
 ## Polecenia startowe
 
-1. Zastosowanie maski ciągłej do macierzy sąsiedztwa, z zachowaniem różniczkowalności.
-2. Funkcja celu wraz z karą, zgodnie z Twoimi notatkami o dolnym ograniczeniu.
-3. Pętla optymalizacji z jawnym warunkiem zatrzymania i śledzeniem funkcji celu.
-4. Procedura generowania grafów z wszczepionym motywem oraz model o znanym zachowaniu.
-5. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
-6. Badanie skuteczności w funkcji gęstości grafu tła.
+1. Walidacja rankingu, macierzy przynależności i parametru.
+2. Zysk na pozycji z licznikiem wcześniejszych pokryć, aktualizowanym w przejściu.
+3. Skumulowanie z dyskontem pozycyjnym.
+4. Ranking wzorcowy metodą zachłanną, zgodnie z Twoimi notatkami.
+5. Procedura generowania dokumentów o zadanym pokryciu elementów potrzeby.
+6. Badanie wpływu parametru na uporządkowanie dwóch rankingów o różnej powtarzalności.
 
 ## Pułapki
 
-**Sama dostateczność.** Narzędzie zaproponuje metodę szukającą fragmentu
-wystarczającego, bo takich implementacji jest najwięcej. Artykuł wymaga obu
-składowych naraz, a różnica jest tym, co czyni temat wartym pracy.
+**Zysk liczony niezależnie od pozycji.** Agent napisze sumę trafności, bo tak wygląda
+typowy kod miary rankingowej. Cała treść tej metody leży w tym, że zysk zależy od tego,
+co stoi wyżej. Test z dokumentami pokrywającymi ten sam element wychwyci to od razu.
 
-**Dolne ograniczenie a wielkość docelowa.** Optymalizujesz ograniczenie, nie samą
-wielkość. Wynik jest gwarancją, a nie dokładną wartością. Praca musi to rozróżnienie
-utrzymać, bo inaczej rozdział trzeci przypisuje metodzie własność, której nie ma.
+**Licznik pokryć liczony od nowa.** Poprawnie, ale wolno. Przy rankingu tysiąca pozycji
+i kilkudziesięciu elementach potrzeby różnica jest wyraźna.
 
-**Wyostrzanie maski.** Maska ciągła po optymalizacji nie jest wyjaśnieniem. Reguła
-zamiany na zero-jedynkową jest częścią metody i zmienia wynik. Progowanie dobrane
-arbitralnie trzeba opisać jako decyzję.
+**Ranking wzorcowy wyznaczany przeglądem zupełnym.** Nie skończy się. Metoda zachłanna
+jest w artykule i jest przybliżeniem, o czym praca musi powiedzieć wprost, bo wynik
+znormalizowany zależy wtedy od jakości przybliżenia.
 
-**Model jako zależność.** Trenowanie sieci grafowej wewnątrz pakietu zamknie drogę
-do sprawdzenia zgodności. Model jest wejściem.
+**Elementy potrzeby traktowane jak niezależne.** Metoda to zakłada, a w realnych danych
+znaczenia zapytania bywają zagnieżdżone. Jest to ograniczenie do opisania w granicach
+stosowalności, a nie usterka implementacji.
 
-**Na obronie** musisz umieć podać przykład fragmentu grafu, który jest dostateczny,
-ale nie konieczny, i wyjaśnić, dlaczego byłby złym wyjaśnieniem.
+**Na obronie** musisz umieć podać dwa rankingi o tej samej wartości miary klasycznej
+i różnej wartości miary z karą, oraz wyjaśnić, co dokładnie oznacza parametr $\alpha$.
 
 ## Literatura
 
-Artykuł źródłowy: `cai2025pns`.
+Artykuł źródłowy: `clarke2008novelty`.
 
-Wprowadzenie: opracowanie o wyjaśnialności modeli grafowych; podręcznikowe omówienie
-prawdopodobieństw konieczności i dostateczności. Dwie do czterech pozycji dobierasz
-sam. Temat pokrewny z tematem 01 w części pojęciowej.
+Wprowadzenie: podręcznikowe omówienie zysku skumulowanego z dyskontem; opracowanie
+o wieloznaczności zapytań i różnorodności wyników. Dwie do czterech pozycji dobierasz
+sam. Tematy pokrewne: 07 i 13 – wszystkie trzy wyprowadzają miarę z założeń o zachowaniu
+użytkownika.
 
 Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.

@@ -63,6 +63,31 @@ konieczności i dostateczności.
    wielkości.
 4. Zwrócenie przedziałów wraz z informacją, które ograniczenie okazało się wiążące.
 
+**Wzory.** Trzy podstawowe wielkości definiuje się w języku kontrfaktycznym. Dla
+zmiennych zerojedynkowych, gdzie $x$ oznacza podanie leczenia, a $y$ wystąpienie skutku:
+
+$$PN = P(Y_{x'} = \text{fałsz} \mid X = x,\; Y = y)$$
+
+$$PS = P(Y_{x} = y \mid X = x',\; Y = y')$$
+
+$$PNS = P(Y_{x} = y,\; Y_{x'} = y')$$
+
+Prawdopodobieństwo konieczności odpowiada na pytanie, czy skutek by nie wystąpił bez
+leczenia, u osoby leczonej, u której wystąpił. Prawdopodobieństwo dostateczności pyta
+odwrotnie: czy skutek by wystąpił po leczeniu, u osoby nieleczonej, u której nie wystąpił.
+Trzecia wielkość łączy oba warunki.
+
+Wielkości te są **nieidentyfikowalne**: z samych danych nie da się wyznaczyć ich wartości,
+a jedynie przedział, w którym leżą. Artykuł rozszerza definicje na zmienne wielowartościowe,
+gdzie $X$ przyjmuje wartości $x_1,\ldots,x_m$, a $Y$ wartości $y_1,\ldots,y_n$, i podaje
+granice **dokładne** w tym sensie, że dla każdego punktu wewnątrz przedziału istnieje model
+przyczynowy dający dokładnie tę wartość.
+
+Granice wyznacza się jako rozwiązanie zadania programowania liniowego: zmiennymi są
+prawdopodobieństwa stanów nieobserwowalnych, ograniczeniami zgodność z rozkładem
+obserwacyjnym i eksperymentalnym oraz warunek unormowania, a funkcją celu wielkość, której
+granic szukasz. Dolna granica to minimum, górna maksimum tego samego zadania.
+
 **Co wynotować z artykułu.** Wzory pobierasz z sekcji definicyjnej i z części
 opisującej konstrukcję zadania programowania liniowego. Potrzebujesz:
 

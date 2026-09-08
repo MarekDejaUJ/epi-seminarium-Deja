@@ -12,6 +12,12 @@
 | Proponowana nazwa pakietu | `PrzelomoweR` |
 | Trudność | ●● |
 
+> **Uwaga o istniejącym kodzie.** Autorzy udostępniają skrypty liczące wskaźniki
+> przełomowości na swoim zbiorze. Nie jest to pakiet R i nie obejmuje rozkładu na
+> składowe ani porównania między bazami, ale **musisz go przejrzeć i opisać w pracy**,
+> czym Twoja implementacja się różni. Pominięcie istniejącego kodu jest w tym
+> seminarium usterką poważną.
+
 ## Po co to badaczowi
 
 Wskaźniki przełomowości publikacji liczy się z sieci cytowań. Sieć tę bierze się
@@ -58,6 +64,31 @@ i rocznika; miary zgodności między bazami.
 4. Normalizacja w obrębie dziedziny i rocznika.
 5. Powtórzenie dla każdej bazy i zestawienie wyników.
 6. Miary zgodności między bazami: korelacja rangowa, odsetek zgodnych klasyfikacji.
+
+**Wzory.** Podstawą jest ten sam podział prac cytujących co w temacie 04: $N_i$ to prace
+cytujące wyłącznie publikację, $N_j$ prace cytujące ją razem ze źródłami, $N_k$ prace
+cytujące wyłącznie źródła. Wskaźnik klasyczny to
+
+$$DI = \frac{N_i - N_j}{N_i + N_j + N_k}$$
+
+Rozkład na dwie składowe polega na tym, żeby nie odejmować liczników, lecz podać je osobno:
+
+$$DI_{\text{destab}} = \frac{N_i}{N_i + N_j + N_k}, \qquad DI_{\text{konsol}} = \frac{N_j}{N_i + N_j + N_k}$$
+
+Pierwsza składowa mierzy **wypieranie** źródeł, druga ich **utrwalanie**. Wskaźnik klasyczny
+jest ich różnicą, więc publikacja o obu składowych wysokich i publikacja o obu niskich mogą
+dać tę samą wartość, mimo że opisują zupełnie różne zjawiska. Rozdzielenie składowych
+przywraca tę informację.
+
+Zachodzi przy tym
+
+$$DI_{\text{destab}} + DI_{\text{konsol}} + \frac{N_k}{N_i + N_j + N_k} = 1$$
+
+więc trzy frakcje sumują się do jedności i stanowią pełny rozkład prac cytujących. Jest to
+niezmiennik nadający się wprost na test.
+
+Dokładne warianty wskaźnika liczone przez autorów, przyjęte okno czasowe oraz sposób
+traktowania autocytowań przepisz z opisu zbioru.
 
 **Co wynotować z artykułu.** Z opisu zbioru i metody: dokładne definicje obu
 składowych; sposób przyporządkowania rekordów między bazami wraz z odsetkiem

@@ -62,6 +62,35 @@ imputacji.
 6. Metaregresja oszacowań na cechach badania i procedury.
 7. Analiza wrażliwości: wynik przy pominięciu badań z imputowanym błędem.
 
+**Wzory.** Teoria perspektywy opisuje wybór dwiema funkcjami. Funkcja wartości przypisuje
+użyteczność wynikom mierzonym względem punktu odniesienia:
+
+$$v(x) = \begin{cases} x^{\alpha} & x \ge 0 \\ -\lambda\,(-x)^{\beta} & x < 0 \end{cases}$$
+
+Parametr $\lambda$ to **awersja do straty**: gdy przekracza jedność, strata waży więcej niż
+zysk tej samej wielkości. Parametry $\alpha$ i $\beta$ opisują malejącą wrażliwość na
+wielkość wyniku.
+
+Funkcja wagi przekształca prawdopodobieństwo na wagę decyzyjną. W najczęściej stosowanej
+postaci
+
+$$w(p) = \frac{p^{\gamma}}{\left(p^{\gamma} + (1-p)^{\gamma}\right)^{1/\gamma}}$$
+
+przy $\gamma$ mniejszym od jedności daje przecenianie zdarzeń mało prawdopodobnych
+i niedocenianie bardzo prawdopodobnych.
+
+Metaanaliza łączy oszacowania tych parametrów z wielu badań. Przy modelu efektów losowych
+oszacowanie zbiorcze to średnia ważona odwrotnością wariancji:
+
+$$\hat{\theta} = \frac{\sum_i w_i \hat{\theta}_i}{\sum_i w_i}, \qquad w_i = \frac{1}{s_i^2 + \tau^2}$$
+
+gdzie $s_i^2$ to wariancja oszacowania w badaniu $i$, a $\tau^2$ wariancja między badaniami,
+opisująca niejednorodność. Sedno pracy metaanalitycznej leży w wyznaczeniu $\tau^2$
+i w tym, co zrobić z badaniami, które nie podają błędu standardowego.
+
+Warianty postaci obu funkcji stosowane w poszczególnych badaniach oraz sposób sprowadzenia
+ich do wspólnej skali przepisz z artykułu: to jest główna trudność tego tematu.
+
 **Co wynotować z artykułu.** Z sekcji metodycznej: dokładną postać estymatora
 ważonego z uwzględnieniem korelacji; sposób imputacji brakujących błędów
 standardowych wraz z założeniami; przyjętą strukturę korelacji między parametrami;

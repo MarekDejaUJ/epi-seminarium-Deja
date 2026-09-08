@@ -57,6 +57,28 @@ najczęściej cytowanego źródła oraz miara wyparcia względem tego źródła.
 5. Wyznaczenie najczęściej cytowanego źródła i miary wyparcia względem niego.
 6. Opcjonalne przycięcie okna czasowego i normalizacja w obrębie dziedziny i rocznika.
 
+**Wzory.** Dla publikacji $p$ dzieli się prace cytujące na trzy rozłączne grupy:
+$N_i$ to prace cytujące wyłącznie $p$, $N_j$ prace cytujące zarówno $p$, jak i jej źródła,
+$N_k$ prace cytujące wyłącznie źródła $p$. Wskaźnik przełomowości to
+
+$$D = \frac{N_i - N_j}{N_i + N_j + N_k}$$
+
+Wartość dodatnia oznacza, że publikacja jest cytowana zamiast swoich źródeł, ujemna, że
+razem z nimi. Zakres to przedział od minus jednego do jednego.
+
+Artykuł rozkłada wskaźnik na dwa czynniki:
+
+$$D = \frac{d_p}{1 + R_k}, \qquad d_p = \frac{N_i - N_j}{N_i + N_j}, \qquad R_k = \frac{N_k}{N_i + N_j}$$
+
+Pierwszy czynnik $d_p$ to **lokalne wyparcie**: na ile publikacja zastępuje swoje źródła
+w bezpośredniej konkurencji o uwagę. Drugi czynnik opisuje przewagę źródeł nad publikacją
+i jest przybliżeniem ilorazu liczby cytowań źródeł do liczby cytowań publikacji.
+
+Rozkład ten jest sednem artykułu, bo pokazuje, że o wartości wskaźnika decyduje przede
+wszystkim **najczęściej cytowane źródło**, a nie liczba źródeł. Rozkład cytowań wśród
+źródeł jest silnie skośny i autorzy modelują go prawem potęgowym, z czego wyprowadzają
+udział najczęściej cytowanego źródła w cytowaniach wszystkich źródeł.
+
 **Co wynotować z artykułu.** Z sekcji metodycznej: dokładną definicję wskaźnika
 w postaci użytej przez autorów, definicję miary wyparcia względem najczęściej
 cytowanego źródła oraz **wykazanie związku między nimi** – to jest sedno pracy

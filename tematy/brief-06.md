@@ -57,6 +57,29 @@ zawierać zero.
 4. Przeszukanie tego zbioru w poszukiwaniu minimum i maksimum efektu.
 5. Powtórzenie dla siatki wartości parametru i wyznaczenie progu.
 
+**Wzory.** Interesuje nas zestawienie prawdopodobieństw skutku przy narażeniu
+i bez narażenia. Gdyby zmienna zakłócająca $U$ była w pełni obserwowana, prawdziwą wartość
+dałoby się wyznaczyć przez standaryzację:
+
+$$P(Y_{e}=1) = \sum_{u} P(Y=1 \mid E=e,\, U=u)\; P(U=u)$$
+
+Kłopot polega na tym, że $U$ jest obserwowane tylko u części osób, a brak nie jest losowy.
+Rozkład $P(U=u)$ da się więc oszacować jedynie na podzbiorze z obserwacją, a ten podzbiór
+nie jest reprezentatywny.
+
+Granice buduje się przez rozdzielenie wkładu obserwowanego od nieobserwowanego. Wkład
+części z obserwacją liczy się wprost. Dla części bez obserwacji podstawia się **wartości
+skrajne**: zero dla granicy dolnej i jeden dla górnej, bo nie da się powiedzieć o niej nic
+więcej. Szerokość przedziału jest wtedy proporcjonalna do odsetka braków, co jest
+własnością pożądaną: im mniej wiemy, tym mniej twierdzimy.
+
+Granice tak zbudowane są **wolne od założeń**, przy jednym warunku: mechanizm braków nie
+zależy od wyniku. Autor zaznacza jednocześnie, że nie są dokładne, czyli przedział bywa
+szerszy, niż wynika z danych. Analiza wrażliwości zawęża go, wprowadzając jawny parametr
+opisujący, jak bardzo mechanizm braków odbiega od losowego.
+
+Dokładne postaci obu granic dla poszczególnych zestawień przepisz z artykułu.
+
 **Co wynotować z artykułu.** Z sekcji definicyjnej: dokładne sformułowanie warunku
 niezależności między wynikiem a wskaźnikiem obserwacji przy zadanym warunkowaniu;
 definicję parametru wrażliwości; postać granic wraz z dowodem, że są ostre; warunki,

@@ -57,6 +57,28 @@ spójności, związku ze sprawą i różnicy między stronami; opcjonalnie przeb
    ramy.
 6. Uporządkowanie ram według wybranej miary.
 
+**Wzory.** Wypowiedzi zamienia się na wektory w przestrzeni o wielu wymiarach, a bliskość
+znaczeniową mierzy się kosinusem kąta między nimi:
+
+$$\cos(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\lVert \mathbf{u} \rVert \, \lVert \mathbf{v} \rVert}$$
+
+Miara przyjmuje wartości od minus jednego do jednego i nie zależy od długości wektorów,
+czyli od długości wypowiedzi. To jest powód, dla którego stosuje się ją zamiast odległości
+euklidesowej.
+
+Na podstawie tak zdefiniowanej bliskości wypowiedzi grupuje się w ramy interpretacyjne,
+a następnie liczy dwie wielkości. **Jednorodność ramy** to przeciętna bliskość wypowiedzi
+wewnątrz grupy: rama jednorodna oznacza wypowiedzi mówiące jednym głosem. **Odrębność**
+to bliskość między grupami: im mniejsza, tym wyraźniej ramy są od siebie oddzielone.
+
+Trzecia wielkość dotyczy postaw. Dla każdej ramy wyznacza się rozkład stanowisk wobec
+przedmiotu sporu i porównuje rozkłady między ramami. Rama, w której stanowiska są zgodne,
+oznacza wspólnotę interpretacyjną; rama o rozkładzie dwubiegunowym oznacza spór wewnątrz
+tej samej ramy, co jest zjawiskiem odrębnym i wartym opisania.
+
+Dokładne postaci tych trzech wielkości oraz sposób doboru liczby grup przepisz z artykułu:
+są to decyzje, od których zależy wynik i które trzeba w pracy uzasadnić.
+
 **Co wynotować z artykułu.** Z sekcji metodycznej: dokładne definicje wszystkich
 miar wraz z ich zakresami; przyjętą metodę grupowania i sposób doboru jej parametrów;
 sposób wyznaczenia środka dyskursu; definicję miary różnicy między stronami oraz to,

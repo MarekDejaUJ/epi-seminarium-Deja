@@ -56,6 +56,27 @@ poziomie zapytania.
    oszacowania obciążenia.
 5. Wariant rankingowy: powtórzenie kroków z uwzględnieniem wag pozycji w rankingu.
 
+**Wzory.** Punktem wyjścia jest miara skuteczności policzona na ocenach maszynowych,
+obciążona o nieznaną wielkość. Poprawkę szacuje się na **podpróbie ocenionej przez
+człowieka**: dla dokumentów należących do podpróby znane są obie oceny, więc znana jest
+różnica między nimi.
+
+Niech $\hat{\theta}_{M}$ oznacza wartość miary policzoną na ocenach maszynowych dla całego
+zbioru, a $\hat{\Delta}$ średnią różnicę między wartością na ocenach ludzkich i maszynowych,
+policzoną na podpróbie. Estymator skorygowany ma postać
+
+$$\hat{\theta} = \hat{\theta}_{M} + \hat{\Delta}$$
+
+Przedział ufności buduje się wokół tej wartości, a jego szerokość zależy od zmienności
+poprawki, a nie od zmienności samej miary. Stąd bierze się zysk metody: przy dobrych ocenach
+maszynowych poprawka jest mała i mało zmienna, więc przedział jest wąski mimo niewielkiej
+podpróby ludzkiej.
+
+Drugie podejście opisane w artykule nie szacuje poprawki, lecz wyznacza **granice** wokół
+trafności każdego dokumentu tak, żeby prawdziwa wartość mieściła się między nimi z zadanym
+prawdopodobieństwem. Wynikiem jest wtedy przedział z gwarancją pokrycia, a nie oszacowanie
+punktowe z błędem standardowym. Oba warianty trzeba w pracy rozróżnić.
+
 **Co wynotować z artykułu.** Z sekcji metodycznej potrzebujesz: definicji obu
 proponowanych estymatorów, postaci składnika korygującego obciążenie, sposobu
 wyznaczenia przedziału dla każdej z metod oraz warunków, przy których przedział ma
