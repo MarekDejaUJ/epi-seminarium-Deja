@@ -229,6 +229,8 @@ Symbole zostawiaj takie jak w artykule źródłowym – czytelnik ma móc porów
 
 ### Listingi kodu
 
+*Listing* to fragment kodu wydzielony z tekstu i złożony pismem maszynowym, z własnym numerem i podpisem, tak samo jak tabela czy rysunek. Standardy mówią o *fragmentach kodu* (Standardy EPI); nazwa „listing” jest utrwaloną nazwą tego elementu w pracach informatycznych i tak też podpisuje go wzór, numerując listingi ciągle przez całą pracę.
+
 ```latex
 \begin{lstlisting}[caption={Wyznaczanie wag},label={lst:wagi}]
 oblicz_wagi <- function(macierz) {
@@ -240,7 +242,7 @@ oblicz_wagi <- function(macierz) {
 
 Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wstawisz poleceniem `\listingR`, które przyjmuje podpis, etykietę i ścieżkę – wtedy listing zawsze odpowiada aktualnej wersji kodu.
 
-**Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.** Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery wychodzą przestawione. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może. Kontroli służy skrypt `tools/sprawdz-listingi.R`, ale wymaga on R, więc działa tylko **lokalnie**. **Na Overleaf** objaw widać wprost w złożonym dokumencie: litery w listingu są poprzestawiane.
+**Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.** Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery nie tyle znikają, co **wędrują na początek wyrazu**: zapisane w kodzie słowo `ścieżka` złoży się jako `śżcieka`. Usterka jest cicha, bo kompilacja kończy się bez błędu. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może; ograniczenie dotyczy wyłącznie wnętrza. Jeżeli musisz pokazać tekst polski będący wynikiem działania programu, na przykład komunikat błędu, nie wstawiaj go do listingu: przytocz go jako cytat blokowy albo umieść w tabeli. Kontroli służy skrypt `tools/sprawdz-listingi.R`, ale wymaga on R, więc działa tylko **lokalnie**. **Na Overleaf** objaw widać wprost w złożonym dokumencie: litery w listingu są poprzestawiane.
 
 ## Poziom trzeci: przy redakcji
 

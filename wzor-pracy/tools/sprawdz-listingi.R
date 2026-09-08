@@ -1,4 +1,4 @@
-# Kontrola zawartosci listingow kodu.
+# Kontrola zawartosci blokow skladanych doslownie: lstlisting oraz zapis.
 #
 # Wnetrze listingu sklada sie wylacznie ze znakow ASCII. Pakiet listings ma
 # tablice znakow obejmujaca tylko ASCII, wiec znaki polskie wewnatrz listingu
@@ -19,11 +19,11 @@ znajdz_naruszenia <- function(plik) {
   for (i in seq_along(linie)) {
     linia <- linie[[i]]
 
-    if (grepl("\\\\begin\\{lstlisting\\}", linia)) {
+    if (grepl("\\\\begin\\{(lstlisting|zapis)\\}", linia)) {
       w_listingu <- TRUE
       next
     }
-    if (grepl("\\\\end\\{lstlisting\\}", linia)) {
+    if (grepl("\\\\end\\{(lstlisting|zapis)\\}", linia)) {
       w_listingu <- FALSE
       next
     }
