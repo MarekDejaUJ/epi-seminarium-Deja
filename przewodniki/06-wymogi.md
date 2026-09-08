@@ -58,7 +58,7 @@ Standardy wymieniają pięć sytuacji, w których wskazanie źródła jest obowi
 
 Każde przytoczenie umieszczasz w cudzysłowie polskim, a cytat w cytacie w cudzysłowie wewnętrznym. Wewnątrz cytatu obowiązuje pisownia cytowanego autora; zmianę odnotowujesz w nawiasie kwadratowym po cudzysłowie zamykającym. Tłumaczenie własne oznaczasz w nawiasie kwadratowym, a cytat w oryginale przywołujesz w przypisie dolnym. Fragment powyżej dwóch lub trzech zdań wyodrębniasz graficznie.
 
-Przytoczenie musi być **wkomponowane w tekst**: wprowadzone lub domknięte komentarzem, który sygnalizuje obecność cudzego słowa. Samo wklejenie z przypisem nie wystarcza. Przy powoływaniu się na cudzą opinię obowiązuje, niezależnie od przypisu, wprowadzenie z informacją, do kogo dany pogląd należy.
+Przytoczenie musi być **wkomponowane w tekst**: wprowadzone lub domknięte komentarzem, który sygnalizuje obecność cudzego słowa. Samo wklejenie z cytowaniem nie wystarcza. Przy powoływaniu się na cudzą opinię obowiązuje, niezależnie od cytowania, wprowadzenie z informacją, do kogo dany pogląd należy.
 
 Brak zasygnalizowania w tekście, że posługujesz się cudzym słowem, oznacza naruszenie prawa (Dz.U. 2022 poz. 2509). Brak odpowiednio opisanych źródeł może być powodem dyskwalifikacji pracy.
 
@@ -68,7 +68,7 @@ Obowiązuje system nawiasowy, tak zwany harwardzki: nazwisko, rok, w razie potrz
 
 Do przypisów dolnych trafiają wyłącznie przypisy dygresyjne, których należy unikać, oraz oryginalne brzmienie tłumaczonych cytatów.
 
-Zasada wiążąca bibliografię z tekstem: **bibliografia zawiera wyłącznie pozycje faktycznie wykorzystane, do których odsyłają przypisy w tekście**. Pozycje dotyczące tematu, ale niewykorzystane, do bibliografii nie trafiają. Muszą się w niej znaleźć pozycje obcojęzyczne.
+Zasada wiążąca bibliografię z tekstem: **bibliografia zawiera wyłącznie pozycje faktycznie wykorzystane, do których odsyłają cytowania w tekście**. Pozycje dotyczące tematu, ale niewykorzystane, do bibliografii nie trafiają. Muszą się w niej znaleźć pozycje obcojęzyczne.
 
 ## Materiał ilustracyjny
 
@@ -119,7 +119,7 @@ Standardy wymieniają wprost, co podlega ocenie promotora i recenzenta: zgodnoś
 ### Kompilacja i objętość
 
 - [ ] Pełna kompilacja kończy się bez błędów
-- [ ] Brak komunikatów o nierozwiązanych powołaniach i odsyłaczach
+- [ ] Brak komunikatów o nierozwiązanych cytowaniach i odsyłaczach
 - [ ] Objętość mieści się w limicie
 - [ ] Listingi nie zawierają znaków spoza ASCII
 
@@ -133,8 +133,8 @@ Standardy wymieniają wprost, co podlega ocenie promotora i recenzenta: zgodnoś
 
 ### Bibliografia i źródła
 
-- [ ] Każda pozycja bibliografii ma powołanie w tekście
-- [ ] Każde powołanie ma pozycję w bibliografii
+- [ ] Każda pozycja bibliografii ma cytowanie w tekście
+- [ ] Każde cytowanie ma pozycję w bibliografii
 - [ ] W bibliografii są pozycje obcojęzyczne
 - [ ] Wykaz źródeł obejmuje wszystkie użyte pakiety
 - [ ] Adresy sieciowe mają datę odczytu
