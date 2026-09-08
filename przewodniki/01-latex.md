@@ -3,9 +3,9 @@
 
 # LaTeX od podstaw
 
-Rozdział uczy LaTeX-a na wzorze, którym piszesz pracę, a nie w oderwaniu od niego. Wszystkie przykłady działają bez dodatkowej konfiguracji, bo skład ustawia klasa dokumentu.
+W rozdziale poznajesz LaTeX-a na wzorze, którym piszesz pracę, a nie w oderwaniu od niego. Wszystkie przykłady działają bez dodatkowej konfiguracji, bo ustawienia składu są w *klasie dokumentu*, czyli w pliku, w którym zapisany jest cały wygląd pracy. Twoja klasa to `epi-praca.cls` i nie musisz do niej zaglądać.
 
-Podziel naukę na trzy wieczory. Po pierwszym umiesz złożyć tekst z rozdziałami i powołaniami. Po drugim – tabele, rysunki i wzory. Trzeci przyda się dopiero przy redakcji.
+Podziel naukę na trzy wieczory. Po pierwszym umiesz złożyć tekst z rozdziałami i cytowaniami. Po drugim – tabele, rysunki i wzory. Trzeci przyda się dopiero przy redakcji.
 
 ## Jak myśleć o LaTeX-u
 
@@ -13,7 +13,7 @@ W edytorze tekstu zaznaczasz fragment i nadajesz mu wygląd. W LaTeX-u **opisuje
 
 Ma to trzy konsekwencje, które w pracy licencjackiej są warte więcej niż koszt nauki. Skład jest zgodny z wymogami Instytutu z definicji, a nie dlatego, że pamiętałeś o ustawieniu interlinii w każdym akapicie. Spis treści, spis ilustracji, bibliografia i indeks nazwisk powstają same z tego, co napisałeś w tekście – nie da się mieć w spisie treści rozdziału, którego nie ma. Wzory matematyczne są zapisem, a nie obrazkiem, co przy pracy pełnej wzorów z artykułu metodycznego przestaje być wygodą, a staje się warunkiem wykonalności.
 
-Kosztem jest to, że pliku źródłowego się nie ogląda – trzeba go skompilować. Do tego przyzwyczaisz się w pierwszy dzień.
+Kosztem jest to, że pliku źródłowego się nie ogląda – trzeba go najpierw *skompilować*, czyli przetworzyć w gotowy dokument PDF. Do tego przyzwyczaisz się w pierwszy dzień.
 
 ## Poziom pierwszy: tekst i struktura
 
@@ -37,11 +37,13 @@ Praca składa się z pliku głównego i plików rozdziałów.
 
 Wszystko przed `\begin{document}` to *preambuła*, czyli ustawienia. Wszystko między `\begin{document}` a `\end{document}` to treść. W Twojej pracy preambuła jest już gotowa; uzupełniasz w niej wyłącznie metadane.
 
-**Polecenie** zaczyna się od ukośnika wstecznego. Argumenty obowiązkowe idą w nawiasach klamrowych, opcjonalne w kwadratowych. **Środowisko** ma początek i koniec, jak `quote` albo `tabular`.
+**Polecenie** zaczyna się od ukośnika wstecznego i mówi, co ma zostać zrobione. To, na czym polecenie działa, nazywa się *argumentem*. Argumenty obowiązkowe są w nawiasach klamrowych, opcjonalne w kwadratowych: w zapisie `\includegraphics[width=5cm]{wykres.png}` nazwa pliku jest argumentem obowiązkowym, a szerokość opcjonalnym.
+
+**Środowisko** obejmuje cały fragment tekstu i ma jawny początek oraz koniec. Otwiera je `\begin` z nazwą, zamyka `\end` z tą samą nazwą, a wszystko pomiędzy składa się według reguł tego środowiska – jak `quote` dla cytatu blokowego albo `tabular` dla tabeli. Środowiskiem jest też sam dokument, o czym mówi para poleceń z przykładu wyżej.
 
 ### Akapity i spacje
 
-Nowy akapit robi **pusta linia**. Pojedyncze złamanie wiersza w pliku źródłowym nie znaczy nic – LaTeX i tak złoży tekst od nowa. Wielokrotne spacje redukują się do jednej. Nie wymuszaj odstępów spacjami ani pustymi liniami; od tego są polecenia, a w Twojej pracy odstępy ustawia klasa.
+Nowy akapit zaczyna się po **pustej linii**. Pojedyncze złamanie wiersza w pliku źródłowym nie znaczy nic – LaTeX i tak złoży tekst od nowa. Wielokrotne spacje redukują się do jednej. Nie wymuszaj odstępów spacjami ani pustymi liniami; od tego są polecenia, a w Twojej pracy odstępy ustawia klasa.
 
 W seminarium obowiązuje jedna zasada zapisu źródła: **jeden akapit w jednym wierszu**. Akapitu nie łamiemy w pliku, bez względu na jego długość; wiersze rozdziela wyłącznie pusta linia. Powód jest praktyczny – porównanie wersji pokazuje wtedy, który akapit się zmienił, zamiast lawiny przesuniętych wierszy po dopisaniu jednego słowa. Ma to znaczenie przy pracy z promotorem i w historii repozytorium, a edytory i tak zawijają długie wiersze na ekranie. Zasada nie dotyczy wnętrza listingów, tabel i wzorów ani pozycji list wypunktowanych.
 
@@ -68,7 +70,7 @@ Cudzysłowów nie wpisuj ręcznie. Polecenie `\enquote` dobiera je do języka i 
 
 W seminarium obowiązuje jedna zasada typograficzna wykraczająca poza wymogi Instytutu: **nie stosujemy pauzy**, czyli trzech łączników. Zdanie wtrącone wydzielamy półpauzą z odstępem po obu stronach – tak jak w tym zdaniu. Łącznik pozostaje łącznikiem w wyrazach złożonych i w zakresach stron.
 
-Znaki zastrzeżone wymagają ucieczki: procent, dolar, ampersand, podkreślenie, kratka i nawiasy klamrowe poprzedzamy ukośnikiem. Najczęściej potykasz się o podkreślenie w nazwach funkcji – dlatego do nazw służą polecenia opisane w podrozdziale [Polecenia własne wzoru](#polecenia-własne-wzoru), które robią to za Ciebie.
+Kilka znaków ma w LaTeX-u znaczenie specjalne i żeby pojawiły się w tekście, trzeba je poprzedzić ukośnikiem: procent, dolar, ampersand, podkreślenie, kratka i nawiasy klamrowe. Najczęściej potykasz się o podkreślenie w nazwach funkcji – dlatego do nazw służą polecenia opisane w podrozdziale [Polecenia własne wzoru](#polecenia-własne-wzoru), które robią to za Ciebie.
 
 ### Rozdziały i podrozdziały
 
@@ -103,7 +105,7 @@ Metode omowiono w podrozdziale~\ref{sec:aparat} na stronie~\pageref{sec:aparat}.
 
 Odsyłacz do nieistniejącej etykiety daje w gotowym pliku dwa znaki zapytania i ostrzeżenie `Reference ... undefined`. Zawsze sprawdzaj je przed oddaniem.
 
-### Powołania
+### Cytowania
 
 ```latex
 \parencite{cisek2002filozoficzne}                  % (Cisek 2002)
@@ -112,7 +114,7 @@ Odsyłacz do nieistniejącej etykiety daje w gotowym pliku dwa znaki zapytania i
 \textcite{wozniak1997kognitywizm} pokazuje, ze...  % Wozniak (1997) pokazuje, ze...
 ```
 
-Postać powołania – inicjał przy zbieżnych nazwiskach, skrót „i in.” przy więcej niż trzech autorach, sufiksy rocznika przy tym samym roku – dobiera styl automatycznie. Twoim zadaniem jest poprawny wpis w pliku bibliograficznym, opisany w rozdziale [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
+Postać cytowania – inicjał przy zbieżnych nazwiskach, skrót „i in.” przy więcej niż trzech autorach, sufiksy rocznika przy tym samym roku – dobiera styl automatycznie. Twoim zadaniem jest poprawny wpis w pliku bibliograficznym, opisany w rozdziale [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
 
 ### Polecenia własne wzoru
 
@@ -194,7 +196,7 @@ Tabele i rysunki są *pływakami*: LaTeX umieszcza je tam, gdzie wychodzi najlep
 
 ### Wzory
 
-Wzór w linii otacza się znakami dolara. Wzór wyróżniony i numerowany zapisuje się tak:
+Wzory składa się w *trybie matematycznym*, w którym symbole ustawiane są inaczej niż zwykły tekst: kursywą i z własnymi odstępami. Wzór w linii otacza się znakami dolara, które ten tryb włączają i wyłączają. Wzór wyróżniony i numerowany zapisuje się tak:
 
 ```latex
 \begin{equation}\label{eq:cc}
@@ -226,7 +228,7 @@ Wzór bez numeru zapisuje się w nawiasach kwadratowych poprzedzonych ukośnikie
 | tekst wewnątrz wzoru | `\text{dla } x > 0` |
 | macierz | `\begin{pmatrix} a & b \\ c & d \end{pmatrix}` |
 
-Symbole zostawiaj takie jak w artykule źródłowym – czytelnik ma móc porównać. I pamiętaj o zasadzie z podrozdziału [Rozdział pierwszy: podstawy metodyczne](04-jak-pisac.md#rozdział-pierwszy-podstawy-metodyczne): po każdym wzorze następuje akapit objaśniający, co ten wzór robi.
+Symbole zostawiaj takie jak w artykule źródłowym – czytelnik ma móc porównać. I pamiętaj o zasadzie z podrozdziału [Rozdział pierwszy: podstawy metodyczne](04-jak-pisac.md#rozdział-pierwszy-podstawy-metodyczne): po każdym wzorze następuje akapit objaśniający, co ten wzór wyraża i po co jest w pracy.
 
 ### Listingi kodu
 
@@ -253,19 +255,19 @@ Znak procentu wyłącza resztę wiersza. Komentarze służą do notatek dla sieb
 
 ### Kontrola typografii
 
-Klasa blokuje wdowy i sieroty, ale zdarza się, że LaTeX nie umie złamać zbyt długiego słowa i wypuszcza je poza margines. W dzienniku kompilacji zobaczysz wtedy komunikat `Overfull \hbox`. Naprawiaj w tej kolejności: przeformułuj zdanie, co najczęściej jest najlepszym rozwiązaniem; podpowiedz miejsce podziału zapisem `wielo\-kryterialny`; przy długim adresie sieciowym użyj polecenia `\url`, które pozwala łamać w sensownych miejscach. Liczba nadmiarowych pudełek w gotowej pracy powinna być zerowa albo bliska zeru.
+Klasa blokuje *wdowy i sieroty*, czyli pojedyncze wiersze akapitu odcięte na końcu albo na początku strony, ale zdarza się, że LaTeX nie umie złamać zbyt długiego słowa i wypuszcza je poza margines. W dzienniku kompilacji zobaczysz wtedy komunikat `Overfull \hbox`. Naprawiaj w tej kolejności: przeformułuj zdanie, co najczęściej jest najlepszym rozwiązaniem; podpowiedz miejsce podziału zapisem `wielo\-kryterialny`; przy długim adresie sieciowym użyj polecenia `\url`, które pozwala łamać w sensownych miejscach. Liczba nadmiarowych pudełek w gotowej pracy powinna być zerowa albo bliska zeru.
 
 ### Sekwencja kompilacji
 
-Pełne złożenie pracy wymaga kilku przebiegów, bo spis treści, odsyłacze, bibliografia i indeks potrzebują danych z przebiegu poprzedniego. Kolejność to LuaLaTeX, biber, makeindex, a potem dwa razy LuaLaTeX. Robi to za Ciebie `latexmk`:
+Pełne złożenie pracy wymaga kilku przebiegów, bo spis treści, odsyłacze, bibliografia i indeks potrzebują danych z przebiegu poprzedniego. Kolejność to LuaLaTeX, potem `biber`, który składa bibliografię z pliku źródeł, potem `makeindex`, który porządkuje indeks nazwisk, a na koniec dwa razy LuaLaTeX. Całą sekwencję uruchamia za Ciebie `latexmk`:
 
 ```bash
 latexmk -lualatex main.tex
 ```
 
-Na Overleaf sekwencja uruchamia się automatycznie. Skutek praktyczny jest taki, że **po dodaniu nowego powołania albo etykiety pierwsza kompilacja może pokazać znaki zapytania** – po drugiej znikną.
+Na Overleaf sekwencja uruchamia się automatycznie. Skutek praktyczny jest taki, że **po dodaniu nowego cytowania albo etykiety pierwsza kompilacja może pokazać znaki zapytania** – po drugiej znikną.
 
-Polecenie `latexmk -c` usuwa pliki pomocnicze i zostawia gotowy dokument. Przydaje się, gdy kompilacja zaczyna zachowywać się dziwnie, bo uszkodzony plik pomocniczy potrafi utrzymywać błąd, którego w źródle już nie ma. Na Overleaf odpowiednikiem jest *Recompile from scratch* z rozwijanego menu obok przycisku kompilacji.
+Przy okazji powstaje kilkanaście *plików pomocniczych*, o rozszerzeniach `.aux`, `.toc` czy `.bbl`. To w nich LaTeX przechowuje między przebiegami numery rozdziałów, strony odsyłaczy i złożoną bibliografię. Polecenie `latexmk -c` usuwa je i zostawia gotowy dokument. Przydaje się, gdy kompilacja zaczyna zachowywać się dziwnie, bo uszkodzony plik pomocniczy potrafi utrzymywać błąd, którego w źródle już nie ma. Na Overleaf odpowiednikiem jest *Recompile from scratch* z rozwijanego menu obok przycisku kompilacji.
 
 ## Diagnostyka
 
@@ -282,17 +284,17 @@ Komunikat zaczyna się od wykrzyknika, a numer wiersza stoi w linii rozpoczynaj�
 | `Undefined control sequence` | literówka w poleceniu | sprawdź pisownię w tabeli **Polecenia semantyczne wzoru** |
 | `Missing $ inserted` | znak matematyczny poza trybem matematycznym | otocz znakami dolara albo poprzedź ukośnikiem |
 | `Missing \begin{document}` | tekst wpisany w preambule | przenieś treść za początek dokumentu |
-| `File ... not found` | zła nazwa albo ścieżka grafiki | grafiki idą do `rysunki/` |
+| `File ... not found` | zła nazwa albo ścieżka grafiki | grafiki trzymaj w `rysunki/` |
 | `Environment ... undefined` | literówka w nazwie środowiska | porównaj początek i koniec |
 | `\begin ended by \end` | niedomknięte środowiska | sprawdź parowanie |
 | `Extra alignment tab` | za dużo ampersandów w wierszu | policz kolumny w deklaracji |
 | `Misplaced alignment tab` | ampersand poza tabelą | poprzedź go ukośnikiem |
 | `Citation ... undefined` | klucz nieobecny w pliku bibliograficznym | sprawdź klucz, skompiluj dwa razy |
 | `Reference ... undefined` | odsyłacz do nieistniejącej etykiety | sprawdź etykietę, skompiluj dwa razy |
-| `Empty bibliography` | brak powołań w tekście | dodaj powołanie |
+| `Empty bibliography` | brak cytowań w tekście | dodaj cytowanie |
 | `Overfull \hbox` | tekst wychodzi poza margines | przeformułuj zdanie |
 | `Underfull \hbox` | zbyt rozstrzelony wiersz | zwykle można zignorować |
-| `There's no line here to end` | podwójny ukośnik bez wiersza | usuń go, akapit robi pusta linia |
+| `There's no line here to end` | podwójny ukośnik bez wiersza | usuń go, do akapitu wystarczy pusta linia |
 | `Paragraph ended before ...` | brakujący nawias klamrowy | sprawdź parowanie |
 | `Package inputenc Error` | plik w innym kodowaniu niż UTF-8 | zapisz ponownie w UTF-8 |
 | przestawione polskie litery w listingu | znaki spoza ASCII w kodzie | usuń diakrytykę |
