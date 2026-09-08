@@ -242,7 +242,17 @@ oblicz_wagi <- function(macierz) {
 
 Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wstawisz poleceniem `\listingR`, które przyjmuje podpis, etykietę i ścieżkę – wtedy listing zawsze odpowiada aktualnej wersji kodu.
 
-**Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.** Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery nie tyle znikają, co **wędrują na początek wyrazu**: zapisane w kodzie słowo `ścieżka` złoży się jako `śżcieka`. Usterka jest cicha, bo kompilacja kończy się bez błędu. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może; ograniczenie dotyczy wyłącznie wnętrza. Jeżeli musisz pokazać tekst polski będący wynikiem działania programu, na przykład komunikat błędu, nie wstawiaj go do listingu: przytocz go jako cytat blokowy albo umieść w tabeli. Kontroli służy skrypt `tools/sprawdz-listingi.R`, ale wymaga on R, więc działa tylko **lokalnie**. **Na Overleaf** objaw widać wprost w złożonym dokumencie: litery w listingu są poprzestawiane.
+**Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.** Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery nie tyle znikają, co **wędrują na początek wyrazu**: zapisane w kodzie słowo `ścieżka` złoży się jako `śżcieka`. Usterka jest cicha, bo kompilacja kończy się bez błędu. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może; ograniczenie dotyczy wyłącznie wnętrza. Kontroli służy skrypt `tools/sprawdz-listingi.R`, ale wymaga on R, więc działa tylko **lokalnie**. **Na Overleaf** objaw widać wprost w złożonym dokumencie: litery w listingu są poprzestawiane.
+
+Zostaje pytanie, co zrobić, gdy trzeba pokazać tekst polski złożony pismem maszynowym: komunikat błędu, wynik działania programu, fragment danych. Do tego służy osobne środowisko `wydruk`, które **polskie znaki składa poprawnie**, bo korzysta z innego pakietu:
+
+```latex
+\begin{wydruk}
+Blad: kolumna "ocena jakosci" zawiera wartosci spoza zakresu.
+\end{wydruk}
+```
+
+Cena jest taka, że nie ma tam kolorowania składni ani numeracji wierszy. Podział jest więc prosty: **kod idzie do listingu, wyjście programu do wydruku**. Kodowi ograniczenie i tak nie przeszkadza, bo sprawdzanie pakietu R wymaga ASCII niezależnie od składu.
 
 ## Poziom trzeci: przy redakcji
 

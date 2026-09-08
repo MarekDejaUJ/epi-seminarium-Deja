@@ -258,7 +258,17 @@ oblicz_wagi <- function(macierz) {
 
 Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wstawisz poleceniem \kod{\textbackslash listingR}, które przyjmuje podpis, etykietę i ścieżkę -- wtedy listing zawsze odpowiada aktualnej wersji kodu.
 
-\wyroznienie{Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.} Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery nie tyle znikają, co \wyroznienie{wędrują na początek wyrazu}: zapisane w kodzie słowo \kod{ścieżka} złoży się jako \kod{śżcieka}. Usterka jest cicha, bo kompilacja kończy się bez błędu. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może; ograniczenie dotyczy wyłącznie wnętrza. Jeżeli musisz pokazać tekst polski będący wynikiem działania programu, na przykład komunikat błędu, nie wstawiaj go do listingu: przytocz go jako cytat blokowy albo umieść w tabeli. Kontroli służy skrypt \plik{tools/sprawdz-listingi.R}, ale wymaga on R, więc działa tylko \wyroznienie{lokalnie}. \wyroznienie{Na Overleaf} objaw widać wprost w złożonym dokumencie: litery w listingu są poprzestawiane.
+\wyroznienie{Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.} Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery nie tyle znikają, co \wyroznienie{wędrują na początek wyrazu}: zapisane w kodzie słowo \kod{ścieżka} złoży się jako \kod{śżcieka}. Usterka jest cicha, bo kompilacja kończy się bez błędu. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może; ograniczenie dotyczy wyłącznie wnętrza. Kontroli służy skrypt \plik{tools/sprawdz-listingi.R}, ale wymaga on R, więc działa tylko \wyroznienie{lokalnie}. \wyroznienie{Na Overleaf} objaw widać wprost w złożonym dokumencie: litery w listingu są poprzestawiane.
+
+Zostaje pytanie, co zrobić, gdy trzeba pokazać tekst polski złożony pismem maszynowym: komunikat błędu, wynik działania programu, fragment danych. Do tego służy osobne środowisko \kod{wydruk}, które \wyroznienie{polskie znaki składa poprawnie}, bo korzysta z innego pakietu:
+
+\begin{zapis}
+\begin{wydruk}
+Blad: kolumna "ocena jakosci" zawiera wartosci spoza zakresu.
+\end{wydruk}
+\end{zapis}
+
+Cena jest taka, że nie ma tam kolorowania składni ani numeracji wierszy. Podział jest więc prosty: \wyroznienie{kod idzie do listingu, wyjście programu do wydruku}. Kodowi ograniczenie i tak nie przeszkadza, bo sprawdzanie pakietu R wymaga ASCII niezależnie od składu.
 
 \section{Poziom trzeci: przy redakcji}
 

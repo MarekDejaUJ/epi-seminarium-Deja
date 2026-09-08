@@ -296,6 +296,19 @@
 \newcommand{\listingR}[3]{%
   \lstinputlisting[caption={#1},label={#2}]{#3}}
 
+% Blok doslowny dopuszczajacy polskie znaki.
+% Pakiet listings przestawia znaki spoza ASCII pod LuaLaTeX-em i nie da sie tego
+% naprawic ustawieniami stylu; sprawdzone dla mapowania literate, trybu kolumn
+% stalych i alsoletter, ktore dodatkowo przerywa kompilacje. Pakiet fancyvrb
+% sklada te same znaki poprawnie, kosztem kolorowania skladni. Stad podzial:
+% lstlisting dla kodu, ktory i tak ma byc w ASCII ze wzgledu na przenosnosc
+% pakietu R, oraz wydruk dla tekstu wyjscia programu, komunikatow i danych,
+% gdzie polskie znaki sa potrzebne.
+\RequirePackage{fancyvrb}
+\fvset{fontsize=\small,frame=single,rulecolor=\color{epi@ramka},framesep=6pt,
+       samepage=false,xleftmargin=0pt}
+\DefineVerbatimEnvironment{wydruk}{Verbatim}{}
+
 % --------------------------------------------------------------------------
 % Makra semantyczne
 % --------------------------------------------------------------------------
