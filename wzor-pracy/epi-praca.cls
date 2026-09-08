@@ -211,103 +211,12 @@
 \setlist[kontrolna]{label=$\square$,leftmargin=1.6em,itemsep=0.15\baselineskip}
 
 % --------------------------------------------------------------------------
-% Listingi kodu
+% Kod, listingi i wydruki
 % --------------------------------------------------------------------------
 
-\RequirePackage{xcolor}
-\RequirePackage{listings}
-
-\definecolor{epi@tlo}{gray}{0.97}
-\definecolor{epi@komentarz}{RGB}{100,110,120}
-\definecolor{epi@slowo}{RGB}{20,90,160}
-\definecolor{epi@lancuch}{RGB}{140,70,20}
-\definecolor{epi@ramka}{gray}{0.75}
-
-\lstdefinestyle{epiR}{%
-  language=R,
-  basicstyle=\ttfamily\small\setstretch{1},
-  keywordstyle=\color{epi@slowo},
-  commentstyle=\color{epi@komentarz}\itshape,
-  stringstyle=\color{epi@lancuch},
-  numbers=left,
-  numberstyle=\ttfamily\footnotesize\color{epi@komentarz},
-  numbersep=10pt,
-  backgroundcolor=\color{epi@tlo},
-  frame=single,
-  rulecolor=\color{epi@ramka},
-  framesep=6pt,
-  breaklines=true,
-  breakatwhitespace=true,
-  showstringspaces=false,
-  columns=fullflexible,
-  keepspaces=true,
-  upquote=true,
-  extendedchars=true,
-  aboveskip=1.2\baselineskip,
-  belowskip=0.8\baselineskip}
-
-% Styl dla fragmentow zapisu LaTeX-a przytaczanych w materialach dydaktycznych.
-\lstdefinestyle{epiTeX}{%
-  language={[LaTeX]TeX},
-  basicstyle=\ttfamily\small\setstretch{1},
-  keywordstyle=\color{epi@slowo},
-  commentstyle=\color{epi@komentarz}\itshape,
-  stringstyle=\color{epi@lancuch},
-  moredelim=[s][\color{epi@lancuch}]{\{}{\}},
-  numbers=none,
-  backgroundcolor=\color{epi@tlo},
-  frame=single,
-  rulecolor=\color{epi@ramka},
-  framesep=6pt,
-  breaklines=true,
-  showstringspaces=false,
-  columns=fullflexible,
-  keepspaces=true,
-  aboveskip=1.2\baselineskip,
-  belowskip=0.8\baselineskip}
-
-\lstnewenvironment{zapis}[1][]{\lstset{style=epiTeX,#1}}{}
-
-\lstset{style=epiR}
-
-% Numeracja listingow ciagla przez cala prace, jak pozostalych obiektow.
-% Licznik powstaje dopiero na poczatku dokumentu, stad odroczenie.
-\AtBeginDocument{%
-  \counterwithout{lstlisting}{chapter}%
-  \renewcommand{\thelstlisting}{\arabic{lstlisting}}}
-
-% Tablica znakow pakietu listings obejmuje wylacznie ASCII. Pod pdfLaTeX-em znaki
-% polskie da sie odwzorowac na polecenia akcentow; pod LuaLaTeX-em i XeLaTeX-em
-% znaki o kodzie powyzej 255 omijaja bufor wyrazu i wychodza przestawione.
-% Dlatego wnetrze listingu sklada sie wylacznie ze znakow ASCII - to samo
-% ograniczenie naklada sprawdzanie pakietu R, ktore zglasza znaki spoza ASCII
-% w kodzie zrodlowym jako problem przenosnosci. Podpisy listingow, jako zwykly
-% tekst pracy, moga zawierac polskie znaki bez ograniczen.
-% Skrypt tools/sprawdz-listingi.R wskazuje miejsca naruszajace te zasade.
-\ifPDFTeX
-  \lstset{inputencoding=utf8,
-    literate=%
-      {ą}{{\k a}}1 {ć}{{\'c}}1 {ę}{{\k e}}1 {ł}{{\l}}1 {ń}{{\'n}}1
-      {ó}{{\'o}}1 {ś}{{\'s}}1 {ź}{{\'z}}1 {ż}{{\.z}}1
-      {Ą}{{\k A}}1 {Ć}{{\'C}}1 {Ę}{{\k E}}1 {Ł}{{\L}}1 {Ń}{{\'N}}1
-      {Ó}{{\'O}}1 {Ś}{{\'S}}1 {Ź}{{\'Z}}1 {Ż}{{\.Z}}1}
-\fi
-
-\newcommand{\listingR}[3]{%
-  \lstinputlisting[caption={#1},label={#2}]{#3}}
-
-% Blok doslowny dopuszczajacy polskie znaki.
-% Pakiet listings przestawia znaki spoza ASCII pod LuaLaTeX-em i nie da sie tego
-% naprawic ustawieniami stylu; sprawdzone dla mapowania literate, trybu kolumn
-% stalych i alsoletter, ktore dodatkowo przerywa kompilacje. Pakiet fancyvrb
-% sklada te same znaki poprawnie, kosztem kolorowania skladni. Stad podzial:
-% lstlisting dla kodu, ktory i tak ma byc w ASCII ze wzgledu na przenosnosc
-% pakietu R, oraz wydruk dla tekstu wyjscia programu, komunikatow i danych,
-% gdzie polskie znaki sa potrzebne.
-\RequirePackage{fancyvrb}
-\fvset{fontsize=\small,frame=single,rulecolor=\color{epi@ramka},framesep=6pt,
-       samepage=false,xleftmargin=0pt}
-\DefineVerbatimEnvironment{wydruk}{Verbatim}{}
+% Cala obsluga blokow z kodem jest w osobnym pliku stylu, zaladowanym tutaj.
+% Plik musi lezec obok klasy; w paczce dla Overleaf jest dolaczony.
+\RequirePackage{epi-kod}
 
 % --------------------------------------------------------------------------
 % Makra semantyczne

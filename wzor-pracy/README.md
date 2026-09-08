@@ -16,10 +16,11 @@ odpowiada bieżącej wersji klasy i stylu bibliograficznego.
 | Plik | Do czego służy |
 |---|---|
 | `main.tex` | Twoja praca. Uzupełniasz metadane, treść piszesz w `rozdzialy/` |
-| `przyklad.tex` | dokument pokazowy ze wszystkimi elementami składu i wszystkimi postaciami powołań |
+| `przyklad.tex` | dokument pokazowy ze wszystkimi elementami składu i wszystkimi postaciami cytowań |
 | `rozdzialy/*.tex` | rozdziały pracy z wbudowanymi wskazówkami do usunięcia |
 | `bibliografia/literatura.bib` | bibliografia; wpisy wzorcowe odpowiadają przykładom z Instrukcji ISI |
 | `epi-praca.cls` | klasa dokumentu – nie zmieniaj |
+| `epi-kod.sty` | skład kodu, listingów i wydruków; ładowany przez klasę – nie zmieniaj |
 | `isi-uj.bbx`, `isi-uj.cbx` | styl bibliograficzny instytutowy – nie zmieniaj |
 | `polish-apa.lbx` | polska lokalizacja wariantu APA 7 |
 | `tools/policz_znaki.R` | kontrola objętości części zasadniczej |
