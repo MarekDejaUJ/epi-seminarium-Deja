@@ -3,15 +3,15 @@
 
 # Wprowadzenie
 
-Przewodnik prowadzi przez cały cykl seminarium: od pierwszego uruchomienia wzoru, przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną przed oddaniem pracy.
+Przewodnik obejmuje cały cykl seminarium: od pierwszego uruchomienia wzoru, przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną przed oddaniem pracy.
 
 Praca dyplomowa na kierunku elektroniczne przetwarzanie informacji składa się z dwóch ściśle powiązanych części: projektu dyplomowego oraz pracy licencjackiej, która ten projekt opisuje. Zaliczenie seminarium następuje dopiero po przyjęciu projektu (Standardy EPI). Twoim projektem jest pakiet języka R implementujący algorytm z artykułu metodycznego wraz z serwisem, który go udostępnia.
 
 ## Dla kogo i po co
 
-Przewodnik zakłada, że znasz podstawy statystyki i programowania w R (R Core Team 2026), a nie znasz LaTeX-a ani inżynierii oprogramowania. Wszystkiego, co potrzebne, uczy od zera.
+Przewodnik zakłada, że znasz podstawy statystyki i programowania w R (R Core Team 2026), a nie znasz LaTeX-a ani inżynierii oprogramowania. Wszystkiego, co potrzebne, nauczysz się tutaj od zera.
 
-Dokument, który czytasz, jest jednocześnie instrukcją i przykładem. Złożono go tą samą klasą, z której korzystasz przy pisaniu pracy, i tym samym stylem bibliograficznym. Każdy element opisany w rozdziale pierwszym – tabela z tytułem nad nią, wzór z etykietą, listing kodu, powołanie w nawiasie, spis ilustracji – występuje dalej w praktyce. Kiedy nie pamiętasz zapisu, zajrzyj do źródła tego przewodnika: leży w tym samym repozytorium.
+Dokument, który czytasz, jest jednocześnie instrukcją i przykładem. Złożono go tą samą klasą, z której korzystasz przy pisaniu pracy, i tym samym stylem bibliograficznym. Każdy element opisany w rozdziale pierwszym – tabela z tytułem nad nią, wzór z etykietą, listing kodu, cytowanie w nawiasie, spis ilustracji – występuje dalej w praktyce. Kiedy nie pamiętasz zapisu, zajrzyj do źródła tego przewodnika: leży w tym samym repozytorium.
 
 ## Jak czytać
 
@@ -36,9 +36,9 @@ Rozdziały siódmy i ósmy dotyczą pracy z narzędziem wspomagającym pisanie k
 
 ## Dokumenty rozstrzygające
 
-Wymagania wobec pracy określają dwa dokumenty Instytutu. **Standardy prac dyplomowych EPI** (Standardy EPI) rozstrzygają o układzie pracy i o wymogach wobec projektu dyplomowego. **Instrukcja ISI** (Instrukcja ISI) rozstrzyga o składzie, przypisach i opisach bibliograficznych. Tam, gdzie dokumenty się rozchodzą, przewodnik podaje, który z nich obowiązuje.
+Wymagania wobec pracy określają dwa dokumenty Instytutu. **Standardy prac dyplomowych EPI** (Standardy EPI) rozstrzygają o układzie pracy i o wymogach wobec projektu dyplomowego. **Instrukcja ISI** (Instrukcja ISI) rozstrzyga o składzie, przypisach i opisach bibliograficznych. Tam, gdzie dokumenty się rozchodzą, w przewodniku wskazany jest ten, który obowiązuje.
 
-Wzór realizuje te wymagania automatycznie. Nie zmieniaj ustawień składu – rozbieżność z wymogami obciąża pracę, a nie wzór.
+Wymagania te są we wzorze zrealizowane automatycznie. Nie zmieniaj ustawień składu – rozbieżność z wymogami obciąża pracę, a nie wzór.
 
 ---
 
