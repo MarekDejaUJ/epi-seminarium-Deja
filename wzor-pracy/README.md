@@ -84,7 +84,7 @@ Numeracja jest ciągła przez całą pracę, osobna dla tabel, rysunków, wykres
 ## Bibliografia
 
 Styl domyślny odwzorowuje opisy z Instrukcji ISI: `Nazwisko, Imię (rok). Tytuł.
-Miasto: Wydawca.` Powołania mają postać `(Kowalski 2010, s. 15-21)`.
+Miasto: Wydawca.` Cytowania mają postać `(Kowalski 2010, s. 15-21)`.
 
 W pliku `.bib`:
 
@@ -99,7 +99,7 @@ W pliku `.bib`:
 - pozycje sieciowe, które mają trafić do odrębnej netografii, oznacz
   `keywords = {netografia}`.
 
-Powołania: `\parencite{klucz}`, `\parencite[s.~15-21]{klucz}`,
+Cytowania: `\parencite{klucz}`, `\parencite[s.~15-21]{klucz}`,
 `\parencite{klucz1,klucz2}`, `\textcite{klucz}` w zdaniu.
 
 Wariant `apa` używa pakietu `biblatex-apa` z polskimi łącznikami z pliku
