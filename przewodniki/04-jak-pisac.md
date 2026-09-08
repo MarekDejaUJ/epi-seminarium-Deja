@@ -3,7 +3,7 @@
 
 # Jak napisać pracę
 
-Rozdział prowadzi przez wzór część po części. Każdy podrozdział odpowiada jednemu plikowi w katalogu rozdziałów. Kolejność podrozdziałów jest kolejnością w pracy, ale **nie kolejnością pisania** – o tym w podrozdziale [W jakiej kolejności pisać](#w-jakiej-kolejności-pisać).
+W rozdziale omówiona jest każda część wzoru po kolei. Każdy podrozdział odpowiada jednemu plikowi w katalogu rozdziałów. Kolejność podrozdziałów jest kolejnością w pracy, ale **nie kolejnością pisania** – o tym w podrozdziale [W jakiej kolejności pisać](#w-jakiej-kolejności-pisać).
 
 Twoja praca opisuje projekt: pakiet języka R implementujący algorytm z artykułu metodycznego. To zmienia sens niektórych części w stosunku do prac czysto teoretycznych. Stanem badań jest tu nie tylko literatura przedmiotu, ale też istniejące oprogramowanie. Materiałem badawczym są dane, na których pokazujesz działanie narzędzia. Wynikiem jest działające, sprawdzone narzędzie oraz wnioski z jego zastosowania.
 
@@ -23,13 +23,13 @@ Luka musi być sprawdzalna. Wymień narzędzia, które przejrzałeś, i napisz, 
 
 **Cel.** Jedno zdanie w formie czynności: celem pracy jest zaprojektowanie, implementacja i weryfikacja pakietu języka R udostępniającego określoną procedurę badaczom nauk społecznych. Cel jest tym, co zrobiłeś, a nie tym, czego się dowiedziałeś.
 
-**Pytanie badawcze.** Cel mówi, co zbudowałeś; pytanie mówi, czego się dzięki temu dowiadujemy. Pytania zaczynające się od „jak” i „dlaczego” prowadzą do analizy, a „co” i „ile” do opisu. Sposób dochodzenia do pytania opisuje podrozdział [Pytanie analityczne](05-warsztat.md#pytanie-analityczne). Przykłady pytań właściwych dla tego typu pracy:
+**Pytanie badawcze.** Cel mówi, co zbudowałeś; pytanie mówi, czego się dzięki temu dowiadujemy. Pytania zaczynające się od „jak” i „dlaczego” prowadzą do analizy, a „co” i „ile” do opisu. Sposób dochodzenia do pytania jest w podrozdziale [Pytanie analityczne](05-warsztat.md#pytanie-analityczne). Przykłady pytań właściwych dla tego typu pracy:
 
 - Jakie warunki musi spełnić implementacja metody, żeby jej wyniki dały się odtworzyć przez osobę trzecią?
 - Które założenia metody okazują się najbardziej wrażliwe na jakość danych spotykanych w badaniach społecznych?
 - Jak wybór procedury generowania danych testowych wpływa na to, co wolno wywnioskować o poprawności implementacji?
 
-**Materiał i metoda.** Dwa lub trzy zdania: na jakich danych sprawdzasz narzędzie i jak weryfikujesz poprawność. Szczegóły idą do rozdziałów drugiego i trzeciego pracy.
+**Materiał i metoda.** Dwa lub trzy zdania: na jakich danych sprawdzasz narzędzie i jak weryfikujesz poprawność. Szczegóły zostawiasz do rozdziałów drugiego i trzeciego pracy.
 
 **Zakres i ograniczenia.** Co praca obejmuje, a czego nie. Ograniczenie postawione samodzielnie jest mocniejsze niż ten sam zarzut w recenzji.
 
@@ -53,23 +53,23 @@ Luka musi być sprawdzalna. Wymień narzędzia, które przejrzałeś, i napisz, 
 - [ ] Pytanie badawcze różne od celu
 - [ ] Zakres i ograniczenia wypisane
 - [ ] Zapowiedź struktury zgodna z faktyczną strukturą pracy
-- [ ] Każde twierdzenie o stanie rzeczy ma powołanie
+- [ ] Każde twierdzenie o stanie rzeczy ma cytowanie
 
 ## Rozdział pierwszy: podstawy metodyczne
 
 Plik `rozdzialy/01-podstawy.tex`, objętość osiem do dwunastu stron.
 
-Odpowiednik sekcji poświęconej podstawom metodycznym w czasopismach o oprogramowaniu badawczym. Opisujesz matematykę i logikę, które zaimplementowałeś – jeszcze nie kod. Rozdział ma udowodnić, że rozumiesz metodę, którą zamknąłeś w narzędziu.
+Odpowiednik sekcji poświęconej podstawom metodycznym w czasopismach o oprogramowaniu badawczym. Opisujesz matematykę i logikę, które zaimplementowałeś – jeszcze nie kod. W tym rozdziale masz udowodnić, że rozumiesz metodę, którą zamknąłeś w narzędziu.
 
 ### Zasada nadrzędna
 
-**Po każdym wzorze następuje akapit wyjaśniający, co ten wzór robi i po co, językiem zrozumiałym dla badacza bez przygotowania matematycznego.** Wzór bez wyjaśnienia jest w tej pracy błędem merytorycznym, a nie oszczędnością miejsca. Twoim odbiorcą jest osoba, która chce metody użyć, a nie ją wyprowadzić.
+**Po każdym wzorze następuje akapit wyjaśniający, co ten wzór wyraża i po co jest w pracy, językiem zrozumiałym dla badacza bez przygotowania matematycznego.** Wzór bez wyjaśnienia jest w tej pracy błędem merytorycznym, a nie oszczędnością miejsca. Twoim odbiorcą jest osoba, która chce metody użyć, a nie ją wyprowadzić.
 
 Sprawdzian: przeczytaj sam akapit, bez wzoru. Czy nadal wiadomo, co się dzieje? Jeżeli nie, akapit jest za słaby.
 
 ### Co musi zawierać
 
-**Osadzenie metody.** Jaki problem metoda rozwiązuje, skąd się wzięła, czym różni się od podejść wcześniejszych. Powołanie na artykuł źródłowy i dwa lub trzy opracowania wprowadzające.
+**Osadzenie metody.** Jaki problem metoda rozwiązuje, skąd się wzięła, czym różni się od podejść wcześniejszych. Cytowanie artykułu źródłowego oraz dwóch lub trzech opracowań wprowadzających.
 
 **Aparat formalny.** Wielkości wejściowe wraz z dziedzinami, kolejne kroki algorytmu, wielkości wyjściowe. Numeruj i etykietuj te wzory, do których praca się odwołuje. Objaśnij **każdy** symbol, którego używasz – nawet ten, który wydaje Ci się oczywisty.
 
@@ -94,7 +94,7 @@ Wzoru nie tłumacz na polski w sensie notacji. Symbole zostają takie jak w źr�
 | Wzory przepisane z opracowania wtórnego | ryzyko powielenia cudzego błędu |
 
 - [ ] Każdy symbol objaśniony w tekście
-- [ ] Po każdym wzorze akapit o tym, co wzór robi
+- [ ] Po każdym wzorze akapit o tym, co wzór wyraża
 - [ ] Założenia metody wypisane wprost
 - [ ] Granice stosowalności opisane
 - [ ] Przegląd rozwiązań pokrewnych w układzie problemowym
@@ -123,7 +123,7 @@ Odpowiednik sekcji opisującej oprogramowanie. Najważniejszy rozdział inżynie
 
 **Narzędzia zewnętrzne.** Dla każdej biblioteki nazwa, źródło, przeznaczenie oraz krótki opis wejścia i wyjścia. Wymóg wprost ze Standardów.
 
-### Jak pisać o pracy z narzędziem programistycznym
+### Jak pisać o pracy z agentem
 
 Jeżeli korzystałeś z narzędzia wspomagającego pisanie kodu, opisz to jako element metodyki inżynierskiej, a nie jako wyznanie. Interesujące jest to, **gdzie specyfikacja wychwyciła błąd**: w którym miejscu narzędzie uprościło założenie metody i jak to wykryłeś. To pokazuje zrozumienie metody lepiej niż bezbłędny kod. Zasada podstawowa pozostaje jedna: musisz umieć objaśnić każdą linię kodu, którą oddajesz.
 
@@ -200,11 +200,11 @@ Podsumowanie domyka klamrę z Wprowadzeniem. Czytelnik, który przeczyta tylko t
 
 ### Wykaz źródeł
 
-Plik `rozdzialy/05-wykaz-zrodel.tex`. To **nie to samo co bibliografia**. Bibliografia obejmuje opracowania naukowe, do których odsyłają powołania w tekście. Wykaz źródeł obejmuje narzędzia i dane: pakiety R, zbiory danych, serwisy udostępniające oprogramowanie. Standardy dopuszczają reprezentowanie narzędzi programistycznych adresami serwisów, które je udostępniają i opisują.
+Plik `rozdzialy/05-wykaz-zrodel.tex`. To **nie to samo co bibliografia**. Bibliografia obejmuje opracowania naukowe, do których odsyłają cytowania w tekście. Wykaz źródeł obejmuje narzędzia i dane: pakiety R, zbiory danych, serwisy udostępniające oprogramowanie. Standardy dopuszczają reprezentowanie narzędzi programistycznych adresami serwisów, które je udostępniają i opisują.
 
 ### Bibliografia
 
-Generowana automatycznie z pliku bibliograficznego. Zasada, której pilnuje recenzent: żadnej pozycji w bibliografii bez powołania w tekście i odwrotnie. Pozycje przeczytane, ale niewykorzystane, do bibliografii nie trafiają. Muszą się w niej znaleźć pozycje obcojęzyczne – wymóg zarówno Standardów, jak i Instrukcji. Zapis wpisów opisuje rozdział [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
+Generowana automatycznie z pliku bibliograficznego. Zasada, której pilnuje recenzent: żadnej pozycji w bibliografii bez cytowania w tekście i odwrotnie. Pozycje przeczytane, ale niewykorzystane, do bibliografii nie trafiają. Muszą się w niej znaleźć pozycje obcojęzyczne – wymóg zarówno Standardów, jak i Instrukcji. Zapis wpisów jest w rozdziale [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
 
 ### Spis ilustracji i indeks nazwisk
 
