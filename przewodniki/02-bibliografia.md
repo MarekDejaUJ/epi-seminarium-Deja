@@ -5,7 +5,7 @@
 
 Bibliografia w pracy powstaje automatycznie z pliku `bibliografia/literatura.bib`. Nie składasz jej ręcznie i nie sortujesz – robi to styl odwzorowujący opisy z Instrukcji (Instrukcja ISI). Twoje zadanie sprowadza się do jednego: poprawnych wpisów w pliku. Opis wychodzi wtedy zgodny z wymogami sam.
 
-Zasada, której pilnuje recenzent: bibliografia zawiera wyłącznie pozycje faktycznie wykorzystane, do których odsyłają powołania w tekście. Pozycje przeczytane, ale niewykorzystane, do bibliografii nie trafiają.
+Zasada, której pilnuje recenzent: bibliografia zawiera wyłącznie pozycje faktycznie wykorzystane, do których odsyłają cytowania w tekście. Pozycje przeczytane, ale niewykorzystane, do bibliografii nie trafiają.
 
 **Prowadź plik bibliograficzny od pierwszego dnia.** Odtwarzanie bibliografii po napisaniu pracy zajmuje kilka dni i zawsze kończy się brakującym numerem strony.
 
@@ -22,13 +22,25 @@ Zasada, której pilnuje recenzent: bibliografia zawiera wyłącznie pozycje fakt
 }
 ```
 
-Pierwsza linia podaje typ wpisu, który decyduje o postaci opisu, oraz klucz cytowania, którym powołujesz się w tekście. Dalej idą pola; wartość zawsze w nawiasach klamrowych. Powołanie `\parencite{cisek2002filozoficzne}` daje w tekście „(Cisek 2002)”.
+Powyższy fragment to jeden *wpis*, czyli komplet danych o jednym źródle. Otwiera go *typ wpisu*, tutaj `@book`, i to on przesądza o postaci gotowego opisu bibliograficznego. Zaraz za nawiasem klamrowym stoi *klucz cytowania*, tutaj `cisek2002filozoficzne`: nazwa, którą nadajesz sam i którą odwołujesz się do tego wpisu, pisząc pracę. Dalej wymienione są *pola* w postaci `nazwa = {wartosc}`, po jednym w wierszu; wartość zawsze stoi w nawiasach klamrowych.
+
+Cytowanie `\parencite{cisek2002filozoficzne}` daje w tekście „(Cisek 2002)”. Klucz jest jedynym łącznikiem między poleceniem w rozdziale a wpisem w pliku i w gotowym dokumencie nigdzie się nie pojawia.
 
 ### Klucze
 
-Klucz jest Twój i nigdzie nie widać go w gotowym dokumencie, ale przy stu pozycjach zaczyna mieć znaczenie. Konwencja przyjęta w seminarium to nazwisko, rok i pierwsze znaczące słowo tytułu, bez znaków diakrytycznych i bez spacji: `cisek2002filozoficzne`, `callaway2024continuous`, `liPearl2024probabilities`.
+Klucz musi być niepowtarzalny w obrębie pliku, a złożyć go wolno wyłącznie z liter, cyfr, łącznika i podkreślenia. Poza tym możesz go zbudować dowolnie, więc przy stu pozycjach opłaca się jedna konwencja zamiast stu pomysłów.
 
-Klucz raz nadany zostaje na zawsze. Zmiana klucza po napisaniu połowy pracy oznacza przeszukanie wszystkich rozdziałów.
+W seminarium klucz składa się z nazwiska, roku i jednego słowa z tytułu, po którym rozpoznasz pozycję na pierwszy rzut oka, zawsze bez znaków diakrytycznych i bez spacji. Przy jednym autorze bierzesz jego nazwisko, przy dwóch oba, drugie od wielkiej litery, przy trzech i więcej samo nazwisko pierwszego:
+
+**Tabela 7. Budowa klucza cytowania**
+
+| Pozycja | Klucz |
+|---|---|
+| Peña, Jose M. (2024). *Bounds and sensitivity analysis… MNAR confounding* | `pena2024mnar` |
+| Li, Ang; Pearl, Judea (2024). *Probabilities of causation…* | `liPearl2024probabilities` |
+| Oosterhuis, Harrie i in. (2024). *Reliable confidence intervals…* | `oosterhuis2024reliable` |
+
+Klucz raz nadany zostaje na zawsze. Zmiana klucza po napisaniu połowy pracy oznacza przeszukanie wszystkich rozdziałów, a każde przeoczone miejsce daje w złożonym dokumencie znak zapytania zamiast cytowania.
 
 ### Pola nazwisk
 
@@ -40,7 +52,7 @@ author = {{Biblioteka Jagiellonska}}
 author = {van Dijk, Teun A.}
 ```
 
-Imiona podawaj w pełnym brzmieniu – Instrukcja wymaga pełnych imion w opisie bibliograficznym. Inicjały w powołaniu styl doda sam, gdy będą potrzebne do odróżnienia dwóch autorów o tym samym nazwisku.
+Imiona podawaj w pełnym brzmieniu – Instrukcja wymaga pełnych imion w opisie bibliograficznym. Inicjały w cytowaniu styl doda sam, gdy będą potrzebne do odróżnienia dwóch autorów o tym samym nazwisku.
 
 Polskie znaki wpisuj wprost, a plik zapisz w UTF-8. LaTeX zmienia wielkość liter w tytułach w części stylów, więc skrót albo nazwę własną otocz dodatkowymi nawiasami klamrowymi: `title = {Zastosowanie metody {TOPSIS}}`.
 
@@ -63,7 +75,7 @@ Książka wielu autorów różni się od pojedynczej tylko listą w polu `author
 }
 ```
 
-Daje to opis „Zieliński, Jan red. (1998). *Świat komputerów*. Wrocław: Globus.”, a w tekście powołanie „(Zieliński red. 1998)”.
+Daje to opis „Zieliński, Jan red. (1998). *Świat komputerów*. Wrocław: Globus.”, a w tekście cytowanie „(Zieliński red. 1998)”.
 
 ### Rozdział w pracy zbiorowej
 
@@ -118,15 +130,15 @@ Hasło z własnym autorem opisuje się jak rozdział w pracy zbiorowej. Hasło b
 
 ### Dokumenty sieciowe
 
-Do wpisu drukowanego dodajesz pola `doi`, `url` i `urldate`. Datę odczytu zapisuj w formacie rok-miesiąc-dzień; styl przestawi ją na polską postać z kropkami. Strony internetowe i wpisy w blogach opisuje typ `@online`, a pole `keywords` o wartości `netografia` pozwala złożyć te pozycje w odrębnym wykazie, jeżeli uzgodnisz to z promotorem.
+Do wpisu drukowanego dodajesz pola `doi`, `url` i `urldate`. Datę odczytu zapisuj w formacie rok-miesiąc-dzień; styl przestawi ją na polską postać z kropkami. Strony internetowe i wpisy w blogach opisuje typ `@online`, a pole `keywords` o wartości `netografia` pozwala złożyć te pozycje w odrębnym wykazie. *Netografia* to wydzielona część bibliografii obejmująca wyłącznie źródła sieciowe; podział stosujesz tylko wtedy, gdy uzgodnisz go z promotorem.
 
 ### Pozycje szczególne
 
-Dokument na nośniku materialnym opisuje typ nośnika w polu `howpublished`. Norma wymaga pól `entrysubtype` o wartości `norma` oraz `shorthand`, bo rok wchodzi w skład jej oznaczenia i nie powtarza się go w nawiasie (PN-ISO 690: 2012). Pozycja bez autora potrzebuje pola `shorttitle` z dwoma pierwszymi słowami tytułu, żeby powołanie miało postać wymaganą przez Instrukcję.
+Dokument na nośniku materialnym opisuje typ nośnika w polu `howpublished`. Norma wymaga pól `entrysubtype` o wartości `norma` oraz `shorthand`, bo rok wchodzi w skład jej oznaczenia i nie powtarza się go w nawiasie (PN-ISO 690: 2012). Pozycja bez autora potrzebuje pola `shorttitle` z dwoma pierwszymi słowami tytułu, żeby cytowanie miało postać wymaganą przez Instrukcję.
 
 ## Zestawienie pól
 
-**Tabela 7. Pola wpisu bibliograficznego**
+**Tabela 8. Pola wpisu bibliograficznego**
 
 | Pole | Kiedy | Uwaga |
 |---|---|---|
@@ -150,7 +162,7 @@ Dokument na nośniku materialnym opisuje typ nośnika w polu `howpublished`. Nor
 | `keywords` | opcjonalnie | wartość `netografia` |
 | `howpublished` | nośnik materialny | na przykład płyta DVD |
 | `entrysubtype` | norma | wartość `norma` |
-| `shorthand` | norma | oznaczenie do powołania |
+| `shorthand` | norma | oznaczenie użyte w cytowaniu |
 
 Pole `langid` decyduje o skrótach w opisie, a jego brak jest traktowany jak pozycja polska. **Wypełniaj je zawsze** – inaczej artykuł angielski dostanie polskie oznaczenia tomu i stron.
 
@@ -162,13 +174,13 @@ Ręczne pisanie stu wpisów jest wykonalne, ale nierozsądne. Zotero zbiera meta
 
 Zainstaluj Zotero wraz z wtyczką do przeglądarki, a następnie dodatek Better BibTeX. Dodatek jest niezbędny: daje stabilne klucze cytowania, eksport w formacie biblatex i automatyczne odświeżanie pliku. Utwórz kolekcję dla pracy, a w niej podkolekcje na metodę, dziedzinę i narzędzia.
 
-W ustawieniach dodatku ustaw wzorzec klucza odpowiadający konwencji seminaryjnej i **włącz pinowanie kluczy**. Bez tego klucz może się zmienić po edycji metadanych i powołania w pracy przestaną działać.
+W ustawieniach dodatku ustaw wzorzec klucza odpowiadający konwencji seminaryjnej i **włącz utrwalanie kluczy** – w dodatku polecenie nazywa się *pin*. Bez tego klucz zmieni się po każdej poprawce metadanych, a cytowania w pracy przestaną działać.
 
-Eksport ustawia się raz: menu podręczne kolekcji, polecenie eksportu, format *Better BibLaTeX*, opcja utrzymywania pliku w aktualności. Jako cel wskaż plik bibliograficzny w projekcie pracy. Wybieraj format biblatex, a nie starszy BibTeX – styl korzysta z pól, których starszy format nie zna.
+Eksport ustawia się raz: menu podręczne kolekcji, polecenie eksportu, format *Better BibLaTeX*, opcja utrzymywania pliku w aktualności. Jako cel wskaż plik bibliograficzny w projekcie pracy. Wybieraj format biblatex, a nie starszy BibTeX. Plik ma w obu przypadkach rozszerzenie `.bib` i wygląda podobnie, ale różni się zestawem pól, a styl instytutowy korzysta z pól, których starszy format nie zna.
 
 ### Odpowiedniki typów
 
-**Tabela 8. Typy dokumentów w Zotero i we wpisie bibliograficznym**
+**Tabela 9. Typy dokumentów w Zotero i we wpisie bibliograficznym**
 
 | Typ w Zotero | Typ wpisu |
 |---|---|
@@ -189,9 +201,9 @@ Metadane z baz bibliograficznych bywają niekompletne. Po każdym imporcie spraw
 
 Zasada praktyczna: **nigdy nie ufaj pierwszemu importowi**. Sprawdzenie wpisu zajmuje minutę, a poprawianie bibliografii tydzień przed obroną – znacznie więcej.
 
-## Powołania w tekście
+## Cytowania w tekście
 
-**Tabela 9. Postacie powołania**
+**Tabela 10. Postacie cytowania**
 
 | Sytuacja | Polecenie | Efekt |
 |---|---|---|
@@ -201,7 +213,7 @@ Zasada praktyczna: **nigdy nie ufaj pierwszemu importowi**. Sprawdzenie wpisu za
 | w zdaniu | `\textcite{klucz}` | Woźniak (1997) pokazuje… |
 | z przedrostkiem | `\parencite[zob.][s.~9]{klucz}` | (zob. Nowak 2006, s. 9) |
 
-Inicjał przy zbieżnych nazwiskach, skrót przy więcej niż trzech autorach i sufiksy rocznika styl dobiera automatycznie. Nie wpisuj ich ręcznie w pliku bibliograficznym.
+Inicjał przy zbieżnych nazwiskach, skrót „i in.” przy więcej niż trzech autorach oraz *sufiks rocznika* styl dobiera automatycznie. Sufiks to litera dopisywana do roku, gdy ten sam autor ma w bibliografii dwie pozycje z tego samego roku: „(Kowalski 2010a)” i „(Kowalski 2010b)”. Nie wpisuj tych elementów ręcznie w pliku bibliograficznym.
 
 Cytat dosłowny z tłumaczeniem własnym zapisujesz razem z oznaczeniem tłumacza i oryginałem w przypisie dolnym:
 
@@ -212,7 +224,7 @@ Cytat dosłowny z tłumaczeniem własnym zapisujesz razem z oznaczeniem tłumacz
 
 ## Cytowanie oprogramowania i danych
 
-Pakiety R i zbiory danych trafiają do **wykazu źródeł**, a nie do bibliografii; rozróżnienie omawia podrozdział [Wykaz źródeł](04-jak-pisac.md#wykaz-źródeł). Jeżeli jednak powołujesz się na pakiet w tekście jak na publikację, potrzebujesz wpisu. Dane pobierzesz w konsoli:
+Pakiety R i zbiory danych trafiają do **wykazu źródeł**, a nie do bibliografii; rozróżnienie jest w podrozdziale [Wykaz źródeł](04-jak-pisac.md#wykaz-źródeł). Jeżeli jednak powołujesz się na pakiet w tekście jak na publikację, potrzebujesz wpisu. Dane pobierzesz w konsoli:
 
 ```r
 citation("ggplot2")
@@ -238,7 +250,7 @@ Zbiór danych opisujesz jak dokument sieciowy, z podaniem wersji albo daty pobra
 
 ## Kontrola
 
-Przed oddaniem sprawdź trzy rzeczy. Po pierwsze zgodność w obie strony: każda pozycja bibliografii ma powołanie w tekście, a każde powołanie pozycję w bibliografii. Nierozwiązane powołania widać w dzienniku kompilacji; pozycji bez powołania styl po prostu nie złoży, co działa na Twoją korzyść. Po drugie obecność pozycji obcojęzycznych, wymaganych zarówno przez Standardy, jak i przez Instrukcję. Po trzecie kompletność opisów – przejrzyj gotową bibliografię w złożonym dokumencie, a nie w pliku źródłowym, bo brakujące miasto, ucięty tytuł czasopisma albo brak daty odczytu widać dopiero w składzie.
+Przed oddaniem sprawdź trzy rzeczy. Po pierwsze zgodność w obie strony: każda pozycja bibliografii ma cytowanie w tekście, a każde cytowanie pozycję w bibliografii. Nierozwiązane cytowania widać w dzienniku kompilacji; pozycji bez cytowania styl po prostu nie złoży, co działa na Twoją korzyść. Po drugie obecność pozycji obcojęzycznych, wymaganych zarówno przez Standardy, jak i przez Instrukcję. Po trzecie kompletność opisów – przejrzyj gotową bibliografię w złożonym dokumencie, a nie w pliku źródłowym, bo brakujące miasto, ucięty tytuł czasopisma albo brak daty odczytu widać dopiero w składzie.
 
 Gdy bibliografia jest pusta albo nieaktualna po zmianach w pliku, uruchom pełną kompilację od zera.
 

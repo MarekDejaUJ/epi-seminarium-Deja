@@ -7,7 +7,7 @@ Zestawienie wymagań obowiązujących pracę licencjacką na kierunku elektronic
 
 ## Skład
 
-**Tabela 20. Wymogi składu**
+**Tabela 21. Wymogi składu**
 
 | Wymóg | Źródło | Kto realizuje |
 |---|---|---|
@@ -64,7 +64,7 @@ Brak zasygnalizowania w tekście, że posługujesz się cudzym słowem, oznacza 
 
 ## Przypisy i bibliografia
 
-Obowiązuje system nawiasowy, tak zwany harwardzki: nazwisko, rok, w razie potrzeby strona. Postacie powołań i odpowiadające im polecenia zestawia tabela **Postacie powołania**. Skracanie listy autorów, dodawanie inicjału i sufiksów rocznika wykonuje styl automatycznie – Twoim zadaniem jest poprawny wpis w pliku bibliograficznym.
+Obowiązuje system nawiasowy, tak zwany harwardzki: nazwisko, rok, w razie potrzeby strona. Postacie cytowań i odpowiadające im polecenia są zestawione w tabeli **Postacie cytowania**. Skracanie listy autorów, dodawanie inicjału i sufiksów rocznika wykonuje styl automatycznie – Twoim zadaniem jest poprawny wpis w pliku bibliograficznym.
 
 Do przypisów dolnych trafiają wyłącznie przypisy dygresyjne, których należy unikać, oraz oryginalne brzmienie tłumaczonych cytatów.
 
@@ -72,7 +72,7 @@ Zasada wiążąca bibliografię z tekstem: **bibliografia zawiera wyłącznie po
 
 ## Materiał ilustracyjny
 
-**Tabela 21. Wymogi wobec materiału ilustracyjnego**
+**Tabela 22. Wymogi wobec materiału ilustracyjnego**
 
 | Wymóg | Źródło |
 |---|---|
@@ -89,7 +89,7 @@ Prawa do ilustracji: bez zgody autora można wykorzystać materiały z domeny pu
 
 ## Zapis w tekście
 
-**Tabela 22. Zapis elementów w tekście**
+**Tabela 23. Zapis elementów w tekście**
 
 | Element | Zapis | Polecenie |
 |---|---|---|

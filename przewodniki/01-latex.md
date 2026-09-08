@@ -13,7 +13,7 @@ W edytorze tekstu zaznaczasz fragment i nadajesz mu wygląd. W LaTeX-u **opisuje
 
 Ma to trzy konsekwencje, które w pracy licencjackiej są warte więcej niż koszt nauki. Skład jest zgodny z wymogami Instytutu z definicji, a nie dlatego, że pamiętałeś o ustawieniu interlinii w każdym akapicie. Spis treści, spis ilustracji, bibliografia i indeks nazwisk powstają same z tego, co napisałeś w tekście – nie da się mieć w spisie treści rozdziału, którego nie ma. Wzory matematyczne są zapisem, a nie obrazkiem, co przy pracy pełnej wzorów z artykułu metodycznego przestaje być wygodą, a staje się warunkiem wykonalności.
 
-Kosztem jest to, że pliku źródłowego się nie ogląda – trzeba go skompilować. Do tego przyzwyczaisz się w pierwszy wieczór.
+Kosztem jest to, że pliku źródłowego się nie ogląda – trzeba go skompilować. Do tego przyzwyczaisz się w pierwszy dzień.
 
 ## Poziom pierwszy: tekst i struktura
 

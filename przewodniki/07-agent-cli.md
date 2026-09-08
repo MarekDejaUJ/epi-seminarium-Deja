@@ -74,7 +74,7 @@ Są trzy sytuacje, w których pętlę trzeba zatrzymać, bo dalsze krążenie ty
 
 Narzędzie nie zna artykułu, który czytasz. Zna wzorce z kodu, który widziało wcześniej. Tam, gdzie Twoja metoda odbiega od wzorca, dostaniesz rozwiązanie typowe, a nie właściwe.
 
-**Tabela 23. Typowe miejsca rozejścia się implementacji z metodą**
+**Tabela 24. Typowe miejsca rozejścia się implementacji z metodą**
 
 | Sytuacja | Co sprawdzić |
 |---|---|
@@ -163,7 +163,7 @@ Wykaz poleceń jest wymaganym aneksem pracy, ale prowadzi się go **od pierwszeg
 
 Rejestr jest plikiem w repozytorium pakietu. Dla każdego polecenia zapisujesz cztery rzeczy: cel, treść polecenia, co zmieniłeś w otrzymanym wyniku oraz jak sprawdziłeś poprawność. Trzecia i czwarta kolumna są najważniejsze, bo to one pokazują Twój wkład.
 
-**Tabela 24. Wpis w rejestrze poleceń**
+**Tabela 25. Wpis w rejestrze poleceń**
 
 | Pole | Treść |
 |---|---|

@@ -15,7 +15,7 @@ Wzór pobierasz z repozytorium seminarium: pobierz archiwum całego repozytorium
 
 ### Ustawienia
 
-**Tabela 10. Ustawienia projektu na Overleaf**
+**Tabela 11. Ustawienia projektu na Overleaf**
 
 | Ustawienie | Wartość | Dlaczego |
 |---|---|---|
@@ -98,7 +98,7 @@ Repozytorium pakietu i pracę trzymaj **osobno**. Praca zawiera pliki, które ni
 
 ## Problemy specyficzne dla Overleaf
 
-**Tabela 11. Problemy w pracy na Overleaf**
+**Tabela 12. Problemy w pracy na Overleaf**
 
 | Objaw | Przyczyna | Naprawa |
 |---|---|---|
