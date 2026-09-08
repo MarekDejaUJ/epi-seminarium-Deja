@@ -256,7 +256,7 @@ oblicz_wagi <- function(macierz) {
 
 Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wstawisz poleceniem \kod{\textbackslash listingR}, które przyjmuje podpis, etykietę i ścieżkę -- wtedy listing zawsze odpowiada aktualnej wersji kodu.
 
-\wyroznienie{Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.} Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery wychodzą przestawione. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może. Kontroli służy skrypt \plik{tools/sprawdz-listingi.R}.
+\wyroznienie{Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.} Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery wychodzą przestawione. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może. Kontroli służy skrypt \plik{tools/sprawdz-listingi.R}, ale wymaga on R, więc działa tylko \wyroznienie{lokalnie}. \wyroznienie{Na Overleaf} objaw widać wprost w złożonym dokumencie: litery w listingu są poprzestawiane.
 
 \section{Poziom trzeci: przy redakcji}
 
@@ -272,15 +272,19 @@ Klasa blokuje \termin{wdowy i sieroty}, czyli pojedyncze wiersze akapitu odcięt
 
 \subsection{Sekwencja kompilacji}
 
-Pełne złożenie pracy wymaga kilku przebiegów, bo spis treści, odsyłacze, bibliografia i indeks potrzebują danych z przebiegu poprzedniego. Kolejność to LuaLaTeX, potem \pkg{biber}, który składa bibliografię z pliku źródeł, potem \pkg{makeindex}, który porządkuje indeks nazwisk, a na koniec dwa razy LuaLaTeX. Całą sekwencję uruchamia za Ciebie \pkg{latexmk}:
+Pełne złożenie pracy wymaga kilku przebiegów, bo spis treści, odsyłacze, bibliografia i indeks potrzebują danych z przebiegu poprzedniego. Kolejność to LuaLaTeX, potem \pkg{biber}, który składa bibliografię z pliku źródeł, potem \pkg{makeindex}, który porządkuje indeks nazwisk, a na koniec dwa razy LuaLaTeX.
+
+\wyroznienie{Na Overleaf.} Sekwencja uruchamia się sama po naciśnięciu przycisku kompilacji i nie musisz o niej pamiętać.
+
+\wyroznienie{Lokalnie.} Całą sekwencję uruchamia za Ciebie \pkg{latexmk}, wywoływany z katalogu pracy:
 
 \begin{lstlisting}[language=bash,numbers=none]
 latexmk -lualatex main.tex
 \end{lstlisting}
 
-Na Overleaf sekwencja uruchamia się automatycznie. Skutek praktyczny jest taki, że \wyroznienie{po dodaniu nowego cytowania albo etykiety pierwsza kompilacja może pokazać znaki zapytania} -- po drugiej znikną.
+Skutek praktyczny jest w obu ścieżkach ten sam: \wyroznienie{po dodaniu nowego cytowania albo etykiety pierwsza kompilacja może pokazać znaki zapytania} -- po drugiej znikną.
 
-Przy okazji powstaje kilkanaście \termin{plików pomocniczych}, o rozszerzeniach \plik{.aux}, \plik{.toc} czy \plik{.bbl}. To w nich LaTeX przechowuje między przebiegami numery rozdziałów, strony odsyłaczy i złożoną bibliografię. Polecenie \kod{latexmk -c} usuwa je i zostawia gotowy dokument. Przydaje się, gdy kompilacja zaczyna zachowywać się dziwnie, bo uszkodzony plik pomocniczy potrafi utrzymywać błąd, którego w źródle już nie ma. Na Overleaf odpowiednikiem jest \termin{Recompile from scratch} z rozwijanego menu obok przycisku kompilacji.
+Przy okazji powstaje kilkanaście \termin{plików pomocniczych}, o rozszerzeniach \plik{.aux}, \plik{.toc} czy \plik{.bbl}. To w nich LaTeX przechowuje między przebiegami numery rozdziałów, strony odsyłaczy i złożoną bibliografię. Przydaje się to do momentu, w którym kompilacja zaczyna zachowywać się dziwnie, bo uszkodzony plik pomocniczy potrafi utrzymywać błąd, którego w źródle już nie ma. Czyszczenie wygląda wtedy różnie w obu ścieżkach: \wyroznienie{lokalnie} usuwa je polecenie \kod{latexmk -c}, \wyroznienie{na Overleaf} służy do tego \termin{Recompile from scratch} z rozwijanego menu obok przycisku kompilacji.
 
 \section{Diagnostyka}\label{sec:diagnostyka}
 
@@ -314,7 +318,7 @@ Komunikat albo objaw & Przyczyna & Naprawa \\
 przestawione polskie litery w listingu & znaki spoza ASCII w kodzie & usuń diakrytykę \\
 kod bez właściwego kroju pisma & dokument złożony pdfLaTeX-em & ustaw kompilator na LuaLaTeX \\
 brak indeksu nazwisk & brak polecenia \kod{\textbackslash osoba} & dodaj polecenia i skompiluj \\
-dokument nie odświeża się mimo zmian & uszkodzone pliki pomocnicze & \kod{latexmk -c} i pełna kompilacja \\
+dokument nie odświeża się mimo zmian & uszkodzone pliki pomocnicze & pełne złożenie od zera; lokalnie \kod{latexmk -c} \\
 \bottomrule
 \end{tabular}
 \end{tabelaepi}

@@ -1,6 +1,3 @@
-<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/01-latex.tex.
-     Zmiany nanos w pliku zrodlowym, nie tutaj. -->
-
 # LaTeX od podstaw
 
 W rozdziale poznajesz LaTeX-a na wzorze, którym piszesz pracę, a nie w oderwaniu od niego. Wszystkie przykłady działają bez dodatkowej konfiguracji, bo ustawienia składu są w *klasie dokumentu*, czyli w pliku, w którym zapisany jest cały wygląd pracy. Twoja klasa to `epi-praca.cls` i nie musisz do niej zaglądać.
@@ -243,7 +240,7 @@ oblicz_wagi <- function(macierz) {
 
 Kolorowanie składni, numerację wierszy i ramkę ustawia klasa. Kod z pliku wstawisz poleceniem `\listingR`, które przyjmuje podpis, etykietę i ścieżkę – wtedy listing zawsze odpowiada aktualnej wersji kodu.
 
-**Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.** Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery wychodzą przestawione. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może. Kontroli służy skrypt `tools/sprawdz-listingi.R`.
+**Wnętrze listingu musi być zapisane wyłącznie znakami ASCII.** Komentarze w kodzie pisz bez polskich znaków diakrytycznych. Powód jest podwójny. Tablica znaków pakietu składającego listingi obejmuje tylko ASCII, więc polskie litery wychodzą przestawione. Sprawdzanie pakietu R zgłasza z kolei znaki spoza ASCII w kodzie źródłowym jako problem przenośności, więc to samo ograniczenie obowiązuje w repozytorium. Podpis listingu jest zwykłym tekstem pracy i polskich znaków używać może. Kontroli służy skrypt `tools/sprawdz-listingi.R`, ale wymaga on R, więc działa tylko **lokalnie**. **Na Overleaf** objaw widać wprost w złożonym dokumencie: litery w listingu są poprzestawiane.
 
 ## Poziom trzeci: przy redakcji
 
@@ -259,15 +256,19 @@ Klasa blokuje *wdowy i sieroty*, czyli pojedyncze wiersze akapitu odcięte na ko
 
 ### Sekwencja kompilacji
 
-Pełne złożenie pracy wymaga kilku przebiegów, bo spis treści, odsyłacze, bibliografia i indeks potrzebują danych z przebiegu poprzedniego. Kolejność to LuaLaTeX, potem `biber`, który składa bibliografię z pliku źródeł, potem `makeindex`, który porządkuje indeks nazwisk, a na koniec dwa razy LuaLaTeX. Całą sekwencję uruchamia za Ciebie `latexmk`:
+Pełne złożenie pracy wymaga kilku przebiegów, bo spis treści, odsyłacze, bibliografia i indeks potrzebują danych z przebiegu poprzedniego. Kolejność to LuaLaTeX, potem `biber`, który składa bibliografię z pliku źródeł, potem `makeindex`, który porządkuje indeks nazwisk, a na koniec dwa razy LuaLaTeX.
+
+**Na Overleaf.** Sekwencja uruchamia się sama po naciśnięciu przycisku kompilacji i nie musisz o niej pamiętać.
+
+**Lokalnie.** Całą sekwencję uruchamia za Ciebie `latexmk`, wywoływany z katalogu pracy:
 
 ```bash
 latexmk -lualatex main.tex
 ```
 
-Na Overleaf sekwencja uruchamia się automatycznie. Skutek praktyczny jest taki, że **po dodaniu nowego cytowania albo etykiety pierwsza kompilacja może pokazać znaki zapytania** – po drugiej znikną.
+Skutek praktyczny jest w obu ścieżkach ten sam: **po dodaniu nowego cytowania albo etykiety pierwsza kompilacja może pokazać znaki zapytania** – po drugiej znikną.
 
-Przy okazji powstaje kilkanaście *plików pomocniczych*, o rozszerzeniach `.aux`, `.toc` czy `.bbl`. To w nich LaTeX przechowuje między przebiegami numery rozdziałów, strony odsyłaczy i złożoną bibliografię. Polecenie `latexmk -c` usuwa je i zostawia gotowy dokument. Przydaje się, gdy kompilacja zaczyna zachowywać się dziwnie, bo uszkodzony plik pomocniczy potrafi utrzymywać błąd, którego w źródle już nie ma. Na Overleaf odpowiednikiem jest *Recompile from scratch* z rozwijanego menu obok przycisku kompilacji.
+Przy okazji powstaje kilkanaście *plików pomocniczych*, o rozszerzeniach `.aux`, `.toc` czy `.bbl`. To w nich LaTeX przechowuje między przebiegami numery rozdziałów, strony odsyłaczy i złożoną bibliografię. Przydaje się to do momentu, w którym kompilacja zaczyna zachowywać się dziwnie, bo uszkodzony plik pomocniczy potrafi utrzymywać błąd, którego w źródle już nie ma. Czyszczenie wygląda wtedy różnie w obu ścieżkach: **lokalnie** usuwa je polecenie `latexmk -c`, **na Overleaf** służy do tego *Recompile from scratch* z rozwijanego menu obok przycisku kompilacji.
 
 ## Diagnostyka
 
@@ -300,7 +301,7 @@ Komunikat zaczyna się od wykrzyknika, a numer wiersza stoi w linii rozpoczynaj�
 | przestawione polskie litery w listingu | znaki spoza ASCII w kodzie | usuń diakrytykę |
 | kod bez właściwego kroju pisma | dokument złożony pdfLaTeX-em | ustaw kompilator na LuaLaTeX |
 | brak indeksu nazwisk | brak polecenia `\osoba` | dodaj polecenia i skompiluj |
-| dokument nie odświeża się mimo zmian | uszkodzone pliki pomocnicze | `latexmk -c` i pełna kompilacja |
+| dokument nie odświeża się mimo zmian | uszkodzone pliki pomocnicze | pełne złożenie od zera; lokalnie `latexmk -c` |
 
 ### Gdy nic nie pomaga
 

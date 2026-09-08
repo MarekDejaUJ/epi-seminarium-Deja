@@ -1,6 +1,3 @@
-<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/00-wprowadzenie.tex.
-     Zmiany nanos w pliku zrodlowym, nie tutaj. -->
-
 # Wprowadzenie
 
 Przewodnik obejmuje cały cykl seminarium: od pierwszego uruchomienia wzoru, przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną przed oddaniem pracy.
@@ -39,6 +36,27 @@ Rozdziały siódmy i ósmy dotyczą pracy z narzędziem wspomagającym pisanie k
 Wymagania wobec pracy określają dwa dokumenty Instytutu. **Standardy prac dyplomowych EPI** (Standardy EPI) rozstrzygają o układzie pracy i o wymogach wobec projektu dyplomowego. **Instrukcja ISI** (Instrukcja ISI) rozstrzyga o składzie, przypisach i opisach bibliograficznych. Tam, gdzie dokumenty się rozchodzą, w przewodniku wskazany jest ten, który obowiązuje.
 
 Wymagania te są we wzorze zrealizowane automatycznie. Nie zmieniaj ustawień składu – rozbieżność z wymogami obciąża pracę, a nie wzór.
+
+## Dwie ścieżki pracy
+
+Pracę można pisać na dwa sposoby i przewodnik opisuje oba.
+
+**Ścieżka przeglądarkowa.** Piszesz na uczelnianej instalacji Overleaf.
+Nie instalujesz niczego, kompilacja dzieje się na serwerze, promotor widzi tę samą
+wersję co Ty. Jest to ścieżka domyślna i wystarczająca do napisania całej pracy.
+
+**Ścieżka lokalna.** Piszesz u siebie, w Positronie, mając zainstalowaną
+dystrybucję \TeX-a i R. Zyskujesz to, że praca, pakiet i wykresy są w jednym miejscu,
+oraz dostęp do skryptów kontrolnych, których na Overleaf uruchomić się nie da.
+
+Różnica jest istotna w kilku miejscach: przy kompilacji, przy czyszczeniu plików
+pomocniczych i przy kontroli objętości. Wszędzie tam, gdzie postępowanie się rozchodzi,
+akapity są oznaczone słowami **Lokalnie** i **Na Overleaf**.
+Tam, gdzie takiego oznaczenia nie ma, opis dotyczy obu ścieżek.
+
+Najczęstszy układ w praktyce jest mieszany: pakiet i wykresy powstają lokalnie,
+tekst pracy na Overleaf. Wtedy stosujesz oznaczenie właściwe dla czynności, a nie
+dla całej pracy.
 
 ---
 

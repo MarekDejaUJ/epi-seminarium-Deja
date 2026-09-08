@@ -1,7 +1,8 @@
-<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/03-overleaf.tex.
-     Zmiany nanos w pliku zrodlowym, nie tutaj. -->
-
 # Overleaf i współpraca
+
+Rozdział dotyczy ścieżki przeglądarkowej z podrozdziału
+ef{sec:sciezki}; praca lokalna opisana jest w podrozdziale
+ef{sec:lokalnie}.
 
 Overleaf to LaTeX w przeglądarce. Nie trzeba nic instalować, projekt jest dostępny z każdego komputera, a promotor widzi tę samą wersję co Ty. Uniwersytet prowadzi **własną instalację** pod adresem `overleaf.uj.edu.pl` i to na niej pracujemy: projekty zostają w infrastrukturze uczelni, a udostępnianie działa wewnątrz Uniwersytetu. Dla pracy licencjackiej pisanej pod opieką promotora to najmniej kłopotliwe środowisko. Praca lokalna też jest możliwa i opisana jest w podrozdziale [Praca lokalna w Positronie](#praca-lokalna-w-positronie).
 

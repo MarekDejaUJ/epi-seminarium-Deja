@@ -1,6 +1,3 @@
-<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/05-warsztat.tex.
-     Zmiany nanos w pliku zrodlowym, nie tutaj. -->
-
 # Warsztat pisania akademickiego
 
 Rozdział jest o tym, **jak** pisać: skąd wziąć pytanie, jak zbudować argument, jak rozmawiać z literaturą i jak nie stracić panowania nad źródłami. Co ma się znaleźć w której części pracy, jest w rozdziale [Jak napisać pracę](04-jak-pisac.md#jak-napisać-pracę); czego wymaga Instytut – rozdział [Wymogi formalne](06-wymogi.md#wymogi-formalne).

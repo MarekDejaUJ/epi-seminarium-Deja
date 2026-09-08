@@ -108,6 +108,11 @@ angielskiego zapisu APA, ponieważ styl definiuje własne makra składania dat.
 
 ## Kontrola przed oddaniem
 
+Oba skrypty wymagają R i działają **wyłącznie lokalnie**; na Overleaf
+się nie uruchomią. Odpowiedniki przeglądarkowe podaje rozdział o wymogach
+formalnych w przewodniku.
+
+
 ```
 Rscript tools/policz_znaki.R
 Rscript tools/sprawdz-listingi.R

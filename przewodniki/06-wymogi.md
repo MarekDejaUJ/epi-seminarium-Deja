@@ -1,6 +1,3 @@
-<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/06-wymogi.tex.
-     Zmiany nanos w pliku zrodlowym, nie tutaj. -->
-
 # Wymogi formalne
 
 Zestawienie wymagań obowiązujących pracę licencjacką na kierunku elektroniczne przetwarzanie informacji, z podaniem źródła każdego z nich. Dwa dokumenty Instytutu uzupełniają się i miejscami rozchodzą – przy rozbieżności o **układzie pracy** rozstrzygają Standardy (Standardy EPI), a o **zapisie bibliografii** Instrukcja (Instrukcja ISI). W tabelach skrót S oznacza Standardy, a skrót I – Instrukcję.
@@ -32,7 +29,9 @@ Wszystkie pozycje realizuje klasa dokumentu bez Twojego udziału. Nie zmieniaj u
 
 Tekst od pierwszej strony Wprowadzenia do ostatniej strony Podsumowania nie może przekraczać **czterdziestu stron znormalizowanych, czyli 72 000 znaków ze spacjami** (Instrukcja ISI). Do limitu nie wliczają się: strona tytułowa, strony informacyjne, spis treści, wykaz źródeł, bibliografia, spisy, indeks i aneksy.
 
-Kontrolę wykonuje skrypt `tools/policz_znaki.R`, uruchamiany z katalogu wzoru. Liczy znaki po usunięciu poleceń, listingów, wzorów i tabel, więc daje oszacowanie od góry.
+**Lokalnie.** Kontrolę wykonuje skrypt `tools/policz_znaki.R`, uruchamiany z katalogu wzoru poleceniem `Rscript tools/policz_znaki.R`. Liczy znaki po usunięciu poleceń, listingów, wzorów i tabel, więc daje oszacowanie od góry. Wymaga zainstalowanego R.
+
+**Na Overleaf.** R-a tam nie ma i skrypt się nie uruchomi. Zgrubną kontrolę daje wbudowane liczenie słów z menu projektu: strona znormalizowana to około 250 słów tekstu polskiego, więc limit odpowiada mniej więcej dziesięciu tysiącom słów. Kontrolę rozstrzygającą robisz na gotowym dokumencie: zaznacz tekst od pierwszej strony Wprowadzenia do ostatniej strony Podsumowania, wklej do edytora tekstu i odczytaj liczbę znaków ze spacjami.
 
 ## Struktura
 

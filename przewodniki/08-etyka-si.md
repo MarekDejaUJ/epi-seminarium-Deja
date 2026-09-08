@@ -1,6 +1,3 @@
-<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/08-etyka-si.tex.
-     Zmiany nanos w pliku zrodlowym, nie tutaj. -->
-
 # Jawność i odpowiedzialność
 
 Praca dyplomowa jest z ustawy **samodzielnym opracowaniem** zagadnienia, prezentującym wiedzę i umiejętności studenta oraz umiejętność samodzielnego analizowania i wnioskowania (Prawo o szkolnictwie wyższym). Ten wymóg nie zmienia się od tego, że część kodu powstała z pomocą agenta. Zmienia się natomiast to, co musisz o tej pomocy powiedzieć.

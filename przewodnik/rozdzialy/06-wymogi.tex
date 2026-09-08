@@ -33,7 +33,9 @@ Wszystkie pozycje realizuje klasa dokumentu bez Twojego udziału. Nie zmieniaj u
 
 Tekst od pierwszej strony Wprowadzenia do ostatniej strony Podsumowania nie może przekraczać \wyroznienie{czterdziestu stron znormalizowanych, czyli 72 000 znaków ze spacjami} \parencite{instrukcjaISI}. Do limitu nie wliczają się: strona tytułowa, strony informacyjne, spis treści, wykaz źródeł, bibliografia, spisy, indeks i aneksy.
 
-Kontrolę wykonuje skrypt \plik{tools/policz\_znaki.R}, uruchamiany z katalogu wzoru. Liczy znaki po usunięciu poleceń, listingów, wzorów i tabel, więc daje oszacowanie od góry.
+\wyroznienie{Lokalnie.} Kontrolę wykonuje skrypt \plik{tools/policz\_znaki.R}, uruchamiany z katalogu wzoru poleceniem \kod{Rscript tools/policz\_znaki.R}. Liczy znaki po usunięciu poleceń, listingów, wzorów i tabel, więc daje oszacowanie od góry. Wymaga zainstalowanego R.
+
+\wyroznienie{Na Overleaf.} R-a tam nie ma i skrypt się nie uruchomi. Zgrubną kontrolę daje wbudowane liczenie słów z menu projektu: strona znormalizowana to około 250 słów tekstu polskiego, więc limit odpowiada mniej więcej dziesięciu tysiącom słów. Kontrolę rozstrzygającą robisz na gotowym dokumencie: zaznacz tekst od pierwszej strony Wprowadzenia do ostatniej strony Podsumowania, wklej do edytora tekstu i odczytaj liczbę znaków ze spacjami.
 
 \section{Struktura}
 

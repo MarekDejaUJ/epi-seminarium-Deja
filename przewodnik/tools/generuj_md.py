@@ -491,10 +491,7 @@ def konwertuj(tresc):
 # Wykonanie
 # ---------------------------------------------------------------------------
 
-NAGLOWEK = (
-    '<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/{zrodlo}.\n'
-    '     Zmiany nanos w pliku zrodlowym, nie tutaj. -->\n\n'
-)
+NAGLOWEK = ''
 
 STOPKA = (
     '\n---\n\n'
@@ -526,12 +523,9 @@ def tytul_rozdzialu(sciezka):
 
 def zapisz_indeks(tytuly):
     wiersze = [
-        '<!-- Pliki w tym katalogu powstaja automatycznie z przewodnik/rozdzialy/.',
-        '     Zmiany nanos w plikach zrodlowych, nie tutaj. -->',
-        '',
         '# Przewodnik seminaryjny',
         '',
-        'Przewodnik prowadzi przez cały cykl seminarium – od pierwszego uruchomienia',
+        'Przewodnik obejmuje cały cykl seminarium – od pierwszego uruchomienia',
         'wzoru, przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną',
         'przed oddaniem pracy.',
         '',
@@ -547,21 +541,7 @@ def zapisz_indeks(tytuly):
             continue
         numer += 1
         wiersze.append(f'| {numer} | [{tytul}]({plik}) | {KIEDY[plik]} |')
-    wiersze += [
-        '',
-        '## Skąd się biorą te pliki',
-        '',
-        'Źródłem treści są pliki LaTeX w katalogu [`przewodnik/`](../przewodnik/),',
-        'składane tą samą klasą, z której korzystają prace studentów. Wersja w Markdown',
-        'powstaje z nich automatycznie:',
-        '',
-        '```bash',
-        'python przewodnik/tools/generuj_md.py',
-        '```',
-        '',
-        'Dzięki temu obie wersje mówią to samo. Poprawki nanoś w plikach `.tex`.',
-        '',
-    ]
+    wiersze.append('')
     io.open(os.path.join(CEL, 'README.md'), 'w', encoding='utf-8',
             newline='\n').write('\n'.join(wiersze))
     print('zapisano:', os.path.relpath(os.path.join(CEL, 'README.md'), KORZEN))

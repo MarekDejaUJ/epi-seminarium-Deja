@@ -1,9 +1,6 @@
-<!-- Pliki w tym katalogu powstaja automatycznie z przewodnik/rozdzialy/.
-     Zmiany nanos w plikach zrodlowych, nie tutaj. -->
-
 # Przewodnik seminaryjny
 
-Przewodnik prowadzi przez cały cykl seminarium – od pierwszego uruchomienia
+Przewodnik obejmuje cały cykl seminarium – od pierwszego uruchomienia
 wzoru, przez budowę pakietu i pisanie kolejnych rozdziałów, po kontrolę formalną
 przed oddaniem pracy.
 
@@ -19,15 +16,3 @@ Całość w jednym pliku, do druku: **[przewodnik.pdf](../przewodnik/przewodnik.
 | 6 | [Wymogi formalne](06-wymogi.md) | przed oddaniem |
 | 7 | [Praca z agentem programistycznym](07-agent-cli.md) | przed pierwszym poleceniem dla narzędzia |
 | 8 | [Jawność i odpowiedzialność](08-etyka-si.md) | na początku i przed oddaniem |
-
-## Skąd się biorą te pliki
-
-Źródłem treści są pliki LaTeX w katalogu [`przewodnik/`](../przewodnik/),
-składane tą samą klasą, z której korzystają prace studentów. Wersja w Markdown
-powstaje z nich automatycznie:
-
-```bash
-python przewodnik/tools/generuj_md.py
-```
-
-Dzięki temu obie wersje mówią to samo. Poprawki nanoś w plikach `.tex`.

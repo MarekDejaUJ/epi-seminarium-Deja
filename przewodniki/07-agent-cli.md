@@ -1,6 +1,3 @@
-<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/07-agent-cli.tex.
-     Zmiany nanos w pliku zrodlowym, nie tutaj. -->
-
 # Praca z agentem programistycznym
 
 *Agent programistyczny*, nazywany też agentem SI, to program oparty na dużym modelu językowym, uruchamiany z terminala w katalogu projektu. Dostaje od Ciebie cel opisany słowami, po czym sam czyta pliki projektu, pisze i zmienia kod, uruchamia testy, czyta ich wyniki i poprawia to, co nie przeszło. Pracuje w pętli i sam decyduje, które pliki otworzyć.
@@ -8,6 +5,9 @@
 W rozdziale opisana jest metoda budowy pakietu z użyciem takiego agenta. Granice dozwolonego użycia i sposób ich dokumentowania są w rozdziale [Jawność i odpowiedzialność](08-etyka-si.md#jawność-i-odpowiedzialność); tutaj chodzi o to, **jak** pracować, żeby powstało narzędzie badawcze, za które da się odpowiadać.
 
 Nazywamy rzecz po imieniu, bo seminarium wymaga jawności użycia. Praca, która opisuje agenta jako „narzędzie wspomagające”, zaciera to, co recenzent ma ocenić: gdzie kończy się wkład autora, a gdzie zaczyna wynik działania programu.
+
+Jedno zastrzeżenie na wstępie: **pakiet budujesz zawsze lokalnie**, niezależnie od tego, gdzie piszesz pracę. Overleaf składa dokumenty i nie uruchamia R-a, więc kod, testy i sprawdzenie pakietu dzieją się u Ciebie na komputerze. Podział na dwie ścieżki z podrozdziału
+ef{sec:sciezki} dotyczy tekstu pracy, nie projektu.
 
 Punkt wyjścia jest taki: implementacja algorytmu z artykułu metodycznego to zadanie, w którym trudność nie leży w składni języka, tylko w zrozumieniu metody. Agent zdejmuje z Ciebie pierwsze i **nie zdejmuje drugiego**. Twoja rola przesuwa się z pisania linii kodu na projektowanie kontraktu i sprawdzanie, czy wynik ten kontrakt spełnia. To trudniejsza rola, nie łatwiejsza.
 

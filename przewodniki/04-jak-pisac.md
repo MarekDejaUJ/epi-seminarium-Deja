@@ -1,6 +1,3 @@
-<!-- Plik powstaje automatycznie z przewodnik/rozdzialy/04-jak-pisac.tex.
-     Zmiany nanos w pliku zrodlowym, nie tutaj. -->
-
 # Jak napisać pracę
 
 W rozdziale omówiona jest każda część wzoru po kolei. Każdy podrozdział odpowiada jednemu plikowi w katalogu rozdziałów. Kolejność podrozdziałów jest kolejnością w pracy, ale **nie kolejnością pisania** – o tym w podrozdziale [W jakiej kolejności pisać](#w-jakiej-kolejności-pisać).
