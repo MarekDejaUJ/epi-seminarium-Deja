@@ -3,7 +3,7 @@
 
 # Warsztat pisania akademickiego
 
-Rozdział jest o tym, **jak** pisać: skąd wziąć pytanie, jak zbudować argument, jak rozmawiać z literaturą i jak nie stracić panowania nad źródłami. Co ma się znaleźć w której części pracy, opisuje rozdział [Jak napisać pracę](04-jak-pisac.md#jak-napisać-pracę); czego wymaga Instytut – rozdział [Wymogi formalne](06-wymogi.md#wymogi-formalne).
+Rozdział jest o tym, **jak** pisać: skąd wziąć pytanie, jak zbudować argument, jak rozmawiać z literaturą i jak nie stracić panowania nad źródłami. Co ma się znaleźć w której części pracy, jest w rozdziale [Jak napisać pracę](04-jak-pisac.md#jak-napisać-pracę); czego wymaga Instytut – rozdział [Wymogi formalne](06-wymogi.md#wymogi-formalne).
 
 ## Pytanie analityczne
 
@@ -95,9 +95,9 @@ Artykuł, na którym opierasz pracę, czytasz inaczej niż literaturę przegląd
 
 Bibliografię prowadź **od pierwszego dnia**. Odtwarzanie jej po fakcie zajmuje kilka dni i zawsze kończy się brakującym numerem strony.
 
-Praktyka minimalna obejmuje cztery kroki. Utwórz kolekcję w Zotero z podkolekcjami na metodę, dziedzinę i narzędzia. Ustaw automatyczny eksport do pliku bibliograficznego projektu. Przy każdej pozycji zapisz jedno lub dwa zdania o tym, **do czego ta pozycja jest Ci potrzebna w pracy** – nie streszczenie, bo streszczenie jest w abstrakcie. Powołanie w tekście wstawiaj od razu przy pisaniu akapitu, a nie na końcu rozdziału.
+Praktyka minimalna obejmuje cztery kroki. Utwórz kolekcję w Zotero z podkolekcjami na metodę, dziedzinę i narzędzia. Ustaw automatyczny eksport do pliku bibliograficznego projektu. Przy każdej pozycji zapisz jedno lub dwa zdania o tym, **do czego ta pozycja jest Ci potrzebna w pracy** – nie streszczenie, bo streszczenie jest w abstrakcie. Cytowanie w tekście wstawiaj od razu przy pisaniu akapitu, a nie na końcu rozdziału.
 
-Sprawdzanie metadanych po imporcie jest obowiązkowe: bazy bibliograficzne notorycznie gubią drugie imiona, mylą typ dokumentu i skracają tytuły czasopism. Szczegóły techniczne opisuje rozdział [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
+Sprawdzanie metadanych po imporcie jest obowiązkowe: bazy bibliograficzne notorycznie gubią drugie imiona, mylą typ dokumentu i skracają tytuły czasopism. Szczegóły techniczne są w rozdziale [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
 
 ## Styl naukowy
 
@@ -120,7 +120,7 @@ Praca naukowa różni się od publicystyki i od dokumentacji technicznej.
 | Zamiast | Napisz |
 |---|---|
 | Niesamowicie ważnym zagadnieniem jest… | Zagadnienie ma znaczenie dla…, ponieważ… |
-| Jak wiadomo, media społecznościowe… | Badania nad mediami społecznościowymi wskazują, że… (powołanie) |
+| Jak wiadomo, media społecznościowe… | Badania nad mediami społecznościowymi wskazują, że… (cytowanie) |
 | Postanowiłem użyć tej metody, bo jest wygodna | Wybrano metodę ze względu na… |
 | Funkcja bierze dane i je przetwarza | Funkcja przyjmuje macierz ocen i zwraca wektor wag |
 
@@ -138,7 +138,7 @@ Praca nie może powielać badań przeprowadzonych wcześniej przez inne osoby �
 
 ### Kompilacja
 
-Praca ani żaden jej fragment nie może być zestawieniem zapożyczeń – ani dosłownych cytatów, ani fragmentów sparafrazowanych. Zasada obejmuje także tłumaczenia z języka obcego. Parafraza nie zwalnia z powołania: wyrażenie cudzej myśli własnymi słowami bez wskazania autora jest naruszeniem, nawet jeżeli żadne zdanie nie zostało przepisane.
+Praca ani żaden jej fragment nie może być zestawieniem zapożyczeń – ani dosłownych cytatów, ani fragmentów sparafrazowanych. Zasada obejmuje także tłumaczenia z języka obcego. Parafraza nie zwalnia z cytowania: wyrażenie cudzej myśli własnymi słowami bez wskazania autora jest naruszeniem, nawet jeżeli żadne zdanie nie zostało przepisane.
 
 Dosłowne cytowanie i referowanie cudzych ustaleń ogranicz do minimum koniecznego do ustalenia stanu badań, podjęcia z nimi dyskusji albo osadzenia własnych wyników.
 
@@ -158,13 +158,13 @@ Przegląd, który brzmi jak wyliczanka kolejnych autorów i tego, co napisali, n
 
 Redakcja to osobny etap, a nie przedłużenie pisania. Zaplanuj na nią co najmniej tydzień.
 
-Przeglądy rób po kolei, za każdym razem szukając jednej rzeczy. Najpierw struktura: czy kolejność rozdziałów i sekcji odpowiada logice wywodu. Potem argument: czy każda teza ma uzasadnienie, a każde uzasadnienie prowadzi do tezy. Następnie powołania: czy każde twierdzenie o cudzym dorobku ma przypis i czy każda pozycja bibliografii ma powołanie. Dalej terminologia: czy nazwy są konsekwentne w całej pracy. Potem język: zdania, akapity, interpunkcja. Na końcu skład: wiszące wiersze, pływające tabele, przeniesienia, spisy.
+Przeglądy rób po kolei, za każdym razem szukając jednej rzeczy. Najpierw struktura: czy kolejność rozdziałów i sekcji odpowiada logice wywodu. Potem argument: czy każda teza ma uzasadnienie, a każde uzasadnienie prowadzi do tezy. Następnie cytowania: czy każde twierdzenie o cudzym dorobku ma przypis i czy każda pozycja bibliografii ma cytowanie. Dalej terminologia: czy nazwy są konsekwentne w całej pracy. Potem język: zdania, akapity, interpunkcja. Na końcu skład: wiszące wiersze, pływające tabele, przeniesienia, spisy.
 
 Korektę rób na wydruku albo w innym kroju pisma. Czytaj na głos zdania, które wydają się długie; zdanie, którego nie da się przeczytać jednym tchem, wymaga podziału. Przed ostatnim przeglądem odłóż tekst na dwa lub trzy dni – nie ma sposobu, żeby to obejść.
 
 ## Harmonogram
 
-Pisanie i budowa pakietu idą równolegle. Rozdziały powstają w kolejności innej niż kolejność w pracy; podaje ją tabela **Kolejność pisania rozdziałów**.
+Pisanie i budowa pakietu prowadzone są równolegle. Rozdziały powstają w kolejności innej niż kolejność w pracy; jest ona w tabeli **Kolejność pisania rozdziałów**.
 
 **Tabela 20. Co prowadzić od pierwszego dnia**
 
