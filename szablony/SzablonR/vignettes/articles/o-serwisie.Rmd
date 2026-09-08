@@ -19,7 +19,7 @@ języka R implementujący procedurę porządkowania alternatyw według wielu
 kryteriów. Składa się z trzech części.
 
 Zakładka **Algorytm** opisuje metodę: wzory, założenia, granice stosowalności
-i sposób weryfikacji poprawności, wraz z powołaniami na literaturę.
+i sposób weryfikacji poprawności, wraz z cytowaniami literatury.
 
 Zakładka **Poradnik** prowadzi przez pełną ścieżkę analizy od surowych danych
 do rankingu.

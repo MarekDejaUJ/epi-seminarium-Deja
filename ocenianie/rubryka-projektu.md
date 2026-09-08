@@ -62,7 +62,7 @@ z aplikacją.
 
 | Punkty | Opis |
 |---|---|
-| 18–20 | Każda funkcja eksportowana opisana z argumentami, wynikiem i działającym przykładem. Winieta prowadzi przez pełny przepływ analizy. Serwis zawiera opis algorytmu z powołaniami i bibliografią zgodną z pracą. Aplikacja przyjmuje dane użytkownika, pozwala zmieniać parametry i czytelnie obsługuje błędy. Nota wymagana przez Standardy obecna. |
+| 18–20 | Każda funkcja eksportowana opisana z argumentami, wynikiem i działającym przykładem. Winieta prowadzi przez pełny przepływ analizy. Serwis zawiera opis algorytmu z cytowaniami i bibliografią zgodną z pracą. Aplikacja przyjmuje dane użytkownika, pozwala zmieniać parametry i czytelnie obsługuje błędy. Nota wymagana przez Standardy obecna. |
 | 14–17 | Dokumentacja kompletna, winieta obecna, serwis i aplikacja działają. Opis algorytmu skrótowy albo bibliografia niepełna. |
 | 10–13 | Dokumentacja funkcji kompletna, serwis ogranicza się do dokumentacji. Aplikacja działa na danych wbudowanych. |
 | 5–9 | Dokumentacja szczątkowa. Serwis albo aplikacja niedostępne pod stałym adresem. |

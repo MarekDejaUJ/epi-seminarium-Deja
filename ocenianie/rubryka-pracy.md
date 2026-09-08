@@ -90,11 +90,11 @@ wiarygodnie opisywać.
 
 | Poziom | Opis |
 |---|---|
-| wyróżniająca | Piśmiennictwo dobrane do problemu, nie do tematu ogólnie. Pozycje obcojęzyczne obecne i faktycznie wykorzystane. Powołania w miejscach, w których rzeczywiście coś podpierają. Opisy bibliograficzne zgodne z wymaganym stylem, bez wyjątków. |
-| poprawna | Dobór trafny, powołania poprawne, pojedyncze niezgodności w opisach bibliograficznych. |
-| niewystarczająca | Pozycje w bibliografii bez powołań w tekście. Powołania do prac, których treść nie odpowiada twierdzeniu. Opisy niezgodne ze stylem. |
+| wyróżniająca | Piśmiennictwo dobrane do problemu, nie do tematu ogólnie. Pozycje obcojęzyczne obecne i faktycznie wykorzystane. Cytowania w miejscach, w których rzeczywiście coś podpierają. Opisy bibliograficzne zgodne z wymaganym stylem, bez wyjątków. |
+| poprawna | Dobór trafny, cytowania poprawne, pojedyncze niezgodności w opisach bibliograficznych. |
+| niewystarczająca | Pozycje w bibliografii bez cytowań w tekście. Cytowania prac, których treść nie odpowiada twierdzeniu. Opisy niezgodne ze stylem. |
 
-Powołanie do pracy, która nie mówi tego, co jej przypisano, jest usterką cięższą niż
+Cytowanie pracy, która nie mówi tego, co jej przypisano, jest usterką cięższą niż
 błąd w zapisie opisu bibliograficznego. Recenzent sprawdza to wyrywkowo i zwykle
 trafia.
 
@@ -107,10 +107,10 @@ oddaniem pracy.
 |---|---|
 | rozdział pierwszy referuje artykuł zamiast go opracowywać | 6 |
 | brak przeglądu istniejących implementacji metody | 3 |
-| wzory bez objaśnienia, co robią | 6 |
+| wzory bez objaśnienia, co wyrażają | 6 |
 | ta sama rzecz nazwana w pracy trzema określeniami | 4 |
 | wnioski szersze niż wyniki | 6 |
-| pozycje w bibliografii bez powołań | 8 |
+| pozycje w bibliografii bez cytowań | 8 |
 | opis aplikacji niezgodny z jej stanem | 7 |
 | brak opisu, skąd wiadomo, że program liczy poprawnie | 5 |
 

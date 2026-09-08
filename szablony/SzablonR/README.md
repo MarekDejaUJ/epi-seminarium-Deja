@@ -25,7 +25,7 @@ niezmienność.
 | `data-raw/generuj_dane.R` | procedura generowania danych o znanej strukturze |
 | `tests/testthat/` | trzy warstwy sprawdzania, opisane niżej |
 | `vignettes/poradnik.Rmd` | pełna ścieżka analizy krok po kroku |
-| `vignettes/articles/` | strony serwisu: opis algorytmu z powołaniami, nota o serwisie |
+| `vignettes/articles/` | strony serwisu: opis algorytmu z cytowaniami, nota o serwisie |
 | `inst/shiny-app/app.R` | aplikacja działająca w przeglądarce |
 | `_pkgdown.yml` | konfiguracja serwisu |
 | `tools/` | eksport aplikacji do postaci uruchamialnej w przeglądarce |
@@ -96,7 +96,7 @@ internetowy. Szkielet buduje go z trzech części.
 dostaje stronę z argumentami, wartością zwracaną i przykładem.
 
 **Opis algorytmu** (`vignettes/articles/algorytm.Rmd`) to strona z wzorami,
-założeniami, granicami stosowalności i powołaniami na literaturę. Powołania
+założeniami, granicami stosowalności i cytowaniami literatury. Cytowania
 działają jak w pracy: plik `literatura.bib` obok, odwołania w nawiasach
 kwadratowych, bibliografia na końcu.
 

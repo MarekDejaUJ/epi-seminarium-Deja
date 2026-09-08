@@ -21,7 +21,7 @@ Do przejścia przed [kamieniem milowym
 ### Serwis
 
 - [ ] Serwis działa pod adresem podanym na stronie tytułowej pracy
-- [ ] Opis algorytmu zawiera wzory i powołania
+- [ ] Opis algorytmu zawiera wzory i cytowania
 - [ ] Bibliografia serwisu jest zgodna z bibliografią pracy
 - [ ] Dokumentacja obejmuje wszystkie funkcje eksportowane
 - [ ] Nota wymagana przez Standardy znajduje się w zakładce o serwisie
@@ -79,8 +79,8 @@ Wynik zmieniony na trzecim miejscu po przecinku i tak trzeba poprawić w tabeli.
 - [ ] Skład zgodny ze Standardami: krój, stopień, interlinia, marginesy, numeracja
 - [ ] Strona tytułowa zgodna z załącznikiem do Standardów
 - [ ] Opisy bibliograficzne zgodne z wymaganym stylem
-- [ ] Każde powołanie ma pozycję w bibliografii i odwrotnie
-- [ ] Powołania sprawdzone wyrywkowo: treść źródła odpowiada twierdzeniu
+- [ ] Każde cytowanie ma pozycję w bibliografii i odwrotnie
+- [ ] Cytowania sprawdzone wyrywkowo: treść źródła odpowiada twierdzeniu
 - [ ] Materiał ilustracyjny ma tytuł nad i źródło pod obiektem
 - [ ] Aneksy kompletne: metadane oprogramowania, nota serwisu, oświadczenie, wykaz poleceń
 - [ ] Praca wolna od śladów redakcji roboczej i komentarzy w plikach źródłowych

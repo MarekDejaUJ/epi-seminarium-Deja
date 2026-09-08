@@ -114,4 +114,4 @@ Poniższe czynności rozstrzyga rozumienie metody, a nie znajomość języka:
 - projekt procedury generowania danych,
 - decyzja o każdej zależności pakietu,
 - interpretacja wyników,
-- **cały tekst pracy oraz wszystkie powołania i opisy bibliograficzne.**
+- **cały tekst pracy oraz wszystkie cytowania i opisy bibliograficzne.**

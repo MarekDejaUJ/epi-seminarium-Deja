@@ -44,5 +44,5 @@ Katalog [`przewodniki/`](../przewodniki/) powstaje automatycznie z plików tego 
 python przewodnik/tools/generuj_md.py
 ```
 
-Skrypt przenosi tabele, listingi, wzory, listy kontrolne, powołania i odsyłacze
+Skrypt przenosi tabele, listingi, wzory, listy kontrolne, cytowania i odsyłacze
 międzyrozdziałowe. Uruchom go po każdej zmianie w źródłach, razem z ponowną kompilacją.

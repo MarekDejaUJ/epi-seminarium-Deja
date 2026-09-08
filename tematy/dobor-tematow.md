@@ -35,7 +35,7 @@ roboczej: różnice dotyczyły inicjałów, roku wydania i brzmienia tytułu.
 
 To sprawdzenie nie jest nadmiarowe. Opis bibliograficzny przepisany z drugiej ręki
 potrafi zawierać nazwiska istniejących badaczy przy tytule, którego nikt nie napisał.
-Powołanie na taką pozycję w pracy dyplomowej jest błędem, którego nie da się obronić.
+Cytowanie takiej pozycji w pracy dyplomowej jest błędem, którego nie da się obronić.
 
 **Erraty i wersje.** Sprawdzano, czy do artykułu nie ukazało się sprostowanie. Jedna
 pozycja na liście ma opublikowaną erratę i brief odsyła do obu tekstów. Pracujesz

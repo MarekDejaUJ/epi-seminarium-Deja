@@ -96,7 +96,7 @@ część pierwszą pracy: wprowadzenie i rozdział pierwszy.
 - [ ] Po każdym wzorze jest akapit mówiący, co ten wzór robi
 - [ ] Granice stosowalności metody opisane, nie pominięte
 - [ ] Bibliografia liczy co najmniej piętnaście pozycji, w tym obcojęzyczne
-- [ ] Każda pozycja bibliografii ma powołanie w tekście
+- [ ] Każda pozycja bibliografii ma cytowanie w tekście
 - [ ] Dokument składa się bez błędów i bez nierozwiązanych odsyłaczy
 
 Objętość części pierwszej to orientacyjnie dwadzieścia stron znormalizowanych, czyli
@@ -145,7 +145,7 @@ przyjęciu projektu.
 - [ ] Pakiet w wersji `1.0.0` ze znacznikiem w repozytorium
 - [ ] Sprawdzenie w trybie zgodności nadal czyste
 - [ ] Serwis działa pod adresem, który wpisujesz na stronę tytułową pracy
-- [ ] Serwis zawiera opis algorytmu z powołaniami i bibliografią
+- [ ] Serwis zawiera opis algorytmu z cytowaniami i bibliografią
 - [ ] Serwis zawiera dokumentację wszystkich funkcji eksportowanych
 - [ ] Aplikacja działa w przeglądarce i przyjmuje dane użytkownika
 - [ ] Aplikacja obsługuje błędne dane komunikatem, a nie zatrzymaniem
