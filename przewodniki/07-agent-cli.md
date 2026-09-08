@@ -88,7 +88,7 @@ Są trzy sytuacje, w których pętlę trzeba zatrzymać, bo dalsze krążenie ty
 
 Agent nie zna artykułu, który czytasz. Zna wzorce z kodu, który widział wcześniej. Tam, gdzie Twoja metoda odbiega od wzorca, dostaniesz rozwiązanie typowe, a nie właściwe.
 
-**Tabela 24. Typowe miejsca rozejścia się implementacji z metodą**
+**Tabela 25. Typowe miejsca rozejścia się implementacji z metodą**
 
 | Sytuacja | Co sprawdzić |
 |---|---|
@@ -177,7 +177,7 @@ Wykaz poleceń jest wymaganym aneksem pracy, ale prowadzi się go **od pierwszeg
 
 Rejestr jest plikiem w repozytorium pakietu. Dla każdego polecenia zapisujesz pięć rzeczy: użytego agenta, cel, treść polecenia, co zmieniłeś w otrzymanym wyniku oraz jak sprawdziłeś poprawność. Trzecia i czwarta kolumna są najważniejsze, bo to one pokazują Twój wkład.
 
-**Tabela 25. Wpis w rejestrze poleceń**
+**Tabela 26. Wpis w rejestrze poleceń**
 
 | Pole | Treść |
 |---|---|

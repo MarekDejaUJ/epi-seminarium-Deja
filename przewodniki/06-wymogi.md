@@ -4,7 +4,7 @@ Zestawienie wymagań obowiązujących pracę licencjacką na kierunku elektronic
 
 ## Skład
 
-**Tabela 21. Wymogi składu**
+**Tabela 22. Wymogi składu**
 
 | Wymóg | Źródło | Kto realizuje |
 |---|---|---|
@@ -71,7 +71,7 @@ Zasada wiążąca bibliografię z tekstem: **bibliografia zawiera wyłącznie po
 
 ## Materiał ilustracyjny
 
-**Tabela 22. Wymogi wobec materiału ilustracyjnego**
+**Tabela 23. Wymogi wobec materiału ilustracyjnego**
 
 | Wymóg | Źródło |
 |---|---|
@@ -88,7 +88,7 @@ Prawa do ilustracji: bez zgody autora można wykorzystać materiały z domeny pu
 
 ## Zapis w tekście
 
-**Tabela 23. Zapis elementów w tekście**
+**Tabela 24. Zapis elementów w tekście**
 
 | Element | Zapis | Polecenie |
 |---|---|---|

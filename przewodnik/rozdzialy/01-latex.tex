@@ -163,7 +163,7 @@ informacji rozniczujacej i powinno otrzymac wage nizsza.
 
 \subsection{Tabele}
 
-Tabela w pracy ma tytuł nad sobą i źródło pod sobą. Robi to środowisko \kod{tabelaepi}, które przyjmuje tytuł i etykietę.
+Tabela w pracy ma tytuł nad sobą i źródło pod sobą. Składa ją środowisko \kod{tabelaepi}, które przyjmuje tytuł i etykietę, a opcjonalnie także położenie.
 
 \begin{zapis}
 \begin{tabelaepi}{Moduly pakietu}{tab:moduly}
@@ -201,7 +201,36 @@ dev.off()
 
 Wykres liczbowy wstawiaj przez środowisko \kod{wykresepi}; ma osobną numerację, tak jak wymaga Instrukcja.
 
-Tabele i rysunki są \termin{pływakami}: LaTeX umieszcza je tam, gdzie wychodzi najlepiej, niekoniecznie w miejscu wpisania. To nie jest usterka. Nie walcz z tym w trakcie pisania -- zajmij się tym przy redakcji, a w tekście zawsze odsyłaj przez etykietę, nigdy przez zwrot \enquote{poniższa tabela}.
+Tabele, rysunki i wykresy są \termin{pływakami}: LaTeX umieszcza je tam, gdzie wychodzi najlepiej, niekoniecznie w miejscu wpisania. To nie jest usterka, tylko sposób, w jaki unika się dziur na stronach. Nie walcz z tym w trakcie pisania -- zajmij się tym przy redakcji, a w tekście zawsze odsyłaj przez etykietę, nigdy przez zwrot \enquote{poniższa tabela}, bo pływak może wylądować stronę dalej.
+
+\subsection{Położenie pływaka}
+
+Miejsce, w którym pływak wolno postawić, ustala się literami podanymi w nawiasie kwadratowym, przed tytułem:
+
+\begin{zapis}
+\begin{tabelaepi}[H]{Moduly pakietu}{tab:moduly}
+\end{zapis}
+
+\begin{tabelaepi}{Litery położenia pływaka}{tab:polozenie}
+\begin{tabular}{@{}cp{10.6cm}@{}}
+\toprule
+Litera & Znaczenie \\
+\midrule
+\kod{h} & tutaj, jeżeli w tym miejscu zostało dość miejsca \\
+\kod{t} & u góry strony \\
+\kod{b} & u dołu strony \\
+\kod{p} & na osobnej stronie złożonej z samych pływaków \\
+\kod{!} & bez oglądania się na ograniczenia wypełnienia strony \\
+\kod{H} & dokładnie tutaj, bez pływania \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Litery poza \kod{H} łączy się i podaje w kolejności, w jakiej LaTeX ma próbować. Domyślnie wzór stosuje \kod{htbp}, czyli najpierw tutaj, potem góra, dół i osobna strona; przy zwykłej tabeli nie musisz podawać niczego.
+
+\kod{H} działa inaczej niż pozostałe: nie jest propozycją, tylko poleceniem. Obiekt zostaje dokładnie tam, gdzie go wpisałeś, a jeżeli nie mieści się na stronie, zostaje przeniesiony w całości na następną, zostawiając pustkę. Stąd zasada praktyczna: \wyroznienie{sięgaj po \kod{H} tylko wtedy, gdy obiekt trzeba czytać razem ze zdaniem obok} -- mała tabela z dwiema liczbami, rysunek, do którego odnosi się kolejne zdanie. Przy większych obiektach efektem jest strona w połowie pusta.
+
+Gdy pływaki zbiorą się i wyjdą poza rozdział, w którym są omawiane, wstaw \kod{\textbackslash clearpage} przed końcem rozdziału. Domknie to stronę i wypchnie wszystkie zaległe obiekty przed dalszą treść.
 
 \subsection{Wzory}
 

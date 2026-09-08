@@ -34,7 +34,7 @@ Luka musi być sprawdzalna. Wymień narzędzia, które przejrzałeś, i napisz, 
 
 ### Typowe błędy
 
-**Tabela 13. Błędy we wprowadzeniu**
+**Tabela 14. Błędy we wprowadzeniu**
 
 | Błąd | Dlaczego szkodzi |
 |---|---|
@@ -80,7 +80,7 @@ Z artykułu źródłowego, z sekcji definicyjnej i algorytmicznej. **Nie przepis
 
 Wzoru nie tłumacz na polski w sensie notacji. Symbole zostają takie jak w źródle, żeby czytelnik mógł porównać; tłumaczysz sens, a nie znaki.
 
-**Tabela 14. Błędy w rozdziale metodycznym**
+**Tabela 15. Błędy w rozdziale metodycznym**
 
 | Błąd | Dlaczego szkodzi |
 |---|---|
@@ -124,7 +124,7 @@ Odpowiednik sekcji opisującej oprogramowanie. Najważniejszy rozdział inżynie
 
 Jeżeli korzystałeś z narzędzia wspomagającego pisanie kodu, opisz to jako element metodyki inżynierskiej, a nie jako wyznanie. Interesujące jest to, **gdzie specyfikacja wychwyciła błąd**: w którym miejscu narzędzie uprościło założenie metody i jak to wykryłeś. To pokazuje zrozumienie metody lepiej niż bezbłędny kod. Zasada podstawowa pozostaje jedna: musisz umieć objaśnić każdą linię kodu, którą oddajesz.
 
-**Tabela 15. Błędy w rozdziale inżynierskim**
+**Tabela 16. Błędy w rozdziale inżynierskim**
 
 | Błąd | Dlaczego szkodzi |
 |---|---|
@@ -161,7 +161,7 @@ Dane wygenerowane pozwalają sprawdzić poprawność, bo znasz prawdziwą odpowi
 
 **Porównanie.** Zestaw wyniki z rezultatem z artykułu źródłowego albo z metodą odniesienia. Rozbieżność nie jest porażką – jest wynikiem, o ile potrafisz wskazać jej przyczynę. Rozbieżność przemilczana jest błędem.
 
-**Tabela 16. Błędy w studium przypadku**
+**Tabela 17. Błędy w studium przypadku**
 
 | Błąd | Dlaczego szkodzi |
 |---|---|
@@ -213,7 +213,7 @@ Plik `rozdzialy/06-aneksy.tex`. Wzór przewiduje cztery aneksy: metadane oprogra
 
 ## W jakiej kolejności pisać
 
-**Tabela 17. Kolejność pisania rozdziałów**
+**Tabela 18. Kolejność pisania rozdziałów**
 
 | Etap | Co piszesz | Dlaczego wtedy |
 |---|---|---|

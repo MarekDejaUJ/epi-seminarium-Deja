@@ -179,16 +179,17 @@
   \begingroup\setstretch{1}\footnotesize\raggedright
   \'Zr\'od\l o: #1.\par\endgroup}
 
-\NewDocumentEnvironment{tabelaepi}{m m}
-  {\begin{table}[htbp]\setstretch{1}\caption{#1}\label{#2}\centering}
+% Pierwszy argument jest opcjonalny i ustala polozenie plywaka; domyslnie htbp.
+\NewDocumentEnvironment{tabelaepi}{O{htbp} m m}
+  {\begin{table}[#1]\setstretch{1}\caption{#2}\label{#3}\centering}
   {\end{table}}
 
-\NewDocumentEnvironment{rysunekepi}{m m}
-  {\begin{figure}[htbp]\setstretch{1}\caption{#1}\label{#2}\centering}
+\NewDocumentEnvironment{rysunekepi}{O{htbp} m m}
+  {\begin{figure}[#1]\setstretch{1}\caption{#2}\label{#3}\centering}
   {\end{figure}}
 
-\NewDocumentEnvironment{wykresepi}{m m}
-  {\begin{wykres}[htbp]\setstretch{1}\caption{#1}\label{#2}\centering}
+\NewDocumentEnvironment{wykresepi}{O{htbp} m m}
+  {\begin{wykres}[#1]\setstretch{1}\caption{#2}\label{#3}\centering}
   {\end{wykres}}
 
 % --------------------------------------------------------------------------

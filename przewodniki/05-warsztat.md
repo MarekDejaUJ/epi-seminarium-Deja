@@ -37,7 +37,7 @@ Pytanie prowadzi przez cały proces badawczy i pisanie. Kształtuje strukturę p
 
 Pytanie otwiera, teza domyka. Teza to zdanie oznajmujące, z którym da się nie zgodzić. Jeżeli nikt rozsądny nie mógłby zaprzeczyć Twojej tezie, to nie jest teza, tylko stwierdzenie faktu.
 
-**Tabela 18. Od pytania do tezy**
+**Tabela 19. Od pytania do tezy**
 
 | Pytanie | Teza |
 |---|---|
@@ -112,7 +112,7 @@ Akapit ma jedną myśl i mieści się na jednej trzeciej strony. Pierwsze zdanie
 
 Praca naukowa różni się od publicystyki i od dokumentacji technicznej.
 
-**Tabela 19. Rejestr wypowiedzi**
+**Tabela 20. Rejestr wypowiedzi**
 
 | Zamiast | Napisz |
 |---|---|
@@ -163,7 +163,7 @@ Korektę rób na wydruku albo w innym kroju pisma. Czytaj na głos zdania, któr
 
 Pisanie i budowa pakietu prowadzone są równolegle. Rozdziały powstają w kolejności innej niż kolejność w pracy; jest ona w tabeli **Kolejność pisania rozdziałów**.
 
-**Tabela 20. Co prowadzić od pierwszego dnia**
+**Tabela 21. Co prowadzić od pierwszego dnia**
 
 | Co | Gdzie | Dlaczego |
 |---|---|---|

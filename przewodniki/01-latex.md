@@ -151,7 +151,7 @@ informacji rozniczujacej i powinno otrzymac wage nizsza.
 
 ### Tabele
 
-Tabela w pracy ma tytuł nad sobą i źródło pod sobą. Robi to środowisko `tabelaepi`, które przyjmuje tytuł i etykietę.
+Tabela w pracy ma tytuł nad sobą i źródło pod sobą. Składa ją środowisko `tabelaepi`, które przyjmuje tytuł i etykietę, a opcjonalnie także położenie.
 
 ```latex
 \begin{tabelaepi}{Moduly pakietu}{tab:moduly}
@@ -189,7 +189,32 @@ dev.off()
 
 Wykres liczbowy wstawiaj przez środowisko `wykresepi`; ma osobną numerację, tak jak wymaga Instrukcja.
 
-Tabele i rysunki są *pływakami*: LaTeX umieszcza je tam, gdzie wychodzi najlepiej, niekoniecznie w miejscu wpisania. To nie jest usterka. Nie walcz z tym w trakcie pisania – zajmij się tym przy redakcji, a w tekście zawsze odsyłaj przez etykietę, nigdy przez zwrot „poniższa tabela”.
+Tabele, rysunki i wykresy są *pływakami*: LaTeX umieszcza je tam, gdzie wychodzi najlepiej, niekoniecznie w miejscu wpisania. To nie jest usterka, tylko sposób, w jaki unika się dziur na stronach. Nie walcz z tym w trakcie pisania – zajmij się tym przy redakcji, a w tekście zawsze odsyłaj przez etykietę, nigdy przez zwrot „poniższa tabela”, bo pływak może wylądować stronę dalej.
+
+### Położenie pływaka
+
+Miejsce, w którym pływak wolno postawić, ustala się literami podanymi w nawiasie kwadratowym, przed tytułem:
+
+```latex
+\begin{tabelaepi}[H]{Moduly pakietu}{tab:moduly}
+```
+
+**Tabela 5. Litery położenia pływaka**
+
+| Litera | Znaczenie |
+|---|---|
+| `h` | tutaj, jeżeli w tym miejscu zostało dość miejsca |
+| `t` | u góry strony |
+| `b` | u dołu strony |
+| `p` | na osobnej stronie złożonej z samych pływaków |
+| `!` | bez oglądania się na ograniczenia wypełnienia strony |
+| `H` | dokładnie tutaj, bez pływania |
+
+Litery poza `H` łączy się i podaje w kolejności, w jakiej LaTeX ma próbować. Domyślnie wzór stosuje `htbp`, czyli najpierw tutaj, potem góra, dół i osobna strona; przy zwykłej tabeli nie musisz podawać niczego.
+
+`H` działa inaczej niż pozostałe: nie jest propozycją, tylko poleceniem. Obiekt zostaje dokładnie tam, gdzie go wpisałeś, a jeżeli nie mieści się na stronie, zostaje przeniesiony w całości na następną, zostawiając pustkę. Stąd zasada praktyczna: **sięgaj po `H` tylko wtedy, gdy obiekt trzeba czytać razem ze zdaniem obok** – mała tabela z dwiema liczbami, rysunek, do którego odnosi się kolejne zdanie. Przy większych obiektach efektem jest strona w połowie pusta.
+
+Gdy pływaki zbiorą się i wyjdą poza rozdział, w którym są omawiane, wstaw `\clearpage` przed końcem rozdziału. Domknie to stronę i wypchnie wszystkie zaległe obiekty przed dalszą treść.
 
 ### Wzory
 
@@ -211,7 +236,7 @@ $$
 
 Wzór bez numeru zapisuje się w nawiasach kwadratowych poprzedzonych ukośnikiem. Kilka wzorów wyrównanych do znaku równości składa środowisko `align`.
 
-**Tabela 5. Zapis matematyczny**
+**Tabela 6. Zapis matematyczny**
 
 | Chcesz | Piszesz |
 |---|---|
@@ -290,7 +315,7 @@ Komunikat zaczyna się od wykrzyknika, a numer wiersza stoi w linii rozpoczynaj�
 
 ### Katalog błędów
 
-**Tabela 6. Najczęstsze błędy kompilacji**
+**Tabela 7. Najczęstsze błędy kompilacji**
 
 | Komunikat albo objaw | Przyczyna | Naprawa |
 |---|---|---|

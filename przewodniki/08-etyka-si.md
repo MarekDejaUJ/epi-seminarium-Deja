@@ -32,7 +32,7 @@ Konsekwencje takiego wpisu w pracy dyplomowej są poważne. Brak odpowiednio opi
 
 Każdą pozycję bibliografii masz w ręku: przeczytaną, z ustalonym identyfikatorem cyfrowym, wpisaną do menedżera bibliografii. Sposób prowadzenia jest w rozdziale [Bibliografia: plik BibTeX i Zotero](02-bibliografia.md#bibliografia-plik-bibtex-i-zotero).
 
-**Tabela 26. Zakres dozwolonego użycia**
+**Tabela 27. Zakres dozwolonego użycia**
 
 | Czynność | Ocena |
 |---|---|
