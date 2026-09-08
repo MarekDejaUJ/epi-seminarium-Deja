@@ -29,7 +29,7 @@ Klucz musi być niepowtarzalny w obrębie pliku, a złożyć go wolno wyłączni
 
 W seminarium klucz składa się z nazwiska, roku i jednego słowa z tytułu, po którym rozpoznasz pozycję na pierwszy rzut oka, zawsze bez znaków diakrytycznych i bez spacji. Przy jednym autorze bierzesz jego nazwisko, przy dwóch oba, drugie od wielkiej litery, przy trzech i więcej samo nazwisko pierwszego:
 
-**Tabela 8. Budowa klucza cytowania**
+**Tabela 9. Budowa klucza cytowania**
 
 | Pozycja | Klucz |
 |---|---|
@@ -135,7 +135,7 @@ Dokument na nośniku materialnym opisuje typ nośnika w polu `howpublished`. Nor
 
 ## Zestawienie pól
 
-**Tabela 9. Pola wpisu bibliograficznego**
+**Tabela 10. Pola wpisu bibliograficznego**
 
 | Pole | Kiedy | Uwaga |
 |---|---|---|
@@ -177,7 +177,7 @@ Eksport ustawia się raz: menu podręczne kolekcji, polecenie eksportu, format *
 
 ### Odpowiedniki typów
 
-**Tabela 10. Typy dokumentów w Zotero i we wpisie bibliograficznym**
+**Tabela 11. Typy dokumentów w Zotero i we wpisie bibliograficznym**
 
 | Typ w Zotero | Typ wpisu |
 |---|---|
@@ -200,7 +200,7 @@ Zasada praktyczna: **nigdy nie ufaj pierwszemu importowi**. Sprawdzenie wpisu za
 
 ## Cytowania w tekście
 
-**Tabela 11. Postacie cytowania**
+**Tabela 12. Postacie cytowania**
 
 | Sytuacja | Polecenie | Efekt |
 |---|---|---|

@@ -18,7 +18,7 @@ Paczka powstaje z repozytorium przy każdej zmianie wzoru, więc pobrana dziś j
 
 ### Ustawienia
 
-**Tabela 12. Ustawienia projektu na Overleaf**
+**Tabela 13. Ustawienia projektu na Overleaf**
 
 | Ustawienie | Wartość | Dlaczego |
 |---|---|---|
@@ -107,7 +107,7 @@ Repozytorium pakietu i pracę trzymaj **osobno**. Praca zawiera pliki, które ni
 
 ## Problemy specyficzne dla Overleaf
 
-**Tabela 13. Problemy w pracy na Overleaf**
+**Tabela 14. Problemy w pracy na Overleaf**
 
 | Objaw | Przyczyna | Naprawa |
 |---|---|---|

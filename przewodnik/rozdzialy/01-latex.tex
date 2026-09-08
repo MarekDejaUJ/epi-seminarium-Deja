@@ -81,7 +81,26 @@ Kilka znaków ma w LaTeX-u znaczenie specjalne i żeby pojawiły się w tekście
 \subsection{Normalizacja}              % 1.1.1
 \end{zapis}
 
-Numeracja jest automatyczna. Nie wpisuj numerów ręcznie -- po wstawieniu rozdziału w środku przenumerowanie zajmie sekundę, a nie godzinę. Elementy nienumerowane, obecne mimo to w spisie treści, mają własne polecenia: \kod{\textbackslash wprowadzenie}, \kod{\textbackslash podsumowanie}, \kod{\textbackslash wykazzrodel}, \kod{\textbackslash aneksy}.
+Numeracja jest automatyczna. Nie wpisuj numerów ręcznie -- po wstawieniu rozdziału w środku przenumerowanie zajmie sekundę, a nie godzinę. Elementy nienumerowane, obecne mimo to w spisie treści, mają własne polecenia. Nie składa się ich samodzielnie.
+
+\begin{tabelaepi}{Polecenia elementów nienumerowanych}{tab:nienumerowane}
+\begin{tabular}{@{}lp{8.9cm}@{}}
+\toprule
+Polecenie & Co wstawia \\
+\midrule
+\kod{\textbackslash wprowadzenie} & rozdział Wprowadzenie \\
+\kod{\textbackslash podsumowanie} & rozdział Podsumowanie \\
+\kod{\textbackslash wykazzrodel} & Wykaz źródeł \\
+\kod{\textbackslash bibliografia} & bibliografię złożoną przez styl \\
+\kod{\textbackslash spisilustracji} & spisy tabel, rysunków i wykresów \\
+\kod{\textbackslash indeksnazwisk} & indeks nazwisk \\
+\kod{\textbackslash aneksy} & rozdział Aneksy \\
+\kod{\textbackslash aneks\{Tytuł\}} & pojedynczy aneks, z własną numeracją \\
+\bottomrule
+\end{tabular}
+\end{tabelaepi}
+
+Każde z nich robi dwie rzeczy naraz: składa nagłówek bez numeru i dopisuje pozycję do spisu treści. Samo \kod{\textbackslash chapter*} albo \kod{\textbackslash section*} drugiej z tych rzeczy nie zrobi, więc \wyroznienie{nie stosuj ich samodzielnie}. Układ pracy jest ustalony przez Standardy i nie ma w nim miejsca, które trzeba by dopisywać własnym nagłówkiem bez numeru.
 
 \subsection{Etykiety i odsyłacze}
 
@@ -306,6 +325,18 @@ Cena jest taka, że nie ma tam kolorowania składni ani numeracji wierszy. Podzi
 Rozdziały są osobnymi plikami włączanymi poleceniem \kod{\textbackslash input}, podawanym bez rozszerzenia. Dzięki temu nie przewijasz tysiąca wierszy i łatwiej znaleźć miejsce błędu. Żeby przy pisaniu jednego rozdziału kompilować tylko jego, zakomentuj pozostałe polecenia włączenia w pliku głównym. Przed oddaniem odkomentuj wszystkie -- inaczej numeracja, spis treści i bibliografia będą niepełne.
 
 Znak procentu wyłącza resztę wiersza. Komentarze służą do notatek dla siebie i znikają z gotowego pliku. Przed oddaniem przejrzyj je i usuń te, które są notatkami roboczymi.
+
+\subsection{Łamanie stron}
+
+Rozdziały zaczynają się od nowej strony samoczynnie. \wyroznienie{Nie poprzedzaj \kod{\textbackslash chapter} poleceniem łamania} -- dostaniesz pustą stronę.
+
+Do dyspozycji są trzy polecenia i różnią się w sposób, który ma znaczenie. \kod{\textbackslash newpage} kończy stronę i przenosi dalszą treść na następną. \kod{\textbackslash clearpage} robi to samo, ale najpierw wypuszcza wszystkie zaległe pływaki; to jest właściwe polecenie na koniec rozdziału, gdy tabele uciekły za daleko. \kod{\textbackslash pagebreak} łamie stronę, rozciągając tekst do dołu, przez co odstępy między akapitami się powiększają; w pracy ciągłej wygląda to źle i zwykle lepiej z niego zrezygnować.
+
+Zasada nadrzędna: \wyroznienie{łamania stron nie wstawia się w trakcie pisania}. Każde dopisane zdanie przesuwa wszystko, co dalej, więc ręczne łamanie trzeba by poprawiać po każdej zmianie. Jest to czynność redakcyjna, na sam koniec, po dopisaniu ostatniego akapitu.
+
+Czego nie robić nigdy: nie przesuwaj treści pustymi liniami, poleceniem \kod{\textbackslash vspace} ani podwójnym ukośnikiem. Odstępy ustawia klasa i każda taka poprawka jest rozbieżnością z wymogami składu.
+
+Jeden przypadek, w którym łamanie jest uzasadnione od razu: jeżeli chcesz, żeby każdy aneks zaczynał się od nowej strony, wstaw \kod{\textbackslash clearpage} przed każdym \kod{\textbackslash aneks}.
 
 \subsection{Kontrola typografii}
 

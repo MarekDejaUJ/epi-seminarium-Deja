@@ -77,7 +77,22 @@ Kilka znaków ma w LaTeX-u znaczenie specjalne i żeby pojawiły się w tekście
 \subsection{Normalizacja}              % 1.1.1
 ```
 
-Numeracja jest automatyczna. Nie wpisuj numerów ręcznie – po wstawieniu rozdziału w środku przenumerowanie zajmie sekundę, a nie godzinę. Elementy nienumerowane, obecne mimo to w spisie treści, mają własne polecenia: `\wprowadzenie`, `\podsumowanie`, `\wykazzrodel`, `\aneksy`.
+Numeracja jest automatyczna. Nie wpisuj numerów ręcznie – po wstawieniu rozdziału w środku przenumerowanie zajmie sekundę, a nie godzinę. Elementy nienumerowane, obecne mimo to w spisie treści, mają własne polecenia. Nie składa się ich samodzielnie.
+
+**Tabela 3. Polecenia elementów nienumerowanych**
+
+| Polecenie | Co wstawia |
+|---|---|
+| `\wprowadzenie` | rozdział Wprowadzenie |
+| `\podsumowanie` | rozdział Podsumowanie |
+| `\wykazzrodel` | Wykaz źródeł |
+| `\bibliografia` | bibliografię złożoną przez styl |
+| `\spisilustracji` | spisy tabel, rysunków i wykresów |
+| `\indeksnazwisk` | indeks nazwisk |
+| `\aneksy` | rozdział Aneksy |
+| `\aneks{Tytuł}` | pojedynczy aneks, z własną numeracją |
+
+Każde z nich robi dwie rzeczy naraz: składa nagłówek bez numeru i dopisuje pozycję do spisu treści. Samo `\chapter*` albo `\section*` drugiej z tych rzeczy nie zrobi, więc **nie stosuj ich samodzielnie**. Układ pracy jest ustalony przez Standardy i nie ma w nim miejsca, które trzeba by dopisywać własnym nagłówkiem bez numeru.
 
 ### Etykiety i odsyłacze
 
@@ -89,7 +104,7 @@ To jest funkcja, dla której warto uczyć się LaTeX-a. Nadajesz obiektowi etyki
 Metode omowiono w podrozdziale~\ref{sec:aparat} na stronie~\pageref{sec:aparat}.
 ```
 
-**Tabela 3. Konwencja przedrostków w etykietach**
+**Tabela 4. Konwencja przedrostków w etykietach**
 
 | Przedrostek | Obiekt |
 |---|---|
@@ -117,7 +132,7 @@ Postać cytowania – inicjał przy zbieżnych nazwiskach, skrót „i in.” pr
 
 Nie sięgaj po polecenia formatujące bezpośrednio. Wzór ma polecenia, które mówią, **czym** coś jest, i dobierają wygląd zgodnie z wymogami Instytutu.
 
-**Tabela 4. Polecenia semantyczne wzoru**
+**Tabela 5. Polecenia semantyczne wzoru**
 
 | Polecenie | Zastosowanie | Wygląd |
 |---|---|---|
@@ -199,7 +214,7 @@ Miejsce, w którym pływak wolno postawić, ustala się literami podanymi w nawi
 \begin{tabelaepi}[H]{Moduly pakietu}{tab:moduly}
 ```
 
-**Tabela 5. Litery położenia pływaka**
+**Tabela 6. Litery położenia pływaka**
 
 | Litera | Znaczenie |
 |---|---|
@@ -236,7 +251,7 @@ $$
 
 Wzór bez numeru zapisuje się w nawiasach kwadratowych poprzedzonych ukośnikiem. Kilka wzorów wyrównanych do znaku równości składa środowisko `align`.
 
-**Tabela 6. Zapis matematyczny**
+**Tabela 7. Zapis matematyczny**
 
 | Chcesz | Piszesz |
 |---|---|
@@ -287,6 +302,18 @@ Rozdziały są osobnymi plikami włączanymi poleceniem `\input`, podawanym bez 
 
 Znak procentu wyłącza resztę wiersza. Komentarze służą do notatek dla siebie i znikają z gotowego pliku. Przed oddaniem przejrzyj je i usuń te, które są notatkami roboczymi.
 
+### Łamanie stron
+
+Rozdziały zaczynają się od nowej strony samoczynnie. **Nie poprzedzaj `\chapter` poleceniem łamania** – dostaniesz pustą stronę.
+
+Do dyspozycji są trzy polecenia i różnią się w sposób, który ma znaczenie. `\newpage` kończy stronę i przenosi dalszą treść na następną. `\clearpage` robi to samo, ale najpierw wypuszcza wszystkie zaległe pływaki; to jest właściwe polecenie na koniec rozdziału, gdy tabele uciekły za daleko. `\pagebreak` łamie stronę, rozciągając tekst do dołu, przez co odstępy między akapitami się powiększają; w pracy ciągłej wygląda to źle i zwykle lepiej z niego zrezygnować.
+
+Zasada nadrzędna: **łamania stron nie wstawia się w trakcie pisania**. Każde dopisane zdanie przesuwa wszystko, co dalej, więc ręczne łamanie trzeba by poprawiać po każdej zmianie. Jest to czynność redakcyjna, na sam koniec, po dopisaniu ostatniego akapitu.
+
+Czego nie robić nigdy: nie przesuwaj treści pustymi liniami, poleceniem `\vspace` ani podwójnym ukośnikiem. Odstępy ustawia klasa i każda taka poprawka jest rozbieżnością z wymogami składu.
+
+Jeden przypadek, w którym łamanie jest uzasadnione od razu: jeżeli chcesz, żeby każdy aneks zaczynał się od nowej strony, wstaw `\clearpage` przed każdym `\aneks`.
+
 ### Kontrola typografii
 
 Klasa blokuje *wdowy i sieroty*, czyli pojedyncze wiersze akapitu odcięte na końcu albo na początku strony, ale zdarza się, że LaTeX nie umie złamać zbyt długiego słowa i wypuszcza je poza margines. W dzienniku kompilacji zobaczysz wtedy komunikat `Overfull \hbox`. Naprawiaj w tej kolejności: przeformułuj zdanie, co najczęściej jest najlepszym rozwiązaniem; podpowiedz miejsce podziału zapisem `wielo\-kryterialny`; przy długim adresie sieciowym użyj polecenia `\url`, które pozwala łamać w sensownych miejscach. Liczba nadmiarowych pudełek w gotowej pracy powinna być zerowa albo bliska zeru.
@@ -315,7 +342,7 @@ Komunikat zaczyna się od wykrzyknika, a numer wiersza stoi w linii rozpoczynaj�
 
 ### Katalog błędów
 
-**Tabela 7. Najczęstsze błędy kompilacji**
+**Tabela 8. Najczęstsze błędy kompilacji**
 
 | Komunikat albo objaw | Przyczyna | Naprawa |
 |---|---|---|
