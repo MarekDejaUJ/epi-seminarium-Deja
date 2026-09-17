@@ -1,6 +1,5 @@
 # SzablonR
 
-<!-- badge: podmień nazwę użytkownika i repozytorium na własne -->
 [![R-CMD-check](https://github.com/nazwauzytkownika/SzablonR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nazwauzytkownika/SzablonR/actions/workflows/R-CMD-check.yaml)
 
 Szkielet pakietu badawczego przygotowany na seminarium licencjackie kierunku
@@ -138,7 +137,8 @@ wpisujesz na stronie tytułowej pracy.
 
 1. Zmień nazwę pakietu w pliku `DESCRIPTION`, w nazwie katalogu, w `tests/testthat.R`,
    w `inst/CITATION`, w nagłówku pliku `R/SzablonR-package.R` oraz w adresach
-   w `_pkgdown.yml`.
+   w `_pkgdown.yml`. W adresach znacznika stanu na początku tego pliku wpisz
+   własną nazwę użytkownika i repozytorium.
 2. Wpisz swoje dane w polu `Authors@R`, w pliku `inst/CITATION` oraz w nocie
    w `vignettes/articles/o-serwisie.Rmd`.
 3. Napisz `SPEC.md` – kontrakt algorytmu spisuje się **przed** kodem.

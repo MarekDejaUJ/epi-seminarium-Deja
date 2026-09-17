@@ -14,181 +14,98 @@
 
 ## Po co to badaczowi
 
-Od kilkunastu lat naukometria posługuje się wskaźnikiem, który ma odróżniać prace
-**przełomowe** od **rozwijających** to, co już jest. Idea jest prosta: jeśli kolejne
-prace cytują Twój artykuł, a przestają cytować to, na czym się oparłeś, znaczy że
-wyparłeś poprzedników. Jeśli cytują Ciebie **razem** z Twoimi źródłami, znaczy że
-dołożyłeś cegiełkę do istniejącego gmachu.
+Klasyczny indeks przełomowości opisuje, czy późniejsze prace cytują publikację bez jej źródeł, czy razem z nimi. W interpretacji bibliometrycznej pomijanie źródeł bywa łączone z wyparciem wcześniejszej linii badań. Jedna liczba może jednak mieszać bilans bezpośrednich cytowań z popularnością całego otoczenia źródeł.
 
-Wskaźnik ten trafił do polityki naukowej. Używa się go w raportach o kondycji nauki,
-w dyskusjach o tym, czy nauka przestała być przełomowa, a bywa, że w ocenie
-jednostek. Konsekwencje takich zastosowań są realne.
+Lin, Li i Wu analizują tę konstrukcję i wskazują związek indeksu z najczęściej cytowanym źródłem. Do sprawdzenia tej interpretacji potrzebne są osobne liczności kategorii, bilans bezpośrednio cytujących i relacja popularności źródła do popularności publikacji. Dokładną tożsamość wynikającą z definicji należy oddzielić od przybliżeń stwierdzonych empirycznie.
 
-Artykuł stawia tezę, która to zastosowanie podważa. Pokazuje, że wskaźnik **nie
-mierzy przełomowości bezwzględnej**, jak się powszechnie zakłada, tylko relację
-między artykułem a jego **najczęściej cytowanym źródłem**. Innymi słowy: mierzy
-lokalne wyparcie jednego poprzednika, a nie zmianę w całej dziedzinie. To zupełnie
-inna wielkość i zupełnie inne wnioski.
-
-Dla badacza nauk społecznych zainteresowanego naukometrią oznacza to, że
-interpretacja setek opublikowanych analiz wymaga rewizji. Narzędzie, które liczy
-wskaźnik **i pokazuje, względem czego** został policzony, pozwala tę rewizję
-przeprowadzić na własnych danych.
-
-Autorzy udostępnili wartości wskaźnika dla **49 milionów artykułów** z otwartej bazy
-danych bibliograficznych, więc materiał do studium przypadku jest gotowy.
+Własny pakiet ma udostępniać te składowe i umożliwiać porównanie okien cytowań oraz kompletności sieci. Badacz może dzięki temu rozpoznać, dlaczego zmienił się indeks. Wynik dotyczy wzorca cytowania, a ocena nowości treści wymaga dodatkowych dowodów.
 
 ## Algorytm
 
-**Wejście.** Lista krawędzi cytowań: pary identyfikatorów artykuł cytujący –
-artykuł cytowany. Opcjonalnie lata publikacji, dziedziny i identyfikatory autorów.
+**Wejście.** Skierowana sieć cytowań, lista publikacji analizowanych i wspólne okno przyszłych cytowań. Krawędź `cytujacy -> cytowany` oznacza odwołanie. Dla publikacji $p$ niech $F$ oznacza zbiór prac cytujących $p$, a $B$ zbiór prac cytujących co najmniej jedno źródło $p$. Oba zbiory dotyczą tego samego okna. Policz $N_i=|F\setminus B|$, $N_j=|F\cap B|$, $N_k=|B\setminus F|$.
 
-**Wyjście.** Dla każdego artykułu: wartość wskaźnika przełomowości, wskazanie
-najczęściej cytowanego źródła oraz miara wyparcia względem tego źródła.
+$$D_p=\frac{N_i-N_j}{N_i+N_j+N_k},\qquad d_p=\frac{N_i-N_j}{N_i+N_j},\qquad R_k=\frac{N_k}{N_i+N_j}.$$
 
-**Kroki.**
+$D_p$ jest klasycznym indeksem, $d_p$ wyraża bilans pomijania i współcytowania źródeł wśród bezpośrednio cytujących, a $R_k$ stosunek cytujących tylko źródła do cytujących publikację. Przy dodatnich mianownikach zachodzi dokładna tożsamość $D_p=d_p/(1+R_k)$.
 
-1. Sprawdzenie grafu: brak cykli, brak krawędzi do samego siebie, kompletność
-   identyfikatorów.
-2. Wyznaczenie dla każdego artykułu zbioru jego źródeł oraz zbioru prac cytujących.
-3. Podział prac cytujących na te, które cytują tylko artykuł, te, które cytują
-   artykuł i jego źródła, oraz te, które cytują tylko źródła.
-4. Złożenie wskaźnika z liczności tych zbiorów.
-5. Wyznaczenie najczęściej cytowanego źródła i miary wyparcia względem niego.
-6. Opcjonalne przycięcie okna czasowego i normalizacja w obrębie dziedziny i rocznika.
+Niech $C_p=|F|$, a $C_{\max}$ będzie największą liczbą cytowań pojedynczego źródła $p$ w tym samym oknie.
 
-**Wzory.** Dla publikacji $p$ dzieli się prace cytujące na trzy rozłączne grupy:
-$N_i$ to prace cytujące wyłącznie $p$, $N_j$ prace cytujące zarówno $p$, jak i jej źródła,
-$N_k$ prace cytujące wyłącznie źródła $p$. Wskaźnik przełomowości to
+$$b_p=C_{\max}/C_p.$$
 
-$$D = \frac{N_i - N_j}{N_i + N_j + N_k}$$
+Wielkość $b_p$ jest czynnikiem związanym z najczęściej cytowanym źródłem. Przybliżenia łączące $R_k$ z $b_p$ w artykule mają charakter empiryczny; współczynnik około 2,5 nie jest stałą wynikającą z definicji. $d_p$ odnosi się do całego zbioru źródeł, a nie tylko do najczęściej cytowanego.
 
-Wartość dodatnia oznacza, że publikacja jest cytowana zamiast swoich źródeł, ujemna, że
-razem z nimi. Zakres to przedział od minus jednego do jednego.
+Kroki: sprawdź kierunek i identyfikatory relacji, usuń duplikaty krawędzi, ustal źródła i przyszłych cytujących, wykonaj operacje na zbiorach, policz indeksy i diagnostykę mianowników. Porównanie kilku okien stanowi analizę wrażliwości. Nie usuwaj cytowań autorów własnych bez jawnej, osobnej reguły; nie myl ich z krawędzią publikacji do samej siebie.
 
-Artykuł rozkłada wskaźnik na dwa czynniki:
-
-$$D = \frac{d_p}{1 + R_k}, \qquad d_p = \frac{N_i - N_j}{N_i + N_j}, \qquad R_k = \frac{N_k}{N_i + N_j}$$
-
-Pierwszy czynnik $d_p$ to **lokalne wyparcie**: na ile publikacja zastępuje swoje źródła
-w bezpośredniej konkurencji o uwagę. Drugi czynnik opisuje przewagę źródeł nad publikacją
-i jest przybliżeniem ilorazu liczby cytowań źródeł do liczby cytowań publikacji.
-
-Rozkład ten jest sednem artykułu, bo pokazuje, że o wartości wskaźnika decyduje przede
-wszystkim **najczęściej cytowane źródło**, a nie liczba źródeł. Rozkład cytowań wśród
-źródeł jest silnie skośny i autorzy modelują go prawem potęgowym, z czego wyprowadzają
-udział najczęściej cytowanego źródła w cytowaniach wszystkich źródeł.
-
-**Co wynotować z artykułu.** Z sekcji metodycznej: dokładną definicję wskaźnika
-w postaci użytej przez autorów, definicję miary wyparcia względem najczęściej
-cytowanego źródła oraz **wykazanie związku między nimi** – to jest sedno pracy
-i to musisz umieć odtworzyć. Wynotuj też przyjęte okno czasowe i sposób traktowania
-autocytowań.
+Dla pojedynczej publikacji koszt zależy od liczby jej źródeł i odczytanych krawędzi ich cytowania. Macierze rzadkie są opcją implementacji, ale ich iloczyny mogą zwiększyć zużycie pamięci. Przetwarzanie blokami i pomiar czasu oraz pamięci są ważniejsze od zakazu pętli. Miara nie dowodzi przełomu intelektualnego ani wyparcia przyczynowego.
 
 ## Kontrakt
 
-**Warunki wstępne.** Lista krawędzi bez powtórzeń; brak krawędzi z artykułu do
-samego siebie; identyfikatory niepuste; przy podanym oknie czasowym obecne lata
-publikacji.
+Tabela `krawedzie` ma niepuste identyfikatory `cytujacy`, `cytowany`, tabela `publikacje` unikatowe `id`, `rok`; bez `NA` w identyfikatorach i latach potrzebnych do okna. Brak rekordu źródła lub niekompletną listę odwołań należy zgłosić. Duplikaty krawędzi usuwa konstruktor z podaniem liczby. Krawędź do samej publikacji zatrzymuje wykonanie. `okno` jest dodatnią liczbą całkowitą; podstawowy wariant to lata od `rok + 1` do `rok + okno`, z wyłączeniem cytowań w roku publikacji.
 
-**Niezmienniki.** Wskaźnik należy do przedziału od minus jeden do jeden. Artykuł bez
-źródeł nie ma wskaźnika. Odwrócenie ról artykułu i źródła zmienia znak miary
-wyparcia. Wynik nie zależy od kolejności krawędzi na wejściu.
+Niezmienniki: zbiory kategorii są rozłączne, liczności nieujemne, $D,d\in[-1,1]$, $R_k,b_p\ge0$ tam, gdzie są określone. $N_i+N_j+N_k=0$ daje `D=NA`. Przy $C_p=0$ i $N_k>0$ zachowaj `D=0`, a `d`, `Rk`, `bp=NA`. Brak źródeł daje `bp=NA`; wzór D przy $C_p>0$ daje 1, lecz taki przypadek oznacz `brak_zrodel`, aby nie interpretować go jak dowodu przełomu. Błąd kompletności sieci jest odrębnym statusem.
 
-**Wyjście.** Klasa `przelomowosc` ze składnikami: ramka wyników, liczności
-składowych, wskazane źródło odniesienia, przyjęte okno czasowe.
-
-**Błędy zatrzymujące wykonanie.** Cykl w grafie cytowań; krawędź do samego siebie;
-brak lat publikacji przy zadanym oknie; pusta lista krawędzi.
+S3 `wyparcie_cytowan`: tabela `id`, `Ni`, `Nj`, `Nk`, `Cp`, `Cmax`, `D`, `d`, `Rk`, `bp`, `status`; `parametry` i `diagnostyka`. Błędy: „Identyfikatory publikacji muszą być jednoznaczne”, „Krawędź nie może wskazywać tej samej publikacji”, „Brak metadanych potrzebnych do okna cytowań”, „Okno musi być dodatnią liczbą całkowitą”.
 
 ## Plan pakietu
 
-| Plik | Odpowiedzialność |
-|---|---|
-| `R/przygotowanie_danych.R` | walidacja grafu, budowa macierzy rzadkiej |
-| `R/wskaznik.R` | liczności składowych i wskaźnik |
-| `R/wyparcie.R` | najczęściej cytowane źródło i miara wyparcia |
-| `R/normalizacja.R` | okno czasowe, normalizacja dziedzinowa |
-| `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | rozrzut wskaźnika względem miary wyparcia |
+Pakiet `WyparcieR`, licencja GPL-3. Publiczne funkcje:
 
-Zależności: pakiet do macierzy rzadkich oraz `ggplot2`. **Nie używaj pętli po
-artykułach** – przy realnych danych to jedyna decyzja projektowa, która przesądza
-o wykonalności.
+- `przygotuj_siec(krawedzie, publikacje)` – sprawdzenie kierunku i metadanych.
+- `oblicz_wyparcie(siec, cele, okno = 5)` – liczności, D, d, Rk i bp.
+- `porownaj_okna(siec, cele, okna = c(3, 5, 10))` – wspólna tabela wariantów.
+- `generuj_siec(n = 1000, ziarno = 202704)` – sieć z kontrolowanymi otoczeniami.
+
+Moduły: `R/siec.R`, `R/zbiory_cytowan.R`, `R/wyparcie.R`, `R/generator.R`, `R/metody_s3.R`. Klasa S3 `wyparcie_cytowan` ma metody `print()`, `summary()` i `plot()`: skrócony wynik, zestawienie diagnostyki oraz wykres zgodny z rodzajem wyniku. Wartości i parametry pozostają dostępne bez odczytywania tekstu wydruku.
+
+`Imports`: `stats`; `Matrix` tylko przy wyborze implementacji macierzowej. `Suggests`: `testthat`, `knitr`, `rmarkdown`, `pkgdown`, `shiny`. Funkcje obliczeniowe nie instalują zależności ani nie korzystają z sieci. Dokumentacja `pkgdown` zawiera przykład od wejścia do interpretacji; aplikacja pod `/app/` korzysta z tego samego interfejsu i jawnie prezentuje parametry. Sprawdzenie: instalacja pakietu, uruchomienie przykładu i metod S3 oraz `R CMD check --as-cran`.
 
 ## Dane
 
-**Procedura generowania.** Budujesz sztuczny graf cytowań o **zadanej strukturze**:
-część artykułów wypiera swoje źródła, część je konsoliduje, w kontrolowanych
-proporcjach. Znasz wtedy oczekiwany znak wskaźnika dla każdego artykułu, więc możesz
-sprawdzić, czy implementacja go odtwarza.
+**Generator.** `ziarno = 202704`. Utwórz 1000 publikacji z rokiem równym $2000+\lfloor(i-1)/50\rfloor$. Każda od 2001 r. wybiera bez zwracania do pięciu wcześniejszych publikacji, z prawdopodobieństwem proporcjonalnym do $1+$ aktualna liczba cytowań. Następnie dołącz 20 odrębnych składowych, każdą z nowym celem, jego dwoma własnymi źródłami i przyszłymi cytującymi o dokładnie znanych $N_i,N_j,N_k$, np. $(10,0,10)$, $(0,10,10)$ i $(5,5,90)$; Składowe nie łączą się z bazową siecią, a identyfikatory nowych prac nie mogą się pokrywać. Zadaj lata źródeł wcześniejsze od celu, a przyszłych cytujących od roku celu + 1 do + 5. To prawda konstrukcyjna dotycząca liczności i indeksów, bez twierdzenia o rzeczywistej nowości prac. Osobno usuń losowo 5% i 20% krawędzi oraz odetnij cytowania po trzecim roku, zachowując pełną sieć jako wzorzec.
 
-Parametry: liczba artykułów, rozkład liczby źródeł, rozkład liczby cytowań, odsetek
-artykułów wypierających, ziarno.
+**Obliczenia kontrolne.** $(N_i,N_j,N_k)=(1,0,1)$ daje $D=0{,}5$, $d=1$, $R_k=1$. $(0,0,1)$ daje $D=0$, pozostałe dwa wskaźniki `NA`. $(2,1,3)$ daje $D=1/6$, $d=1/3$, $R_k=1$; jeśli $C_{\max}=5$, to $b_p=5/3$. $(0,0,0)$ daje `D=NA`.
 
-**Przypadki o znanym wyniku.** Artykuł, którego wszyscy cytujący pomijają źródła:
-wskaźnik równy jeden. Artykuł, którego wszyscy cytujący cytują też źródła: wskaźnik
-ujemny o znanej wartości. Artykuł bez cytowań: brak wskaźnika albo wartość
-zdefiniowana wprost w artykule – sprawdź, którą przyjmują autorzy.
+**Przypadki brzegowe.** Brak źródeł; brak przyszłych cytowań; powtórzone krawędzie; brakujący rok; jedna praca cytująca wiele źródeł, liczona do B tylko raz; bardzo popularne źródło powodujące duży zbiór B.
 
-**Przypadki patologiczne.** Graf z jednym artykułem; artykuł cytujący sam siebie;
-identyfikatory zduplikowane; okno czasowe wykluczające wszystkie cytowania.
+**Zbiór empiryczny.** [OpenAlex](https://openalex.org/), metadane w zwykłym formacie OpenAlex na licencji [CC0](https://github.com/ourresearch/openalex-docs/blob/main/license.md). Wybierz 20 publikacji z jednego podobszaru nauk społecznych, opublikowanych w 2015 r., i pięcioletnie okno cytowań. Zachowaj listę identyfikatorów oraz datę i parametry pobrania. Zgromadź źródła każdej publikacji oraz prace z lat 2016–2020 cytujące publikację lub choć jedno z jej źródeł. Tego otoczenia nie ograniczaj do wybranego podobszaru. Nieobecny rekord lub niedostępna lista źródeł oznacza brak informacji, a nie brak cytowania.
 
-**Zbiór empiryczny.** Zbiór wartości wskaźnika udostępniony przez autorów oraz
-otwarta baza danych bibliograficznych, z której powstał. Sprawdź licencję i sposób
-cytowania. **Porównanie własnych wyników z wartościami autorów jest tu najmocniejszą
-weryfikacją empiryczną** i powinno trafić do rozdziału trzeciego.
+Pobranie jest osobnym etapem, poza funkcjami obliczeniowymi i testami pakietu. Zachowaj surowe odpowiedzi i odtwarzalny skrypt budowy tabeli krawędzi. Porównuj publikacje przy tym samym oknie i tej samej regule wyłączeń; liczności dotyczą zarejestrowanych relacji, a nie wszystkich cytowań istniejących poza bazą.
 
 ## Mapowanie na pracę
 
-| Sekcja briefu | Rozdział pracy |
+| Materiał | Część pracy |
 |---|---|
-| Po co to badaczowi | Wprowadzenie: tło i luka |
-| Algorytm, co wynotować | Rozdział 1: aparat formalny |
-| Kontrakt, okno czasowe, autocytowania | Rozdział 1: założenia |
-| Plan pakietu, dane, wydajność | Rozdział 2 |
-| Porównanie z wartościami autorów | Rozdział 3 |
+| Problem zastosowania, pytanie analityczne i zakres wkładu | Wprowadzenie |
+| Definicje, wzory, założenia i porównanie dostępnych rozwiązań | Rozdział 1: Podstawy metodyczne |
+| Kontrakt, moduły, klasy wyniku, generator i wyniki testów | Rozdział 2: Implementacja i architektura pakietu |
+| Charakterystyka danych, analiza, interpretacja i porównanie | Rozdział 3: Studium przypadku |
+| Odpowiedź na pytanie, ograniczenia i kierunek rozwoju | Zakończenie |
 
-**Wstępne pytanie badawcze.** W jakim stopniu wartość wskaźnika przełomowości daje
-się wyjaśnić samą relacją do najczęściej cytowanego źródła i co z tego wynika dla
-interpretacji analiz opartych na tym wskaźniku?
+**Wstępne pytanie analityczne.** Jak cytowania źródeł i długość okna zmieniają klasyczny indeks D, bilans d oraz czynnik bp przy stałych cytowaniach publikacji?
+
+**Proponowany wkład.** Wspólny rachunek wszystkich składowych, jawna diagnostyka zerowych mianowników oraz eksperyment oddzielający tożsamość matematyczną od empirycznej zależności z bp.
 
 ## Polecenia startowe
 
-1. Budowa macierzy rzadkiej z listy krawędzi wraz z walidacją grafu.
-2. Liczności trzech składowych bez pętli po artykułach, na operacjach macierzowych.
-3. Wskaźnik i miara wyparcia zgodnie z Twoimi notatkami.
-4. Procedura generowania grafu o zadanej strukturze.
-5. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
-6. Pomiar czasu i pamięci dla grafu o rosnącej liczbie krawędzi.
+1. **Specyfikacja.** Zdefiniuj kierunek krawędzi, zbiory F i B oraz pięć wskaźników i okno. Wynik: `SPEC.md` z sygnaturami, definicjami i obsługą przypadków brzegowych. Sprawdzenie: każdy argument i każda kolumna wyniku mają opis; zakres odpowiada wskazanym częściom artykułu.
+2. **Przykłady analityczne.** Dodaj cztery przypadki liczności, test deduplikacji i cytowania wielu źródeł przez tę samą pracę. Wynik: testy z liczbowymi wartościami oczekiwanymi. Sprawdzenie: odtwórz rachunki na kartce lub osobnym, prostym skryptem; nie wyznaczaj oczekiwanych wartości testowaną funkcją.
+3. **Walidacja.** Zapisz testy wszystkich błędów wymienionych w kontrakcie oraz poprawnych danych prowadzących do `NA`. Wynik: konstruktor wejścia i stabilne komunikaty. Sprawdzenie: błędne dane zatrzymują obliczenia, a niezdefiniowana miara ma opisany status.
+4. **Rdzeń.** Najpierw wykonaj operacje na zbiorach dla jednego celu; wersję blokową sprawdź względem tej referencji. Wynik: działające funkcje i obiekt S3. Sprawdzenie: testy analityczne oraz porównanie z niezależną, najprostszą wersją obliczenia.
+5. **Eksperyment.** Zestaw pełną i przerzedzoną sieć oraz różne okna; zmierz również zużycie pamięci. Wynik: skrypt z konfiguracją, ziarnami i tabelą wyników. Sprawdzenie: powtórzenie daje te same dane i odtwarza tabelę; raport obejmuje wszystkie zaplanowane warianty.
+6. **Udostępnienie.** Dodaj dokumentację, metodę wykresu, winietę i przykład w aplikacji. Wynik: instalowalny pakiet i działająca strona. Sprawdzenie: przykład działa po instalacji w czystej sesji R; opis odróżnia wynik liczbowy od jego interpretacji.
 
 ## Pułapki
 
-**Pętla po artykułach.** Narzędzie zaproponuje ją jako pierwsze rozwiązanie, bo tak
-się to czyta w definicji. Przy milionie artykułów kod się nie skończy. Przełożenie
-liczności na operacje na macierzach rzadkich jest sednem części inżynierskiej pracy.
+Jedna praca cytująca kilka źródeł nie jest kilkoma przyszłymi pracami. Brak bezpośrednich cytowań nie zawsze oznacza niezdefiniowany D. Wartości bp i Rk nie są identyczne; empiryczne przybliżenie nie może być niezmiennikiem testowym. Przestawienie roli publikacji i jej źródła nie gwarantuje zmiany znaku miary.
 
-**Autocytowania.** Zmieniają wynik i różne prace traktują je różnie. Sprawdź, co
-robią autorzy, i zapisz to w specyfikacji jako decyzję.
-
-**Okno czasowe.** Wskaźnik liczony po dwóch latach i po dziesięciu to dwie różne
-wielkości. Porównywanie wyników policzonych w różnych oknach jest błędem, który
-często trafia do publikacji.
-
-**Teza artykułu.** Praca nie ma być kolejnym zastosowaniem wskaźnika, tylko
-narzędziem pokazującym, **względem czego** został policzony. Jeśli rozdział trzeci
-sprowadza się do rankingu najbardziej przełomowych artykułów, temat został
-zmarnowany.
-
-**Na obronie** musisz umieć wyjaśnić, dlaczego wskaźnik mierzy relację lokalną,
-a nie zmianę w dziedzinie, i podać przykład, w którym prowadzi to do mylnego wniosku.
+Na obronie należy omówić, jakie wzorce cytowań stoją za tą samą wartością D, dlaczego trzeba odczytywać składowe i jak niekompletność sieci ogranicza interpretację.
 
 ## Literatura
 
 Artykuł źródłowy: `lin2026disruption`.
 
-Wprowadzenie: pierwotna praca wprowadzająca wskaźnik przełomowości; przegląd krytyk
-tego wskaźnika. Dwie do czterech pozycji dobierasz sam. Temat jest pokrewny
-z tematem 14 – warto uzgodnić wspólną część literatury.
+Wprowadzenie: `funk2017dynamic`, `leydesdorff2019i3`. Klucze i pełne opisy są w [`zrodla/tematy.bib`](zrodla/tematy.bib).
 
-Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.
+Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`. Źródła danych opisano w sekcji „Dane”; w pracy należy podać ich opis bibliograficzny, wersję wykorzystanego zbioru i zakres przekształceń.
+
+Dane: `openalexData`.

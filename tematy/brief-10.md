@@ -7,204 +7,109 @@
 | Artykuł źródłowy | Imai, Taisuke; Nunnari, Salvatore; Wu, Jilong; Vieider, Ferdinand M. (2025). *Meta-Analysis of Prospect Theory Parameters*. CESifo Working Paper 12334 |
 | Dostęp | dokument roboczy dostępny publicznie |
 | Dziedzina | ekonomia behawioralna, percepcja ryzyka |
-| Proponowany tytuł pracy | Pakiet R do metaanalizy parametrów modeli decyzji jako przykład zastosowania ważenia odwrotnością wariancji w syntezie wyników badań |
+| Proponowany tytuł pracy | Pakiet R do wspólnej metaanalizy parametrów jako przykład zastosowania bayesowskich modeli hierarchicznych w syntezie wyników badań |
 | Proponowana nazwa pakietu | `MetaPTR` |
-| Trudność | ●● |
+| Trudność | ●●● |
+| Identyfikator | [CESifo Working Paper 12334](https://www.ifo.de/DocDL/cesifo1_wp12334.pdf) |
 
 ## Po co to badaczowi
 
-Teoria perspektywy opisuje, jak ludzie podejmują decyzje w warunkach ryzyka: że
-inaczej traktują zyski niż straty, że przeceniają zdarzenia mało prawdopodobne,
-że strata boli mocniej, niż cieszy zysk tej samej wielkości. Model ten ma kilka
-parametrów, a **setki badań** oszacowały je na własnych próbach.
+Oszacowania parametrów teorii perspektywy różnią się między badaniami. W artykule analizowane są krzywizna użyteczności, wrażliwość na prawdopodobieństwo i podniesienie funkcji wag prawdopodobieństwa. Parametry wspólnie opisują zachowanie wobec ryzyka. Awersja do strat należy do szerszej teorii, ale jest wyłączona z tej metaanalizy.
 
-I tu zaczyna się problem, który dotyczy nie tylko tej teorii. Oszacowania te bardzo
-się między sobą różnią. Badacz, który chce przyjąć wartość parametru do własnego
-modelu – albo po prostu chce wiedzieć, ile wynosi awersja do strat – nie ma czego
-zacytować poza pojedynczym badaniem sprzed lat. Metaanaliza miałaby dać odpowiedź,
-ale w tym przypadku napotyka trzy przeszkody naraz.
+Synteza napotyka kilka problemów: różne postacie funkcji, różne procedury badawcze, zależności między prawdziwymi wartościami parametrów i brakujące błędy standardowe. Zastąpienie brakującego błędu jedną przewidywaną liczbą pomija niepewność tej liczby. Autorzy rozwiązują to wspólnym bayesowskim modelem hierarchicznym, w którym brakujące błędy są zmiennymi, a nie stałymi.
 
-Po pierwsze, parametry są **wzajemnie skorelowane**: pochodzą z jednego dopasowania,
-więc traktowanie ich jak niezależnych oszacowań zaniża niepewność. Po drugie, wiele
-prac **nie podaje błędów standardowych**, więc klasyczne ważenie odwrotnością
-wariancji nie ma czym ważyć. Po trzecie, różnice między badaniami mogą wynikać nie
-z różnic między ludźmi, tylko z **procedury pomiaru** – a to pytanie samo w sobie
-jest ciekawsze niż średnia.
-
-Artykuł zbiera 812 oszacowań z 166 prac i podaje procedurę radzącą sobie z tymi
-trzema przeszkodami. Wynik: wzorce średnie potwierdzają teorię, ale rozrzut między
-badaniami jest ogromny, a najsilniejszymi jego predyktorami są cechy **procedury
-badawczej**, nie cechy badanych. To ustalenie o naruszeniu niezmienniczości
-procedury dotyczy każdego, kto mierzy postawy kwestionariuszem.
-
-Narzędzie robiące to samo dla dowolnego zestawu skorelowanych parametrów przydaje
-się daleko poza teorią perspektywy.
+Projekt obejmuje ograniczony model dla dwóch lub trzech parametrów, z jawnym modelem błędów, rozkładami a priori i diagnostyką próbkowania. Nie wymaga odtworzenia wszystkich metaregresji autorów. Pakiet ma służyć do wspólnej syntezy porównywalnych parametrów; studium empiryczne może ilustrować tę strukturę na publicznych danych wielowymiarowej metaanalizy, bez obietnicy replikacji całej bazy teorii perspektywy.
 
 ## Algorytm
 
-**Wejście.** Ramka oszacowań: identyfikator badania, nazwa parametru, wartość,
-błąd standardowy jeżeli podany, liczebność próby, cechy badania i procedury pomiaru.
+**Zakres obowiązkowy.** Model pomiarowy i hierarchiczny z sekcji 4.1–4.2, ze wspólną estymacją nieznanych błędów standardowych. Obowiązkowe są stałe średnie oraz najwyżej jeden ustalony predyktor w X i jeden w Z. Harmonizacja parametrów i wybór jednej estymacji z każdej niezależnej próby poprzedzają dopasowanie. Pełna baza 812 estymacji, wszystkie postacie funkcji i wszystkie metaregresje są poza zakresem obowiązkowym.
 
-**Wyjście.** Oszacowania zbiorcze dla każdego parametru wraz z przedziałami; miary
-rozrzutu między badaniami; wynik metaregresji na cechach badania; diagnostyka wpływu
-imputacji.
+Niech $\theta_i=(\rho_i,\gamma_i,\delta_i)$ będzie wektorem raportowanych parametrów, $\eta_i$ ich prawdziwym, nieobserwowanym odpowiednikiem, a $s_i$ wektorem błędów standardowych. W ogólnym interfejsie liczba wymiarów może wynosić dwa lub trzy.
 
-**Kroki.**
+$$\theta_i\mid\eta_i,s_i\sim N(\eta_i,\operatorname{diag}(s_i^2)),\qquad
+\eta_i\sim N(X_iB,\Sigma).$$
 
-1. Sprawdzenie wejścia: rozpoznane nazwy parametrów, kompletność identyfikatorów,
-   obecność liczebności tam, gdzie brakuje błędu standardowego.
-2. Imputacja brakujących błędów standardowych na podstawie liczebności i oszacowań
-   dostępnych w badaniach kompletnych.
-3. Zbudowanie macierzy kowariancji uwzględniającej korelacje między parametrami
-   pochodzącymi z tego samego badania.
-4. Ważenie odwrotnością wariancji z tą macierzą i wyznaczenie oszacowań zbiorczych.
-5. Wyznaczenie miar rozrzutu między badaniami.
-6. Metaregresja oszacowań na cechach badania i procedury.
-7. Analiza wrażliwości: wynik przy pominięciu badań z imputowanym błędem.
+Pierwszy poziom opisuje błąd pomiaru raportowanych estymacji, drugi zróżnicowanie prawdziwych parametrów i ich współzmienność między próbami. X jest macierzą cech z wyrazem wolnym, B macierzą współczynników, a $\Sigma$ kowariancją między prawdziwymi parametrami. Kowariancja ta nie jest kowariancją błędów pomiaru: artykuł w pierwszym poziomie używa macierzy diagonalnej.
 
-**Wzory.** Teoria perspektywy opisuje wybór dwiema funkcjami. Funkcja wartości przypisuje
-użyteczność wynikom mierzonym względem punktu odniesienia:
+$$\log(s_i)\sim N(Z_i\Xi,\Omega).$$
 
-$$v(x) = \begin{cases} x^{\alpha} & x \ge 0 \\ -\lambda\,(-x)^{\beta} & x < 0 \end{cases}$$
+Z i $\Xi$ określają model błędów, a $\Omega$ zależności między ich logarytmami. Obserwowane s są danymi, brakujące s dla raportowanych parametrów zmiennymi dodatnimi przez transformację wykładniczą. Nie wstawiaj jednej regresyjnej imputacji przed dopasowaniem. Dla nieobserwowanego parametru pomijaj jego składnik funkcji wiarygodności, czyli modelu rozkładu obserwowanych estymacji i używaj właściwego podwektora oraz podmacierzy modelu błędów. Brak parametru nie oznacza wartości neutralnej 0 lub 1.
 
-Parametr $\lambda$ to **awersja do straty**: gdy przekracza jedność, strata waży więcej niż
-zysk tej samej wielkości. Parametry $\alpha$ i $\beta$ opisują malejącą wrażliwość na
-wielkość wyniku.
+**Specyfikacja projektu.** Standaryzuj jawnie skale wejściowe przy ustalonych centrach i skalach, zapisując transformację odwrotną. Użyj $B_{jk}\sim N(0,2^2)$, wyrazu wolnego $\Xi\sim N(-2,1)$, pozostałych współczynników $\Xi\sim N(0,1)$, dodatnich skal obu kowariancji z półnormalnym N(0,1) i macierzy korelacji z LKJ(2). Są to jawne wybory a priori w projekcie, a nie deklaracja identyczności z nieuszczegółowionymi w tekście rozproszonymi rozkładami a priori hiperparametrów autorów. Wrażliwość obejmuje podwojenie skal rozkładów a priori. Stałe neutralne dla teorii perspektywy: rho = 0, gamma = 1, delta = 1; postacie funkcji harmonizuje się według sekcji 2, a skali power i exponential nie miesza bez dodatkowego modelowania.
 
-Funkcja wagi przekształca prawdopodobieństwo na wagę decyzyjną. W najczęściej stosowanej
-postaci
+Kroki: walidacja i maski obserwacji, budowa X,Z, model Stan z parametryzacją Cholesky'ego, cztery łańcuchy po 1000 rozgrzewki i 1000 zachowanych losowań, diagnostyka, transformacja odwrotna i podsumowanie rozkładu a posteriori. Wyniki: średnie lub mediany, kwantyle 2,5% i 97,5%, kowariancje, przewidywania i rozkłady imputowanych błędów. To przedziały wiarygodności bayesowskiej, nie klasyczne przedziały ufności.
 
-$$w(p) = \frac{p^{\gamma}}{\left(p^{\gamma} + (1-p)^{\gamma}\right)^{1/\gamma}}$$
-
-przy $\gamma$ mniejszym od jedności daje przecenianie zdarzeń mało prawdopodobnych
-i niedocenianie bardzo prawdopodobnych.
-
-Metaanaliza łączy oszacowania tych parametrów z wielu badań. Przy modelu efektów losowych
-oszacowanie zbiorcze to średnia ważona odwrotnością wariancji:
-
-$$\hat{\theta} = \frac{\sum_i w_i \hat{\theta}_i}{\sum_i w_i}, \qquad w_i = \frac{1}{s_i^2 + \tau^2}$$
-
-gdzie $s_i^2$ to wariancja oszacowania w badaniu $i$, a $\tau^2$ wariancja między badaniami,
-opisująca niejednorodność. Sedno pracy metaanalitycznej leży w wyznaczeniu $\tau^2$
-i w tym, co zrobić z badaniami, które nie podają błędu standardowego.
-
-Warianty postaci obu funkcji stosowane w poszczególnych badaniach oraz sposób sprowadzenia
-ich do wspólnej skali przepisz z artykułu: to jest główna trudność tego tematu.
-
-**Co wynotować z artykułu.** Z sekcji metodycznej: dokładną postać estymatora
-ważonego z uwzględnieniem korelacji; sposób imputacji brakujących błędów
-standardowych wraz z założeniami; przyjętą strukturę korelacji między parametrami;
-specyfikację metaregresji; sposób raportowania rozrzutu. Wynotuj też definicje
-samych parametrów teorii, bo są potrzebne do rozdziału pierwszego.
+Koszt jednej oceny modelu przy J wymiarach jest rzędu $O(nJ^2+J^3)$ przy ponownym użyciu rozkładów macierzy; całkowity koszt zależy od liczby kroków próbkowania. Założenia: porównywalne parametry, niezależne próby i brakujące błędy MAR względem informacji ujętej w modelu. Wiele estymacji tej samej próby wymaga dodatkowego poziomu zależności, więc nie traktuj ich jak niezależnych w zakresie podstawowym.
 
 ## Kontrakt
 
-**Warunki wstępne.** Co najmniej dwa badania na parametr; nieujemne błędy
-standardowe; liczebności dodatnie; nazwy parametrów ze zbioru zadeklarowanego;
-cechy badania bez braków albo z jawnie zadeklarowaną obsługą.
+Macierze `estymaty`, `bledy` mają te same nazwy i wymiary n × J, J = 2 albo 3. Estymaty skończone lub `NA`; błędy ściśle dodatnie albo `NA`. Jeśli parametr nie został oszacowany, jego błąd też jest `NA`. X,Z mają n wierszy, skończone wartości, wyraz wolny i pełną rangę. Dla każdego wymiaru musi istnieć co najmniej pięć niezależnych raportowanych estymacji i co najmniej trzy dodatnie błędy; to minimalny warunek obliczeniowy projektu, nie gwarancja wiarygodnej identyfikacji korelacji. Żaden wiersz nie może mieć samych braków. `id_proby` jednoznaczne; wiele wierszy tej samej próby w tym wariancie jest błędem.
 
-**Niezmienniki.** Oszacowanie zbiorcze mieści się w zakresie oszacowań składowych.
-Błąd standardowy oszacowania zbiorczego nie przekracza najmniejszego z błędów
-składowych. Przy jednym badaniu wynik równa się temu badaniu. Uwzględnienie korelacji
-nie zawęża przedziału względem wariantu zakładającego niezależność.
+Niezmienniki: macierze kowariancji dodatnio określone, losowane błędy dodatnie, maski nie zmieniają danych obserwowanych. Nie wymagaj, aby niepewność syntezy była mniejsza od najmniejszego błędu pojedynczego badania, ani aby każdy wynik mieścił się między skrajnymi estymatami. S3 `meta_parametrow`: `losowania`, `podsumowanie`, `imputacje`, `kowariancje`, `diagnostyka`, `transformacje`, `parametry`, `status`.
 
-**Wyjście.** Klasa `metaanaliza_pt` ze składnikami: oszacowania zbiorcze, przedziały,
-miary rozrzutu, wynik metaregresji, liczba imputacji, wynik analizy wrażliwości.
-
-**Błędy zatrzymujące wykonanie.** Ujemny błąd standardowy; brak liczebności przy
-braku błędu standardowego; nierozpoznana nazwa parametru; jedno badanie przy żądaniu
-metaregresji.
+Brak zbieżności to zachowany wynik diagnostyczny `niezbieznosc`, z ostrzeżeniem i bez automatycznego zatwierdzenia wniosku. Próg kontroli: R-hat > 1,01, efektywna liczebność bulk/tail < 400 albo rozbieżne kroki próbkowania. Błędy: „Błędy standardowe muszą być dodatnie albo NA”, „Macierze parametrów i błędów muszą być zgodne”, „Próby muszą być niezależne w tym wariancie”, „Macierz predyktorów musi mieć pełną rangę”, „Za mało obserwowanych danych dla wymiaru”.
 
 ## Plan pakietu
 
-| Plik | Odpowiedzialność |
-|---|---|
-| `R/przygotowanie_danych.R` | walidacja ramki oszacowań, kontrola nazw parametrów |
-| `R/imputacja.R` | uzupełnianie brakujących błędów standardowych |
-| `R/kowariancja.R` | macierz kowariancji z korelacjami wewnątrz badania |
-| `R/laczenie.R` | ważenie odwrotnością wariancji, oszacowania zbiorcze |
-| `R/metaregresja.R` | wyjaśnianie rozrzutu cechami badania |
-| `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | wykres leśny, wykres lejkowy |
+Pakiet `MetaPTR`, licencja GPL-3. Publiczne funkcje:
 
-Zależności: `stats` i `ggplot2`. Jeżeli sięgasz po istniejący pakiet do metaanalizy,
-uzasadnij to i pokaż, czego on nie robi – to jest wprost Twoja luka technologiczna.
+- `przygotuj_meta(estymaty, bledy, id_proby, X = NULL, Z = NULL, centra, skale)` – dane i maski.
+- `dopasuj_meta(dane, priory, lancuchy = 4, rozgrzewka = 1000, iteracje = 1000, ziarno = 202710)` – model i diagnostyka.
+- `podsumuj_meta(wynik, poziom = 0.95)` – wynik w skali wejściowej.
+- `przewiduj_meta(wynik, X_nowe, Z_nowe)` – rozkłady predykcyjne.
+- `generuj_meta(n = 100, ziarno = 202710)` – prawdziwe parametry, błędy i maski.
+
+Moduły: `R/dane.R`, `R/model.R`, `R/podsumowanie.R`, `R/generator.R`, `R/metody_s3.R` oraz model w `inst/stan/`. Klasa S3 `meta_parametrow` ma metody `print()`, `summary()` i `plot()`: skrócony wynik, zestawienie diagnostyki oraz wykres zgodny z rodzajem wyniku. Wartości i parametry pozostają dostępne bez odczytywania tekstu wydruku.
+
+`Imports`: `stats`, `rstan`, `posterior`. `Suggests`: `testthat`, `metadat`, `ggplot2`, `knitr`, `rmarkdown`, `pkgdown`, `shiny`. Funkcje obliczeniowe nie instalują zależności ani nie korzystają z sieci. Dokumentacja `pkgdown` zawiera przykład od wejścia do interpretacji; aplikacja pod `/app/` korzysta z tego samego interfejsu i jawnie prezentuje parametry. Sprawdzenie: instalacja pakietu, uruchomienie przykładu i metod S3 oraz `R CMD check --as-cran`.
+
+Stan wymaga lokalnego środowiska kompilacji i nie jest backendem obliczeniowym aplikacji Shinylive. Aplikacja prezentuje wcześniej obliczone, podpisane scenariusze oraz ich diagnostykę; interaktywne filtry nie udają ponownego dopasowania modelu. Winieta zawiera polecenie odtwarzające te scenariusze lokalnie. Testy szybkie sprawdzają przygotowanie danych i rachunki analityczne, a pełną walidację próbkowania uruchamia się osobnym skryptem z zapisanymi ziarnami.
 
 ## Dane
 
-**Procedura generowania.** Ustalasz **prawdziwe wartości zbiorcze** parametrów,
-losujesz z nich oszacowania badań z zadanym rozrzutem między badaniami i zadaną
-strukturą korelacji wewnątrz badania, a następnie **usuwasz część błędów
-standardowych** według kontrolowanego mechanizmu. Sprawdzasz, czy oszacowanie
-zbiorcze odtwarza prawdę i czy przedział ma deklarowane pokrycie – osobno przy
-imputacji i bez niej.
+**Generator.** `ziarno = 202710`, 100 niezależnych prób, trzy parametry. $\mu=(0{,}2,0{,}7,1)$; odchylenia prawdziwych parametrów $(0{,}15,0{,}1,0{,}2)$ i macierz korelacji z każdą korelacją poza przekątną 0,4. Losuj $\eta_i$ z tego rozkładu normalnego. Liczebność próby równa 50 albo 200 z równymi szansami; $\log s_i$ ma średnią -2, zależność -0,05 od $\sqrt{n_i}$, odchylenie 0,3 i korelacje 0,5. Następnie losuj estymaty z diagonalnym błędem pomiaru. Usuń 30% s niezależnie i 10% parametrów, zachowując co najmniej jedną estymatę w wierszu. Zachowaj pełne s i eta. Osobno usuń s zależnie od ich wielkości jako naruszenie MAR; do 5% estymat dodaj 4 odchylenia jako wariant odstający. Oceniaj odzyskiwanie mu, kowariancji i niepewność imputacji w 100 powtórzeniach, z błędem Monte Carlo i odsetkiem niezbieżnych dopasowań.
 
-Parametry: liczba badań, oszacowań na badanie, rozrzut między badaniami, siła
-korelacji wewnątrz badania, odsetek brakujących błędów, ziarno.
+**Obliczenie kontrolne.** Jednowymiarowy, warunkowy fragment modelu: dwie estymaty 0 i 1, s = 0,1 i 1, ustalone $\tau^2=4$, płaski rozkład a priori średniej. Wagi wynoszą $1/4{,}01$ i $1/5$, średnia $401/901=0{,}445061$, a odchylenie a posteriori $\sqrt{2005/901}=1{,}491746$. Sprawdź ten fragment przy ustalonych hiperparametrach; nie oczekuj identycznych liczb w pełnym modelu z estymowaną tau i właściwym rozkładem a priori.
 
-**Przypadki o znanym wyniku.** Wszystkie badania o identycznym błędzie standardowym:
-oszacowanie zbiorcze równe średniej arytmetycznej. Jedno badanie: wynik równy temu
-badaniu. Zerowa korelacja wewnątrz badania: zgodność z wariantem klasycznym,
-policzalnym ręcznie dla trzech badań.
+**Przypadki brzegowe.** s = 0; całkowicie brakujący wymiar; powtórzone id próby; współliniowe predyktory; bardzo mały zbiór i korelacja bliska 1; dopasowanie z diagnostyką rozbieżnych kroków.
 
-**Przypadki patologiczne.** Zerowy błąd standardowy; wszystkie błędy brakujące;
-jedno badanie z dziesięcioma parametrami.
-
-**Zbiór empiryczny.** Dane towarzyszące artykułowi, czyli zebrane oszacowania.
-Sprawdź warunki udostępnienia. Alternatywnie zbuduj własny, mniejszy zestaw z prac
-w wybranym obszarze – samo zbieranie danych jest wtedy częścią rozdziału trzeciego
-i warto opisać jego procedurę.
+**Zbiór empiryczny.** [`metadat::dat.berkey1998`](https://wviechtb.github.io/metadat/reference/dat.berkey1998.html), pięć prób klinicznych z dwoma parametrami efektu i ich wariancjami; pakiet [`metadat`](https://cran.r-project.org/package=metadat) na GPL (>= 2), z możliwością użycia GPL-3. Użyj PD i AL jako dwóch wymiarów. Z wariancji wyznacz s przez pierwiastek; pomiarowe kowariancje dostępne w danych zachowaj do diagnostyki, ponieważ model z artykułu używa diagonalnego poziomu pomiarowego i je pomija. Podaj to ograniczenie przy interpretacji. Pokaż pełne dane oraz kontrolowane ukrycie trzech błędów, nie tworząc dodatkowych pozornie niezależnych prób. Tak mały zbiór służy do demonstracji interfejsu i wrażliwości na rozkład a priori; nie uzasadnia precyzyjnych wniosków o korelacjach. To zastosowanie ogólnej struktury modelu, a nie replikacja wyników teorii perspektywy. Dostępność i licencję surowej bazy autorów trzeba ustalić osobno przed ewentualnym rozszerzeniem studium.
 
 ## Mapowanie na pracę
 
-| Sekcja briefu | Rozdział pracy |
+| Materiał | Część pracy |
 |---|---|
-| Po co to badaczowi | Wprowadzenie: tło i luka |
-| Definicje parametrów, algorytm | Rozdział 1: aparat formalny |
-| Kontrakt, założenia imputacji | Rozdział 1: granice stosowalności |
-| Plan pakietu, dane, badanie pokrycia | Rozdział 2 |
-| Zbiór empiryczny, metaregresja | Rozdział 3 |
+| Problem zastosowania, pytanie analityczne i zakres wkładu | Wprowadzenie |
+| Definicje, wzory, założenia i porównanie dostępnych rozwiązań | Rozdział 1: Podstawy metodyczne |
+| Kontrakt, moduły, klasy wyniku, generator i wyniki testów | Rozdział 2: Implementacja i architektura pakietu |
+| Charakterystyka danych, analiza, interpretacja i porównanie | Rozdział 3: Studium przypadku |
+| Odpowiedź na pytanie, ograniczenia i kierunek rozwoju | Zakończenie |
 
-**Wstępne pytanie badawcze.** Ile rozrzutu oszacowań parametrów da się wyjaśnić
-cechami procedury pomiaru, a ile pozostaje niewyjaśnione, i co z tego wynika dla
-badacza chcącego przyjąć wartość parametru do własnego modelu?
+**Wstępne pytanie analityczne.** Jak wspólne modelowanie parametrów i nieznanych błędów standardowych wpływa na niepewność syntezy oraz wrażliwość na założenia modelu?
+
+**Proponowany wkład.** Sprawdzony pakiet ograniczonego modelu hierarchicznego, z rozkładami imputacji i diagnostyką. Wkład obejmuje implementację modelu i ocenę jego działania; nie polega na zastąpieniu go ważoną średnią.
 
 ## Polecenia startowe
 
-1. Walidacja ramki oszacowań wraz z kontrolą nazw parametrów.
-2. Imputacja brakujących błędów standardowych zgodnie z Twoimi notatkami.
-3. Macierz kowariancji z korelacjami wewnątrz badania.
-4. Estymator ważony i przedziały.
-5. Procedura generowania z kontrolowanym brakiem błędów standardowych.
-6. Badanie pokrycia osobno dla wariantu z imputacją i bez.
+1. **Specyfikacja.** Rozdziel trzy poziomy modelu, brak parametru od braku błędu i rozkłady a priori projektu. Wynik: `SPEC.md` z sygnaturami, definicjami i obsługą przypadków brzegowych. Sprawdzenie: każdy argument i każda kolumna wyniku mają opis; zakres odpowiada wskazanym częściom artykułu.
+2. **Przykłady analityczne.** Sprawdź fragment normalny o średniej 401/901 i odchyleniu sqrt(2005/901), przy ustalonych hiperparametrach. Wynik: testy z liczbowymi wartościami oczekiwanymi. Sprawdzenie: odtwórz rachunki na kartce lub osobnym, prostym skryptem; nie wyznaczaj oczekiwanych wartości testowaną funkcją.
+3. **Walidacja.** Zapisz testy wszystkich błędów wymienionych w kontrakcie oraz poprawnych danych prowadzących do `NA`. Wynik: konstruktor wejścia i stabilne komunikaty. Sprawdzenie: błędne dane zatrzymują obliczenia, a niezdefiniowana miara ma opisany status.
+4. **Rdzeń.** Zapisz pełny model Stan z losowanymi log-błędami i podmacierzami; sprawdź każdą składową funkcji wiarygodności względem prostego rachunku. Wynik: działające funkcje i obiekt S3. Sprawdzenie: testy analityczne oraz porównanie z niezależną, najprostszą wersją obliczenia.
+5. **Eksperyment.** Porównaj pełne i maskowane dane, dwa warianty rozkładów a priori i naruszenie MAR; zawsze raportuj diagnostykę przed interpretacją. Wynik: skrypt z konfiguracją, ziarnami i tabelą wyników. Sprawdzenie: powtórzenie daje te same dane i odtwarza tabelę; raport obejmuje wszystkie zaplanowane warianty.
+6. **Udostępnienie.** Dodaj dokumentację, metodę wykresu, winietę i przykład w aplikacji. Wynik: instalowalny pakiet i działająca strona. Sprawdzenie: przykład działa po instalacji w czystej sesji R; opis odróżnia wynik liczbowy od jego interpretacji.
 
 ## Pułapki
 
-**Traktowanie oszacowań jako niezależnych.** Narzędzie zaproponuje klasyczną
-metaanalizę, bo tak wygląda typowy kod. Kilka parametrów z jednego dopasowania nie
-jest kilkoma niezależnymi obserwacjami. Skutkiem jest przedział zbyt wąski.
+Współzmienność prawdziwych parametrów i zależność ich błędów są odrębnymi macierzami. Jedna imputacja s nie przenosi jej niepewności. Parametr awersji do strat nie należy do estymowanych wymiarów artykułu. Macierz diagonalna w poziomie pomiarowym jest założeniem, a nie wynikiem estymacji. Dodatkowe losowania nie naprawiają źle określonego modelu ani zależności próbek.
 
-**Imputacja bez analizy wrażliwości.** Uzupełnienie brakujących błędów standardowych
-jest założeniem, nie faktem. Wynik przy pominięciu badań imputowanych musi być
-pokazany obok wyniku głównego.
-
-**Metaregresja a przyczynowość.** Związek cechy procedury z wartością parametru nie
-oznacza, że procedura ten parametr powoduje. Badania różnią się wieloma rzeczami
-naraz. Rozdział trzeci musi to zastrzec.
-
-**Wykres lejkowy.** Bywa czytany jako dowód stronniczości publikacyjnej. Przy
-skorelowanych oszacowaniach jego interpretacja jest ostrożniejsza, niż podaje
-większość podręczników.
-
-**Na obronie** musisz umieć wyjaśnić, dlaczego ważenie odwrotnością wariancji jest
-optymalne, i co się psuje, gdy wariancje trzeba oszacować zamiast odczytać.
+Na obronie należy przejść przez trzy poziomy modelu, objaśnić sens rozkładu a posteriori i pokazać, co diagnostyka pozwala powiedzieć o wiarygodności własnego wyniku.
 
 ## Literatura
 
 Artykuł źródłowy: `imai2025meta`.
 
-Wprowadzenie: klasyczne opracowanie teorii perspektywy; podręcznikowe omówienie
-metaanalizy i miar rozrzutu między badaniami. Dwie do czterech pozycji dobierasz sam.
-Temat pokrewny z tematem 13.
+Wprowadzenie: `tversky1992prospect`, `carpenter2017stan`, `gelman2013bayesian`. Klucze i pełne opisy są w [`zrodla/tematy.bib`](zrodla/tematy.bib).
 
-Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.
+Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`. Źródła danych opisano w sekcji „Dane”; w pracy należy podać ich opis bibliograficzny, wersję wykorzystanego zbioru i zakres przekształceń.
+
+Dane: `berkeyData`.

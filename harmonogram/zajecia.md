@@ -26,8 +26,8 @@ w środę nadal znaczy to samo co w poniedziałek.
 ## Co przynosisz
 
 Komputer z działającym środowiskiem: R, Positron, Git, dostęp do repozytorium.
-Konfiguracja jest w przewodniku [Praca z agentem
-programistycznym](../przewodniki/07-agent-cli.md#środowisko).
+Konfiguracja jest w przewodniku
+[Praca z agentem programistycznym](../przewodniki/07-agent-cli.md#środowisko).
 
 Od tygodnia 5 przynosisz też aktualną specyfikację, bo w bloku studia korzystasz
 z niej co tydzień.
@@ -107,8 +107,8 @@ kolorowy wskaźnik stanu. Przegląd czternastu repozytoriów przed zajęciami to
 czternastu wskaźników; wchodzisz tylko tam, gdzie świeci na czerwono dłużej niż
 tydzień.
 
-**Sprawdzanie kamieni milowych.** Warunki przyjęcia w [kamieniach
-milowych](kamienie-milowe.md) są sformułowane jako lista kontrolna właśnie po to, żeby
+**Sprawdzanie kamieni milowych.** Warunki przyjęcia w
+[kamieniach milowych](kamienie-milowe.md) są sformułowane jako lista kontrolna właśnie po to, żeby
 sprawdzenie jednej osoby zajmowało kilka minut. Kamienie 2 i 4 sprawdzają się niemal
 wyłącznie automatycznie: wynik `devtools::test()` i wynik sprawdzenia w trybie
 zgodności.
@@ -120,8 +120,8 @@ rozdział, więc czyta się czternaście razy ten sam typ tekstu, co jest znaczn
 szybsze niż czternaście różnych.
 
 **Tryb pracy z uwagami.** Warianty obiegu przez Overleaf, przez repozytorium i tryb
-mieszany są w przewodniku [Overleaf i
-współpraca](../przewodniki/03-overleaf.md). Na instalacji uczelnianej działają
+mieszany są w przewodniku
+[Overleaf i współpraca](../przewodniki/03-overleaf.md). Na instalacji uczelnianej działają
 komentarze w trybie przeglądu i historia zmian, nie ma natomiast śledzenia zmian.
 Stąd zasada obiegu: prowadzący komentuje, student poprawia.
 

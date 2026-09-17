@@ -6,8 +6,8 @@ zastanowić, czy liczyć ją za spełnioną, jest niespełniona.
 
 ## Student: projekt dyplomowy
 
-Do przejścia przed [kamieniem milowym
-5](../harmonogram/kamienie-milowe.md#kamień-milowy-5-projekt-dyplomowy), w tygodniu 26.
+Do przejścia przed
+[kamieniem milowym 5](../harmonogram/kamienie-milowe.md#kamień-milowy-5-projekt-dyplomowy), w tygodniu 26.
 
 ### Instalacja i działanie
 
@@ -49,8 +49,8 @@ Do przejścia przed [kamieniem milowym
 
 ## Student: praca licencjacka
 
-Pełna lista formalna jest w przewodniku: [lista kontrolna przed
-oddaniem](../przewodniki/06-wymogi.md#lista-kontrolna-przed-oddaniem). Przejdź ją
+Pełna lista formalna jest w przewodniku:
+[lista kontrolna przed oddaniem](../przewodniki/06-wymogi.md#lista-kontrolna-przed-oddaniem). Przejdź ją
 w całości.
 
 Poniżej cztery pozycje, których tamta lista nie obejmuje, bo dotyczą zgodności między

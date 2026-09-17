@@ -14,186 +14,94 @@
 
 ## Po co to badaczowi
 
-Miary skuteczności wyszukiwania wzięły się z pomysłu, że można policzyć, ile spośród
-dokumentów trafnych system znalazł. Kłopot polega na tym, że przy dużej kolekcji nikt
-nie wie, ile ich jest, więc **pełności nie da się zmierzyć**, a średnia precyzja, którą
-stosuje się najczęściej, jest z pełności wyprowadzona i dziedziczy jej wadę.
+Badacz oceniający wyszukiwarkę musi zdecydować, jak duże znaczenie mają kolejne pozycje. Przejrzenie pierwszych kilku wyników i długie poszukiwanie mogą prowadzić do innych ocen tej samej listy. Parametr miary powinien mieć interpretację w odniesieniu do zachowania użytkownika.
 
-Jest jeszcze druga rzecz, dziwna, gdy się ją zauważy. Klasyczne miary wagują pozycje
-w rankingu, ale wagi biorą się z konstrukcji miary, nie z tego, jak ludzie czytają
-wyniki wyszukiwania. Nie ma w nich żadnego założenia o użytkowniku.
+RBP opiera się na modelu, w którym prawdopodobieństwo kontynuowania przeglądania jest stałe po każdej pozycji. Z tego założenia wynikają malejące wagi dalszych dokumentów. Można też obliczyć maksymalny nierozpoznany wkład pozycji bez oceny i nieznanej dalszej części listy.
 
-Artykuł odwraca kolejność. Najpierw stawia **model zachowania**: użytkownik ogląda
-wynik pierwszy, potem z prawdopodobieństwem $p$ przechodzi do następnego, a z
-prawdopodobieństwem $1-p$ kończy. Dopiero z tego modelu wyprowadza miarę. Wagi pozycji
-przestają być umowne, a parametr $p$ ma znaczenie, które da się opisać słowami:
-niecierpliwy użytkownik to małe $p$, wytrwały to duże.
-
-Model daje jeszcze jedną rzecz, której klasyczne miary nie mają. Skoro wagi maleją
-geometrycznie, to **da się policzyć, ile wyniku brakuje** z powodu dokumentów
-nieocenionych albo obciętego rankingu. Wynik przestaje być liczbą, a staje się
-przedziałem z jawnie podaną niepewnością.
-
-Dla badacza zachowań informacyjnych jest to miara, której parametr odpowiada
-obserwowalnej własności użytkownika, a nie decyzji projektanta miary.
+Projekt pozwala ocenić system przy kilku scenariuszach długości poszukiwania i wskazać, jak wiele niewiedzy pozostaje w wyniku. Badacz może planować dodatkowe ocenianie dokumentów na podstawie ich wag. Zakres wynikający z braków trzeba interpretować osobno od losowej niepewności średniej po próbie zapytań.
 
 ## Algorytm
 
-**Wejście.** Ranking dokumentów, sądy o trafności (zerojedynkowe lub stopniowane),
-parametr wytrwałości $p$ z przedziału otwartego od zera do jedności.
+**Wejście.** Uporządkowana lista trafności $r_i\in[0,1]$, z możliwymi `NA`, oraz prawdopodobieństwo kontynuacji $0<p<1$. Model użytkownika zakłada jednakowe p po każdej pozycji. Dla znanej głębokości d:
 
-**Wyjście.** Wartość miary, wartość resztowa opisująca niepewność, przedział, w którym
-mieści się wynik przy pełnych sądach, oczekiwana liczba obejrzanych dokumentów.
+$$B=(1-p)\sum_{i=1}^{d}p^{i-1}\widetilde r_i,\qquad
+\varepsilon=p^d+(1-p)\sum_{i:r_i\ \mathrm{nieznane}}p^{i-1},$$
+$$\operatorname{RBP}\in[B,B+\varepsilon].$$
 
-**Wzór podstawowy.** Niech $r_i$ oznacza trafność dokumentu na pozycji $i$, a $d$
-głębokość rankingu. Wtedy
+$\widetilde r_i$ jest znaną trafnością, a dla nieznanej ma zerowy wkład w dolną granicę. $B$ jest znanym wkładem, $\varepsilon$ maksymalnym wkładem nieocenionych pozycji i nieznanego końca listy. Wagi sumują się do 1 dla nieskończonej listy. Przedział jest deterministycznym zakresem możliwych wartości, a nie przedziałem ufności 95%.
 
-$$\mathrm{RBP} = (1-p)\sum_{i=1}^{d} r_i\, p^{\,i-1}$$
+Kroki: wyznacz wagi geometryczne, zsumuj znane wkłady, dodaj masę nieznanych wag i ogona, zwróć składowe osobno. Wariant `koniec = "pelny"` oznacza znany koniec listy, z zerową trafnością poza d; wtedy pomija się $p^d$, lecz zachowuje nieocenione wewnętrzne pozycje. Podstawowy wariant `nieznany` zachowuje ogon.
 
-Czynnik $(1-p)$ normalizuje sumę, bo $\sum_{i=1}^{\infty} p^{\,i-1} = 1/(1-p)$. Miara
-przyjmuje wartości od zera włącznie do jedności wyłącznie.
-
-**Model użytkownika.** Przy tak przyjętym zachowaniu użytkownik ogląda średnio
-
-$$\frac{1}{1-p}$$
-
-dokumentów. Dla $p = 0{,}5$ są to dwa dokumenty, dla $p = 0{,}8$ pięć, dla
-$p = 0{,}95$ dwadzieścia. Jest to jedyna interpretacja parametru, jakiej potrzebujesz,
-i warto ją podać w pracy, bo tłumaczy dobór wartości.
-
-**Wartość resztowa.** Jeżeli ranking urwano na głębokości $d$, to nieznany wkład
-dalszych pozycji wynosi
-
-$$(1-p)\sum_{i=d+1}^{\infty} p^{\,i-1} = p^{\,d}$$
-
-Jeżeli natomiast w obrębie rankingu część dokumentów nie ma oceny, każdy z nich dokłada
-do reszty wagę, którą miałby, gdyby okazał się trafny. Dla zbioru pozycji nieocenionych
-$U$ reszta wynosi
-
-$$p^{\,d} + (1-p)\sum_{i \in U} p^{\,i-1}$$
-
-Wynik prawdziwy leży wtedy między wartością policzoną a wartością powiększoną o resztę.
-
-**Kroki.**
-
-1. Sprawdzenie danych: zakres parametru, zgodność identyfikatorów, brak powtórzeń.
-2. Rozdzielenie pozycji rankingu na trzy kategorie: ocenione trafne, ocenione nietrafne,
-   nieocenione.
-3. Złożenie sumy ważonej po pozycjach ocenionych jako trafne.
-4. Policzenie reszty z obcięcia rankingu i z pozycji nieocenionych.
-5. Złożenie przedziału i miar pomocniczych.
-6. Powtórzenie dla siatki wartości parametru.
-
-**Co wynotować z artykułu.** Wyprowadzenie miary z modelu użytkownika, krok po kroku;
-dokładną postać reszty w obu przypadkach; przykład rankingu z dokumentami nieocenionymi
-wraz z policzonymi granicami przedziału dla trzech wartości parametru; argumentację,
-dlaczego miara jest odporna na wydłużenie rankingu, czego średnia precyzja nie jest.
+Przy trafności Bernoulliego o prawdopodobieństwie q wartość oczekiwana skończonego wkładu wynosi $q(1-p^d)$; dopiero dla nieskończonego modelu wynosi q. Koszt $O(d)$, pamięć robocza $O(d)$ lub $O(1)$ przy przetwarzaniu strumieniowym. Parametr p odzwierciedla założenie zachowania, nie jest jakością systemu ani prawdopodobieństwem trafności.
 
 ## Kontrakt
 
-**Warunki wstępne.** Parametr ściśle między zerem a jednością; ranking bez powtórzeń;
-trafności w przedziale od zera do jedności; sądy o trafności rozłączne z listą pozycji
-nieocenionych.
+`trafnosc` to wektor liczbowy z wartościami w [0,1] lub `NA`; `NaN` i nieskończoności są błędem. `p` skończone w (0,1); `koniec` wybiera znany lub nieznany ogon. Pusty ranking przy nieznanym ogonie daje [0,1], przy pełnym [0,0]. Przekształcenie ocen stopniowanych do [0,1] musi być jawne, nie wykonywane przez nieopisane dzielenie przez maksimum obserwowanej próby.
 
-**Niezmienniki.** Wynik należy do przedziału od zera włącznie do jedności wyłącznie.
-Reszta jest nieujemna i nie większa niż jeden minus wynik. Dopisanie dokumentów na koniec
-rankingu nie zmniejsza wyniku i nie zwiększa reszty ponad wartość sprzed dopisania.
-Przy wszystkich dokumentach trafnych i nieskończonym rankingu wynik dąży do jedności.
-Przy parametrze bliskim zeru wynik dąży do trafności pierwszego dokumentu.
+Niezmienniki: $0\le B\le B+\varepsilon\le1$; ujawnienie dodatkowej trafności bez zmiany pozostałych danych daje podprzedział poprzedniego; wydłużenie znanego prefiksu usuwa jego wagę z ogona. Przy kompletnie ocenionym prefiksie reszta nadal wynosi $p^d$, jeśli ogon nieznany. Same jedynki dają $B=1-p^d$, a nie skończony wkład równy 1.
 
-**Wyjście.** Klasa `rbp` ze składnikami: wartość, reszta, granice przedziału, wartość
-parametru, oczekiwana liczba obejrzanych dokumentów, liczba pozycji nieocenionych.
-
-**Błędy zatrzymujące wykonanie.** Parametr równy zero albo jeden; trafność spoza
-przedziału; powtórzone pozycje w rankingu; pusty ranking.
+S3 `wynik_rbp`: `wartosc` równa B, `dolna`, `gorna`, `reszta_ogon`, `reszta_braki`, `p`, `glebokosc`, `koniec`, `status`. Błędy: „Trafność musi należeć do [0, 1] albo być NA”, „Parametr p musi należeć do (0, 1)”, „Nieznana reguła końca rankingu”.
 
 ## Plan pakietu
 
-| Plik | Odpowiedzialność |
-|---|---|
-| `R/przygotowanie_danych.R` | walidacja rankingu, sądów i parametru |
-| `R/rbp.R` | miara podstawowa na operacjach wektorowych |
-| `R/reszta.R` | wartość resztowa z obcięcia i z pozycji nieocenionych |
-| `R/porownanie.R` | miary klasyczne do zestawienia |
-| `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | wynik z przedziałem w funkcji parametru |
+Pakiet `RBPmiaraR`, licencja GPL-3. Publiczne funkcje:
 
-Zależności: `stats` i `ggplot2`. Wagi licz jako `(1 - p) * p^(seq_along(x) - 1)`, jednym
-działaniem na wektorze, bez pętli po pozycjach.
+- `oblicz_rbp(trafnosc, p = 0.8, koniec = "nieznany")` – wkład i granice.
+- `profil_rbp(trafnosc, p = c(0.5, 0.8, 0.95), koniec = "nieznany")` – tabela parametrów.
+- `porownaj_rbp(rankingi, oceny, p = 0.8, k = 100)` – wyniki po zapytaniach.
+- `generuj_ranking(d = 100, q = 0.2, ziarno = 202707)` – pełna trafność i maska.
+
+Moduły: `R/walidacja.R`, `R/rbp.R`, `R/porownanie.R`, `R/generator.R`, `R/metody_s3.R`. Klasa S3 `wynik_rbp` ma metody `print()`, `summary()` i `plot()`: skrócony wynik, zestawienie diagnostyki oraz wykres zgodny z rodzajem wyniku. Wartości i parametry pozostają dostępne bez odczytywania tekstu wydruku.
+
+`Imports`: `stats`. `Suggests`: `testthat`, `knitr`, `rmarkdown`, `pkgdown`, `shiny`. Funkcje obliczeniowe nie instalują zależności ani nie korzystają z sieci. Dokumentacja `pkgdown` zawiera przykład od wejścia do interpretacji; aplikacja pod `/app/` korzysta z tego samego interfejsu i jawnie prezentuje parametry. Sprawdzenie: instalacja pakietu, uruchomienie przykładu i metod S3 oraz `R CMD check --as-cran`.
 
 ## Dane
 
-**Procedura generowania.** Generujesz ranking o zadanej jakości i **znanej wartości
-oczekiwanej miary**: przy niezależnym losowaniu trafności z prawdopodobieństwem $q$ na
-każdej pozycji wartość oczekiwana miary wynosi dokładnie $q$, co daje przypadek
-o wyniku znanym z rachunku, a nie z uruchomienia kodu. Następnie usuwasz część sądów
-i sprawdzasz, czy prawdziwa wartość mieści się w wyznaczonym przedziale.
+**Generator.** `ziarno = 202707`. Dla 500 zapytań i d = 100 losuj $r_i\sim\operatorname{Bernoulli}(q)$, q = 0,1, 0,3, 0,5. Zachowaj pełne listy jako punkt odniesienia skończonego wkładu; ukrywaj 10% i 50% trafności losowo, a osobno pozycje 1–10 albo 51–100. Dla p = 0,5, 0,8, 0,95 sprawdź zawieranie każdego ujawnionego pełnego wkładu w granicach `pelny`. Przy `nieznany` sprawdź dowolne uzupełnienia ogona, a wartość oczekiwaną prefiksu porównaj z $q(1-p^d)$. Nie określaj pełnej nieskończonej prawdy na podstawie samego skończonego wektora.
 
-Parametry: długość rankingu, prawdopodobieństwo trafności, odsetek pozycji nieocenionych,
-wartość parametru wytrwałości, ziarno.
+**Obliczenia kontrolne.** Trafności $(1,0,1)$ i p = 0,8: $B=0{,}2(1+0{,}64)=0{,}328$, ogon 0,512, granice [0,328; 0,84]. Dla $(1,NA,1)$ dodatkowa reszta to 0,16, granice [0,328; 1]. Przy q = 0,5 i d = 3 wartość oczekiwana B wynosi 0,244. Przy znanym końcu $(1,0,1)$ granice są punktem 0,328.
 
-**Przypadki o znanym wyniku.** Wszystkie pozycje trafne, ranking o długości $d$: wynik
-równy $1 - p^{\,d}$. Tylko pierwsza pozycja trafna: wynik równy $1-p$. Żadna pozycja
-trafna: zero, reszta równa $p^{\,d}$ powiększona o wkład pozycji nieocenionych.
+**Przypadki brzegowe.** Pusta lista; same `NA`; same zera lub jedynki; p bliskie 1; p = 0 lub 1 odrzucone przez zakres; nieznany element w pierwszej pozycji.
 
-**Przypadki patologiczne.** Ranking jednoelementowy; wszystkie pozycje nieocenione;
-parametr bardzo bliski jedności przy krótkim rankingu, gdy reszta przewyższa wynik.
+**Zbiór empiryczny.** [Reuters-21578, Distribution 1.0](https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection), DOI [10.24432/C52G6M](https://doi.org/10.24432/C52G6M), licencja CC BY 4.0 wskazana przez UCI. Dokumenty prasowe mają kategorie przypisane przez osoby indeksujące. W studium przypadku kategoria jest umownym zapytaniem, a przynależność do niej binarną oceną trafności. Jest to adaptacja zbioru klasyfikacyjnego, więc wynik dotyczy odnajdywania kategorii, a nie pełnej oceny potrzeb informacyjnych użytkownika.
 
-**Zbiór empiryczny.** Publiczna kolekcja testowa z sądami o trafności i kilkoma
-rankingami. Ten sam zbiór, którego używa temat 03, co pozwala porównać wyniki obu miar
-na identycznych danych.
+Wybierz dokumenty z niepustym tekstem i oznaczeniem `TOPICS="YES"` ze zbioru testowego podziału ModApte. Zapisz identyfikatory dokumentów, wybór kategorii i liczności. Zbuduj co najmniej trzy rankingi na tej samej puli: podobieństwo tekstu do nazwy i opisu kategorii, jego wariant oparty tylko na tytule oraz ranking losowy. Ustal preprocessing i rozstrzyganie remisów identyfikatorem przed porównaniem wyników. Pełne etykiety kategorii są punktem odniesienia dla kontrolowanego ukrywania ocen. Pobranie i przekształcenie wykonaj osobnym skryptem; zachowaj opis źródła, a w testach pakietu używaj małych przykładów bez pobierania danych z sieci.
 
 ## Mapowanie na pracę
 
-| Sekcja briefu | Rozdział pracy |
+| Materiał | Część pracy |
 |---|---|
-| Po co to badaczowi, model użytkownika | Wprowadzenie: tło i luka |
-| Wzory, wyprowadzenie z modelu, reszta | Rozdział 1: aparat formalny |
-| Kontrakt, zachowanie graniczne parametru | Rozdział 1: granice stosowalności |
-| Plan pakietu, procedura generowania, pokrycie przedziału | Rozdział 2 |
-| Zbiór empiryczny, porównanie z miarą klasyczną | Rozdział 3 |
+| Problem zastosowania, pytanie analityczne i zakres wkładu | Wprowadzenie |
+| Definicje, wzory, założenia i porównanie dostępnych rozwiązań | Rozdział 1: Podstawy metodyczne |
+| Kontrakt, moduły, klasy wyniku, generator i wyniki testów | Rozdział 2: Implementacja i architektura pakietu |
+| Charakterystyka danych, analiza, interpretacja i porównanie | Rozdział 3: Studium przypadku |
+| Odpowiedź na pytanie, ograniczenia i kierunek rozwoju | Zakończenie |
 
-**Wstępne pytanie badawcze.** Jak dobór parametru wytrwałości wpływa na uporządkowanie
-systemów i przy jakim odsetku dokumentów nieocenionych przedział niepewności staje się
-tak szeroki, że uporządkowania nie da się rozstrzygnąć?
+**Wstępne pytanie analityczne.** Jak parametr kontynuacji i położenie nieocenionych dokumentów wpływają na ocenę oraz nierozstrzygnięty zakres różnic między systemami?
+
+**Proponowany wkład.** Interfejs oddzielający wkład znany, braki wewnątrz listy i nieznany ogon, z doświadczeniem pokazującym znaczenie położenia ocen zamiast tylko ich liczby.
 
 ## Polecenia startowe
 
-1. Walidacja wejścia z jawnym sprawdzeniem zakresu parametru.
-2. Miara podstawowa na wektorze wag, zgodnie ze wzorem z notatek.
-3. Wartość resztowa w obu przypadkach: obcięcie rankingu i pozycje nieocenione.
-4. Procedura generowania rankingu o znanej wartości oczekiwanej miary.
-5. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
-6. Badanie pokrycia: czy prawdziwa wartość mieści się w przedziale przy rosnącym
-   odsetku pozycji nieocenionych.
+1. **Specyfikacja.** Rozdziel skończony wkład i możliwą wartość całej listy oraz dwa rodzaje końca. Wynik: `SPEC.md` z sygnaturami, definicjami i obsługą przypadków brzegowych. Sprawdzenie: każdy argument i każda kolumna wyniku mają opis; zakres odpowiada wskazanym częściom artykułu.
+2. **Przykłady analityczne.** Sprawdź B = 0,328, reszty 0,512 i 0,16 oraz E(B) = 0,244. Wynik: testy z liczbowymi wartościami oczekiwanymi. Sprawdzenie: odtwórz rachunki na kartce lub osobnym, prostym skryptem; nie wyznaczaj oczekiwanych wartości testowaną funkcją.
+3. **Walidacja.** Zapisz testy wszystkich błędów wymienionych w kontrakcie oraz poprawnych danych prowadzących do `NA`. Wynik: konstruktor wejścia i stabilne komunikaty. Sprawdzenie: błędne dane zatrzymują obliczenia, a niezdefiniowana miara ma opisany status.
+4. **Rdzeń.** Zsumuj wagi i osobno reszty; wersję wektorową porównaj z pojedynczymi krokami geometrycznymi. Wynik: działające funkcje i obiekt S3. Sprawdzenie: testy analityczne oraz porównanie z niezależną, najprostszą wersją obliczenia.
+5. **Eksperyment.** Porównaj maski przy tej samej liczbie braków, kilka p i ujawnianie kolejnych ocen. Wynik: skrypt z konfiguracją, ziarnami i tabelą wyników. Sprawdzenie: powtórzenie daje te same dane i odtwarza tabelę; raport obejmuje wszystkie zaplanowane warianty.
+6. **Udostępnienie.** Dodaj dokumentację, metodę wykresu, winietę i przykład w aplikacji. Wynik: instalowalny pakiet i działająca strona. Sprawdzenie: przykład działa po instalacji w czystej sesji R; opis odróżnia wynik liczbowy od jego interpretacji.
 
 ## Pułapki
 
-**Reszta pominięta.** Najłatwiej zaimplementować samą sumę i uznać temat za skończony.
-Reszta jest tym, co odróżnia tę miarę od zwykłej sumy ważonej, i bez niej praca traci
-swoją tezę.
+Brak oceny ma zerowy znany wkład, lecz dodatni możliwy wkład. Reszta nie jest odchyleniem standardowym. Wysokie p zwiększa znaczenie dalszych pozycji i ogona. Porównanie wartości B bez reszty może pozornie rozstrzygać różnice, których znane dane nie rozstrzygają.
 
-**Normalizacja przez sumę wag policzoną na skończonym rankingu.** Czynnik $(1-p)$
-pochodzi z sumy szeregu nieskończonego. Dzielenie przez sumę wag pierwszych $d$ pozycji
-daje inną miarę, wyglądającą podobnie i zachowującą się inaczej przy wydłużaniu rankingu.
-
-**Pozycje nieocenione traktowane jak nietrafne.** Wtedy reszta wychodzi zero i cała
-konstrukcja przestaje działać. Ten sam błąd co w temacie 03 i ta sama metoda wykrycia.
-
-**Jedna wartość parametru.** Wynik zależy od parametru, więc podanie jednej liczby bez
-uzasadnienia jest decyzją ukrytą. W pracy podaj siatkę wartości i interpretację każdej
-przez oczekiwaną liczbę obejrzanych dokumentów.
-
-**Na obronie** musisz umieć wyprowadzić czynnik normalizujący z sumy szeregu
-geometrycznego i wyjaśnić, co dokładnie oznacza wartość resztowa dla czytelnika wyników.
+Na obronie należy połączyć model zachowania użytkownika z wagami i wyjaśnić, jak plan oceniania dokumentów może zmniejszać niewiedzę o wyniku.
 
 ## Literatura
 
 Artykuł źródłowy: `moffatZobel2008rbp`.
 
-Wprowadzenie: podręcznikowe omówienie miar oceny wyszukiwania; opracowanie o modelach
-zachowania użytkownika w ocenie systemów. Dwie do czterech pozycji dobierasz sam.
-Tematy pokrewne: 03 i 13 dotyczą tego samego problemu z innej strony, 02 przedziałów
-niepewności w ocenie.
+Wprowadzenie: `manning2008ir`, `chapelle2009err`. Klucze i pełne opisy są w [`zrodla/tematy.bib`](zrodla/tematy.bib).
 
-Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.
+Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`. Źródła danych opisano w sekcji „Dane”; w pracy należy podać ich opis bibliograficzny, wersję wykorzystanego zbioru i zakres przekształceń.
+
+Dane: `reuters21578`.

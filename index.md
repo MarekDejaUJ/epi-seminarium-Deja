@@ -17,8 +17,8 @@ przyjęciu projektu.
 
 Ścieżka ułożona w kolejności, w jakiej naprawdę się ją przechodzi.
 
-**1. Zanim napiszesz pierwsze zdanie.** Przeczytaj [warsztat pisania
-akademickiego](przewodniki/05-warsztat.md) i sformułuj pytanie analityczne. To jedyna
+**1. Zanim napiszesz pierwsze zdanie.** Przeczytaj
+[warsztat pisania akademickiego](przewodniki/05-warsztat.md) i sformułuj pytanie analityczne. To jedyna
 rzecz, której nie da się nadrobić później.
 
 **2. Wybierz temat.** Czternaście [tematów](tematy/README.md), po jednym na osobę.
@@ -38,10 +38,10 @@ Skonfiguruj to **przed** pierwszą lekturą, nie po dwudziestej.
 **6. Napisz specyfikację.** [Szablon](szablony/spec/SPEC-szablon.md) i
 [szkielet pakietu](szablony/README.md). Kod pisze się dopiero po tym kroku.
 
-**7. Pisz i buduj równolegle.** [Harmonogram trzydziestu
-tygodni](harmonogram/tygodnie.md) mówi, co ma powstać w którym tygodniu po obu
-stronach. Wskazówki do każdej części pracy są w przewodniku [Jak napisać
-pracę](przewodniki/04-jak-pisac.md).
+**7. Pisz i buduj równolegle.**
+[Harmonogram trzydziestu tygodni](harmonogram/tygodnie.md) mówi, co ma powstać w którym tygodniu po obu
+stronach. Wskazówki do każdej części pracy są w przewodniku
+[Jak napisać pracę](przewodniki/04-jak-pisac.md).
 
 **8. Sprawdź się przed oddaniem.** [Listy kontrolne](ocenianie/listy-kontrolne.md)
 i [wymogi formalne](przewodniki/06-wymogi.md).

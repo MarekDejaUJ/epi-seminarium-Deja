@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | Artykuł źródłowy | Webber, William; Moffat, Alistair; Zobel, Justin (2008). *Score Standardization for Inter-Collection Comparison of Retrieval Systems*. SIGIR '08, s. 51-58 |
-| Identyfikator | [kopia autorska](https://people.eng.unimelb.edu.au/jzobel/fulltext/sigir08.pdf) |
+| Identyfikator | [10.1145/1390334.1390346](https://doi.org/10.1145/1390334.1390346); [kopia autorska](https://www.codalism.com/research/papers/wmz08_sigir_pp.pdf) |
 | Dostęp | wolny |
 | Dziedzina | wyszukiwanie informacji, metodologia eksperymentu |
 | Proponowany tytuł pracy | Pakiet R do standaryzacji wyników oceny systemów wyszukiwawczych jako przykład zastosowania normalizacji rozkładowej w badaniach porównawczych |
@@ -14,184 +14,96 @@
 
 ## Po co to badaczowi
 
-Kiedy w artykule pada zdanie, że system osiągnął wynik 0,32, czytelnik nie wie o nim
-prawie nic. Nie wie, czy to dużo. Nie wie, czy wynik 0,28 z innego artykułu jest gorszy,
-czy tylko zmierzony na trudniejszym zestawie zapytań. **Wyniki miar skuteczności są
-względne wobec kolekcji** i poza nią nie znaczą nic.
+Średnia skuteczność wyszukiwarki zależy od wybranego zestawu zapytań. Zbiory mogą różnić się trudnością, a wyniki poszczególnych zapytań skalą i rozrzutem. Porównanie liczb z dwóch doświadczeń wymaga więc określenia, względem czego wynik ma być wysoki lub niski.
 
-Powód jest prosty i widać go w danych. Zapytania różnią się trudnością znacznie bardziej
-niż systemy jakością. W typowym zestawie średnie wyniki dla poszczególnych zapytań
-rozciągają się kilkunastokrotnie, podczas gdy średnie wyniki systemów mieszczą się
-w przedziale dwu-, trzykrotnym. O wartości wyniku decyduje więc głównie to, jakie
-zapytania trafiły do kolekcji, a nie to, jak dobry jest system.
+Standaryzacja ze źródła odnosi wynik systemu do rozkładu wyników systemów kalibracyjnych na tym samym zapytaniu. Położenie w tym rozkładzie jest następnie przekształcane i uśredniane. Badacz otrzymuje skalę odniesienia, ale jej znaczenie zależy od składu kalibracji.
 
-Ma to trzy skutki. Wyników z dwóch artykułów nie da się zestawić. Pojedyncza liczba nie
-mówi nic o tym, czy system jest dobry. A w testach istotności zapytania o dużym rozrzucie
-ważą wielokrotnie więcej niż pozostałe, więc wnioski o różnicach między systemami są
-mniej pewne, niż wskazuje sam test.
-
-Artykuł proponuje rozwiązanie zapożyczone ze statystyki stosowanej w badaniach nad
-ludźmi, a wcześniej niestosowane w ocenie wyszukiwarek: **standaryzację wyniku względem
-rozkładu wyników na tym samym zapytaniu**. Trudność zapytania szacuje się z próby
-systemów, a potem używa do przeliczenia wyników wszystkich systemów, także tych, które
-powstaną później.
-
-Dla badacza jest to warunek, żeby liczba w tabeli znaczyła coś sama z siebie.
+W projekcie trzeba oddzielić zmianę skali zadania od rzeczywistej specjalizacji systemów i zbadać wpływ kalibratorów. Samo centrowanie nie zapewnia porównywalności dowolnych kolekcji. Pakiet ma zachować parametry oraz identyfikatory kalibracji, aby nowe wyniki można było interpretować względem tego samego odniesienia.
 
 ## Algorytm
 
-**Wejście.** Macierz wyników: dla każdego systemu i każdego zapytania jedna wartość
-miary skuteczności. Wskazanie, które systemy tworzą próbę odniesienia.
+**Wejście.** Macierz wyniku miary z systemami w wierszach i zapytaniami w kolumnach. Dla każdego zapytania t istnieje stały zbiór systemów kalibracyjnych. Niech $\mu_t$ i $\sigma_t$ oznaczają średnią i odchylenie standardowe ich wyników, z mianownikiem $K-1$ dla K systemów.
 
-**Wyjście.** Wyniki standaryzowane, czynniki standaryzacyjne dla każdego zapytania,
-wyniki przeniesione na przedział jednostkowy, uporządkowanie systemów przed i po.
+$$z_{st}=(m_{st}-\mu_t)/\sigma_t,\qquad u_{st}=\Phi(z_{st}).$$
 
-**Wzory.** Niech $m_{st}$ oznacza wynik systemu $s$ na zapytaniu $t$, a $\mu_t$ i
-$\sigma_t$ średnią i odchylenie standardowe wyników na tym zapytaniu w próbie systemów
-odniesienia. Wynik standaryzowany to
+Wynik $z_{st}$ wyraża położenie systemu s względem kalibracji zapytania t. $\Phi$ jest dystrybuantą standardowego rozkładu normalnego; $u_{st}$ to przekształcony wynik w [0,1], a nie wartość p testu statystycznego ani pewne empiryczne prawdopodobieństwo przewagi. Wynik systemu jest średnią jego $u_{st}$ po określonym zbiorze zapytań.
 
-$$m'_{st} = \frac{m_{st} - \mu_t}{\sigma_t}$$
+Kroki: wybierz i zapisz systemy kalibracyjne, wyznacz parametry osobno dla kolumn, zastosuj do systemów ocenianych, przekształć przez Phi i uśrednij. W R centrowanie i skalowanie wykonaj po kolumnach, np. dwoma wywołaniami `sweep(..., MARGIN = 2)`, bez niejawnego recyklingu wektorów. Przechowuj nazwy zapytań w obiekcie kalibracji.
 
-Wielkości $\mu_t$ i $\sigma_t$ nazywa się **czynnikami standaryzacyjnymi** zapytania $t$.
-Wynik standaryzowany mówi, o ile odchyleń standardowych system odbiega od przeciętnej
-na tym zapytaniu.
+Parametry dla nowych kolekcji wyznacza się na odpowiadających im zapytaniach przy porównywalnym, ustalonym zbiorze systemów odniesienia. Oceniany nowy system nie zmienia automatycznie kalibracji pozostałych. Rekalibracja jest dopuszczalnym, osobno oznaczonym wariantem z nowym identyfikatorem. Koszt $O(KT+ST)$ i pamięć $O(ST)$ dla T zapytań i S systemów ocenianych.
 
-Tak policzona wartość jest wyśrodkowana na zerze i nieograniczona, a miary skuteczności
-zwyczajowo mieszczą się w przedziale jednostkowym. Autorzy przenoszą ją tam dystrybuantą
-rozkładu normalnego standardowego:
-
-$$F(m') = \int_{-\infty}^{m'} \frac{1}{\sqrt{2\pi}}\, e^{-x^2/2}\, dx$$
-
-Po przeniesieniu wartość 0,5 oznacza wynik przeciętny, 0,84 jedno odchylenie powyżej
-przeciętnej, a 0,16 jedno odchylenie poniżej. Jest to interpretacja, której surowy wynik
-miary nie ma.
-
-Przeniesienie ma jeszcze jeden skutek: **tłumi wpływ wartości skrajnych**, na przykład
-sytuacji, w której tylko jeden system znalazł cokolwiek trafnego dla danego zapytania.
-
-**Kroki.**
-
-1. Sprawdzenie danych: kompletność macierzy wyników, liczebność próby odniesienia,
-   niezerowe odchylenie standardowe na każdym zapytaniu.
-2. Wyznaczenie czynników standaryzacyjnych z próby systemów odniesienia.
-3. Przeliczenie wyników wszystkich systemów na wartości standaryzowane.
-4. Przeniesienie na przedział jednostkowy dystrybuantą.
-5. Uśrednienie po zapytaniach i uporządkowanie systemów.
-6. Porównanie uporządkowań oraz rozkładów wyników przed i po standaryzacji.
-
-**Co wynotować z artykułu.** Sposób doboru próby systemów odniesienia i jej wymaganą
-liczebność; postępowanie przy zapytaniach o zerowym odchyleniu standardowym; wykazanie,
-że standaryzacja wyniku surowego i wyniku znormalizowanego przez liczbę dokumentów
-trafnych daje ten sam rezultat, wraz z uzasadnieniem; wyniki porównania rozkładów przed
-i po standaryzacji.
+Metoda usuwa część różnic skali i trudności zapytań. Nie gwarantuje porównywalności całkowicie odmiennych zadań, reprezentatywności kalibracji ani normalności rozkładu wyników. Dodanie identycznej stałej trudności do wyników wszystkich systemów w zapytaniu nie zmienia ich różnic; symulacja musi uwzględniać interakcje lub zmienną skalę, aby badać zmianę uporządkowań.
 
 ## Kontrakt
 
-**Warunki wstępne.** Macierz wyników bez braków albo z jawnie zadeklarowaną obsługą
-braków; co najmniej dwa systemy w próbie odniesienia; dodatnie odchylenie standardowe
-na każdym zapytaniu; wyniki miary w skali ilorazowej.
+`wyniki`: macierz liczb skończonych, z unikatowymi nazwami systemów i zapytań. Co najmniej dwa systemy kalibracyjne, bez `NA` w podstawowym wariancie. `kalibracja` przechowuje identyfikatory, średnie, odchylenia i definicję miary. Dane oceniane mają dokładnie dopasowane identyfikatory zapytań; kolejność dopasowuje się nazwami. Zmiana definicji miary wymaga nowej kalibracji.
 
-**Niezmienniki.** Średnia wyników standaryzowanych w próbie odniesienia wynosi zero
-dla każdego zapytania, a odchylenie standardowe jeden. Wartości po przeniesieniu mieszczą
-się w przedziale od zera do jedności. Przekształcenie jest ściśle rosnące, więc
-uporządkowanie systemów **w obrębie jednego zapytania** się nie zmienia. Uporządkowanie
-po uśrednieniu po zapytaniach zmienić się może i właśnie o to chodzi.
+Kolumna o zerowym odchyleniu daje `NA` dla wszystkich systemów i status `zerowa_skala`. Średnia wyłącza takie kolumny tylko po podaniu ich liczby i wspólnej listy dla porównywanych systemów; brak jakiejkolwiek określonej kolumny daje `NA`. Niezmienniki: monotoniczność transformacji wewnątrz zapytania; niezmienność po wspólnym dodatnim skalowaniu i przesunięciu kolumny wraz z jej kalibracją; nowy oceniany system nie zmienia wyników innych przy stałej kalibracji.
 
-**Wyjście.** Klasa `wyniki_standaryzowane` ze składnikami: macierz wyników
-standaryzowanych, macierz po przeniesieniu, czynniki standaryzacyjne, uporządkowanie
-przed i po, miara zgodności uporządkowań.
-
-**Błędy zatrzymujące wykonanie.** Zerowe odchylenie standardowe na zapytaniu; mniej niż
-dwa systemy odniesienia; macierz z brakami przy niezadeklarowanej obsłudze; wyniki spoza
-dziedziny miary.
+S3 `wynik_standaryzacji`: `z`, `u`, `srednie`, `kalibracja`, `zapytania_wylaczone`, `parametry`, `status`. Błędy: „Macierz musi mieć jednoznaczne nazwy systemów i zapytań”, „Potrzeba co najmniej dwóch systemów kalibracyjnych”, „Zapytania nie odpowiadają zapisanej kalibracji”, „Wyniki muszą być skończone i kompletne”.
 
 ## Plan pakietu
 
-| Plik | Odpowiedzialność |
-|---|---|
-| `R/przygotowanie_danych.R` | walidacja macierzy wyników i próby odniesienia |
-| `R/czynniki.R` | średnie i odchylenia dla zapytań |
-| `R/standaryzacja.R` | przeliczenie i przeniesienie na przedział jednostkowy |
-| `R/uporzadkowanie.R` | uporządkowanie systemów, zgodność uporządkowań |
-| `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | rozkłady przed i po, wpływ zapytań o dużym rozrzucie |
+Pakiet `StandaryzacjaR`, licencja GPL-3. Publiczne funkcje:
 
-Zależności: `stats` i `ggplot2`. Całość to operacje na macierzy: odjęcie wektora średnich
-i podzielenie przez wektor odchyleń wykonuje się jednym działaniem, bez pętli po
-zapytaniach.
+- `kalibruj_wyniki(wyniki, systemy_kalibracyjne, miara)` – parametry po zapytaniach.
+- `standaryzuj_wyniki(wyniki, kalibracja)` – z, Phi i średnie.
+- `porownaj_kolekcje(wyniki_a, wyniki_b, systemy_kalibracyjne, miara)` – oddzielne kalibracje o wspólnej definicji.
+- `generuj_wyniki(n_systemow = 20, n_zapytan = 100, ziarno = 202711)` – interakcje i skala.
+
+Moduły: `R/kalibracja.R`, `R/standaryzacja.R`, `R/porownanie.R`, `R/generator.R`, `R/metody_s3.R`. Klasa S3 `wynik_standaryzacji` ma metody `print()`, `summary()` i `plot()`: skrócony wynik, zestawienie diagnostyki oraz wykres zgodny z rodzajem wyniku. Wartości i parametry pozostają dostępne bez odczytywania tekstu wydruku.
+
+`Imports`: `stats`. `Suggests`: `testthat`, `knitr`, `rmarkdown`, `pkgdown`, `shiny`. Funkcje obliczeniowe nie instalują zależności ani nie korzystają z sieci. Dokumentacja `pkgdown` zawiera przykład od wejścia do interpretacji; aplikacja pod `/app/` korzysta z tego samego interfejsu i jawnie prezentuje parametry. Sprawdzenie: instalacja pakietu, uruchomienie przykładu i metod S3 oraz `R CMD check --as-cran`.
 
 ## Dane
 
-**Procedura generowania.** Generujesz macierz wyników z **jawnie rozdzielonym wpływem
-systemu i zapytania**: wynik jest funkcją jakości systemu, trudności zapytania i szumu.
-Znasz wtedy prawdziwe uporządkowanie systemów i możesz sprawdzić, które podejście je
-odtwarza. Następnie zwiększasz rozrzut trudności zapytań i obserwujesz, kiedy
-uporządkowanie na wynikach surowych zaczyna się psuć.
+**Generator.** `ziarno = 202711`. Ustal zdolności 20 systemów $a_s$ równomiernie od -1 do 1. Dla 100 zapytań losuj trudność $b_t\sim N(0,1)$, skalę $c_t\sim\operatorname{Lognormal}(0,0{,}5^2)$ i preferencję zadania $h_t\in\{-1,1\}$ z równymi szansami. System ma specjalizację $g_s=(-1)^s\cdot0{,}3$, a surowy wynik $m_{st}=b_t+c_t(a_s+g_sh_t+\varepsilon_{st})$, $\varepsilon\sim N(0,0{,}2^2)$. Zbiory A i B różnią się udziałem h=1: 0,2 i 0,8. Kalibrację buduj z ustalonych 12 systemów, oceniaj pozostałe 8. Target porównawczy to średnia standaryzowana na niezależnym, zbalansowanym zestawie 10000 zapytań, a nie z góry założona kolejność po samym a. Dodatkowo dodaj stałą 100 do jednego zapytania albo zwiększ jego skalę dziesięciokrotnie; testuj niezmienność po wspólnej zmianie kalibracji. Braki są odrzucane; kolumnę stałą badaj jako osobny przypadek.
 
-Parametry: liczba systemów, liczba zapytań, rozrzut jakości systemów, rozrzut trudności
-zapytań, poziom szumu, ziarno.
+**Obliczenia kontrolne.** Jedno zapytanie z wynikami kalibracji $(0{,}1,0{,}2,0{,}3)$: średnia 0,2, odchylenie 0,1, z = (-1,0,1), u = (0,1586553; 0,5; 0,8413447). Nowy system z wynikiem 0,4 ma z = 2 i u = 0,9772499 przy tej samej kalibracji. Po dodaniu go wyłącznie do oceny poprzednie u nie zmieniają się.
 
-**Przypadki o znanym wyniku.** Wszystkie systemy o identycznym wyniku na zapytaniu:
-odchylenie zerowe, przypadek błędu. Trzy systemy o wynikach 0,1, 0,2 i 0,3 na jednym
-zapytaniu: wartości standaryzowane policzalne ręcznie. System o wyniku równym średniej:
-wartość zero, po przeniesieniu 0,5.
+**Przypadki brzegowe.** Dwa systemy kalibracyjne; stała kolumna; kolumny zamienione miejscami; nowe zapytanie bez parametrów; macierz niesymetryczna wymiarowo, aby wykryć skalowanie po złej osi.
 
-**Przypadki patologiczne.** Jedno zapytanie w kolekcji; jeden system w próbie odniesienia;
-zapytanie, na którym wszystkie systemy dają zero.
+**Zbiór empiryczny.** [Reuters-21578, Distribution 1.0](https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection), DOI [10.24432/C52G6M](https://doi.org/10.24432/C52G6M), licencja CC BY 4.0 wskazana przez UCI. Dokumenty prasowe mają kategorie przypisane przez osoby indeksujące. W studium przypadku kategoria jest umownym zapytaniem, a przynależność do niej binarną oceną trafności. Jest to adaptacja zbioru klasyfikacyjnego, więc wynik dotyczy odnajdywania kategorii, a nie pełnej oceny potrzeb informacyjnych użytkownika.
 
-**Zbiór empiryczny.** Publicznie dostępne wyniki przebiegów z konferencji ewaluacyjnych
-albo własne wyniki kilku konfiguracji wyszukiwarki na wspólnym zestawie zapytań. Ten sam
-materiał można uzyskać, uruchamiając kilka wariantów prostej wyszukiwarki na otwartej
-kolekcji. Sprawdź warunki licencyjne.
+Wybierz dokumenty z niepustym tekstem i oznaczeniem `TOPICS="YES"` ze zbioru testowego podziału ModApte. Zapisz identyfikatory dokumentów, wybór kategorii i liczności. Zbuduj co najmniej trzy rankingi na tej samej puli: podobieństwo tekstu do nazwy i opisu kategorii, jego wariant oparty tylko na tytule oraz ranking losowy. Ustal preprocessing i rozstrzyganie remisów identyfikatorem przed porównaniem wyników. Pełne etykiety kategorii są punktem odniesienia dla kontrolowanego ukrywania ocen. Pobranie i przekształcenie wykonaj osobnym skryptem; zachowaj opis źródła, a w testach pakietu używaj małych przykładów bez pobierania danych z sieci.
+
+Zbuduj dwie kolekcje z rozłącznych kategorii. Dla każdej przygotuj co najmniej sześć wariantów wyszukiwania, cztery kalibracyjne i dwa oceniane, z tą samą miarą P@10 i regułą etykiet. Przy tak małej liczbie kalibratorów traktuj analizę jako sprawdzenie działania, a wpływ składu kalibracji jako główny wariant wrażliwości.
 
 ## Mapowanie na pracę
 
-| Sekcja briefu | Rozdział pracy |
+| Materiał | Część pracy |
 |---|---|
-| Po co to badaczowi, zmienność trudności zapytań | Wprowadzenie: tło i luka |
-| Wzory, czynniki standaryzacyjne, przeniesienie | Rozdział 1: aparat formalny |
-| Kontrakt, niezmienniki, monotoniczność | Rozdział 1: granice stosowalności |
-| Plan pakietu, procedura generowania, odtwarzanie uporządkowania | Rozdział 2 |
-| Zbiór empiryczny, porównanie przed i po | Rozdział 3 |
+| Problem zastosowania, pytanie analityczne i zakres wkładu | Wprowadzenie |
+| Definicje, wzory, założenia i porównanie dostępnych rozwiązań | Rozdział 1: Podstawy metodyczne |
+| Kontrakt, moduły, klasy wyniku, generator i wyniki testów | Rozdział 2: Implementacja i architektura pakietu |
+| Charakterystyka danych, analiza, interpretacja i porównanie | Rozdział 3: Studium przypadku |
+| Odpowiedź na pytanie, ograniczenia i kierunek rozwoju | Zakończenie |
 
-**Wstępne pytanie badawcze.** Przy jakim stosunku rozrzutu trudności zapytań do rozrzutu
-jakości systemów uporządkowanie oparte na wynikach surowych przestaje odtwarzać
-prawdziwe uporządkowanie systemów, i o ile poprawia to standaryzacja?
+**Wstępne pytanie analityczne.** W jakim stopniu standaryzacja ogranicza zależność oceny systemu od skali wyników i składu kolekcji przy stałym oraz zmienionym zestawie kalibratorów?
+
+**Proponowany wkład.** Jawny, przenośny obiekt kalibracji z diagnostyką zerowych skal i eksperymentem rozdzielającym zmianę trudności od interakcji system–zadanie.
 
 ## Polecenia startowe
 
-1. Walidacja macierzy wyników wraz z wykryciem zapytań o zerowym odchyleniu.
-2. Czynniki standaryzacyjne liczone na próbie odniesienia, na operacjach macierzowych.
-3. Przeliczenie i przeniesienie na przedział jednostkowy dystrybuantą.
-4. Procedura generowania macierzy z rozdzielonym wpływem systemu i zapytania.
-5. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
-6. Badanie odtwarzania prawdziwego uporządkowania przy rosnącym rozrzucie trudności.
+1. **Specyfikacja.** Ustal orientację macierzy, mianownik odchylenia i niezmienność kalibracji podczas oceniania nowego systemu. Wynik: `SPEC.md` z sygnaturami, definicjami i obsługą przypadków brzegowych. Sprawdzenie: każdy argument i każda kolumna wyniku mają opis; zakres odpowiada wskazanym częściom artykułu.
+2. **Przykłady analityczne.** Sprawdź trzy u oraz nowy wynik 0,9772499 i kolumnę stałą. Wynik: testy z liczbowymi wartościami oczekiwanymi. Sprawdzenie: odtwórz rachunki na kartce lub osobnym, prostym skryptem; nie wyznaczaj oczekiwanych wartości testowaną funkcją.
+3. **Walidacja.** Zapisz testy wszystkich błędów wymienionych w kontrakcie oraz poprawnych danych prowadzących do `NA`. Wynik: konstruktor wejścia i stabilne komunikaty. Sprawdzenie: błędne dane zatrzymują obliczenia, a niezdefiniowana miara ma opisany status.
+4. **Rdzeń.** Wykonaj dopasowanie nazw i skalowanie po kolumnach; porównaj każdą kolumnę z osobnym rachunkiem. Wynik: działające funkcje i obiekt S3. Sprawdzenie: testy analityczne oraz porównanie z niezależną, najprostszą wersją obliczenia.
+5. **Eksperyment.** Porównaj trudność, skalę i interakcje osobno; zapisz identyfikatory wszystkich kalibracji. Wynik: skrypt z konfiguracją, ziarnami i tabelą wyników. Sprawdzenie: powtórzenie daje te same dane i odtwarza tabelę; raport obejmuje wszystkie zaplanowane warianty.
+6. **Udostępnienie.** Dodaj dokumentację, metodę wykresu, winietę i przykład w aplikacji. Wynik: instalowalny pakiet i działająca strona. Sprawdzenie: przykład działa po instalacji w czystej sesji R; opis odróżnia wynik liczbowy od jego interpretacji.
 
 ## Pułapki
 
-**Standaryzacja po systemach zamiast po zapytaniach.** Macierz ma dwa wymiary i pomyłka
-jest łatwa, a wynik wygląda sensownie. Test sprawdzający, że średnia w próbie odniesienia
-wynosi zero **dla każdego zapytania**, wychwytuje to natychmiast.
+Prawidłowy wzór może być źle wykonany przez recykling lub skalowanie po wierszach. Phi nie jest empirycznym percentylem małego zestawu kalibracji. Dodanie stałej do wszystkich systemów nie jest wiarygodnym generatorem zmiany ich kolejności. Zmiana kalibratorów może zmienić u nawet przy tych samych surowych wynikach.
 
-**Czynniki liczone na wszystkich systemach.** Sens metody polega na tym, że czynniki
-pochodzą z ustalonej próby odniesienia i pozostają stałe, także dla systemów ocenianych
-później. Przeliczanie ich przy każdym nowym systemie odbiera metodzie jej jedyną zaletę.
-
-**Zapytania o zerowym odchyleniu.** Dzielenie przez zero. Postępowanie jest w artykule
-i nie należy go wymyślać ani po cichu podmieniać na małą stałą.
-
-**Utożsamianie standaryzacji z normalizacją przez wynik idealny.** To dwie różne rzeczy
-i artykuł pokazuje, dlaczego druga nie wystarcza. Praca musi je rozróżnić.
-
-**Na obronie** musisz umieć wyjaśnić, dlaczego wynik 0,32 sam z siebie nic nie znaczy,
-i powiedzieć, co dokładnie oznacza wartość 0,84 po standaryzacji.
+Na obronie należy wyjaśnić, jak odniesienie nadaje wynikowi skalę, i ocenić, które różnice między kolekcjami standaryzacja może ograniczyć.
 
 ## Literatura
 
 Artykuł źródłowy: `webber2008standaryzacja`.
 
-Wprowadzenie: podręcznikowe omówienie metodyki eksperymentu w wyszukiwaniu informacji;
-opracowanie o zmienności trudności zapytań. Dwie do czterech pozycji dobierasz sam.
-Tematy pokrewne: 02, 03, 07 – wszystkie dotyczą wiarygodności pomiaru skuteczności.
+Wprowadzenie: `manning2008ir`, `buckleyVoorhees2004incomplete`. Klucze i pełne opisy są w [`zrodla/tematy.bib`](zrodla/tematy.bib).
 
-Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.
+Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`. Źródła danych opisano w sekcji „Dane”; w pracy należy podać ich opis bibliograficzny, wersję wykorzystanego zbioru i zakres przekształceń.
+
+Dane: `reuters21578`.

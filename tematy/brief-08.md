@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| Artykuł źródłowy | Corsi, Matteo; Urbano, Julián (2024). *The Treatment of Ties in Rank-Biased Overlap*. SIGIR '24 |
-| Identyfikator | [arXiv:2406.07121](https://arxiv.org/abs/2406.07121) |
+| Artykuł źródłowy | Corsi, Matteo; Urbano, Julián (2024). *The Treatment of Ties in Rank-Biased Overlap*. Proceedings of the 47th ACM SIGIR, 251–260 |
+| Identyfikator | [10.1145/3626772.3657700](https://doi.org/10.1145/3626772.3657700); [preprint](https://arxiv.org/abs/2406.07121) |
 | Podstawa metody | Webber, Moffat, Zobel (2010). *A Similarity Measure for Indefinite Rankings*, [10.1145/1852102.1852106](https://doi.org/10.1145/1852102.1852106) |
 | Dostęp | otwarty |
 | Dziedzina | wyszukiwanie informacji, bibliometria, porównywanie list |
@@ -15,183 +15,114 @@
 
 ## Po co to badaczowi
 
-Porównywanie dwóch uporządkowań to jedna z najczęstszych czynności w naukach
-o informacji. Dwa systemy wyszukiwawcze zwracają dwie listy wyników. Dwie bazy
-bibliograficzne dają dwa rankingi czasopism. Dwóch ekspertów porządkuje te same
-dokumenty od najważniejszego. Za każdym razem pada pytanie: **jak bardzo te dwa
-porządki się zgadzają**.
+Dwie wyszukiwarki lub dwa zestawienia bibliometryczne mogą zwracać listy o innych długościach i częściowo innych elementach. Badacz często zna tylko początek listy. Klasyczne korelacje rang wymagają uzgodnienia wspólnego zbioru i nie dają same przez się opisu niewiedzy o dalszych pozycjach.
 
-Klasyczne współczynniki korelacji rangowej odpowiadają na to pytanie źle, z dwóch
-powodów. Po pierwsze wymagają, żeby obie listy zawierały **te same elementy** –
-a listy wyszukiwania zawierają różne dokumenty. Po drugie traktują wszystkie pozycje
-tak samo, więc zamiana miejscami pozycji tysięcznej i tysiąc pierwszej waży tyle samo,
-co zamiana pierwszej z drugą. Dla użytkownika, który ogląda pierwszą dziesiątkę, jest
-to nonsens.
+RBO porównuje zgodność kolejnych prefiksów, nadając większe znaczenie początkowi listy. Corsi i Urbano rozróżniają interpretacje remisów: cała grupa może być widoczna na danej głębokości albo elementy mogą wnosić ułamkowy wkład wynikający z możliwej kolejności. Te interpretacje dają odmienne wyniki także dla tych samych list.
 
-Miara opisana w artykule podstawowym rozwiązuje oba problemy naraz: dopuszcza listy
-o różnej zawartości i różnej, nawet nieznanej długości, a wagę pozycji ustala malejąco.
-
-Artykuł źródłowy dokłada rzecz, którą wersja pierwotna zostawiła otwartą: **remisy**.
-W realnych danych remisy są wszędzie – dokumenty o identycznej ocenie systemu, czasopisma
-o tej samej liczbie cytowań, oceny ekspertów na skali pięciostopniowej. Wersja pierwotna
-zakłada porządek ścisły, więc badacz musi remisy jakoś rozstrzygnąć, i robi to zwykle
-przypadkowo, przez kolejność w pliku. Artykuł pokazuje, że wynik od tego zależy, i podaje
-postać uogólnioną wraz z wariantami.
+Projekt obejmuje własny interfejs porównania, granice wynikające z nieznanego ogona oraz punkt ekstrapolowany przy jawnym założeniu. Istnieją pełne implementacje autorów, dlatego wkład obejmuje sprawdzony pakiet, diagnostykę i analizę wpływu remisów. Badacz ma otrzymać wynik, którego znaczenie odpowiada zastosowaniu rankingu.
 
 ## Algorytm
 
-**Wejście.** Dwa rankingi tych samych albo różnych elementów, ewentualnie z grupami
-remisowymi; parametr wytrwałości $p$; głębokość oceny.
+**Zakres.** RBO bez remisów oraz trzy warianty remisów $w,a,b$ z Corsi i Urbano. Obowiązkowe granice i ekstrapolacja dotyczą wspólnej ocenianej głębokości k z całkowicie widocznymi grupami remisowymi. Dla nierównych list wybierz k nieprzecinające grupy w żadnej liście, zachowaj niewykorzystane elementy w diagnostyce. Dokładniejsze wzory nierównych prefiksów są rozszerzeniem ze źródła, a nie domyślnym zastąpieniem wspólnego zakresu.
 
-**Wyjście.** Wartość podobieństwa, granice przy niepełnej znajomości list, wkład
-kolejnych głębokości, wariant obsługi remisów.
+**Wejście.** Dwa rankingi unikatowych identyfikatorów i wyniki liczbowe opisujące remisy, $0<p<1$. Bez remisów $A_d=|S_{1:d}\cap T_{1:d}|/d$, a suma ważona ma postać:
 
-**Wzory.** Niech $S_{:d}$ i $T_{:d}$ oznaczają zbiory elementów zajmujących pierwsze $d$
-pozycji obu rankingów. Pokrycie na głębokości $d$ to liczność części wspólnej
+$$\operatorname{RBO}=(1-p)\sum_{d=1}^{\infty}p^{d-1}A_d.$$
 
-$$X_d = |S_{:d} \cap T_{:d}|$$
+$A_d$ jest zgodnością do głębokości d; p reguluje wagę dalszej części listy. Dla znanych poziomów 1..k:
 
-a zgodność na tej głębokości to pokrycie odniesione do głębokości
+$$B_k=(1-p)\sum_{d=1}^{k}p^{d-1}A_d,\qquad [B_k,B_k+p^k].$$
 
-$$A_d = \frac{X_d}{d}$$
+To podstawowy, konserwatywny zakres przy nieznanej dalszej zgodności w [0,1]. Nie jest przedziałem ufności. Jego górny koniec nie musi być osiągalny dla każdego konkretnego prefiksu. Ekstrapolacja zakłada stały poziom dalszej zgodności:
 
-Miara jest średnią ważoną zgodności po wszystkich głębokościach, z wagami malejącymi
-geometrycznie:
+$$\operatorname{RBO}_{\rm ext}=B_k+p^kA_k.$$
 
-$$\mathrm{RBO} = (1-p)\sum_{d=1}^{\infty} p^{\,d-1} A_d$$
+Punkt ekstrapolowany wynika z założenia o ogonie i nie zastępuje całego przedziału.
 
-Wartość należy do przedziału od zera do jedności: rankingi rozłączne dają zero, bo
-zgodność jest zerowa na każdej głębokości, rankingi identyczne dają jedność, bo zgodność
-jest wszędzie równa jeden.
+**Remisy.** Dla elementu e w grupie zajmującej pozycje l..u zdefiniuj wkład widoczności $c_{e,d}$ równy 0 dla $d<l$, $(d-l+1)/(u-l+1)$ dla $l\le d<u$ i 1 dla $d\ge u$. Pełna grupa musi być znana nawet wtedy, gdy aktualna głębokość przecina ją. Wariant $a$:
 
-Parametr $p$ działa tak samo jak w temacie 07: małe $p$ oznacza, że liczy się prawie
-wyłącznie początek listy, duże $p$ rozkłada uwagę głębiej.
+$$A_d^a=\frac1d\sum_e c^S_{e,d}c^T_{e,d}.$$
 
-**Remisy.** Gdy elementy stoją w grupie remisowej, pojęcie pierwszych $d$ pozycji
-przestaje być jednoznaczne. Artykuł źródłowy podaje uogólnienie i kilka wariantów
-różniących się tym, co zakłada się o elementach wewnątrz grupy. Wybór wariantu jest
-decyzją badacza i **zmienia wynik**, więc musi być w pracy nazwany i uzasadniony.
+Jest to oczekiwana zgodność niezależnych porządków wewnątrz remisów. Wariant $b$ normalizuje ten iloczyn przez normy obu wektorów wkładów:
 
-**Kroki.**
+$$A_d^b=\frac{\sum_e c^S_{e,d}c^T_{e,d}}{\sqrt{\sum_e(c^S_{e,d})^2\sum_e(c^T_{e,d})^2}}.$$
 
-1. Sprawdzenie danych: brak powtórzeń w obrębie rankingu, zgodność przestrzeni
-   identyfikatorów, poprawność zapisu grup remisowych.
-2. Wyznaczenie pokrycia na kolejnych głębokościach metodą przyrostową: przy przejściu
-   z $d$ na $d+1$ pokrycie zmienia się co najwyżej o dwa.
-3. Złożenie sumy ważonej zgodności.
-4. Wyznaczenie granic wartości przy rankingach obciętych.
-5. Powtórzenie dla wybranego wariantu obsługi remisów.
-6. Zestawienie z klasycznymi współczynnikami korelacji rangowej.
+Pozwala to osiągnąć 1 dla identycznych grup remisowych. Wariant $w$ włącza całą grupę przecinającą d; dla zbiorów widocznych $S_d^w,T_d^w$ stosuje $A_d^w=2|S_d^w\cap T_d^w|/(|S_d^w|+|T_d^w|)$. Realizuje inną interpretację głębokości niż niezależne losowanie kolejności. Użyj odpowiedniego $A_d$ w B, granicach i ekstrapolacji.
 
-**Co wynotować z artykułu.** Postać uogólnioną dla remisów wraz z definicją każdego
-symbolu; różnice między wariantami i to, co każdy z nich zakłada; sposób wyznaczania
-granic przy prefiksach; przykład przewodni z artykułu wraz z policzonymi wartościami
-– posłuży za przypadek analityczny w testach.
+Koszt budowy grup i sum przy wykorzystaniu indeksu identyfikatorów powinien być co najwyżej $O(k^2)$ w prostej wersji i niższy po aktualizacji przyrostowej; sortowanie to $O(k\log k)$. Zmierz wersje na identycznych danych. Nie przestawiaj arbitralnie elementów remisowych, aby pozornie otrzymać metodę bez remisów.
 
 ## Kontrakt
 
-**Warunki wstępne.** Parametr ściśle między zerem a jednością; brak powtórzeń elementu
-w obrębie jednego rankingu; obie listy niepuste; grupy remisowe rozłączne.
+Każda lista: tabela `element`, `wynik`, unikatowy i niepusty element, skończony wynik, uporządkowanie malejące. Równość wyników definiuje remis dokładny; ewentualne zaokrąglenie jest jawnym przygotowaniem danych. `p` w (0,1), wariant `bez_remisow`, `w`, `a` albo `b`. Wariant bez remisów odrzuca powtarzające się wyniki. Brak etykiet elementów lub wyników nie jest dozwolony. Dla braku dodatniej wspólnej głębokości wyniki punktowe są `NA`, granice [0,1].
 
-**Niezmienniki.** Wynik należy do przedziału od zera do jedności. Miara jest symetryczna:
-zamiana rankingów miejscami nie zmienia wyniku. Rankingi identyczne dają jedność,
-rozłączne zero. Pokrycie jest niemalejące wraz z głębokością. Zgodność na głębokości $d$
-nie przekracza jedności.
+Niezmienniki: symetria S,T; $A_d,B,\mathrm{ext}\in[0,1]$; punkt ekstrapolowany w zwróconych granicach; przestawienie wierszy w tej samej grupie nie zmienia wyniku. Identyczne listy z remisami nie muszą mieć wartości 1 w wariancie a. Rozłączne prefiksy nie dowodzą zerowej zgodności nieznanych ogonów. Losowa zamiana dwóch elementów nie gwarantuje monotonicznego spadku RBO.
 
-**Wyjście.** Klasa `podobienstwo_rankingow` ze składnikami: wartość, granice, wkład
-kolejnych głębokości, wariant obsługi remisów, wartość parametru.
-
-**Błędy zatrzymujące wykonanie.** Parametr poza przedziałem otwartym; powtórzony element
-w rankingu; pusty ranking; niespójny zapis grup remisowych.
+Wynik `podobienstwo_rankingow`: `wariant`, `dolna`, `gorna`, `reszta`, `ekstrapolacja`, `profil`, `k`, `p`, `diagnostyka`, `status`. Błędy: „Elementy rankingu muszą być unikatowe”, „Wyniki muszą być skończone”, „Wariant bez remisów nie dopuszcza grup remisowych”, „Głębokość końcowa nie może przecinać grupy remisowej”.
 
 ## Plan pakietu
 
-| Plik | Odpowiedzialność |
-|---|---|
-| `R/przygotowanie_danych.R` | walidacja rankingów, rozpoznanie grup remisowych |
-| `R/pokrycie.R` | pokrycie i zgodność na kolejnych głębokościach, przyrostowo |
-| `R/rbo.R` | miara podstawowa i granice |
-| `R/remisy.R` | warianty obsługi grup remisowych |
-| `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | zgodność w funkcji głębokości, wpływ parametru |
+Pakiet `RankingiR`, licencja GPL-3. Publiczne funkcje:
 
-Zależności: `stats` i `ggplot2`. Pokrycie licz **przyrostowo**: przechodząc na głębokość
-$d+1$ sprawdzasz tylko dwa nowe elementy, zamiast wyznaczać część wspólną od nowa.
-Różnica między złożonością kwadratową a liniową jest sednem części inżynierskiej.
+- `przygotuj_listy(lista_s, lista_t)` – identyfikatory, grupy i kierunek.
+- `profil_zgodnosci(dane, wariant = "a", k = NULL)` – wartości A po głębokościach.
+- `oblicz_rbo(dane, p = 0.9, wariant = "a", k = NULL)` – granice i ekstrapolacja.
+- `generuj_listy(n = 100, ziarno = 202708)` – kontrolowane listy i remisy.
+
+Moduły: `R/listy.R`, `R/remisy.R`, `R/rbo.R`, `R/generator.R`, `R/metody_s3.R`. Klasa S3 `podobienstwo_rankingow` ma metody `print()`, `summary()` i `plot()`: skrócony wynik, zestawienie diagnostyki oraz wykres zgodny z rodzajem wyniku. Wartości i parametry pozostają dostępne bez odczytywania tekstu wydruku.
+
+`Imports`: `stats`. `Suggests`: `testthat`, `knitr`, `rmarkdown`, `pkgdown`, `shiny`. Funkcje obliczeniowe nie instalują zależności ani nie korzystają z sieci. Dokumentacja `pkgdown` zawiera przykład od wejścia do interpretacji; aplikacja pod `/app/` korzysta z tego samego interfejsu i jawnie prezentuje parametry. Sprawdzenie: instalacja pakietu, uruchomienie przykładu i metod S3 oraz `R CMD check --as-cran`.
 
 ## Dane
 
-**Procedura generowania.** Budujesz parę rankingów o **zadanym stopniu zgodności**:
-zaczynasz od rankingu wzorcowego i przestawiasz w nim losowo określony odsetek pozycji
-albo podmieniasz określony odsetek elementów. Znasz wtedy kierunek, w którym miara ma
-się zmieniać, i możesz sprawdzić monotoniczność. Następnie wprowadzasz remisy o zadanej
-wielkości grup i porównujesz warianty.
+**Generator.** `ziarno = 202708`. Dla 200 identyfikatorów losuj bazowe wyniki $z_e\sim N(0,1)$. Drugi ranking ma wynik $z_e+\varepsilon_e$, $\varepsilon\sim N(0,\sigma^2)$, dla $\sigma=0,0{,}5,2$. Remisy wprowadź zaokrągleniem do 1 lub 0 miejsc; wariant bez remisów pozostaw niezaokrąglony. Ukryj koniec list po 10, 30 i 100 pozycjach, zachowując kompletne graniczne grupy. Pełne wygenerowane listy są wzorcem skończonej ekstrapolacji, a niezależnie zadane przedłużenia testują zakresy ogona. Dodatkowe 10% elementów obecnych wyłącznie w jednej liście testuje niezgodność zbiorów. Zwiększenie szumu oceniaj statystycznie w 500 powtórzeniach, bez deterministycznego testu monotoniczności każdej zamiany.
 
-Parametry: długość rankingu, odsetek wspólnych elementów, siła przestawienia, wielkość
-grup remisowych, parametr wytrwałości, ziarno.
+**Obliczenia kontrolne.** Bez remisów identyczny prefiks długości 2 przy p = 0,9: B = 0,19, reszta 0,81, granice [0,19; 1], ekstrapolacja 1. Rozłączne prefiksy tej długości: B = 0, granice [0; 0,81], ekstrapolacja 0. Dwie identyczne listy, z remisem pierwszych dwóch elementów: $A_1^a=1/2$, $A_2^a=1$, więc ekstrapolacja przy k = 2 wynosi 0,95; warianty w i b dają 1. Dla wariantu a B = 0,14, górna granica 0,95.
 
-**Przypadki o znanym wyniku.** Rankingi identyczne: jedność. Rankingi całkowicie
-rozłączne: zero. Rankingi różniące się zamianą dwóch pierwszych pozycji: wartość
-policzalna ręcznie z kilku pierwszych wyrazów sumy – wpisz rachunek do komentarza testu.
+**Przypadki brzegowe.** Grupa remisowa obejmująca całą listę; nierówne listy z grupą przecinającą krótszy koniec; p bliskie 1; powtórzony element; identyczne elementy z innymi remisami.
 
-**Przypadki patologiczne.** Rankingi o skrajnie różnej długości; ranking złożony z jednej
-grupy remisowej; parametr bardzo bliski jedności przy krótkich listach.
+**Zbiór empiryczny i kod odniesienia.** Autorzy udostępniają [pełne implementacje wszystkich wariantów w R i Pythonie](https://github.com/julian-urbano/sigir2024-rbo), z kodem MIT oraz plikami danych CC BY-SA 4.0. Surowe przebiegi TREC w ich procedurze wymagają osobnego dostępu do TREC; nie są przez to automatycznie plikami zawartymi w archiwum. Porównanie własnych funkcji z implementacją autorów jest obowiązkowe, po uzgodnieniu wariantu i wzoru ekstrapolacji. Granice konserwatywne w tym projekcie mogą być szersze od dokładniejszych granic programu wzorcowego.
 
-**Zbiór empiryczny.** Dwa rankingi tych samych obiektów z różnych źródeł: listy czasopism
-według liczby cytowań z dwóch baz bibliograficznych, rankingi uczelni z dwóch zestawień
-albo wyniki dwóch wyszukiwarek dla tego samego zapytania. Sprawdź warunki licencyjne.
+**Zbiór empiryczny.** [Reuters-21578, Distribution 1.0](https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection), DOI [10.24432/C52G6M](https://doi.org/10.24432/C52G6M), licencja CC BY 4.0 wskazana przez UCI. Dokumenty prasowe mają kategorie przypisane przez osoby indeksujące. W studium przypadku kategoria jest umownym zapytaniem, a przynależność do niej binarną oceną trafności. Jest to adaptacja zbioru klasyfikacyjnego, więc wynik dotyczy odnajdywania kategorii, a nie pełnej oceny potrzeb informacyjnych użytkownika.
+
+Wybierz dokumenty z niepustym tekstem i oznaczeniem `TOPICS="YES"` ze zbioru testowego podziału ModApte. Zapisz identyfikatory dokumentów, wybór kategorii i liczności. Zbuduj co najmniej trzy rankingi na tej samej puli: podobieństwo tekstu do nazwy i opisu kategorii, jego wariant oparty tylko na tytule oraz ranking losowy. Ustal preprocessing i rozstrzyganie remisów identyfikatorem przed porównaniem wyników. Pełne etykiety kategorii są punktem odniesienia dla kontrolowanego ukrywania ocen. Pobranie i przekształcenie wykonaj osobnym skryptem; zachowaj opis źródła, a w testach pakietu używaj małych przykładów bez pobierania danych z sieci.
+
+Dla empirycznych rankingów zachowaj wyniki podobieństwa, a remisy utwórz przez jawne zaokrąglenie. Oddziel wpływ remisów od wpływu odcięcia list.
 
 ## Mapowanie na pracę
 
-| Sekcja briefu | Rozdział pracy |
+| Materiał | Część pracy |
 |---|---|
-| Po co to badaczowi, ograniczenia korelacji rangowej | Wprowadzenie: tło i luka |
-| Wzory, wagi pozycji, uogólnienie na remisy | Rozdział 1: aparat formalny |
-| Kontrakt, symetria i zachowanie graniczne | Rozdział 1: granice stosowalności |
-| Plan pakietu, liczenie przyrostowe, procedura generowania | Rozdział 2 |
-| Zbiór empiryczny, porównanie wariantów | Rozdział 3 |
+| Problem zastosowania, pytanie analityczne i zakres wkładu | Wprowadzenie |
+| Definicje, wzory, założenia i porównanie dostępnych rozwiązań | Rozdział 1: Podstawy metodyczne |
+| Kontrakt, moduły, klasy wyniku, generator i wyniki testów | Rozdział 2: Implementacja i architektura pakietu |
+| Charakterystyka danych, analiza, interpretacja i porównanie | Rozdział 3: Studium przypadku |
+| Odpowiedź na pytanie, ograniczenia i kierunek rozwoju | Zakończenie |
 
-**Wstępne pytanie badawcze.** O ile wynik porównania dwóch rankingów zależy od sposobu
-rozstrzygnięcia remisów i przy jakiej wielkości grup remisowych różnica między wariantami
-przewyższa różnicę między porównywanymi rankingami?
+**Wstępne pytanie analityczne.** Jak interpretacja remisów i długość widocznego prefiksu zmieniają ocenę podobieństwa tych samych rankingów?
+
+**Proponowany wkład.** Własna implementacja z walidacją, klasami wyniku, porównaniem wariantów i dokumentacją dla badacza. Istniejący kod autorów jest punktem odniesienia; nie można uzasadniać projektu nieistnieniem implementacji w R.
 
 ## Polecenia startowe
 
-1. Walidacja pary rankingów wraz z rozpoznaniem grup remisowych.
-2. Pokrycie i zgodność na kolejnych głębokościach, liczone przyrostowo.
-3. Miara podstawowa i granice przy rankingach obciętych.
-4. Wariant obsługi remisów zgodnie z Twoimi notatkami z artykułu.
-5. Procedura generowania pary rankingów o zadanym stopniu zgodności.
-6. Badanie wpływu wielkości grup remisowych na rozstęp między wariantami.
+1. **Specyfikacja.** Zdefiniuj trzy interpretacje remisów, widoczność elementu i konserwatywne granice wspólnego prefiksu. Wynik: `SPEC.md` z sygnaturami, definicjami i obsługą przypadków brzegowych. Sprawdzenie: każdy argument i każda kolumna wyniku mają opis; zakres odpowiada wskazanym częściom artykułu.
+2. **Przykłady analityczne.** Sprawdź 0,19, 0,81 oraz różnicę 0,95 wobec 1 dla identycznego remisu. Wynik: testy z liczbowymi wartościami oczekiwanymi. Sprawdzenie: odtwórz rachunki na kartce lub osobnym, prostym skryptem; nie wyznaczaj oczekiwanych wartości testowaną funkcją.
+3. **Walidacja.** Zapisz testy wszystkich błędów wymienionych w kontrakcie oraz poprawnych danych prowadzących do `NA`. Wynik: konstruktor wejścia i stabilne komunikaty. Sprawdzenie: błędne dane zatrzymują obliczenia, a niezdefiniowana miara ma opisany status.
+4. **Rdzeń.** Najpierw zbuduj profile widoczności, potem zgodność i sumę geometryczną; porównaj profile i ekstrapolację z kodem autorów. Wynik: działające funkcje i obiekt S3. Sprawdzenie: testy analityczne oraz porównanie z niezależną, najprostszą wersją obliczenia.
+5. **Eksperyment.** Zmień wyłącznie zaokrąglenie i głębokość na tych samych listach; raportuj niewykorzystaną część dłuższej listy. Wynik: skrypt z konfiguracją, ziarnami i tabelą wyników. Sprawdzenie: powtórzenie daje te same dane i odtwarza tabelę; raport obejmuje wszystkie zaplanowane warianty.
+6. **Udostępnienie.** Dodaj dokumentację, metodę wykresu, winietę i przykład w aplikacji. Wynik: instalowalny pakiet i działająca strona. Sprawdzenie: przykład działa po instalacji w czystej sesji R; opis odróżnia wynik liczbowy od jego interpretacji.
 
 ## Pułapki
 
-**Wyznaczanie części wspólnej od nowa na każdej głębokości.** Kod działa i jest o rząd
-wielkości wolniejszy, niż powinien. Przy rankingach długości tysiąca widać to od razu.
+Wariant a opisuje niezależne porządki w remisach i ma inną własność identyczności niż b. Nieznany ogon nie jest pustym zbiorem. Punkt ekstrapolowany i dolna granica są innymi wynikami. Porównanie z gotowym kodem wymaga ustalenia interpretacji i zakresu, a zgodność punktu nie oznacza identycznych granic.
 
-**Remisy rozstrzygane kolejnością w pliku.** Najczęstszy błąd w tym temacie i jednocześnie
-jego temat. Wynik zależy wtedy od tego, jak dane były posortowane przed wczytaniem, czego
-nikt nie odnotowuje.
-
-**Mylenie z korelacją rangową.** Miara nie jest współczynnikiem korelacji: nie przyjmuje
-wartości ujemnych i nie ma interpretacji probabilistycznej znanej z korelacji rangowej.
-Praca musi to rozróżnienie postawić wprost, bo recenzent o nie zapyta.
-
-**Rankingi o różnej długości.** Zgodność liczona do głębokości krótszej listy zaniża
-wynik, do dłuższej zawyża. Sposób postępowania jest w artykule i trzeba go zastosować,
-a nie wymyślić.
-
-**Na obronie** musisz umieć wyjaśnić, dlaczego zwykła korelacja rangowa nie nadaje się
-do porównywania wyników dwóch wyszukiwarek, i pokazać na przykładzie dwóch krótkich list,
-jak zmienia się wynik przy dwóch różnych rozstrzygnięciach remisu.
+Na obronie należy omówić znaczenie remisu dla użytkownika rankingu, skutek ukrycia dalszych pozycji i wkład własnego pakietu przy istniejącym kodzie odniesienia.
 
 ## Literatura
 
-Artykuł źródłowy: `corsiUrbano2024remisy`. Podstawa metody: `webber2010similarity` –
-przeczytaj oba, w tej kolejności.
+Artykuł źródłowy: `corsiUrbano2024remisy`.
 
-Wprowadzenie: podręcznikowe omówienie współczynników korelacji rangowej; opracowanie
-o porównywaniu rankingów w bibliometrii. Dwie do czterech pozycji dobierasz sam.
-Temat pokrewny: 07 – ten sam mechanizm wag malejących geometrycznie, inne zastosowanie.
+Wprowadzenie: `webber2010similarity`, `manning2008ir`. Klucze i pełne opisy są w [`zrodla/tematy.bib`](zrodla/tematy.bib).
 
-Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.
+Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`. Źródła danych opisano w sekcji „Dane”; w pracy należy podać ich opis bibliograficzny, wersję wykorzystanego zbioru i zakres przekształceń.
+
+Dane: `reuters21578`.

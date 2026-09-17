@@ -14,196 +14,104 @@
 
 ## Po co to badaczowi
 
-Klasyczne miary skuteczności sumują trafność dokumentów niezależnie od siebie. Dziesięć
-dokumentów mówiących dokładnie to samo dostaje taką samą ocenę jak dziesięć dokumentów
-pokrywających dziesięć różnych aspektów sprawy. Dla użytkownika są to sytuacje zupełnie
-różne, a miara ich nie odróżnia.
+Ranking może zawierać wiele trafnych dokumentów powtarzających tę samą informację. Użytkownik poszukujący obrazu zagadnienia potrzebuje także odmiennych aspektów. Miara sumująca niezależne oceny dokumentów może słabo odzwierciedlać wartość kolejnej wiadomości powielającej już przeczytaną treść.
 
-Problem ma dwa źródła. Pierwsze to **wieloznaczność zapytania**: słowo wpisane
-w wyszukiwarkę zwykle ma kilka znaczeń, a system nie wie, o które chodzi. Rozsądne
-zachowanie polega wtedy na pokryciu kilku znaczeń w pierwszej dziesiątce, a nie na
-postawieniu wszystkiego na jedno. Klasyczna miara karze za takie zachowanie, bo dokumenty
-z pozostałych znaczeń liczy jako nietrafne.
+W metodzie Clarke'a i współautorów potrzeba informacyjna jest rozłożona na aspekty. Wkład dokumentu zależy od tego, ile razy wcześniejsze pozycje pokryły dany aspekt. Parametr reguluje zmniejszanie zysku z powtórzeń, a dyskontowanie uwzględnia kolejność czytania.
 
-Drugie źródło to **powtarzalność**. Nawet przy zapytaniu jednoznacznym użytkownik, który
-przeczytał pierwszy dokument, nie potrzebuje piątego, mówiącego to samo innymi słowami.
-Wartość dokumentu zależy od tego, co użytkownik już widział, a więc od pozycji w rankingu
-i od zawartości pozycji wcześniejszych.
-
-Artykuł podaje ramę, w której trafność przestaje być własnością dokumentu, a staje się
-własnością **dokumentu w kontekście rankingu**. Potrzeba informacyjna rozkłada się na
-elementy składowe, a dokument dostaje tym mniejszy zysk za dany element, im więcej
-wcześniejszych dokumentów ten element już pokryło.
-
-Dla badacza zachowań informacyjnych jest to miara odpowiadająca na pytanie, czy system
-rozumie, że użytkownik czyta ranking po kolei i się uczy.
+Projekt pozwala porównać rankingi przy stałym zestawie aspektów i wspólnej puli kandydatów. Ważną częścią jest sprawdzenie przybliżonego wzorca normalizacji. Badacz otrzyma ocenę nowości w ramach określonej reprezentacji potrzeb, bez utożsamiania kategorii aspektów z pełnym rozumieniem użytkownika.
 
 ## Algorytm
 
-**Wejście.** Ranking dokumentów; rozkład potrzeby informacyjnej na elementy składowe;
-macierz przynależności mówiąca, który dokument pokrywa który element; parametr $\alpha$
-sterujący karą za powtórzenie; głębokość oceny.
+**Wejście.** Macierz $J(d,t)\in\{0,1\}$ opisująca pokrycie aspektu t przez dokument d, pełna pula kandydatów, ranking, głębokość k i $\alpha\in[0,1]$. Aspekt jest odrębną jednostką informacji (*nugget*), którą dokument może pokrywać. Dla pozycji i niech $c_{it}=\sum_{j<i}J(d_j,t)$ oznacza wcześniejszą liczbę pokryć.
 
-**Wyjście.** Zysk na każdej pozycji, skumulowany zysk zdyskontowany, wartość
-znormalizowana, ranking wzorcowy użyty do normalizacji.
+$$G_i=\sum_t J(d_i,t)(1-\alpha)^{c_{it}},\qquad
+\alpha\mathrm{DCG}@k=\sum_{i=1}^{k}\frac{G_i}{\log_2(i+1)}.$$
 
-**Wzory.** Niech $J(d_k, i)$ przyjmuje wartość jeden, gdy dokument na pozycji $k$ pokrywa
-element $i$ potrzeby informacyjnej, a zero w przeciwnym razie. Niech
+Pierwszy wzór zmniejsza wkład aspektu po wcześniejszych pokryciach; drugi dyskontuje zysk pozycją. W interpretacji artykułu alpha jest prawdopodobieństwem faktycznego pokrycia przy pozytywnej ocenie, a $1-\alpha$ prawdopodobieństwem błędu lub braku zaspokojenia potrzeby. Dla alpha = 1 tylko pierwsze pokrycie daje zysk; przyjmij $0^0=1$ w tym konkretnym przypadku. Dla alpha = 0 zysk jest sumą pokryć aspektów, co nie jest automatycznie klasycznym DCG z wykładniczą skalą ocen.
 
-$$r_{i,k-1} = \sum_{j=1}^{k-1} J(d_j, i)$$
+**Normalizacja.** Zbuduj ranking zachłanny z całej wspólnej puli: na każdej pozycji wybierz pozostały dokument z największym aktualnym zyskiem, a remis rozstrzygnij identyfikatorem. Po jego wyborze zaktualizuj liczniki pokryć. Nie buduj innego wzorca z listy odnalezionej przez każdy system.
 
-oznacza liczbę dokumentów stojących **przed** pozycją $k$, które element $i$ już pokryły.
-Zysk pozycji $k$ wynosi
+$$x=\frac{\alpha\mathrm{DCG}@k}{\alpha\mathrm{DCG}_{\rm zachlanny}@k},\qquad
+\alpha\mathrm{nDCG}@k=\min(1,x).$$
 
-$$G[k] = \sum_{i=1}^{m} J(d_k, i)\,(1-\alpha)^{\,r_{i,k-1}}$$
+Zachłanny wzorzec jest przybliżony, więc x może przekroczyć 1. Artykuł zalicza taki ranking jak wzorzec idealny. Zachowaj x i flagę przekroczenia w wyniku, aby ograniczenie nie ukrywało jakości przybliżenia. Jeśli mianownik jest zerowy, iloraz jest niezdefiniowany i wynosi `NA` z opisem. Do kontroli małych pul dodaj wzorzec dokładny przez enumerację permutacji, bez nazywania zachłannego wyniku dokładnym optimum.
 
-gdzie $m$ to liczba elementów potrzeby, a $\alpha$ należy do przedziału od zera do
-jedności. Kluczowy jest wykładnik: pierwszy dokument pokrywający dany element dostaje
-za niego pełny zysk, drugi $(1-\alpha)$, trzeci $(1-\alpha)^2$ i tak dalej.
-
-Zysk sumuje się z dyskontem pozycyjnym:
-
-$$DCG[k] = \sum_{j=1}^{k} \frac{G[j]}{\log_2(1+j)}$$
-
-a wartość znormalizowana to iloraz przez tę samą wielkość policzoną dla rankingu
-wzorcowego:
-
-$$\alpha\text{-}nDCG[k] = \frac{DCG[k]}{DCG'[k]}$$
-
-**Ranking wzorcowy.** Tu jest sedno trudności tego tematu. Ranking maksymalizujący zysk
-skumulowany nie daje się wyznaczyć przeglądem wszystkich możliwości, bo problem należy
-do klasy zadań trudnych obliczeniowo. Stosuje się przybliżenie **zachłanne**: na każdą
-kolejną pozycję wybiera się dokument dający największy zysk przy już wybranym początku
-rankingu. Jest to decyzja, którą trzeba w pracy nazwać, bo wynik znormalizowany od niej
-zależy.
-
-Przy $\alpha = 0$ kara za powtórzenie znika i miara sprowadza się do zwykłego zysku
-skumulowanego z dyskontem. Przy $\alpha = 1$ drugi i każdy kolejny dokument pokrywający
-ten sam element nie wnosi nic.
-
-**Kroki.**
-
-1. Sprawdzenie danych: zgodność wymiarów macierzy przynależności z rankingiem, zakres
-   parametru, niepusty zbiór elementów potrzeby.
-2. Przejście po rankingu z pamięcią, ile razy każdy element był już pokryty.
-3. Złożenie zysku na każdej pozycji.
-4. Skumulowanie zysku z dyskontem pozycyjnym.
-5. Zbudowanie rankingu wzorcowego metodą zachłanną i policzenie dla niego tej samej
-   wielkości.
-6. Podzielenie i zestawienie z miarą klasyczną liczoną bez kary za powtórzenie.
-
-**Co wynotować z artykułu.** Uzasadnienie postaci wykładniczej kary; interpretację
-parametru $\alpha$ jako prawdopodobieństwa, że ocena przynależności jest błędna; sposób
-budowy rankingu wzorcowego i jego uzasadnienie; własności, które autorzy wykazują dla
-miary, oraz przyjęte założenia o niezależności elementów potrzeby.
+Koszt oceny $O(kT)$, wzorca zachłannego $O(kMT)$ dla M dokumentów i T aspektów; dokładny wzorzec rośnie jak liczba permutacji M po k. Wynik zależy od zdefiniowanych aspektów, jakości ich ocen i wspólnej puli. Wybrany ranking może pokryć inne potrzeby niż zapisane w macierzy J.
 
 ## Kontrakt
 
-**Warunki wstępne.** Parametr $\alpha$ w przedziale od zera do jedności; macierz
-przynależności zerojedynkowa o wymiarach dokumenty na elementy; ranking bez powtórzeń;
-co najmniej jeden element potrzeby.
+`pokrycie`: macierz dokument × aspekt, wyłącznie 0/1, bez braków, unikatowe nazwy obu osi. `ranking`: unikatowe identyfikatory należące do puli. `k` dodatnie całkowite, nie większe od liczby dokumentów w puli; krótszy ranking uzupełnia się zerowym zyskiem. `alpha` skończone w [0,1]. Wszystkie porównywane systemy mają tę samą pulę, aspekty, k i alpha. `NA` nie oznacza nieobecności aspektu, więc podstawowy wariant go odrzuca.
 
-**Niezmienniki.** Zysk na pozycji jest nieujemny i nie przekracza liczby elementów
-potrzeby. Zysk skumulowany jest niemalejący. Wartość znormalizowana należy do przedziału
-od zera do jedności. Przy $\alpha = 0$ wynik równa się miarze bez kary za powtórzenie.
-Przy $\alpha = 1$ powtórne pokrycie elementu daje zysk zerowy.
+Niezmienniki: zyski nieujemne; ponowne pokrycie nie zwiększa jego własnego marginalnego wkładu przy alpha > 0; wynik ograniczony w [0,1], surowy iloraz może być większy od 1; wzorzec dokładny nie gorszy niż zachłanny. Macierz zerowa jest poprawnym wejściem, daje DCG = 0 i nDCG = `NA`, `zerowy_wzorzec`, a nie błąd.
 
-**Wyjście.** Klasa `roznorodnosc_rankingu` ze składnikami: zysk na pozycjach, zysk
-skumulowany, wartość znormalizowana, ranking wzorcowy, pokrycie elementów potrzeby.
-
-**Błędy zatrzymujące wykonanie.** Parametr poza przedziałem; niezgodność wymiarów;
-macierz przynależności spoza zbioru zerojedynkowego; ranking z powtórzeniami.
+S3 `ocena_roznorodnosci`: `dcg`, `wzorzec_dcg`, `iloraz`, `ndcg`, `ranking_wzorcowy`, `zyski`, `parametry`, `diagnostyka`, `status`. Błędy: „Pokrycie musi zawierać wyłącznie 0 i 1”, „Dokument rankingu nie występuje w puli”, „Ranking zawiera powtórzony dokument”, „Parametr alpha musi należeć do [0, 1]”.
 
 ## Plan pakietu
 
-| Plik | Odpowiedzialność |
-|---|---|
-| `R/przygotowanie_danych.R` | walidacja rankingu, macierzy przynależności i parametru |
-| `R/zysk.R` | zysk na pozycji z uwzględnieniem wcześniejszych pokryć |
-| `R/dyskonto.R` | skumulowanie z dyskontem pozycyjnym |
-| `R/wzorzec.R` | ranking wzorcowy metodą zachłanną |
-| `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | pokrycie elementów wzdłuż rankingu, wpływ parametru |
+Pakiet `RoznorodnoscR`, licencja GPL-3. Publiczne funkcje:
 
-Zależności: `stats` i `ggplot2`. Licznik wcześniejszych pokryć prowadź jako **wektor
-aktualizowany w trakcie przejścia**, a nie licz od nowa dla każdej pozycji: różnica
-między złożonością liniową a kwadratową względem długości rankingu.
+- `przygotuj_aspekty(pokrycie, ranking)` – wspólna pula i walidacja.
+- `oblicz_alfa_dcg(dane, alpha = 0.5, k = 10)` – zyski i suma.
+- `ranking_zachlanny(pokrycie, alpha = 0.5, k = 10)` – przybliżony wzorzec.
+- `oblicz_alfa_ndcg(dane, alpha = 0.5, k = 10)` – iloraz, ograniczenie i diagnostyka.
+- `wzorzec_dokladny(pokrycie, alpha, k)` – tylko pule do ośmiu dokumentów.
+- `generuj_aspekty(ziarno = 202712)` – kontrolowane pokrycia.
+
+Moduły: `R/aspekty.R`, `R/zyski.R`, `R/wzorce.R`, `R/normalizacja.R`, `R/generator.R`, `R/metody_s3.R`. Klasa S3 `ocena_roznorodnosci` ma metody `print()`, `summary()` i `plot()`: skrócony wynik, zestawienie diagnostyki oraz wykres zgodny z rodzajem wyniku. Wartości i parametry pozostają dostępne bez odczytywania tekstu wydruku.
+
+`Imports`: `stats`. `Suggests`: `testthat`, `knitr`, `rmarkdown`, `pkgdown`, `shiny`. Funkcje obliczeniowe nie instalują zależności ani nie korzystają z sieci. Dokumentacja `pkgdown` zawiera przykład od wejścia do interpretacji; aplikacja pod `/app/` korzysta z tego samego interfejsu i jawnie prezentuje parametry. Sprawdzenie: instalacja pakietu, uruchomienie przykładu i metod S3 oraz `R CMD check --as-cran`.
 
 ## Dane
 
-**Procedura generowania.** Budujesz zbiór dokumentów o **zadanym pokryciu elementów
-potrzeby**: część dokumentów pokrywa jeden element, część kilka, część żadnego. Znasz
-wtedy ranking optymalny w przypadkach prostych i możesz sprawdzić, czy przybliżenie
-zachłanne go odtwarza. Następnie generujesz rankingi o kontrolowanej powtarzalności
-i badasz, jak miara je odróżnia.
+**Generator.** `ziarno = 202712`. Dla 50 zapytań utwórz 100 dokumentów i 6 aspektów. Przydziel dokumentowi dominujący aspekt równomiernie; pokrywa go z prawdopodobieństwem 0,9, każdy inny z 0,05. Zbuduj ranking preferujący jeden aspekt i ranking przeplatający sześć aspektów, bez zmiany macierzy. Zadaj alpha = 0, 0,5, 1 i k = 5, 10, 20. Prawdą konstrukcyjną są pokrycia, zyski i dokładny wzorzec w osobnych pulach 4–8 dokumentów. Nie zakładaj, że przeplatanie zawsze wygrywa przy każdym losowym pokryciu. Dodaj 10% całkowicie niepokrywających dokumentów i powielone wektory pokrycia z różnymi identyfikatorami; braków nie imputuj.
 
-Parametry: liczba dokumentów, liczba elementów potrzeby, rozkład pokrycia, stopień
-powtarzalności rankingu, wartość parametru kary, ziarno.
+**Obliczenia kontrolne.** Dwa aspekty, dokumenty a=(1,0), b=(1,0), c=(0,1), alpha = 1, k = 2: DCG(a,b)=1, DCG(a,c)=$1+1/\log_2 3=1{,}63092975$, nDCG(a,b)=0,61314719. Przy alpha = 0,5 DCG(a,b)=$1+0{,}5/\log_2 3=1{,}31546488$.
 
-**Przypadki o znanym wyniku.** Każdy dokument pokrywa dokładnie jeden, inny element:
-kara nie działa, wynik równy miarze klasycznej. Wszystkie dokumenty pokrywają ten sam
-element: zysk maleje geometrycznie, wartości policzalne ręcznie. Ranking o długości dwa:
-cały rachunek mieści się w trzech linijkach – wpisz go do komentarza testu.
+Kontrprzykład dla zachłanności: a={1,2,3,4}, b={1,2,5}, c={3,4,6}, alpha = 1, k = 2. Wzorzec zachłanny (a,b) ma DCG = 4,63092975, ranking (b,c) 4,89278926. Surowy iloraz wynosi 1,05654577, wynik ograniczony 1. Enumeracja wszystkich sześciu uporządkowanych par potwierdza dokładne optimum.
 
-**Przypadki patologiczne.** Żaden dokument nie pokrywa żadnego elementu; jeden element
-potrzeby; parametr równy jedności przy dokumentach pokrywających wyłącznie ten sam
-element.
+**Przypadki brzegowe.** Macierz zerowa; pojedynczy aspekt; alpha = 1 i pierwsze pokrycie; krótszy ranking; dokument spoza puli; wiele identycznych wektorów pokrycia.
 
-**Zbiór empiryczny.** Zapytania wieloznaczne wraz z podziałem na znaczenia. Materiał
-tego rodzaju udostępniają kolekcje testowe do zadań różnorodności; można go też zbudować
-samodzielnie dla kilkunastu zapytań, opisując znaczenia ręcznie. **Opis procedury
-opisywania jest wtedy częścią metodologii**, nie szczegółem technicznym.
+**Zbiór empiryczny.** [Reuters-21578, Distribution 1.0](https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection), DOI [10.24432/C52G6M](https://doi.org/10.24432/C52G6M), licencja CC BY 4.0 wskazana przez UCI. Dokumenty prasowe mają kategorie przypisane przez osoby indeksujące. W studium przypadku kategoria jest umownym zapytaniem, a przynależność do niej binarną oceną trafności. Jest to adaptacja zbioru klasyfikacyjnego, więc wynik dotyczy odnajdywania kategorii, a nie pełnej oceny potrzeb informacyjnych użytkownika.
+
+Wybierz dokumenty z niepustym tekstem i oznaczeniem `TOPICS="YES"` ze zbioru testowego podziału ModApte. Zapisz identyfikatory dokumentów, wybór kategorii i liczności. Zbuduj co najmniej trzy rankingi na tej samej puli: podobieństwo tekstu do nazwy i opisu kategorii, jego wariant oparty tylko na tytule oraz ranking losowy. Ustal preprocessing i rozstrzyganie remisów identyfikatorem przed porównaniem wyników. Pełne etykiety kategorii są punktem odniesienia dla kontrolowanego ukrywania ocen. Pobranie i przekształcenie wykonaj osobnym skryptem; zachowaj opis źródła, a w testach pakietu używaj małych przykładów bez pobierania danych z sieci.
+
+W tym temacie wybierz dokumenty z kategorii `earn`, `acq`, `money-fx` i `trade`. Kategorie są aspektami umownego zapytania o informacje gospodarcze; dokument może pokrywać więcej niż jedną. Ustal wspólną pulę do 500 dokumentów przed budową rankingów. Wnioski dotyczą różnorodności tych kategorii, a nie automatycznie potrzeb konkretnego użytkownika.
 
 ## Mapowanie na pracę
 
-| Sekcja briefu | Rozdział pracy |
+| Materiał | Część pracy |
 |---|---|
-| Po co to badaczowi, wieloznaczność i powtarzalność | Wprowadzenie: tło i luka |
-| Wzory, kara wykładnicza, ranking wzorcowy | Rozdział 1: aparat formalny |
-| Kontrakt, zachowanie graniczne parametru | Rozdział 1: granice stosowalności |
-| Plan pakietu, przybliżenie zachłanne, procedura generowania | Rozdział 2 |
-| Zbiór empiryczny, porównanie z miarą klasyczną | Rozdział 3 |
+| Problem zastosowania, pytanie analityczne i zakres wkładu | Wprowadzenie |
+| Definicje, wzory, założenia i porównanie dostępnych rozwiązań | Rozdział 1: Podstawy metodyczne |
+| Kontrakt, moduły, klasy wyniku, generator i wyniki testów | Rozdział 2: Implementacja i architektura pakietu |
+| Charakterystyka danych, analiza, interpretacja i porównanie | Rozdział 3: Studium przypadku |
+| Odpowiedź na pytanie, ograniczenia i kierunek rozwoju | Zakończenie |
 
-**Wstępne pytanie badawcze.** Jak dobór parametru kary za powtórzenie wpływa na
-uporządkowanie systemów i przy jakiej wartości ranking pokrywający wiele znaczeń zaczyna
-wygrywać z rankingiem skupionym na jednym?
+**Wstępne pytanie analityczne.** Jak siła kary za powtórzenia i przybliżony wzorzec normalizacji zmieniają ocenę rankingów o odmiennej strukturze pokrycia aspektów?
+
+**Proponowany wkład.** Sprawdzony rachunek nowości z jawną pulą, diagnostyką ilorazu ponad 1 i dokładną kontrolą przybliżenia na małych danych.
 
 ## Polecenia startowe
 
-1. Walidacja rankingu, macierzy przynależności i parametru.
-2. Zysk na pozycji z licznikiem wcześniejszych pokryć, aktualizowanym w przejściu.
-3. Skumulowanie z dyskontem pozycyjnym.
-4. Ranking wzorcowy metodą zachłanną, zgodnie z Twoimi notatkami.
-5. Procedura generowania dokumentów o zadanym pokryciu elementów potrzeby.
-6. Badanie wpływu parametru na uporządkowanie dwóch rankingów o różnej powtarzalności.
+1. **Specyfikacja.** Rozpisz liczniki poprzednich pokryć, interpretację alpha i regułę ograniczenia ilorazu. Wynik: `SPEC.md` z sygnaturami, definicjami i obsługą przypadków brzegowych. Sprawdzenie: każdy argument i każda kolumna wyniku mają opis; zakres odpowiada wskazanym częściom artykułu.
+2. **Przykłady analityczne.** Sprawdź trzy DCG i kontrprzykład zachłanności, enumerując uporządkowane pary. Wynik: testy z liczbowymi wartościami oczekiwanymi. Sprawdzenie: odtwórz rachunki na kartce lub osobnym, prostym skryptem; nie wyznaczaj oczekiwanych wartości testowaną funkcją.
+3. **Walidacja.** Zapisz testy wszystkich błędów wymienionych w kontrakcie oraz poprawnych danych prowadzących do `NA`. Wynik: konstruktor wejścia i stabilne komunikaty. Sprawdzenie: błędne dane zatrzymują obliczenia, a niezdefiniowana miara ma opisany status.
+4. **Rdzeń.** Najpierw oblicz zyski dla zadanego rankingu, potem niezależny wzorzec i diagnostykę normalizacji. Wynik: działające funkcje i obiekt S3. Sprawdzenie: testy analityczne oraz porównanie z niezależną, najprostszą wersją obliczenia.
+5. **Eksperyment.** Porównaj alpha i k na stałej puli; w małych pulach zmierz lukę między wzorcem dokładnym a zachłannym. Wynik: skrypt z konfiguracją, ziarnami i tabelą wyników. Sprawdzenie: powtórzenie daje te same dane i odtwarza tabelę; raport obejmuje wszystkie zaplanowane warianty.
+6. **Udostępnienie.** Dodaj dokumentację, metodę wykresu, winietę i przykład w aplikacji. Wynik: instalowalny pakiet i działająca strona. Sprawdzenie: przykład działa po instalacji w czystej sesji R; opis odróżnia wynik liczbowy od jego interpretacji.
 
 ## Pułapki
 
-**Zysk liczony niezależnie od pozycji.** Agent napisze sumę trafności, bo tak wygląda
-typowy kod miary rankingowej. Cała treść tej metody leży w tym, że zysk zależy od tego,
-co stoi wyżej. Test z dokumentami pokrywającymi ten sam element wychwyci to od razu.
+Odwrócenie interpretacji alpha prowadzi do odwrócenia modelu nowości. Algorytm zachłanny nie gwarantuje optimum. Przycięcie ilorazu bez zachowania jego wartości ukrywa informację. Zmiana puli wzorca między systemami unieważnia wspólne odniesienie. Przy wielu kategoriach szczegółowość aspektów staje się decyzją analityczną.
 
-**Licznik pokryć liczony od nowa.** Poprawnie, ale wolno. Przy rankingu tysiąca pozycji
-i kilkudziesięciu elementach potrzeby różnica jest wyraźna.
-
-**Ranking wzorcowy wyznaczany przeglądem zupełnym.** Nie skończy się. Metoda zachłanna
-jest w artykule i jest przybliżeniem, o czym praca musi powiedzieć wprost, bo wynik
-znormalizowany zależy wtedy od jakości przybliżenia.
-
-**Elementy potrzeby traktowane jak niezależne.** Metoda to zakłada, a w realnych danych
-znaczenia zapytania bywają zagnieżdżone. Jest to ograniczenie do opisania w granicach
-stosowalności, a nie usterka implementacji.
-
-**Na obronie** musisz umieć podać dwa rankingi o tej samej wartości miary klasycznej
-i różnej wartości miary z karą, oraz wyjaśnić, co dokładnie oznacza parametr $\alpha$.
+Na obronie należy omówić kompromis trafności i nowości, przejść przez aktualizację zysku i wyjaśnić ograniczenia normalizacji przybliżonej.
 
 ## Literatura
 
 Artykuł źródłowy: `clarke2008novelty`.
 
-Wprowadzenie: podręcznikowe omówienie zysku skumulowanego z dyskontem; opracowanie
-o wieloznaczności zapytań i różnorodności wyników. Dwie do czterech pozycji dobierasz
-sam. Tematy pokrewne: 07 i 13 – wszystkie trzy wyprowadzają miarę z założeń o zachowaniu
-użytkownika.
+Wprowadzenie: `manning2008ir`, `chapelle2009err`. Klucze i pełne opisy są w [`zrodla/tematy.bib`](zrodla/tematy.bib).
 
-Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.
+Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`. Źródła danych opisano w sekcji „Dane”; w pracy należy podać ich opis bibliograficzny, wersję wykorzystanego zbioru i zakres przekształceń.
+
+Dane: `reuters21578`.

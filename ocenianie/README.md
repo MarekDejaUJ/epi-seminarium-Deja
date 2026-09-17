@@ -55,8 +55,8 @@ oddawanego kodu rozumiesz i potrafisz obronić. To rozstrzyga się na obronie i 
 audytu wzajemnego, a nie na podstawie deklaracji.
 
 Granice dozwolonego użycia, z bezwzględnym zakazem generowania tekstu pracy
-i powołań, opisuje przewodnik [Jawność i
-odpowiedzialność](../przewodniki/08-etyka-si.md). Naruszenie tych granic nie jest
+i powołań, opisuje przewodnik
+[Jawność i odpowiedzialność](../przewodniki/08-etyka-si.md). Naruszenie tych granic nie jest
 kwestią punktów w rubryce; jest kwestią dopuszczenia pracy.
 
 ## Kiedy co jest oceniane

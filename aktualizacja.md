@@ -52,8 +52,8 @@ Tematy opierają się na artykułach z ostatnich dwóch lat i po trzech lub czte
 latach część z nich się zestarzeje: powstaną implementacje autorskie, ukażą się prace
 rozwijające metodę. Wymiana tematu obejmuje cztery kroki:
 
-1. Weryfikacja artykułu według procedury opisanej w [nocie o doborze
-   tematów](tematy/dobor-tematow.md). Krok obowiązkowy, nie formalność.
+1. Weryfikacja artykułu według procedury opisanej w
+   [nocie o doborze tematów](tematy/dobor-tematow.md). Krok obowiązkowy, nie formalność.
 2. Sprawdzenie, czy autorzy nie udostępnili już gotowego pakietu.
 3. Nowy plik `tematy/brief-NN.md` w układzie takim jak pozostałe.
 4. Wpis w `tematy/zrodla/tematy.bib` oraz wiersz w tabeli w `tematy/README.md`.

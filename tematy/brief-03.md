@@ -18,179 +18,99 @@ nie we wzorze.
 
 ## Po co to badaczowi
 
-Skuteczność wyszukiwarki mierzy się, porównując to, co zwróciła, z tym, co jest
-naprawdę trafne. Problem w tym, że **nikt nigdy nie ocenił całej kolekcji**. Przy
-milionie dokumentów i pięćdziesięciu zapytaniach ocena wszystkiego jest niewykonalna,
-więc od czasów pierwszych konferencji ewaluacyjnych ocenia się tylko pulę: kilkaset
-dokumentów najwyżej ustawionych przez badane systemy.
+Porównanie wyszukiwarek zwykle opiera się na sądach o trafności dokumentów. Ocenia się tylko część dużej kolekcji. Dokument bez oceny nie musi być nietrafny, a przypisanie mu zerowej trafności może obniżać wynik systemu, który odnajduje materiały pominięte w budowie puli ocen.
 
-Powstaje wtedy cicha luka. Dokument nieoceniony traktuje się jak nietrafny. Dopóki
-porównujemy systemy, które współtworzyły pulę, jest to przybliżenie do przyjęcia.
-Kłopot zaczyna się, gdy pojawia się **system nowy**, którego w puli nie było: jego
-trafne trafienia mogą być nieocenione, a więc policzone jako nietrafne. Nowy system
-wygląda gorzej, niż jest.
+Bpref ocenia kolejność par dokumentów trafnych i nietrafnych, dla których dostępne są sądy. Dokumenty nieocenione nie zwiększają liczby nietrafnych wyprzedzających trafny dokument. W artykule opisane są historyczne warianty tej miary; ich wartości trzeba odróżnić od późniejszej normalizacji używanej w programach ewaluacyjnych.
 
-Jest to problem realny, nie hipotetyczny. Kolekcje testowe żyją latami, a systemy
-oceniane na nich powstają długo po zamknięciu puli. Dotyczy też każdego, kto buduje
-własną kolekcję: sądy o trafności kosztują czas eksperta, więc zawsze jest ich za mało.
-
-Artykuł pokazuje, jak bardzo klasyczne miary zawodzą przy niepełnych ocenach, i podaje
-miarę odporną: **bpref**, liczoną wyłącznie na dokumentach ocenionych, z pominięciem
-nieocenionych zamiast uznawania ich za nietrafne.
+Projekt pozwala zbadać, jak wynik i uporządkowanie systemów zależą od liczby oraz sposobu ukrywania ocen. Badacz otrzyma porównanie bpref z klasycznymi miarami na tej samej kolekcji. Odporność na część braków jest własnością do oceny w konkretnych warunkach, a nie gwarancją prawidłowego porównania przy każdym mechanizmie oceniania.
 
 ## Algorytm
 
-**Wejście.** Ranking dokumentów zwrócony przez system dla zapytania oraz zbiór sądów
-o trafności: dla części dokumentów wiadomo, że są trafne, dla części, że nietrafne,
-o reszcie nie wiadomo nic.
+**Zakres.** Historyczne bpref i bpref-10 z sekcji 3 artykułu; późniejszy wariant `trec_eval` jest osobno nazwanym porównaniem. Wejście to ranking unikatowych dokumentów oraz pełna tabela dostępnych sądów dla jednego zapytania: trafny, nietrafny lub nieoceniony. Dokumenty z sądami mogą znajdować się poza rankingiem.
 
-**Wyjście.** Wartość miary dla zapytania, wartość uśredniona po zapytaniach, liczba
-dokumentów nieocenionych w rankingu oraz miary klasyczne do porównania.
+Niech $R$ będzie liczbą wszystkich ocenionych trafnych dokumentów w sądach, a $n_r$ liczbą ocenionych nietrafnych dokumentów przed trafnym dokumentem $r$ w rankingu. Dla $c=0$ lub $c=10$:
 
-**Wzór.** Niech $R$ oznacza liczbę dokumentów ocenionych jako trafne, $r$ pojedynczy
-dokument trafny, a $n$ dokument oceniony jako nietrafny, należący do pierwszych $R$
-takich dokumentów w rankingu. Wtedy
+$$\operatorname{bpref}_{c}=\frac1R\sum_{r\in\mathcal R\cap\mathrm{ranking}}\left(1-\frac{\min(n_r,R+c)}{R+c}\right).$$
 
-$$\mathrm{bpref} = \frac{1}{R}\sum_{r}\left(1 - \frac{|n \text{ przed } r|}{R}\right)$$
+$\mathcal R$ jest zbiorem trafnych dokumentów z sądów; dokument nieodnaleziony wnosi zero, lecz nadal wchodzi do mianownika $R$. Wariant $c=0$ to historyczny bpref, a $c=10$ to bpref-10. Liczy się tylko pierwszych $R+c$ nietrafnych; dokumenty nieocenione nie zmieniają $n_r$.
 
-gdzie $|n \text{ przed } r|$ to liczba tych dokumentów nietrafnych, które w rankingu
-stoją wyżej niż dany dokument trafny.
+Kroki: dopasuj sądy identyfikatorem, oblicz $R$ z całych sądów, wykonaj sumę skumulowaną liczby nietrafnych w rankingu, odczytaj ją na pozycjach trafnych i zsumuj wkłady. Wynik uśredniaj dopiero po obliczeniu osobno dla każdego zapytania. Koszt po dopasowaniu identyfikatorów: $O(d+J)$ czasu i $O(d+J)$ pamięci dla głębokości $d$ i $J$ sądów.
 
-Miara odpowiada na pytanie: **jak często oceniony dokument trafny wyprzedza oceniony
-dokument nietrafny**. Dokumenty nieoceniane nie występują w tym wzorze w ogóle, więc
-nie da się ukarać systemu za znalezienie czegoś, czego nikt nie obejrzał.
+Współczesny wariant z mianownikiem $\min(R,N)$, gdzie $N$ to całkowita liczba ocenionych nietrafnych, oznacz `trec`; zdefiniuj oddzielnie przypadek $N=0$ i sprawdź wybraną wersję programu wzorcowego. Nie porównuj go z historycznym wzorem jak identycznej implementacji.
 
-Przy małej liczbie dokumentów trafnych miara robi się skokowa, bo par jest bardzo
-mało. Autorzy podają dla takich przypadków wariant
-
-$$\mathrm{bpref\text{-}10} = \frac{1}{R}\sum_{r}\left(1 - \frac{|n \text{ przed } r|}{10 + R}\right)$$
-
-w którym $n$ przebiega pierwszych $10 + R$ ocenionych dokumentów nietrafnych. Gwarantuje
-to co najmniej dziesięć par nawet wtedy, gdy trafny dokument jest jeden.
-
-**Kroki.**
-
-1. Sprawdzenie danych: zgodność identyfikatorów rankingu i sądów, brak powtórzeń,
-   obecność co najmniej jednego dokumentu trafnego.
-2. Zredukowanie rankingu do dokumentów ocenionych, z zapamiętaniem, ile odrzucono.
-3. Dla każdego dokumentu trafnego policzenie, ile dokumentów nietrafnych z ustalonego
-   początku listy stoi wyżej.
-4. Złożenie sumy i podzielenie przez liczbę dokumentów trafnych.
-5. Powtórzenie dla wariantu z przesunięciem oraz dla miar klasycznych.
-6. Uśrednienie po zapytaniach i porównanie uporządkowania systemów.
-
-**Co wynotować z artykułu.** Dokładne sformułowanie obu wzorów wraz z tym, które
-dokumenty nietrafne wchodzą do liczenia; procedurę symulowania niepełnych sądów przez
-losowe usuwanie ocen; sposób porównywania uporządkowań systemów miarą korelacji rangowej;
-wielkości spadku zgodności dla miar klasycznych przy kolejnych poziomach niekompletności.
+AP i P@k jako miary odniesienia liczą się na pierwotnych pozycjach, z nieocenionymi traktowanymi jako nietrafne w tym zadeklarowanym wariancie. Kompresowanie pozycji po usunięciu nieocenionych zmieniłoby także definicję tych miar. Bpref ogranicza wpływ braków, ale nie gwarantuje poprawnego uporządkowania systemów przy każdym mechanizmie oceniania.
 
 ## Kontrakt
 
-**Warunki wstępne.** Ranking bez powtórzeń; sądy o trafności zerojedynkowe; co najmniej
-jeden dokument trafny wśród ocenionych; identyfikatory rankingu i sądów z tej samej
-przestrzeni.
+`ranking`: wektor unikatowych, niepustych identyfikatorów, bez `NA`. `sady`: tabela `dokument`, `trafnosc` z unikatowym dokumentem i wartościami 0, 1 lub `NA`. Brak dokumentu w sądach oznacza nieocenienie. Sądy poza rankingiem są poprawne. `k` jest dodatnią liczbą całkowitą; dla P@k brakujące pozycje krótszej listy wnoszą zero.
 
-**Niezmienniki.** Wynik należy do przedziału od zera do jedności. Ranking, w którym
-wszystkie dokumenty trafne stoją przed wszystkimi nietrafnymi, daje jedność. Ranking
-odwrotny daje zero. Wstawienie dokumentu nieocenionego w dowolne miejsce nie zmienia
-wyniku – to jest własność, dla której miara powstała, i ma własny test.
+Niezmienniki: $0\le\mathrm{bpref}\le1$; wstawienie nieocenionych do rankingu nie zmienia bpref; nieodnaleziony trafny wnosi zero; przy stałych sądach i odnalezionych trafnych przesunięcie nietrafnego za trafny nie obniża bpref. Ranking odwrotny daje zero dla bpref-2004 dopiero przy wystarczającej liczbie nietrafnych; bpref-10 ma inne warunki. $R=0$ daje `NA`, `brak_trafnych`, bez udawania wyniku zerowego.
 
-**Wyjście.** Klasa `ocena_niepelna` ze składnikami: wartość miary dla każdego zapytania,
-wartość średnia, odsetek dokumentów nieocenionych, liczba dokumentów trafnych.
+Wynik `ocena_niepelna`: `wyniki` z kolumnami `zapytanie`, `wariant`, `wartosc`, `R`, `N`, `status`, `parametry`, `diagnostyka`. Średnia pomija niezdefiniowane zapytania tylko po jawnym wskazaniu liczby wyłączeń.
 
-**Błędy zatrzymujące wykonanie.** Brak dokumentów trafnych dla zapytania; powtórzone
-identyfikatory w rankingu; sądy o trafności spoza zbioru dwuelementowego.
+Błędy: „Ranking zawiera powtórzone dokumenty”, „Sądy muszą być jednoznaczne dla dokumentu”, „Trafność musi mieć wartość 0, 1 albo NA”, „Głębokość k musi być dodatnią liczbą całkowitą”.
 
 ## Plan pakietu
 
-| Plik | Odpowiedzialność |
-|---|---|
-| `R/przygotowanie_danych.R` | walidacja rankingu i sądów, redukcja do ocenionych |
-| `R/bpref.R` | obie postaci miary |
-| `R/miary_klasyczne.R` | średnia precyzja i precyzja na zadanej głębokości do porównania |
-| `R/zgodnosc.R` | korelacja rangowa między uporządkowaniami systemów |
-| `R/klasy_s3.R` | obiekt wyniku, metody `print` i `summary` |
-| `R/wizualizacja.R` | spadek zgodności w funkcji odsetka usuniętych ocen |
+Pakiet `NiepelnaOcenaR`, licencja GPL-3. Publiczne funkcje:
 
-Zależności: `stats` i `ggplot2`. **Liczenie par rób na posortowanych pozycjach**, a nie
-przez podwójną pętlę po dokumentach – przy rankingu tysiąca pozycji różnica jest
-odczuwalna, a sam zabieg jest dobrym materiałem do rozdziału drugiego.
+- `przygotuj_ranking(ranking, sady)` – dopasowanie bez usuwania sądów spoza listy.
+- `oblicz_bpref(ranking, sady, wariant = "2004")` – warianty `2004`, `2004_10`, opcjonalnie `trec`.
+- `oblicz_ap(ranking, sady)` i `oblicz_precyzje(ranking, sady, k = 10)` – miary odniesienia.
+- `ukryj_sady(sady, odsetek, mechanizm = "losowy", ziarno = 202703)` – maskowanie ocen.
+- `porownaj_systemy(rankingi, sady, wariant = "2004")` – wyniki po zapytaniach.
+
+Moduły: `R/ranking.R`, `R/bpref.R`, `R/miary_odniesienia.R`, `R/braki.R`, `R/metody_s3.R`. Klasa S3 `ocena_niepelna` ma metody `print()`, `summary()` i `plot()`: skrócony wynik, zestawienie diagnostyki oraz wykres zgodny z rodzajem wyniku. Wartości i parametry pozostają dostępne bez odczytywania tekstu wydruku.
+
+`Imports`: `stats`. `Suggests`: `testthat`, `knitr`, `rmarkdown`, `pkgdown`, `shiny`. Funkcje obliczeniowe nie instalują zależności ani nie korzystają z sieci. Dokumentacja `pkgdown` zawiera przykład od wejścia do interpretacji; aplikacja pod `/app/` korzysta z tego samego interfejsu i jawnie prezentuje parametry. Sprawdzenie: instalacja pakietu, uruchomienie przykładu i metod S3 oraz `R CMD check --as-cran`.
 
 ## Dane
 
-**Procedura generowania.** Generujesz ranking o **zadanej jakości**: ustalasz liczbę
-dokumentów trafnych i prawdopodobieństwo, z jakim system ustawia je wysoko. Znasz wtedy
-oczekiwaną wartość miary. Następnie **usuwasz część sądów o trafności** z zadanym
-odsetkiem i sprawdzasz, jak zmieniają się miary klasyczne, a jak bpref. To jest
-odtworzenie eksperymentu z artykułu i zarazem odpowiedź na pytanie badawcze.
+**Generator.** `ziarno = 202703`. Dla 100 zapytań utwórz 200 dokumentów z $r\sim\operatorname{Bernoulli}(0{,}1)$. Wynik systemu $s_{qd}=a_s r_{qd}+\varepsilon_{qd}$, $\varepsilon\sim N(0,1)$, dla $a_s=0,0{,}5,1,2$. Sortuj malejąco, remisy po identyfikatorze. Zachowaj pełne sądy jako punkt odniesienia. Ukrywaj 10%, 30%, 50%, 70%, 90% sądów losowo, a osobno częściej dla nietrafnych lub poniżej pozycji 20; w wariancie zależnym od pozycji zapisz jeden system użyty do budowy puli. Wykonaj 200 powtórzeń maskowania. Mierz korelację Kendalla uporządkowań i odsetek zapytań bez trafnych sądów. Nie wymuszaj przewagi bpref nad AP.
 
-Parametry: liczba zapytań, długość rankingu, liczba dokumentów trafnych, jakość systemu,
-odsetek usuniętych ocen, ziarno.
+**Obliczenia kontrolne.** `t n t n`, przy $R=2$: bpref-2004 = $(1+1/2)/2=0{,}75$, bpref-10 = $(1+11/12)/2=23/24$. `n t t` przy $R=2,N=1$: odpowiednio 0,5 i $11/12$. Ranking `t` przy dwóch trafnych w pełnych sądach daje obu wariantom 0,5. `t ? n t` daje te same bpref co `t n t`, lecz P@2 przy konwencji nieoceniony = nietrafny wynosi 0,5.
 
-**Przypadki o znanym wyniku.** Wszystkie trafne przed wszystkimi nietrafnymi: wynik
-równy jeden. Kolejność odwrotna: zero. Ranking `t n t n` przy dwóch dokumentach trafnych:
-wynik policzalny ręcznie w dwóch linijkach – wpisz rachunek do komentarza testu.
+**Przypadki brzegowe.** Pusta lista wyników przy $R>0$ daje 0; $R=0$ daje `NA`; wszystkie dokumenty nieocenione; trafne poza rankingiem; powtórzone identyfikatory; $N<R$.
 
-**Przypadki patologiczne.** Zero dokumentów trafnych; jeden dokument trafny i zero
-nietrafnych; ranking złożony wyłącznie z dokumentów nieocenionych; sądy o dokumentach
-spoza rankingu.
+**Zbiór empiryczny.** [Reuters-21578, Distribution 1.0](https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection), DOI [10.24432/C52G6M](https://doi.org/10.24432/C52G6M), licencja CC BY 4.0 wskazana przez UCI. Dokumenty prasowe mają kategorie przypisane przez osoby indeksujące. W studium przypadku kategoria jest umownym zapytaniem, a przynależność do niej binarną oceną trafności. Jest to adaptacja zbioru klasyfikacyjnego, więc wynik dotyczy odnajdywania kategorii, a nie pełnej oceny potrzeb informacyjnych użytkownika.
 
-**Zbiór empiryczny.** Publicznie dostępne kolekcje testowe z sądami o trafności, na
-przykład kolekcje udostępniane przez organizatorów konferencji ewaluacyjnych albo
-zbiory oceny wyszukiwania w otwartych repozytoriach. Wystarczy jeden zestaw zapytań
-z sądami i kilka rankingów. Sprawdź warunki licencyjne przed pobraniem.
+Wybierz dokumenty z niepustym tekstem i oznaczeniem `TOPICS="YES"` ze zbioru testowego podziału ModApte. Zapisz identyfikatory dokumentów, wybór kategorii i liczności. Zbuduj co najmniej trzy rankingi na tej samej puli: podobieństwo tekstu do nazwy i opisu kategorii, jego wariant oparty tylko na tytule oraz ranking losowy. Ustal preprocessing i rozstrzyganie remisów identyfikatorem przed porównaniem wyników. Pełne etykiety kategorii są punktem odniesienia dla kontrolowanego ukrywania ocen. Pobranie i przekształcenie wykonaj osobnym skryptem; zachowaj opis źródła, a w testach pakietu używaj małych przykładów bez pobierania danych z sieci.
 
 ## Mapowanie na pracę
 
-| Sekcja briefu | Rozdział pracy |
+| Materiał | Część pracy |
 |---|---|
-| Po co to badaczowi, problem niekompletnej puli | Wprowadzenie: tło i luka |
-| Wzory, sens miary preferencyjnej | Rozdział 1: aparat formalny |
-| Kontrakt, niezmienniki | Rozdział 1: granice stosowalności |
-| Plan pakietu, procedura generowania, badanie odporności | Rozdział 2 |
-| Zbiór empiryczny, porównanie uporządkowań | Rozdział 3 |
+| Problem zastosowania, pytanie analityczne i zakres wkładu | Wprowadzenie |
+| Definicje, wzory, założenia i porównanie dostępnych rozwiązań | Rozdział 1: Podstawy metodyczne |
+| Kontrakt, moduły, klasy wyniku, generator i wyniki testów | Rozdział 2: Implementacja i architektura pakietu |
+| Charakterystyka danych, analiza, interpretacja i porównanie | Rozdział 3: Studium przypadku |
+| Odpowiedź na pytanie, ograniczenia i kierunek rozwoju | Zakończenie |
 
-**Wstępne pytanie badawcze.** Przy jakim odsetku usuniętych sądów o trafności
-uporządkowanie systemów według miary klasycznej przestaje odpowiadać uporządkowaniu
-przy pełnych sądach, i o ile dłużej wytrzymuje miara preferencyjna?
+**Wstępne pytanie analityczne.** Jak losowe i zależne od pozycji usuwanie ocen zmienia zgodność uporządkowań systemów według historycznych wariantów bpref, AP i P@k?
+
+**Proponowany wkład.** Jednoznaczne rozdzielenie definicji bpref i eksperyment z kontrolowanym mechanizmem braków, zamiast założenia, że każda miara preferencyjna jest odporna na każdy brak ocen.
 
 ## Polecenia startowe
 
-1. Walidacja rankingu i sądów o trafności wraz z redukcją do dokumentów ocenionych.
-2. Obie postaci miary, na operacjach wektorowych, zgodnie z wzorami z notatek.
-3. Miary klasyczne do porównania: średnia precyzja i precyzja na zadanej głębokości.
-4. Procedura generowania rankingu o zadanej jakości i kontrolowanym usuwaniu ocen.
-5. Dane naruszające warunki wstępne wraz z oczekiwanym zachowaniem.
-6. Badanie zgodności uporządkowań w funkcji odsetka usuniętych ocen.
+1. **Specyfikacja.** Zapisz rolę R z całych sądów, warianty mianownika i reguły dla miar odniesienia. Wynik: `SPEC.md` z sygnaturami, definicjami i obsługą przypadków brzegowych. Sprawdzenie: każdy argument i każda kolumna wyniku mają opis; zakres odpowiada wskazanym częściom artykułu.
+2. **Przykłady analityczne.** Dodaj cztery ręczne rankingi z podanymi wynikami i trafny dokument nieodnaleziony. Wynik: testy z liczbowymi wartościami oczekiwanymi. Sprawdzenie: odtwórz rachunki na kartce lub osobnym, prostym skryptem; nie wyznaczaj oczekiwanych wartości testowaną funkcją.
+3. **Walidacja.** Zapisz testy wszystkich błędów wymienionych w kontrakcie oraz poprawnych danych prowadzących do `NA`. Wynik: konstruktor wejścia i stabilne komunikaty. Sprawdzenie: błędne dane zatrzymują obliczenia, a niezdefiniowana miara ma opisany status.
+4. **Rdzeń.** Użyj dopasowania identyfikatorów i sum skumulowanych; zachowaj prostą wersję liczącą pary jako kontrolę. Wynik: działające funkcje i obiekt S3. Sprawdzenie: testy analityczne oraz porównanie z niezależną, najprostszą wersją obliczenia.
+5. **Eksperyment.** Porównaj trzy mechanizmy maskowania na tych samych systemach i raportuj zapytania wyłączone z powodu R=0. Wynik: skrypt z konfiguracją, ziarnami i tabelą wyników. Sprawdzenie: powtórzenie daje te same dane i odtwarza tabelę; raport obejmuje wszystkie zaplanowane warianty.
+6. **Udostępnienie.** Dodaj dokumentację, metodę wykresu, winietę i przykład w aplikacji. Wynik: instalowalny pakiet i działająca strona. Sprawdzenie: przykład działa po instalacji w czystej sesji R; opis odróżnia wynik liczbowy od jego interpretacji.
 
 ## Pułapki
 
-**Traktowanie nieocenionych jak nietrafnych.** Agent napisze tak, bo tak wygląda typowy
-kod liczenia precyzji. To jest dokładnie ten błąd, który miara ma usunąć. Test wstawiający
-dokument nieoceniony w środek rankingu wychwyci to natychmiast.
+Usunięcie sądów spoza rankingu zawyża wynik przez zmniejszenie R. Nieoceniony dokument nie jest nietrafnym w bpref, ale ma zerowy wkład w wybranej klasycznej ocenie na pierwotnych pozycjach. Historyczny i współczesny mianownik dają różne wartości, zwłaszcza przy małym N. Bpref-10 nie jest korektą pozwalającą zawsze otrzymać zero dla odwrotnego rankingu.
 
-**Które dokumenty nietrafne liczyć.** We wzorze $n$ nie przebiega wszystkich dokumentów
-nietrafnych, tylko pierwsze $R$ z nich w kolejności rankingu. Pominięcie tego
-ograniczenia daje inne liczby i niezgodność z artykułem.
-
-**Uśrednianie.** Miarę liczy się osobno dla każdego zapytania, a dopiero potem uśrednia.
-Policzenie jej raz na połączonych zapytaniach daje wynik pozbawiony sensu.
-
-**Mała liczba dokumentów trafnych.** Przy jednym dokumencie trafnym miara przyjmuje
-bardzo niewiele wartości. Stąd wariant z przesunięciem, i stąd wymóg, żeby w studium
-przypadku podać rozkład liczby dokumentów trafnych na zapytanie.
-
-**Na obronie** musisz umieć wyjaśnić, dlaczego miara liczy pary zamiast pozycji, i podać
-przykład rankingu, dla którego miara klasyczna i preferencyjna dają różne uporządkowanie
-dwóch systemów.
+Na obronie należy wyjaśnić ocenianie par preferencji, wpływ mechanizmu braków i związek między kompletnością sądów a stabilnością porównania systemów.
 
 ## Literatura
 
 Artykuł źródłowy: `buckleyVoorhees2004incomplete`.
 
-Wprowadzenie: podręcznikowe omówienie oceny systemów wyszukiwawczych i metodyki
-Cranfield; opracowanie o budowie kolekcji testowych i puli dokumentów. Dwie do czterech
-pozycji dobierasz sam. Tematy pokrewne: 02, 07, 08, 11, 12, 13 – wszystkie dotyczą
-pomiaru skuteczności wyszukiwania i można je porównywać na tych samych danych.
+Wprowadzenie: `manning2008ir`, `moffatZobel2008rbp`. Klucze i pełne opisy są w [`zrodla/tematy.bib`](zrodla/tematy.bib).
 
-Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`.
+Środowisko: `rcore2026`. Wymagania formalne: `standardyEPI`. Źródła danych opisano w sekcji „Dane”; w pracy należy podać ich opis bibliograficzny, wersję wykorzystanego zbioru i zakres przekształceń.
+
+Dane: `reuters21578`.

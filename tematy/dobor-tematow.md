@@ -37,30 +37,36 @@ To sprawdzenie nie jest nadmiarowe. Opis bibliograficzny przepisany z drugiej r�
 potrafi zawierać nazwiska istniejących badaczy przy tytule, którego nikt nie napisał.
 Cytowanie takiej pozycji w pracy dyplomowej jest błędem, którego nie da się obronić.
 
-**Erraty i wersje.** Sprawdzano, czy do artykułu nie ukazało się sprostowanie. Jedna
-pozycja na liście ma opublikowaną erratę i brief odsyła do obu tekstów. Pracujesz
-zawsze na wersji poprawionej.
+**Erraty i wersje.** Na początku pracy należy sprawdzić stronę wydawcy i historię
+wersji preprintu. W specyfikacji zapisz używaną wersję oraz wskazane twierdzenia
+lub równania. W temacie 06 podstawą jest wersja v2. Opublikowane sprostowanie
+ma pierwszeństwo przed pierwotnym zapisem; dostępność nowszej wersji trzeba
+sprawdzić ponownie, ponieważ może się zmienić po wyborze tematu.
 
-**Istniejące implementacje.** Sprawdzano, czy metoda nie ma już gotowego pakietu,
-w szczególności wydanego przez autorów artykułu. Jest to dziś częste: zespoły
-publikują artykuł i pakiet równolegle. Temat, którego metoda miała gotową, dojrzałą
-implementację, został z listy zdjęty.
+**Istniejące implementacje.** Dostępny kod i pakiety służą do ustalenia zakresu
+wkładu oraz niezależnego porównania wyników. W temacie 08 istnieją pełne funkcje
+autorów w R i Pythonie, a w temacie 14 kod autorów obejmuje składowe i trzy bazy.
+W tych projektach wkład obejmuje własny pakiet R, walidację wejścia, strukturę
+wyniku, dokumentację i ocenę wrażliwości. Samo przepisanie lub opakowanie
+istniejącej funkcji bez tych elementów nie realizuje zakresu briefu.
 
-Ten warunek nie znika po wyborze tematu. **Sprawdź go ponownie na początku pracy**,
+Stan dostępnych rozwiązań może się zmienić. **Sprawdź go ponownie na początku pracy**,
 bo między ułożeniem listy a Twoim wstępem mija kilka miesięcy. Wykaz przejrzanych
 rozwiązań jest wymaganą częścią wstępu, a zdanie o nieistnieniu implementacji podane
 bez takiego wykazu jest zarzutem pod Twoim adresem, a nie argumentem.
 
 ## Wzory
 
-Briefy podają wejście, wyjście i kolejne kroki algorytmu, ale **wzory przepisujesz
-z artykułu źródłowego**. Nie z briefu, nie z opracowania przeglądowego, nie z hasła
-encyklopedycznego.
+W briefach są definicje, wzory, zakres obowiązkowy i liczbowe przykłady kontrolne.
+**Przed implementacją porównaj wzory z artykułem źródłowym**, wraz z oznaczeniami,
+warunkami i wskazaną wersją. W pracy cytuj artykuł, a własne decyzje dotyczące
+interfejsu, danych i przypadków brzegowych opisz osobno.
 
-Powód jest ten sam co wyżej: zapis skrócony gubi warunki, przy których wzór
-obowiązuje, a czasem gubi też człon. Brief mówi, której sekcji artykułu szukać i co
-z niej wynotować. Resztę robisz sam, bo to jest ta część pracy, w której uczysz się
-metody.
+Zapis skrócony może gubić warunki lub składnik wzoru. Weryfikacja obejmuje również
+znaczenie wyniku: granice możliwych wartości, przedział ufności, przedział
+wiarygodności i punkt ekstrapolowany mają różne interpretacje. W przykładach
+liczbowych odtwórz rachunek niezależnie od implementowanej funkcji. Zakresu
+obowiązkowego nie rozszerzaj przez samo przyjęcie wszystkich obietnic z artykułu.
 
 ## Co robisz na starcie
 

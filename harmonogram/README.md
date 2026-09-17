@@ -24,8 +24,8 @@ Dlatego każdy tydzień ma produkt po obu stronach.
 
 Kolejność jest zawsze ta sama: **specyfikacja, testy, implementacja, dokumentacja**.
 Nie da się jej skrócić i nie opłaca się jej odwracać. Wyjaśnienie, dlaczego odwrotna
-kolejność zawodzi, jest w [przewodniku o pracy z agentem
-programistycznym](../przewodniki/07-agent-cli.md#dlaczego-odwrotna-kolejność-zawodzi).
+kolejność zawodzi, jest w
+[przewodniku o pracy z agentem programistycznym](../przewodniki/07-agent-cli.md#dlaczego-odwrotna-kolejność-zawodzi).
 
 Harmonogram jest zbudowany wokół tej kolejności. Pierwsze sześć tygodni nie zawiera
 ani jednej linii kodu obliczeniowego i to jest zamierzone.

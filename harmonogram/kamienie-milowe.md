@@ -16,8 +16,8 @@ i żeby odpowiedź brzmiała „tak" albo „nie", a nie „raczej".
 Formalnie zaliczenie seminarium następuje po przyjęciu projektu dyplomowego, czyli
 po kamieniu milowym 5. Pozostałe pięć służy temu, żeby piąty był osiągalny.
 
-Sposób punktowania i przełożenie na ocenę opisuje [rubryka
-projektu](../ocenianie/rubryka-projektu.md).
+Sposób punktowania i przełożenie na ocenę opisuje
+[rubryka projektu](../ocenianie/rubryka-projektu.md).
 
 ## Kamień milowy 1: specyfikacja
 
@@ -167,8 +167,8 @@ Tydzień 30.
 **Co oddajesz.** Pracę licencjacką w Archiwum Prac wraz z kompletem elementów
 końcowych.
 
-**Warunki.** Przechodzisz [listę kontrolną przed
-oddaniem](../przewodniki/06-wymogi.md#lista-kontrolna-przed-oddaniem) w całości.
+**Warunki.** Przechodzisz
+[listę kontrolną przed oddaniem](../przewodniki/06-wymogi.md#lista-kontrolna-przed-oddaniem) w całości.
 Wszystkie pozycje muszą być odhaczone.
 
 Dodatkowo:

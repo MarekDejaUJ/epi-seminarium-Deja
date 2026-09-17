@@ -1,8 +1,6 @@
 % Artykuly zrodlowe tematow seminaryjnych.
 %
-% Kazda pozycja sprawdzona w rejestrze wydawcy, w bazie Crossref albo w arXiv.
-% Identyfikatory pochodza z rejestrow, nie z zestawien wtornych.
-% Stan na 2026-09-08.
+% Artykuly metodyczne i literatura wprowadzajaca.
 
 % --- 1. Granice prawdopodobienstw przyczynowosci ----------------------------
 @inproceedings{liPearl2024probabilities,
@@ -12,6 +10,7 @@
   booktitle    = {Proceedings of the AAAI Conference on Artificial Intelligence},
   volume       = {38},
   number       = {18},
+  pages        = {20465-20472},
   doi          = {10.1609/aaai.v38i18.30030},
   langid       = {english},
 }
@@ -38,6 +37,7 @@
   booktitle    = {Proceedings of the 27th Annual International ACM SIGIR
                   Conference on Research and Development in Information Retrieval},
   pages        = {25-32},
+  doi          = {10.1145/1008992.1009000},
   url          = {https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=150469},
   urldate      = {2026-09-08},
   note         = {kopia w repozytorium NIST, dostęp wolny},
@@ -67,6 +67,9 @@
   title        = {Unsupervised Framing Analysis for Social Media Discourse
                   in Polarizing Events},
   journaltitle = {ACM Transactions on the Web},
+  volume       = {19},
+  number       = {4},
+  pages        = {1-42},
   doi          = {10.1145/3711912},
   langid       = {english},
 }
@@ -77,9 +80,9 @@
   year         = {2024},
   title        = {Bounds and Sensitivity Analysis of the Causal Effect Under
                   Outcome-Independent MNAR Confounding},
-  url          = {https://arxiv.org/abs/2410.06726},
-  urldate      = {2026-09-07},
-  note         = {arXiv:2410.06726},
+  url          = {https://arxiv.org/abs/2410.06726v2},
+  urldate      = {2026-09-17},
+  note         = {arXiv:2410.06726, wersja v2},
   langid       = {english},
 }
 
@@ -111,10 +114,14 @@
   langid       = {english},
 }
 
-@online{corsiUrbano2024remisy,
+@inproceedings{corsiUrbano2024remisy,
   author       = {Corsi, Matteo and Urbano, Julián},
   year         = {2024},
   title        = {The Treatment of Ties in Rank-Biased Overlap},
+  booktitle    = {Proceedings of the 47th International ACM SIGIR Conference
+                  on Research and Development in Information Retrieval},
+  pages        = {251-260},
+  doi          = {10.1145/3626772.3657700},
   url          = {https://arxiv.org/abs/2406.07121},
   urldate      = {2026-09-08},
   note         = {arXiv:2406.07121; wersja konferencyjna SIGIR 2024},
@@ -122,11 +129,15 @@
 }
 
 % --- 9. Zintegrowany wskaznik oddzialywania I3 -----------------------------
-@online{leydesdorff2019i3,
+@article{leydesdorff2019i3,
   author       = {Leydesdorff, Loet and Bornmann, Lutz and Adams, Jonathan},
   year         = {2019},
   title        = {The Integrated Impact Indicator Revisited (I3*):
                   A Non-Parametric Alternative to the Journal Impact Factor},
+  journaltitle = {Scientometrics},
+  volume       = {119},
+  pages        = {1669-1694},
+  doi          = {10.1007/s11192-019-03099-8},
   url          = {https://arxiv.org/abs/1812.03448},
   urldate      = {2026-09-08},
   note         = {arXiv:1812.03448, dostęp otwarty; wersja czasopiśmiennicza
@@ -144,6 +155,8 @@
   number       = {12334},
   institution  = {CESifo},
   location     = {Monachium},
+  url          = {https://www.ifo.de/DocDL/cesifo1_wp12334.pdf},
+  urldate      = {2026-09-17},
   langid       = {english},
 }
 
@@ -156,8 +169,9 @@
   booktitle    = {Proceedings of the 31st Annual International ACM SIGIR
                   Conference on Research and Development in Information Retrieval},
   pages        = {51-58},
-  url          = {https://people.eng.unimelb.edu.au/jzobel/fulltext/sigir08.pdf},
-  urldate      = {2026-09-08},
+  doi          = {10.1145/1390334.1390346},
+  url          = {https://www.codalism.com/research/papers/wmz08_sigir_pp.pdf},
+  urldate      = {2026-09-17},
   note         = {kopia autorska, dostęp wolny},
   langid       = {english},
 }
@@ -178,7 +192,7 @@
 
 % --- 13. Oczekiwana odwrotnosc rangi ---------------------------------------
 @inproceedings{chapelle2009err,
-  author       = {Chapelle, Olivier and Metlzer, Donald and Zhang, Ya
+  author       = {Chapelle, Olivier and Metzler, Donald and Zhang, Ya
                   and Grinspan, Pierre},
   year         = {2009},
   title        = {Expected Reciprocal Rank for Graded Relevance},
@@ -186,9 +200,8 @@
                   and Knowledge Management},
   pages        = {621-630},
   doi          = {10.1145/1645953.1646033},
-  url          = {http://olivier.chapelle.cc/pub/err.pdf},
-  urldate      = {2026-09-08},
-  note         = {kopia autorska, dostęp wolny},
+  url          = {https://research.google/pubs/expected-reciprocal-rank-for-graded-relevance/},
+  urldate      = {2026-09-17},
   langid       = {english},
 }
 
@@ -225,4 +238,203 @@
   organization = {Instytut Studiów Informacyjnych UJ},
   location     = {Kraków},
   langid       = {polish},
+}
+
+@book{manning2008ir,
+  author       = {Manning, Christopher D. and Raghavan, Prabhakar and Schütze, Hinrich},
+  year         = {2008},
+  title        = {Introduction to Information Retrieval},
+  publisher    = {Cambridge University Press},
+  doi          = {10.1017/CBO9780511809071},
+  url          = {https://nlp.stanford.edu/IR-book/},
+  urldate      = {2026-09-17},
+  langid       = {english},
+}
+
+@book{pearl2009causality,
+  author       = {Pearl, Judea},
+  year         = {2009},
+  title        = {Causality: Models, Reasoning, and Inference},
+  edition      = {2},
+  publisher    = {Cambridge University Press},
+  doi          = {10.1017/CBO9780511803161},
+  langid       = {english},
+}
+
+@article{tianPearl2000bounds,
+  author       = {Tian, Jin and Pearl, Judea},
+  year         = {2000},
+  title        = {Probabilities of Causation: Bounds and Identification},
+  journaltitle = {Annals of Mathematics and Artificial Intelligence},
+  volume       = {28},
+  number       = {1-4},
+  pages        = {287-313},
+  doi          = {10.1023/A:1018912507879},
+  langid       = {english},
+}
+
+@article{funk2017dynamic,
+  author       = {Funk, Russell J. and Owen-Smith, Jason},
+  year         = {2017},
+  title        = {A Dynamic Network Measure of Technological Change},
+  journaltitle = {Management Science},
+  volume       = {63},
+  number       = {3},
+  pages        = {791-817},
+  doi          = {10.1287/mnsc.2015.2366},
+  langid       = {english},
+}
+
+@article{entman1993framing,
+  author       = {Entman, Robert M.},
+  year         = {1993},
+  title        = {Framing: Toward Clarification of a Fractured Paradigm},
+  journaltitle = {Journal of Communication},
+  volume       = {43},
+  number       = {4},
+  pages        = {51-58},
+  doi          = {10.1111/j.1460-2466.1993.tb01304.x},
+  langid       = {english},
+}
+
+@article{blei2003lda,
+  author       = {Blei, David M. and Ng, Andrew Y. and Jordan, Michael I.},
+  year         = {2003},
+  title        = {Latent Dirichlet Allocation},
+  journaltitle = {Journal of Machine Learning Research},
+  volume       = {3},
+  pages        = {993-1022},
+  url          = {https://www.jmlr.org/papers/v3/blei03a.html},
+  urldate      = {2026-09-17},
+  langid       = {english},
+}
+
+@book{little2019missing,
+  author       = {Little, Roderick J. A. and Rubin, Donald B.},
+  year         = {2019},
+  title        = {Statistical Analysis with Missing Data},
+  edition      = {3},
+  publisher    = {Wiley},
+  doi          = {10.1002/9781119482260},
+  langid       = {english},
+}
+
+@article{waltman2013percentiles,
+  author       = {Waltman, Ludo and Schreiber, Michael},
+  year         = {2013},
+  title        = {On the Calculation of Percentile-Based Bibliometric Indicators},
+  journaltitle = {Journal of the American Society for Information Science and Technology},
+  volume       = {64},
+  number       = {2},
+  pages        = {372-379},
+  doi          = {10.1002/asi.22775},
+  langid       = {english},
+}
+
+@article{tversky1992prospect,
+  author       = {Tversky, Amos and Kahneman, Daniel},
+  year         = {1992},
+  title        = {Advances in Prospect Theory: Cumulative Representation of Uncertainty},
+  journaltitle = {Journal of Risk and Uncertainty},
+  volume       = {5},
+  number       = {4},
+  pages        = {297-323},
+  doi          = {10.1007/BF00122574},
+  langid       = {english},
+}
+
+@article{carpenter2017stan,
+  author       = {Carpenter, Bob and Gelman, Andrew and Hoffman, Matthew D.
+                  and Lee, Daniel and Goodrich, Ben and Betancourt, Michael
+                  and Brubaker, Marcus and Guo, Jiqiang and Li, Peter
+                  and Riddell, Allen},
+  year         = {2017},
+  title        = {{Stan}: A Probabilistic Programming Language},
+  journaltitle = {Journal of Statistical Software},
+  volume       = {76},
+  number       = {1},
+  pages        = {1-32},
+  doi          = {10.18637/jss.v076.i01},
+  langid       = {english},
+}
+
+@book{gelman2013bayesian,
+  author       = {Gelman, Andrew and Carlin, John B. and Stern, Hal S.
+                  and Dunson, David B. and Vehtari, Aki and Rubin, Donald B.},
+  year         = {2013},
+  title        = {Bayesian Data Analysis},
+  edition      = {3},
+  publisher    = {CRC Press},
+  doi          = {10.1201/b16018},
+  langid       = {english},
+}
+
+@dataset{reuters21578,
+  author       = {Lewis, David D.},
+  year         = {1987},
+  title        = {Reuters-21578 Text Categorization Collection},
+  version      = {Distribution 1.0},
+  organization = {UCI Machine Learning Repository},
+  doi          = {10.24432/C52G6M},
+  note         = {CC BY 4.0},
+  langid       = {english},
+}
+
+@dataset{twentyNewsgroups,
+  author       = {Mitchell, Tom},
+  year         = {1997},
+  title        = {Twenty Newsgroups},
+  organization = {UCI Machine Learning Repository},
+  doi          = {10.24432/C5C323},
+  note         = {CC BY 4.0},
+  langid       = {english},
+}
+
+@dataset{adultUCI,
+  author       = {Becker, Barry and Kohavi, Ronny},
+  year         = {1996},
+  title        = {Adult},
+  organization = {UCI Machine Learning Repository},
+  doi          = {10.24432/C5XW20},
+  note         = {CC BY 4.0},
+  langid       = {english},
+}
+
+@dataset{openalexData,
+  author       = {{OurResearch}},
+  title        = {OpenAlex},
+  url          = {https://openalex.org/},
+  urldate      = {2026-09-17},
+  note         = {Metadane w formacie OpenAlex, CC0},
+  langid       = {english},
+}
+
+@dataset{crossdiData,
+  author       = {Xu, Shuo and Wang, Congcong and An, Xin and Liu, Jianhua},
+  year         = {2025},
+  title        = {CrossDI: A Comprehensive Dataset Crossing Three Databases
+                  for Calculating Disruption Indexes},
+  version      = {1},
+  organization = {Figshare},
+  doi          = {10.6084/m9.figshare.30356599.v1},
+  note         = {CC BY 4.0},
+  langid       = {english},
+}
+
+@dataset{chickWeightR,
+  author       = {{R Core Team}},
+  title        = {Weight versus Age of Chicks on Different Diets},
+  url          = {https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/ChickWeight.html},
+  urldate      = {2026-09-17},
+  note         = {ChickWeight, dane w pakiecie datasets języka R},
+  langid       = {english},
+}
+
+@dataset{berkeyData,
+  author       = {Viechtbauer, Wolfgang},
+  title        = {Studies on Treatments for Periodontal Disease},
+  url          = {https://wviechtb.github.io/metadat/reference/dat.berkey1998.html},
+  urldate      = {2026-09-17},
+  note         = {dat.berkey1998, dane w pakiecie metadat, GPL (>= 2)},
+  langid       = {english},
 }
